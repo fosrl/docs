@@ -1,0 +1,54 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+    /* Primary colors converted from HSL to hex */
+    --ifm-color-primary: hsl(24.6, 95%, 53.1%);
+    --ifm-color-primary-dark: hsl(24.6, 95%, 48%);
+    --ifm-color-primary-darker: hsl(24.6, 95%, 43%);
+    --ifm-color-primary-darkest: hsl(24.6, 95%, 38%);
+    --ifm-color-primary-light: hsl(24.6, 95%, 58%);
+    --ifm-color-primary-lighter: hsl(24.6, 95%, 63%);
+    --ifm-color-primary-lightest: hsl(24.6, 95%, 68%);
+    
+    /* Additional custom variables */
+    --ifm-background-color: hsl(0, 0%, 100%);
+    --ifm-font-color-base: hsl(20, 0%, 10%);
+    --ifm-code-font-size: 95%;
+    --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+    
+    /* Chart colors */
+    --chart-color-1: hsl(12, 76%, 61%);
+    --chart-color-2: hsl(173, 58%, 39%);
+    --chart-color-3: hsl(197, 37%, 24%);
+    --chart-color-4: hsl(43, 74%, 66%);
+    --chart-color-5: hsl(27, 87%, 67%);
+  }
+  
+  /* For readability concerns, you should choose a lighter palette in dark mode. */
+  [data-theme='dark'] {
+    /* Primary colors for dark mode */
+    --ifm-color-primary: hsl(20.5, 90.2%, 48.2%);
+    --ifm-color-primary-dark: hsl(20.5, 90.2%, 43%);
+    --ifm-color-primary-darker: hsl(20.5, 90.2%, 38%);
+    --ifm-color-primary-darkest: hsl(20.5, 90.2%, 33%);
+    --ifm-color-primary-light: hsl(20.5, 90.2%, 53%);
+    --ifm-color-primary-lighter: hsl(20.5, 90.2%, 58%);
+    --ifm-color-primary-lightest: hsl(20.5, 90.2%, 63%);
+    
+    /* Additional custom variables for dark mode */
+    --ifm-background-color: hsl(20, 0%, 10%);
+    --ifm-font-color-base: hsl(60, 9.1%, 97.8%);
+    --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+    
+    /* Chart colors for dark mode */
+    --chart-color-1: hsl(220, 70%, 50%);
+    --chart-color-2: hsl(160, 60%, 45%);
+    --chart-color-3: hsl(30, 80%, 55%);
+    --chart-color-4: hsl(280, 65%, 60%);
+    --chart-color-5: hsl(340, 75%, 55%);
+  }

@@ -1,0 +1,24 @@
+{
+  "name": "docs",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "sst dev",
+    "build": "sst build",
+    "deploy": "sst deploy",
+    "remove": "sst remove",
+    "console": "sst console",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "sst": "^2",
+    "aws-cdk-lib": "2.171.1",
+    "constructs": "10.3.0",
+    "typescript": "^5.7.2",
+    "@tsconfig/node18": "^18.2.4"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}

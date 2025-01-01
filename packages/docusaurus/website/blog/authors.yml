@@ -1,0 +1,17 @@
+miloschwartz:
+  name: Milo Schwartz
+  title: Fossorial maintainer
+  url: https://github.com/miloschwartz
+  image_url: https://github.com/miloschwartz.png
+  page: true
+  socials:
+    github: miloschwartz
+
+oschwartz10612:
+  name: Owen Schwartz
+  title: Fossorial maintainer
+  url: https://github.com/oschwartz10612
+  image_url: https://github.com/oschwartz10612.png
+  page: true
+  socials:
+    github: oschwartz10612
