@@ -8,7 +8,7 @@ export function DocusaurusStack({ stack }: StackContext) {
   });
 
   const site = new StaticSite(stack, "DocusaurusSite", {
-    path: "packages/docusaurus/website",
+    path: "packages/docusaurus",
     buildOutput: "build",
     buildCommand: "npm run build",
     customDomain: {
