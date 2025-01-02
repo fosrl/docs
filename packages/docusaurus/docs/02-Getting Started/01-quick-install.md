@@ -1,14 +1,25 @@
-# Quick Installation Guide
+# Install
 
 ## Prerequisites
 
-- A Linux system with root access
+- A Linux system with root access and a public IP address
 - A domain name pointed to your server's IP address
 - An email address for Let's Encrypt certificate registration
+- (Optionally) a SMTP server
 
 ## Installation Steps
 
-### 1. Running the Installer
+### 1. Downloading and Running the Installer
+
+Download the installer with either wget or curl:
+
+```bash
+wget -O installer "https://github.com/fosrl/pangolin/releases/download/v1.0.0-beta.1/installer"
+```
+
+```bash
+curl -L -o installer "https://github.com/fosrl/pangolin/releases/download/v1.0.0-beta.1/installer"
+```
 
 The installer must be run as root. If you're not already root, switch to the root user or use sudo:
 
@@ -20,12 +31,12 @@ sudo ./installer
 
 The installer will prompt you for the following basic information:
 
-1. **Domain Name**: Enter your fully qualified domain name
-2. **Let's Encrypt Email**: Provide an email address for SSL certificate registration
+1. **Domain Name**: Enter your fully qualified domain name that you have pointing to this instance
+2. **Let's Encrypt Email**: Provide an email address for SSL certificate registration with Lets Encrypt. This should be an email you have access to.
 
 ### 3. Admin User Setup
 
-You'll need to configure the admin user:
+You'll need to configure the admin user. This is the first user in the system. You will log in initially with this user.
 
 1. **Admin Email**: Defaults to `admin@yourdomain` but can be customized
 2. **Admin Password**: Must meet these requirements:
@@ -38,19 +49,19 @@ You'll need to configure the admin user:
 
 Configure security options:
 
-1. **Signup Without Invite**: Choose whether to disable user registration without invites (defaults to disabled)
+1. **Signup Without Invite**: Choose whether to disable user registration without invites (defaults to disabled). This removes the "Sign Up" button on the login form and is recommended for private deployments.
 2. **Organization Creation**: Decide if users can create their own organizations (defaults to enabled)
 
 ### 5. Email Configuration
 
-Decide whether to enable email functionality:
+Decide whether to enable email functionality. This allows Pangolin to send transactional emails like OTP or email verification requests.
 
 If enabled, you'll need to provide:
 - SMTP host
 - SMTP port (defaults to 587)
 - SMTP username
 - SMTP password
-- No-reply email address
+- No-reply email address. This is the sender email address that Pangolin will email from. Many times this should be the same as the username.
 
 ### 6. Docker Installation
 
@@ -86,23 +97,9 @@ After successful installation:
 
 1. The system will be accessible at your configured domain
 2. You can log in using the admin email and password you provided
-3. Configuration files will be located in the `config/` directory
-4. Docker Compose file will be in the root directory as `docker-compose.yml`
-
-## Troubleshooting
-
-Common issues and solutions:
-
-1. **Permission Denied**: Make sure you're running the installer as root
-2. **Docker Installation Fails**: Check your internet connection and system compatibility
-3. **Container Startup Fails**: Verify that:
-   - All required ports are available
-   - Docker service is running
-   - Your system has enough resources
 
 ## Notes
 
 - The installer checks for an existing configuration and won't overwrite it if found
-- All inputs have validation to ensure proper formatting
 - Docker installation is optional if already present
-- The system uses Docker Compose for container orchestration
+<!-- - You can pull the latest and rerun the install script to update the containers! -->
