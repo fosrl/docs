@@ -1,3 +1,39 @@
 # Overview
 
-![graphic](@site/static/img/Fossorial_Overview.drawio.svg)
+## Components Overview
+
+Pangolin’s architecture consists of the following components, each designed to handle a specific aspect of the system:
+
+### [**Pangolin**](https://github.com/fosrl/pangolin) (Management Application & Central Server)
+   The central hub for managing the application. Pangolin includes:
+    - Most business logic.
+    - External facing rest API.
+    - WebSocket server for managing Newt sites.
+    - Internal facing rest API for communication between components on the VPS.
+    - Frontend server for the web interface.
+    - Main database for storing data.
+    - Authentication system.
+
+### [**Gerbil**](https://github.com/fosrl/gerbil) (WireGuard Interface Management)
+   Acts as the intermediary for managing WireGuard configurations. It creates and maintains the secure tunnels between sites and the Pangolin server.
+
+### [**Traefik**](https://github.com/traefik/traefik) (Reverse Proxy)
+   A high-performance, modular reverse proxy that routes requests to private resources. Traefik is widely adopted, and its plugin system allows further customization and security enhancements. For example:
+    - Out-of-the-box compatibility with plugins like Fail2Ban or CrowdSec.
+    - Enhanced security via our custom Traefik plugin Badger, which acts as an authentication bouncer.
+
+### [**Badger**](https://github.com/traefik/badger) (Traefik Plugin):
+    A custom Traefik plugin that acts as an authentication bouncer. Badger:
+     - Intercepts requests to the Traefik reverse proxy.
+     - Redirects unauthenticated requests to the Pangolin server for authentication.
+
+### [**Newt**](https://github.com/fosrl/newt) (Minimal User Space WireGuard Client)
+   A lightweight client designed to run on the private network. Newt:
+    - Connects to the Pangolin server via WebSocket for managing endpoints.
+    - Facilitates networking through its connection to Gerbil over the encrypted tunnel.
+
+## System Diagram
+
+<p align="center">
+    ![graphic](@site/static/img/Fossorial_Overview.drawio.svg)
+</p>
