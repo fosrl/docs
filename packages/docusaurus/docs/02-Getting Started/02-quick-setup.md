@@ -27,12 +27,12 @@ A site is a remote location that you want to proxy through the tunnel and system
 #### Newt
 Assuming you chose Newt above, install and configure it to connect to Gerbil and Pangolin
 
-There are 2 ways to setup Newt: with the CLI application or the Docker container. See ... for all options. 
+There are 2 ways to setup Newt: with the CLI application or the Docker container. See ..... for all options. 
 
 On Linux, you can wget the newt binary and run the command copied during the create site step
 
 ```bash
-wget -O installer "https://github.com/fosrl/pangolin/releases/download/v1.0.0-beta.1/installer"
+wget -O installer "https://github.com/fosrl/newt/releases/download/v1.0.0-beta.1/newt"
 ```
 
 Then run newt
@@ -59,12 +59,47 @@ For example on a Linux client, you can write your copied config to a wg0.conf fi
 
 ### 5. Add Targets and Authentication
 
+#### Target
+
 1. You should now be on the **Connectivity** page under your new resource
 2. If you would like to secure this site with https, leave the `Enable SSL` toggle enabled
-3. Add a target
+3. Add a target for this resource. If your resource is accessible on your internal network at `http://192.168.1.24:8080` for example, then choose the following
+Method: HTTP
+IP Address: 192.168.1.24
+Port: 8080
+4. Press `Add Target` and you will see the target added to the list and enabled.
+5. Press `Save Changes`
+6. Try to access your resource by clicking the url at the top
 
-Note: After you create your resource if you are using https certificates with LetsEncrypt (default) then you must wait some time after a target is created for your certificate to be granted and loaded by Traefik. This should take no more than a few minutes.
+:::tip
+
+After you create your resource if you are using https certificates with LetsEncrypt (default) then you must wait some time after a target is created for your certificate to be granted and loaded by Traefik. This should take no more than a few minutes. For instant access, consider setting up wildcard certificates.
+
+:::
+
+#### Authentication
+
+1. Choose the **Authentication** page under the resource
+
+By default the resource is protected with your same Pangolin account. When opening the resource it just loads because you are already logged in. If you were not, you would first be redirected to Pangolin to login before being sent back to the resource. 
+
+If you would like to disable Pangolin auth, you can disable the `Use Platform SSO` toggle.
+
+:::warning
+
+It is not recommended to expose a resource without some form of authentication. Only do this if you need to for the functionality of the resource or you trust the built-in auth.
+
+:::
+
+For advanced auth control with users, roles, passwords, pins, or email whitelists, see .....
 
 ### 6. Invite Users (optional)
 
-1. Head to the **Users and Roles**
+1. Head to the **Users and Roles** tab
+2. Press `Invite User` 
+3. Enter an email for the new user. If you have setup SMTP during the setup you can choose to send an email invite to the new user
+4. Select the role for the new user. All users must have a role. The admin role gives the user access to all resources and to create new resources and sites. The member role only provides access to resources explicitly attached to the role (none by default). For more information, see .....
+5. Choose how long this invite will be valid for and choose `Create Invitation`
+6. If you chose not to send the email or it is not setup, then be sure to copy the invite and send it to the user
+
+The new user will be prompted to setup a password and verify their email (if SMTP is supported). They will show up in your table once they confirm their account.
