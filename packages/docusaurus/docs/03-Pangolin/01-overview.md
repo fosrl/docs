@@ -15,7 +15,7 @@ _Sites page of Pangolin showing multiple site-to-site tunnels connected to the c
 - Expose private resources on your network **without opening ports**.
 - Secure and easy to configure site-to-site connectivity via a custom **user space WireGuard client**, [Newt](https://github.com/fosrl/newt).
 - Built-in support for any WireGuard client.
-- Automated **SSL certificates** (https) via [LetsEncrypt](https://letsencrypt.org/).
+- Automated **SSL certificates** (https) via [Let's Encrypt](https://letsencrypt.org/).
 
 ### Identity & Access Management
 

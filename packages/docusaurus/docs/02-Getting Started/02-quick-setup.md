@@ -73,7 +73,7 @@ Port: 8080
 
 :::tip
 
-After you create your resource if you are using https certificates with LetsEncrypt (default) then you must wait some time after a target is created for your certificate to be granted and loaded by Traefik. This should take no more than a few minutes. For instant access, consider setting up wildcard certificates.
+After you create your resource if you are using https certificates with Let's Encrypt (default) then you must wait some time after a target is created for your certificate to be granted and loaded by Traefik. This should take no more than a few minutes. For instant access, consider setting up wildcard certificates.
 
 :::
 

@@ -111,7 +111,7 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 
 ```yaml
 app:
-    base_url: https://proxy.example.com
+    base_url: https://example.com
     log_level: info
     save_logs: false
 
@@ -132,7 +132,7 @@ traefik:
 
 gerbil:
     start_port: 51820
-    base_endpoint: proxy.example.com
+    base_endpoint: example.com
     use_subdomain: false
     block_size: 16
     subnet_group: 10.0.0.0/8
