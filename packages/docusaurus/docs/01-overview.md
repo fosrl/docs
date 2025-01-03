@@ -29,8 +29,8 @@ Pangolin’s architecture consists of the following components, each designed to
 
 ### [**Newt**](https://github.com/fosrl/newt) (Minimal User Space WireGuard Client)
    A lightweight client designed to run on the private network. Newt:
-    - Connects to the Pangolin server via WebSocket for managing endpoints.
-    - Facilitates networking through its connection to Gerbil over the encrypted tunnel.
+    - Connects to the Pangolin server via WebSocket and Gerbil via fully user space Wireguard
+    - Facilitates networking through its connection to Gerbil and creating TCP proxies
 
 ## System Diagram
 
