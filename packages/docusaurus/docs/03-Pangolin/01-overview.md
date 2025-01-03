@@ -46,35 +46,6 @@ _Sites page of Pangolin showing multiple site-to-site tunnels connected to the c
 - Extend functionality with existing [Traefik](https://github.com/traefik/traefik) plugins, such as [Fail2Ban](https://plugins.traefik.io/plugins/628c9ebcffc0cd18356a979f/fail2-ban) or [CrowdSec](https://plugins.traefik.io/plugins/6335346ca4caa9ddeffda116/crowdsec-bouncer-traefik-plugin), which integrate seamlessly.
 - Attach as many sites to the central server as you wish.
 
-## Screenshots
-
-Pangolin has a straightforward and simple dashboard UI:
-
-<div align="center">
-  <table>
-  <tr>
-      <td align="center"><img src={require("@site/static/img/pangolin/overview/sites.png").default} alt="Sites Example" width="200"/></td>
-      <td align="center"><img src={require("@site/static/img/pangolin/overview/users.png").default} alt="Users Example" width="200"/></td>
-      <td align="center"><img src={require("@site/static/img/pangolin/overview/share-link.png").default} alt="Share Link Example" width="200"/></td>
-    </tr>
-    <tr>
-      <td align="center"><b>Sites</b></td>
-      <td align="center"><b>Users</b></td>
-      <td align="center"><b>Share Link</b></td>
-    </tr>
-    <tr>
-      <td align="center"><img src={require("@site/static/img/pangolin/overview/auth.png").default} alt="Authentication Example" width="200"/></td>
-      <td align="center"><img src={require("@site/static/img/pangolin/overview/connectivity.png").default} alt="Connectivity Example" width="200"/></td>
-      <td align="center"></td>
-    </tr>
-    <tr>
-      <td align="center"><b>Authentication</b></td>
-      <td align="center"><b>Connectivity</b></td>
-      <td align="center"><b></b></td>
-    </tr>
-  </table>
-</div>
-
 ## Workflow Example
 
 ### Deployment and Usage Example

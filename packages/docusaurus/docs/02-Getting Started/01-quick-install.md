@@ -40,6 +40,7 @@ You'll need to configure the admin user. This is the first user in the system. Y
 
 1. **Admin Email**: Defaults to `admin@yourdomain.com` but can be customized
 2. **Admin Password**: Must meet these requirements:
+   - At least 8 characters
    - At least one uppercase letter
    - At least one lowercase letter
    - At least one digit
