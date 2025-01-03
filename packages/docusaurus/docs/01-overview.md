@@ -35,5 +35,5 @@ Pangolin’s architecture consists of the following components, each designed to
 ## System Diagram
 
 <p align="center">
-    ![graphic](@site/static/img/overview/system-diagram.svg)
+    ![graphic](./img/system-diagram.svg)
 </p>

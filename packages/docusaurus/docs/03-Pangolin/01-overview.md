@@ -4,7 +4,7 @@ Pangolin is a self-hosted tunneled reverse proxy management server with identity
 
 ## Preview
 
-<img src={require("@site/static/img/pangolin/overview/preview.png").default} alt="Preview"/>
+<img src={require("./img/preview.png").default} alt="Preview"/>
 
 _Sites page of Pangolin showing multiple site-to-site tunnels connected to the central server._
 
@@ -78,5 +78,5 @@ Pangolin was inspired by several existing projects and concepts:
 - **Cloudflare Tunnels**:  
   A similar approach to proxying private resources securely, but Pangolin is a self-hosted alternative, giving you full control over your infrastructure.
 
-- **Authentic and Authelia**:  
+- **Authentik and Authelia**:  
   These projects inspired Pangolin’s centralized authentication system for proxies, enabling robust user and role management.

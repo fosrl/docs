@@ -20,8 +20,9 @@ It is highly reccommended that you read the [official Traefik documentation](htt
 
 ## Setting Up Wildcard Certificates
 
-1. Update the Traefik configuration to use the DNS-01 challenge instead of the HTTP-01 challenge. This tells Traefik to use your DNS provider to create the DNS records needed for the challenge.
-2. Set the `prefer_wildcard_cert` flag to `true` in the Pangolin configuration file.
+1. Make sure the stack is not running.
+2. Update the Traefik configuration to use the DNS-01 challenge instead of the HTTP-01 challenge. This tells Traefik to use your DNS provider to create the DNS records needed for the challenge.
+3. Set the `prefer_wildcard_cert` flag to `true` in the Pangolin configuration file.
 
 ## Traefik Configuration
 
@@ -74,7 +75,7 @@ certificatesResolvers:
       dnsChallenge:
         provider: "cloudflare" # your DNS provider
         # see https://doc.traefik.io/traefik/https/acme/#providers
-      # highlight-end 
+      # highlight-end
       email: "admin@example.com"
       storage: "/letsencrypt/acme.json"
       caServer: "https://acme-v02.api.letsencrypt.org/directory"
@@ -94,9 +95,9 @@ next-router:
     certResolver: letsencrypt
     # highlight-start
     domains:
-      - main: "example.net"
+      - main: "example.com"
         sans:
-          - "*.example.net"
+          - "*.example.com"
     # highlight-end
 ```
 
@@ -126,4 +127,34 @@ traefik:
     - ./config/letsencrypt:/letsencrypt
 ```
 
-Traefik supports most DNS providers. You can find a full list of supported providers and how to configure them in the [official Traefik documentation](https://doc.traefik.io/traefik/https/acme/#providers).
+Traefik supports most DNS providers. You can find a full list of supported providers and how to configure them in the [Traefik documentation on providers](https://doc.traefik.io/traefik/https/acme/#providers).
+
+## Verify it Works
+
+:::tip
+
+You can ensure Traefik doesn't try to use the old certs by deleting the previously used `acme.json` file. This will force Traefik to generate a new certificate on the next start.
+
+:::
+
+Start the stack and watch the logs. You should notice that Traefik is making calls to your DNS provider to create the necessary records to complete the challenge. For debugging purposes, you may find it useful to set the log level of Traefik to `debug` in the `traefik_config.yml` file.
+
+After Traefik is done waiting for the cert to verify. Try to create a new resource with a unused subdomain. Traefik should not try to generated a new certificate, but instead use the wildcard certificate. The domain should also be secured immediately instead of waiting for a new certificate to be generated.
+
+You can also check the volume (in the example above at `config/letsencrypt/`) for the correct certificates. In the `acme.json` file you should see something similar to the following. Note the `*.` in the domain.
+
+```json
+{
+  "Certificates": [
+    {
+      "domain": {
+        // highlight-next-line
+        "main": "*.example.com"
+      },
+      "certificate": "...",
+      "key": "...",
+      "Store": "default"
+    }
+  ]
+}
+```
