@@ -38,7 +38,7 @@ The installer will prompt you for the following basic information:
 
 You'll need to configure the admin user. This is the first user in the system. You will log in initially with this user.
 
-1. **Admin Email**: Defaults to `admin@yourdomain` but can be customized
+1. **Admin Email**: Defaults to `admin@yourdomain.com` but can be customized
 2. **Admin Password**: Must meet these requirements:
    - At least one uppercase letter
    - At least one lowercase letter
