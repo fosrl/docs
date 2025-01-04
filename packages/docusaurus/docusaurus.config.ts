@@ -73,7 +73,7 @@ const config: Config = {
       title: 'Fossorial',
       logo: {
         alt: 'Fossorial Logo',
-        src: 'img/logo.jpeg',
+        src: 'img/pangolin_orange.svg',
       },
       items: [
         {
