@@ -35,7 +35,10 @@ When Newt receives WireGuard control messages, it will use the information encod
 Example:
 
 ```bash
-./newt --id 31frd0uzbjvp721 --secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6 --endpoint https://example.com
+./newt \
+--id 31frd0uzbjvp721 \
+--secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6 \
+--endpoint https://example.com
 ```
 
 ## Build
