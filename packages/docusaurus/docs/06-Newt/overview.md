@@ -1,12 +1,12 @@
 # Overview
 
-Newt is a fully user space [WireGuard](https://www.wireguard.com/) tunnel client and TCP/UDP proxy, designed to securely expose private resources controlled by Pangolin. By using Newt, you don't need to manage complex Wireguard tunnels and NATing to expose your resources.
+Newt is a fully user space [WireGuard](https://www.wireguard.com/) tunnel client and TCP/UDP proxy, designed to securely expose private resources controlled by Pangolin. By using Newt, you don't need to manage complex WireGuard tunnels and NATing to expose your resources.
 
 Newt is used with Pangolin and Gerbil as part of the larger system. See documentation below:
 
 ## Preview
 
-<img src="public/screenshots/preview.png" alt="Preview"/>
+<img src={require("./img/preview.png").default} alt="Preview"/>
 
 _Sample output of a Newt container connected to Pangolin and hosting various resource target proxies._
 
@@ -16,13 +16,13 @@ _Sample output of a Newt container connected to Pangolin and hosting various res
 
 Using the Newt ID and a secret the client will make HTTP requests to Pangolin to receive a session token. Using that token it will connect to a websocket and maintain that connection. Control messages will be sent over the websocket.
 
-### Receives Wireguard Control Messages
+### Receives WireGuard Control Messages
 
-When Newt receives Wireguard control messages, it will use the information encoded (endpoint, public key) to bring up a Wireguard tunnel using [netstack](https://github.com/WireGuard/wireguard-go/blob/master/tun/netstack/examples/http_server.go) fully in user space. It will ping over the tunnel to ensure the peer on the Gerbil side is brought up. 
+When Newt receives WireGuard control messages, it will use the information encoded (endpoint, public key) to bring up a WireGuard tunnel using [netstack](https://github.com/WireGuard/wireguard-go/blob/master/tun/netstack/examples/http_server.go) fully in user space. It will ping over the tunnel to ensure the peer on the Gerbil side is brought up. 
 
 ### Receives Proxy Control Messages
 
-When Newt receives Wireguard control messages, it will use the information encoded to crate local low level TCP and UDP proxies attached to the virtual tunnel in order to relay traffic to programmed targets.
+When Newt receives WireGuard control messages, it will use the information encoded to crate local low level TCP and UDP proxies attached to the virtual tunnel in order to relay traffic to programmed targets.
 
 ## CLI Args
 

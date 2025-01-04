@@ -1,24 +1,24 @@
 # Overview
 
-Gerbil is a simple WireGuard interface management server written in Go. Gerbil makes it easy to create Wireguard interfaces as well as add and remove peers with an HTTP.
+Gerbil is a simple WireGuard interface management server written in Go. Gerbil makes it easy to create WireGuard interfaces as well as add and remove peers with an HTTP.
 
 Gerbil can be used stand alone with your own API, a static JSON file, or with Pangolin and Newt as part of the larger system. See documentation below:
 
 ## Preview
 
-<img src="public/screenshots/preview.png" alt="Preview"/>
+<img src={require("./img/preview.png").default} alt="Preview"/>
 
 _Sample output of a Gerbil container connected to Pangolin and terminating various peers._
 
 ## Key Functions
 
-### Setup Wireguard
+### Setup WireGuard
 
-A Wireguard interface will be created and configured on the local Linux machine or in the Docker container according to the values given in either a JSON config file or via the remote server. If the interface already exists it will be reconfigured.
+A WireGuard interface will be created and configured on the local Linux machine or in the Docker container according to the values given in either a JSON config file or via the remote server. If the interface already exists it will be reconfigured.
 
 ### Manage Peers
 
-Gerbil will create the peers defined in the config on the Wireguard interface. The HTTP API can be used to remove, create, and update peers on the interface dynamically.
+Gerbil will create the peers defined in the config on the WireGuard interface. The HTTP API can be used to remove, create, and update peers on the interface dynamically.
 
 ### Report Bandwidth
 
@@ -27,18 +27,18 @@ Bytes transmitted in and out of each peer is collected every 10 seconds and incr
 ## CLI Args
 
 - `reachableAt`: How should the remote server reach Gerbil's API?
-- `generateAndSaveKeyTo`: Where to save the generated Wireguard private key to persist across restarts.
+- `generateAndSaveKeyTo`: Where to save the generated WireGuard private key to persist across restarts.
 - `remoteConfig` (optional): Remote config location to HTTP get the JSON based config from. See `example_config.json`
 - `config` (optional): Local JSON file path to load config. Used if remote config is not supplied. See `example_config.json`
 
 :::tip
 
-You must use either `config` or `remoteConfig` to configure Wireguard.
+You must use either `config` or `remoteConfig` to configure WireGuard.
 
 :::
 
 - `reportBandwidthTo` (optional): Remote HTTP endpoint to send peer bandwidth data
-- `interface` (optional): Name of the Wireguard interface created by Gerbil. Default: `wg0`
+- `interface` (optional): Name of the WireGuard interface created by Gerbil. Default: `wg0`
 - `listen` (optional): Port to listen on for HTTP server. Default: `3003`
 - `log-level` (optional): The log level to use. Default: INFO
 
