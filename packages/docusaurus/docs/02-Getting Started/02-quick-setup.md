@@ -28,7 +28,7 @@ A site is a remote location that you want to proxy through the tunnel and system
 
 Assuming you chose Newt above, install and configure it to connect to Gerbil and Pangolin
 
-There are 2 ways to setup Newt: with the CLI application or the Docker container. See [Newt install](/newt/install) for all options. 
+There are 2 ways to setup Newt: with the CLI application or the Docker container. See [Newt install](/Newt/install) for all options. 
 
 On Linux, you can wget the newt binary and run the command copied during the create site step. Make sure to replace amd64 with your architecture!
 
@@ -39,7 +39,10 @@ wget -O newt "https://github.com/fosrl/newt/releases/download/1.0.0-beta.1/newt_
 Then run Newt
 
 ```bash
-./newt --id 31frd0uzbjvp721 --secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6 --endpoint https://example.com
+./newt \
+--id 31frd0uzbjvp721 \
+--secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6 \
+--endpoint https://example.com
 ```
 
 #### WireGuard

@@ -8,7 +8,7 @@ Configuration is passed in as CLI args in both the binary and the Docker contain
 
 ### Binary
 
-Binaries for Linux, MacOS, and Windows can be found in the [Github releases](https://github.com/fosrl/newt/releases) for ARM and AMD64 (x86_64) versions of Newt. It should be as simple as downloading for your respective platform, making sure it is executable, and running it with the correct [CLI args](/newt/overview#cli-args).
+Binaries for Linux, MacOS, and Windows can be found in the [Github releases](https://github.com/fosrl/newt/releases) for ARM and AMD64 (x86_64) versions of Newt. It should be as simple as downloading for your respective platform, making sure it is executable, and running it with the correct [CLI args](/Newt/overview#cli-args).
 
 On Linux for example:
 
