@@ -1,8 +1,10 @@
 # Overview
 
+The Fossorial system - with Pangolin at its core - is a self-hosted tunneled reverse proxy with identity and access management, designed to securely expose private resources through encrypted [WireGuard](https://www.WireGuard.com/) tunnels running in user space. Think self hosted Cloudflare tunnels.
+
 ## Components Overview
 
-Pangolin’s architecture consists of the following components, each designed to handle a specific aspect of the system:
+Fossorial has a couple major components:
 
 ### [**Pangolin**](https://github.com/fosrl/pangolin) (Management Application & Central Server)
    The central hub for managing the application. Pangolin includes:
