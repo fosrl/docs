@@ -84,6 +84,8 @@ Supported distributions:
 - RHEL
 - Amazon Linux
 
+<img src={require("./img/2025-01-05_17-15.png").default} alt="Preview"/>
+
 ### 7. Container Deployment
 
 After configuration, the installer will:

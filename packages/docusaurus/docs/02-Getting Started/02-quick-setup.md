@@ -81,6 +81,8 @@ After you create your resource if you are using https certificates with Let's En
 
 :::
 
+<img src={require("./img/2025-01-05_17-16_2.png").default} alt="Preview"/>
+
 #### Authentication
 
 1. Choose the **Authentication** page under the resource
