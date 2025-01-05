@@ -1,8 +1,12 @@
 # Overview
 
+The Fossorial system - with Pangolin at its core - is a self-hosted tunneled reverse proxy with identity and access management, designed to securely expose private resources through encrypted [WireGuard](https://www.WireGuard.com/) tunnels running in user space. Think self hosted Cloudflare tunnels.
+
+Pangolin uses Traefik under the hood to do the actual HTTP proxying. A plugin, Badger, provides a way to authenticate every request with Pangolin. A second service, Gerbil, provides a WireGuard management server that Pangolin can use to create peers for connectivity. And finally, there is Newt, a CLI tool and Docker container that connects back to Newt and Gerbil with WireGuard fully in user space and proxies your local resources. This means that you do not need to run a privileged process or container in order to expose your services!
+
 ## Components Overview
 
-Pangolin’s architecture consists of the following components, each designed to handle a specific aspect of the system:
+Fossorial has a couple major components:
 
 ### [**Pangolin**](https://github.com/fosrl/pangolin) (Management Application & Central Server)
    The central hub for managing the application. Pangolin includes:
