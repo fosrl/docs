@@ -43,6 +43,9 @@ Are you experienced with authentication procedures and best practices? We would 
 - [ ] Google, GitHub, etc. OAuth support
 - [ ] Cache authentication in badger to speed up proxy requests
 - [ ] Nicely formatted error pages for badger
+- [ ] Bearer token support for resources (useful for protecting APIs)
+- [ ] Auth token in headers or URL parameters (useful for APIs)
+- [ ] Ability to generate API keys for resources
 
 ### UI/UX Improvements
 - [ ] Improved sidebar and navigation
