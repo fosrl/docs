@@ -1,8 +1,8 @@
 # Overview
 
-Gerbil is a simple WireGuard interface management server written in Go. Gerbil makes it easy to create WireGuard interfaces as well as add and remove peers with an HTTP.
+Gerbil is a simple [WireGuard](https://www.wireguard.com/) interface management server written in Go. Gerbil makes it easy to create WireGuard interfaces as well as add and remove peers with an HTTP API.
 
-Gerbil can be used stand alone with your own API, a static JSON file, or with Pangolin and Newt as part of the larger system. See documentation below:
+Gerbil can be used stand alone with your own API, a static JSON file, or with Pangolin and Newt as part of the larger system.
 
 ## Preview
 
