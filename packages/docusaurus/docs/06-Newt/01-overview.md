@@ -41,6 +41,18 @@ Example:
 --endpoint https://example.com
 ```
 
+```yaml
+services:
+  newt:
+    image: fosrl/newt
+    container_name: newt
+    restart: unless-stopped
+    command:
+        - --id 31frd0uzbjvp721
+        - --secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6
+        - --endpoint https://example.com
+```
+
 ## Build
 
 ### Container 

@@ -63,3 +63,7 @@ Are you experienced with authentication procedures and best practices? We would 
 - [ ] SSH resource support to connect to non-HTTP based endpoints
 - [ ] Additional proxy features like headers to use Pangolin auth on downstream resources
 - [ ] A CICD deployment workflow to Docker and Github
+
+### SAAS
+
+We intend at some point to provide Pangolin in a hosted offering with pricing competitive to generally available cloud VPS services. This way users who would like to use Pangolin but don't want to manage their own VPS can do so and help to fund future development.

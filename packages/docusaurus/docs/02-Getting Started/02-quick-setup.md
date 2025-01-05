@@ -11,31 +11,38 @@
 
 An org is a way to collect sites, users, and resources.
 
-When you log into the app for the first time you will be prompted to create an org.
+When you log into the app for the first time you will be prompted to create an org. Simply choose a name and an ID. Note that the ID can not be changed later!
 
 ### 2. Create a site
 
 A site is a remote location that you want to proxy through the tunnel and system. For example your home server, or a IOT device. A site will terminate one tunnel.
 
-1. Head to the **Sites** tab and select the `Add Site` button
+1. Head to the **Sites** tab and select the `Add Site` button (or use the tab in the setup workflow)
 2. Give your site a name like "Home Lab"
 3. Choose your connection method. You can either use the Newt client (recommended) or a standard WireGuard tunnel. 
 4. Copy the Newt command or the WireGuard config, confirm you have copied it, and press `Create Site`
 
 ### 3. Connect a Tunnel
 
-#### Newt
+#### Newt (recommended)
+
 Assuming you chose Newt above, install and configure it to connect to Gerbil and Pangolin
 
-There are 2 ways to setup Newt: with the CLI application or the Docker container. See ..... for all options. 
+There are 2 ways to setup Newt: with the CLI application or the Docker container. See [Newt install](/newt/install) for all options. 
 
-On Linux, you can wget the newt binary and run the command copied during the create site step
+On Linux, you can wget the newt binary and run the command copied during the create site step. Make sure to replace amd64 with your architecture!
 
 ```bash
-wget -O installer "https://github.com/fosrl/newt/releases/download/v1.0.0-beta.1/newt"
+wget -O newt "https://github.com/fosrl/newt/releases/download/1.0.0-beta.1/newt_linux_amd64"
 ```
 
-Then run newt
+Make it executable: 
+
+```bash
+chmod +x ./newt
+```
+
+Then run Newt
 
 ```bash
 ./newt --id 31frd0uzbjvp721 --secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6 --endpoint https://example.com
@@ -51,7 +58,7 @@ For example on a Linux client, you can write your copied config to a wg0.conf fi
 
 ### 4. Create a Resource
 
-1. Head to the **Resources** tab and select the `Add Resource` button
+1. Head to the **Resources** tab and select the `Add Resource` button (or use the tab in the setup workflow)
 2. Give your resource a name like "Bitwarden"
 3. Choose a subdomain for this resource. The subdomain must be ***globally unique** across all orgs and sites
 4. Choose the site that this resource is at. The resource target must be accessible behind the tunnel attached to this site.
