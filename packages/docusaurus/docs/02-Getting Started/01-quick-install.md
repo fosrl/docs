@@ -3,6 +3,7 @@
 ## Prerequisites
 
 - A Linux system with root access and a public IP address
+  - We recommend Ubuntu or Debian based systems
 - A domain name pointed to your server's IP address
 - **Ports 80, 443, and 51820 exposed** to your Linux instance
 - An email address for Let's Encrypt certificate registration
