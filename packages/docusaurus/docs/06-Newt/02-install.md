@@ -12,20 +12,14 @@ Binaries for Linux, MacOS, and Windows can be found in the [Github releases](htt
 
 On Linux for example:
 
-Download Newt with either wget or curl or from your browser:
+Download Newt with either wget or curl or from your browser and make it executable:
 
 ```bash
-wget -O newt "https://github.com/fosrl/newt/releases/download/1.0.0-beta.1/newt_linux_amd64"
+wget -O newt "https://github.com/fosrl/newt/releases/download/1.0.0-beta.1/newt_linux_amd64" && chmod +x ./newt
 ```
 
 ```bash
-curl -L -o newt "https://github.com/fosrl/newt/releases/download/1.0.0-beta.1/newt_linux_amd64"
-```
-
-Make it executable:
-
-```bash
-chmod +x ./newt
+curl -L -o newt "https://github.com/fosrl/newt/releases/download/1.0.0-beta.1/newt_linux_amd64" && chmod +x ./newt
 ```
 
 And run it:

@@ -13,20 +13,14 @@
 
 Installer binaries for Linux can be found in the [Github releases](https://github.com/fosrl/pangolin/releases) for ARM and AMD64 (x86_64).
 
-For example, on `amd64` download the installer with either wget or curl:
+For example, on `amd64` download the installer with either wget or curl and make it executable::
 
 ```bash
-wget -O installer "https://github.com/fosrl/pangolin/releases/download/v1.0.0-beta.1/installer_linux_amd64"
+wget -O installer "https://github.com/fosrl/pangolin/releases/download/1.0.0-beta.1/installer_linux_amd64" && chmod +x ./installer
 ```
 
 ```bash
-curl -L -o installer "https://github.com/fosrl/pangolin/releases/download/v1.0.0-beta.1/installer_linux_amd64"
-```
-
-Make it executable:
-
-```bash
-chmod +x ./installer
+curl -L -o installer "https://github.com/fosrl/pangolin/releases/download/1.0.0-beta.1/installer_linux_amd64" && chmod +x ./installer
 ```
 
 The installer must be run as root. If you're not already root, switch to the root user or use sudo:
