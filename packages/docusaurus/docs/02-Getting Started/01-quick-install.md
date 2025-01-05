@@ -10,6 +10,8 @@
 
 ## Installation Steps
 
+We also have a short and quick [YouTube video](https://youtu.be/W0uVLjTyAn8) showing the install process!
+
 ### 1. Downloading and Running the Installer
 
 Installer binaries for Linux can be found in the [Github releases](https://github.com/fosrl/pangolin/releases) for ARM and AMD64 (x86_64).
