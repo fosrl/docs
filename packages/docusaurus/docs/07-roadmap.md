@@ -66,4 +66,4 @@ Are you experienced with authentication procedures and best practices? We would 
 
 ### SAAS
 
-We intend at some point to provide Pangolin in a hosted offering with pricing competitive to generally available cloud VPS services. This way users who would like to use Pangolin but don't want to manage their own VPS can do so and help to fund future development.
+We intend at some point to provide Pangolin in a hosted offering with a healthy free tier and pricing competitive to generally available cloud VPS services. This way users who would like to use Pangolin - but don't want to manage their own VPS - can do so and help to fund future development.
