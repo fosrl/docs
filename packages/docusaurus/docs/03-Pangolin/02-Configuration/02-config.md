@@ -59,9 +59,9 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 
 ### gerbil
     - `start_port`: int
-      - This is the starting port for Wireguard tunnels that new Gerbil exit nodes will use and increment as they register with Pangolin. Advised to choose a base of a range with no conflicts.
+      - This is the starting port for WireGuard tunnels that new Gerbil exit nodes will use and increment as they register with Pangolin. Advised to choose a base of a range with no conflicts.
     - `base_endpoint`: string
-      - This is the domain name automatically included in Newt and Wireguard config for tunnel connections.
+      - This is the domain name automatically included in Newt and WireGuard config for tunnel connections.
     - `use_subdomain`: boolean
       - If set to true, new Gerbil exit nodes will be assigned a unique subdomain off of the base domain. Advised to keep this to false.
     - `subnet_group`: string

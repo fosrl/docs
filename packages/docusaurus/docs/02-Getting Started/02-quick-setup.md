@@ -19,8 +19,8 @@ A site is a remote location that you want to proxy through the tunnel and system
 
 1. Head to the **Sites** tab and select the `Add Site` button
 2. Give your site a name like "Home Lab"
-3. Choose your connection method. You can either use the Newt client (recommended) or a standard Wireguard tunnel. 
-4. Copy the Newt command or the Wireguard config, confirm you have copied it, and press `Create Site`
+3. Choose your connection method. You can either use the Newt client (recommended) or a standard WireGuard tunnel. 
+4. Copy the Newt command or the WireGuard config, confirm you have copied it, and press `Create Site`
 
 ### 3. Connect a Tunnel
 
@@ -41,9 +41,9 @@ Then run newt
 ./newt --id 31frd0uzbjvp721 --secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6 --endpoint https://example.com
 ```
 
-#### Wireguard
+#### WireGuard
 
-With Wireguard you will be responsible for ensuring your targets are reachable with the /29 subnet provided or proxied/NATed from the Wireguard host.
+With WireGuard you will be responsible for ensuring your targets are reachable with the /29 subnet provided or proxied/NATed from the WireGuard host.
 
 You are provided a /29 subnet in the 10.0.0.0/16 range that Gerbil uses per site.
 
