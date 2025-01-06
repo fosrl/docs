@@ -66,6 +66,7 @@ Are you experienced with authentication procedures and best practices? We would 
 - [ ] SSH resource support to connect to non-HTTP based endpoints
 - [ ] Additional proxy features like headers to use Pangolin auth on downstream resources
 - [ ] A CICD deployment workflow to Docker and Github
+- [ ] K8S installation via helm chart
 
 ### SAAS
 
