@@ -8,7 +8,7 @@ This guide assumes you already have a Linux server with Docker and Docker compos
 
 This guide will walk you through setting up the Docker Compose stack manually without using the installer CLI tool.
 
-# Prerequisites
+## Prerequisites
 
 - A Linux system with root access and a public IP address
   - We recommend Ubuntu or Debian based systems
@@ -37,7 +37,7 @@ Anything marked with `(generated)` is created on startup. The rest of the files 
 └── docker-compose.yml
 ```
 
-# Purpose of Each File
+## Purpose of Each File
 
 - `config/config.yml`: The main configuration file for Pangolin. See the [Configuration](https://docs.fossorial.io/Pangolin/Configuration/config) section for more details.
 - `config/db/db.sqlite`: The SQLite database file for Pangolin. It will be created on startup.
@@ -50,7 +50,7 @@ Anything marked with `(generated)` is created on startup. The rest of the files 
 
 _For any Traefik configuration changes beyond what is needed in this tutorial, please refer to the [Traefik documentation](https://doc.traefik.io/traefik/)._
 
-# Docker Compose File
+## Docker Compose File
 
 ```yaml
 services:
@@ -106,7 +106,7 @@ services:
       - ./config/letsencrypt:/letsencrypt # Volume to store the Let's Encrypt certificates
 ```
 
-# Traefik Configuration
+## Traefik Configuration
 
 `config/traefik/traefik_config.yml`
 
@@ -217,7 +217,7 @@ http:
           - url: "http://pangolin:3000" # API/WebSocket server
 ```
 
-# Pangolin Configuration
+## Pangolin Configuration
 
 `config/config.yml`
 
@@ -274,7 +274,7 @@ flags:
   disable_user_create_org: true
 ```
 
-# Starting the Stack
+## Starting the Stack
 
 After creating the necessary files and directories, you can start the stack with the following command:
 
