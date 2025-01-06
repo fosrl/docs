@@ -67,6 +67,7 @@ Are you experienced with authentication procedures and best practices? We would 
 - [ ] Additional proxy features like headers to use Pangolin auth on downstream resources
 - [ ] A CICD deployment workflow to Docker and Github
 - [ ] K8S installation via helm chart
+- [ ] UDP/TCP targets if people want to expose custom apis or other traffic themselves.
 
 ### SAAS
 
