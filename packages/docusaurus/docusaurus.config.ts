@@ -133,7 +133,7 @@ const config: Config = {
         //   ],
         // },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Fossorial, LLC`,
+      copyright: `${new Date().getFullYear()} Built by Fossorial`,
     },
     prism: {
       theme: prismThemes.github,
