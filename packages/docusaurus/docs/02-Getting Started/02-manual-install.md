@@ -1,4 +1,4 @@
-# Manual Installation
+# Manual Install
 
 :::warning
 
@@ -234,7 +234,7 @@ server:
   internal_port: 3001
   next_port: 3002
   internal_hostname: pangolin
-  secure_cookies: false
+  secure_cookies: true
   session_cookie_name: p_session
   resource_session_cookie_name: p_resource_session
 
