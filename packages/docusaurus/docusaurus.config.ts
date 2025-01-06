@@ -98,45 +98,45 @@ const config: Config = {
     footer: {
       style: 'dark',
       links: [
-        // {
-        //   title: 'Docs',
-        //   items: [
-        //     {
-        //       label: 'Docs',
-        //       to: '/docs/overview',
-        //     },
-        //   ],
-        // },
-        // {
-        //   title: 'Community',
-        //   items: [
-        //     // {
-        //     //   label: 'Stack Overflow',
-        //     //   href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-        //     // },
-        //     {
-        //       label: 'Discord',
-        //       href: 'https://discordapp.com/invite/docusaurus',
-        //     },
-        //     // {
-        //     //   label: 'X',
-        //     //   href: 'https://x.com/docusaurus',
-        //     // },
-        //   ],
-        // },
-        // {
-        //   title: 'More',
-        //   items: [
-        //     // {
-        //     //   label: 'Blog',
-        //     //   to: '/blog',
-        //     // },
-        //     {
-        //       label: 'GitHub',
-        //       href: 'https://github.com/fosrl',
-        //     },
-        //   ],
-        // },
+        {
+          title: 'Docs',
+          items: [
+            {
+              label: 'Docs',
+              to: '/overview',
+            },
+          ],
+        },
+        {
+          title: 'Community',
+          items: [
+            // {
+            //   label: 'Stack Overflow',
+            //   href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+            // },
+            {
+              label: 'Discord',
+              href: 'https://discord.gg/HCJR8Xhme4',
+            },
+            // {
+            //   label: 'X',
+            //   href: 'https://x.com/docusaurus',
+            // },
+          ],
+        },
+        {
+          title: 'More',
+          items: [
+            // {
+            //   label: 'Blog',
+            //   to: '/blog',
+            // },
+            {
+              label: 'GitHub',
+              href: 'https://github.com/fosrl',
+            },
+          ],
+        },
       ],
       copyright: `${new Date().getFullYear()} Built by Fossorial`,
     },
