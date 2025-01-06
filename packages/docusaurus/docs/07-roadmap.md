@@ -2,6 +2,8 @@
 
 The whole Fossorial project is still in beta, but we wanted to get started on a list of ideas and planned future improvements. If you have some ideas or areas of improvement, please leave a Github issue on the respective repository or contribute to this page [here](https://github.com/fosrl/docs/blob/main/packages/docusaurus/docs/07-roadmap.md).
 
+We are not committed to anything on this list. We will prioritize based on community feedback and our own internal goals. If you would like to see something on this list, please let us know!
+
 ## Development Roadmap
 
 Outside of general bug fixes and improvements related to beta:
@@ -46,6 +48,7 @@ Are you experienced with authentication procedures and best practices? We would 
 - [ ] Bearer token support for resources (useful for protecting APIs)
 - [ ] Auth token in headers or URL parameters (useful for APIs)
 - [ ] Ability to generate API keys for resources
+- [ ] 2FA integration with Duo
 
 ### UI/UX Improvements
 - [ ] Improved sidebar and navigation
@@ -69,6 +72,7 @@ Are you experienced with authentication procedures and best practices? We would 
 - [ ] K8S installation via helm chart
 - [ ] UDP/TCP targets if people want to expose custom apis or other traffic themselves.
 - [ ] Sites that do not require newt or wireguard so you can traefik to anything
+- [ ] Automatically create DNS records if provided with access to DNS provider (like Cloudflare API key)
 
 ### SAAS
 

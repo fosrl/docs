@@ -1,0 +1,289 @@
+# Manual Installation
+
+:::warning
+
+This guide assumes you already have a Linux server with Docker and Docker compose installed. If you don't, please refer to the [official Docker documentation](https://docs.docker.com/get-docker/) for installation instructions. You must also have root access to the server.
+
+:::
+
+This guide will walk you through setting up the Docker Compose stack manually without using the installer CLI tool.
+
+# Prerequisites
+
+- A Linux system with root access and a public IP address
+  - We recommend Ubuntu or Debian based systems
+- A domain name pointed to your server's IP address
+- **TCP ports 80, 443, and UDP port 51820 exposed** to your Linux instance
+- An email address for Let's Encrypt certificate registration
+- (Optionally) a SMTP server
+
+## Folder Structure
+
+Anything marked with `(generated)` is created on startup. The rest of the files and directories should be created manually.
+
+```
+.
+├── config/
+│   ├── config.yml
+│   ├── db/
+│   │   └── db.sqlite (generated)
+│   ├── key (generated)
+│   ├── letsencrypt/
+│   │   └── acme.json (generated)
+│   ├── logs/
+│   └── traefik/
+│       ├── traefik_config.yml
+│       └── dynamic_config.yml
+└── docker-compose.yml
+```
+
+# Purpose of Each File
+
+- `config/config.yml`: The main configuration file for Pangolin. See the [Configuration](https://docs.fossorial.io/Pangolin/Configuration/config) section for more details.
+- `config/db/db.sqlite`: The SQLite database file for Pangolin. It will be created on startup.
+- `config/key`: The key file containing the private key. It will be created when Gerbil starts.
+- `config/letsencrypt/acme.json`: The Let's Encrypt certificate storage file. It will be created on startup and maintained by Traefik.
+- `config/logs/`: The directory where logs are stored (if `save_logs` is enabled in the config).
+- `config/traefik/traefik_config.yml`: The Traefik configuration file that contains the global settings.
+- `config/traefik/dynamic_config.yml`: The Traefik configuration file that contains the dynamic configuration, such as the HTTP routers and services for the Pangolin frontend and backend.
+- `docker-compose.yml`: The Docker Compose file that defines the services for Pangolin, Traefik, and Gerbil.
+
+_For any Traefik configuration changes beyond what is needed in this tutorial, please refer to the [Traefik documentation](https://doc.traefik.io/traefik/)._
+
+# Docker Compose File
+
+```yaml
+services:
+  pangolin:
+    image: fosrl/pangolin:1.0.0-beta.1
+    container_name: pangolin
+    restart: unless-stopped
+    ports:
+      - 3001:3001
+      - 3000:3000
+    volumes:
+      - ./config:/app/config
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/api/v1/"]
+      interval: "3s"
+      timeout: "3s"
+      retries: 5
+
+  gerbil:
+    image: fosrl/gerbil:1.0.0-beta.1
+    container_name: gerbil
+    restart: unless-stopped
+    depends_on:
+      pangolin:
+        condition: service_healthy
+    command:
+      - --reachableAt=http://gerbil:3003
+      - --generateAndSaveKeyTo=/var/config/key
+      - --remoteConfig=http://pangolin:3001/api/v1/gerbil/get-config
+      - --reportBandwidthTo=http://pangolin:3001/api/v1/gerbil/receive-bandwidth
+    volumes:
+      - ./config/:/var/config
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    ports:
+      - 51820:51820/udp
+      - 443:443 # Port for traefik because of the network_mode
+      - 80:80 # Port for traefik because of the network_mode
+
+  traefik:
+    image: traefik:v3.1
+    container_name: traefik
+    restart: unless-stopped
+    network_mode: service:gerbil # Ports appear on the gerbil service
+    depends_on:
+      pangolin:
+        condition: service_healthy
+    command:
+      - --configFile=/etc/traefik/traefik_config.yml
+    volumes:
+      - ./config/traefik:/etc/traefik:ro # Volume to store the Traefik configuration
+      - ./config/letsencrypt:/letsencrypt # Volume to store the Let's Encrypt certificates
+```
+
+# Traefik Configuration
+
+`config/traefik/traefik_config.yml`
+
+```yaml
+api:
+  insecure: true
+  dashboard: true
+
+providers:
+  http:
+    endpoint: "http://pangolin:3001/api/v1/traefik-config"
+    pollInterval: "5s"
+  file:
+    filename: "/etc/traefik/dynamic_config.yml"
+
+experimental:
+  plugins:
+    badger:
+      moduleName: "github.com/fosrl/badger"
+      version: "v1.0.0-beta.1"
+
+log:
+  level: "INFO"
+  format: "common"
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      httpChallenge:
+        entryPoint: web
+      email: admin@example.com # REPLACE THIS WITH YOUR EMAIL
+      storage: "/letsencrypt/acme.json"
+      caServer: "https://acme-v02.api.letsencrypt.org/directory"
+
+entryPoints:
+  web:
+    address: ":80"
+  websecure:
+    address: ":443"
+    http:
+      tls:
+        certResolver: "letsencrypt"
+
+serversTransport:
+  insecureSkipVerify: true
+```
+
+`config/traefik/dynamic_config.yml`
+
+The dynamic configuration file is where you define the HTTP routers and services for the Pangolin frontend and backend. Below is an example configuration for a Next.js frontend and an API backend.
+
+The domain you enter here is what will be used to access the main Pangolin dashboard. Make sure you have the DNS set up correctly for this domain. Point it to the IP address of the server running Pangolin.
+
+```yaml
+http:
+  middlewares:
+    redirect-to-https:
+      redirectScheme:
+        scheme: https
+        permanent: true
+
+  routers:
+    # HTTP to HTTPS redirect router
+    main-app-router-redirect:
+      rule: "Host(`proxy.example.com`)" # REPLACE THIS WITH YOUR DOMAIN
+      service: next-service
+      entryPoints:
+        - web
+      middlewares:
+        - redirect-to-https
+
+    # Next.js router (handles everything except API and WebSocket paths)
+    next-router:
+      rule: "Host(`proxy.example.com`) && !PathPrefix(`/api/v1`)" # REPLACE THIS WITH YOUR DOMAIN
+      service: next-service
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt
+
+    # API router (handles /api/v1 paths)
+    api-router:
+      rule: "Host(`proxy.example.com`) && PathPrefix(`/api/v1`)" # REPLACE THIS WITH YOUR DOMAIN
+      service: api-service
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt
+
+    # WebSocket router
+    ws-router:
+      rule: "Host(`proxy.example.com`)" # REPLACE THIS WITH YOUR DOMAIN
+      service: api-service
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt
+
+  services:
+    next-service:
+      loadBalancer:
+        servers:
+          - url: "http://pangolin:3002" # Next.js server
+
+    api-service:
+      loadBalancer:
+        servers:
+          - url: "http://pangolin:3000" # API/WebSocket server
+```
+
+# Pangolin Configuration
+
+`config/config.yml`
+
+See the [Configuration](https://docs.fossorial.io/Pangolin/Configuration/config) section for more details.
+
+```yaml
+app:
+  base_url: https://proxy.example.com
+  log_level: info
+  save_logs: false
+
+server:
+  external_port: 3000
+  internal_port: 3001
+  next_port: 3002
+  internal_hostname: pangolin
+  secure_cookies: false
+  session_cookie_name: p_session
+  resource_session_cookie_name: p_resource_session
+
+traefik:
+  cert_resolver: letsencrypt
+  http_entrypoint: web
+  https_entrypoint: websecure
+  prefer_wildcard_cert: true
+
+gerbil:
+  start_port: 51820
+  base_endpoint: proxy.example.com
+  use_subdomain: false
+  subnet_group: 10.0.0.0/8
+  block_size: 16
+
+rate_limits:
+  global:
+    window_minutes: 1
+    max_requests: 100
+
+email:
+  smtp_host: host.hoster.net
+  smtp_port: 587
+  smtp_user: no-reply@example.com
+  smtp_pass: aaaaaaaaaaaaaaaaaa
+  no_reply: no-reply@example.com
+
+users:
+  server_admin:
+    email: admin@example.com
+    password: Password123!
+
+flags:
+  require_email_verification: true
+  disable_signup_without_invite: true
+  disable_user_create_org: true
+```
+
+# Starting the Stack
+
+After creating the necessary files and directories, you can start the stack with the following command:
+
+```bash
+sudo docker compose up -d
+```
+
+You can tail the logs of the services with:
+
+```bash
+sudo docker compose logs -f
+```
