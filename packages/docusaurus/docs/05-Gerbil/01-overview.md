@@ -52,9 +52,22 @@ Example:
 --reportBandwidthTo=http://pangolin:3001/api/v1/gerbil/receive-bandwidth
 ```
 
+```yaml
+services:
+  newt:
+    image: fosrl/gerbil
+    container_name: gerbil
+    restart: unless-stopped
+    command:
+        - --reachableAt=http://gerbil:3003
+        - --generateAndSaveKeyTo=/var/config/key
+        - --remoteConfig=http://pangolin:3001/api/v1/gerbil/get-config
+        - --reportBandwidthTo=http://pangolin:3001/api/v1/gerbil/receive-bandwidth
+```
+
 :::tip
 
-CLI args can be passed as "command" fields when using the Docker container.
+CLI args can be passed as "command" fields when using the Docker container. Take a look at [this note](../06-Newt/02-install.md#unraid-portainer-and-other-uis) if your commands are not working.
 
 :::
 
