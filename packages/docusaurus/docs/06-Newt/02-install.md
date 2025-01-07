@@ -69,6 +69,10 @@ services:
         - --endpoint https://example.com
 ```
 
+#### Unraid, Portainer, and other UIs
+
+These container management UIs typically allow for passing commands to the container similar to Docker compose. Look for a commands or arguments box and follow relevant guides. 
+
 :::note
 
 Depending on your docker deployment method (like Portainer or older versions of Docker Compose) be aware that the "command" section may need to be formatted differently. For example:
@@ -93,9 +97,5 @@ And you could start it by simply running:
 ```bash
 docker compose up -d
 ```
-
-#### Unraid, Portainer, and other UIs
-
-These container management UIs typically allow for passing commands to the container similar to Docker compose. Look for a commands or arguments box and follow relevant guides. 
 
 We intent to crate more extensive documentation on this in the future. If you would like to contribute, please do!

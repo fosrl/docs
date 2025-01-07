@@ -80,7 +80,7 @@ npm run db:push
 npm run dev
 ```
 
-Note:
+:::note
 
 When running Pangolin for the first time there will be no exit nodes. This means that there have been no Gerbil "exit nodes" registered in the database. When Gerbil first starts up and requests its config from Pangolin for the first time it gets registered as an exit node.
 
@@ -93,6 +93,8 @@ The easiest way to resovle this is to run Gerbil and have it register in your de
 --generateAndSaveKeyTo=/var/key \
 --reachableAt=http://localhost:3003
 ```
+
+:::
 
 ## Gerbil
 
