@@ -55,7 +55,7 @@ services:
 
 :::note
 
-Take a look at [this note](./02-install.md#unraid-portainer-and-other-uis) if your commands are not working.
+CLI args can be passed as "command" fields when using the Docker container. Take a look at [this note](./02-install.md#unraid-portainer-and-other-uis) if your commands are not working.
 
 :::
 
