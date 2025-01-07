@@ -69,6 +69,25 @@ services:
         - --endpoint https://example.com
 ```
 
+:::note
+
+Depending on your docker deployment method (like Portainer or older versions of Docker Compose) be aware that the "command" section may need to be formatted differently. For example:
+
+On Portainer you may need to do it without `-`
+``` yaml
+command:
+    --id 31frd0uzbjvp721
+    --secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6
+    --endpoint https://example.com
+```
+
+Or perhaps all on one line:
+
+```yaml
+command: --id 31frd0uzbjvp721 --secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6 --endpoint https://example.com
+```
+:::
+
 And you could start it by simply running:
 
 ```bash
