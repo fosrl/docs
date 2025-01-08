@@ -93,4 +93,4 @@ And you could start it by simply running:
 docker compose up -d
 ```
 
-We intent to crate more extensive documentation on this in the future. If you would like to contribute, please do!
+We intend to create more extensive documentation on this in the future. If you would like to contribute, please do!
