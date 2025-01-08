@@ -55,7 +55,7 @@ _For any Traefik configuration changes beyond what is needed in this tutorial, p
 ```yaml
 services:
   pangolin:
-    image: fosrl/pangolin:1.0.0-beta.1
+    image: fosrl/pangolin:latest
     container_name: pangolin
     restart: unless-stopped
     ports:
@@ -70,7 +70,7 @@ services:
       retries: 5
 
   gerbil:
-    image: fosrl/gerbil:1.0.0-beta.1
+    image: fosrl/gerbil:latest
     container_name: gerbil
     restart: unless-stopped
     depends_on:
