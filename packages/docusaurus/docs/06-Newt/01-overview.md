@@ -41,6 +41,22 @@ Example:
 --endpoint https://example.com
 ```
 
+You can also run it with Docker compose. For example, a service in your `docker-compose.yml` might look like this using environment vars (recommended):
+
+```yaml
+services:
+  newt:
+    image: fosrl/newt
+    container_name: newt
+    restart: unless-stopped
+    environment:
+      - PANGOLIN_ENDPOINT=https://example.com
+      - NEWT_ID=2ix2t8xk22ubpfy 
+      - NEWT_SECRET=nnisrfsdfc7prqsp9ewo1dvtvci50j5uiqotez00dgap0ii2 
+```
+
+You can also pass the CLI args to the container:
+
 ```yaml
 services:
   newt:

@@ -55,7 +55,21 @@ docker run -it fosrl/newt --id 31frd0uzbjvp721 \
 --endpoint https://example.com
 ```
 
-You can also run it with Docker compose. For example, a service in your `docker-compose.yml` might look like:
+You can also run it with Docker compose. For example, a service in your `docker-compose.yml` might look like this using environment vars (recommended):
+
+```yaml
+services:
+  newt:
+    image: fosrl/newt
+    container_name: newt
+    restart: unless-stopped
+    environment:
+      - PANGOLIN_ENDPOINT=https://example.com
+      - NEWT_ID=2ix2t8xk22ubpfy 
+      - NEWT_SECRET=nnisrfsdfc7prqsp9ewo1dvtvci50j5uiqotez00dgap0ii2 
+```
+
+You can also pass the CLI args to the container:
 
 ```yaml
 services:
@@ -71,26 +85,7 @@ services:
 
 #### Unraid, Portainer, and other UIs
 
-These container management UIs typically allow for passing commands to the container similar to Docker compose. Look for a commands or arguments box and follow relevant guides. 
-
-:::note
-
-Depending on your docker deployment method (like Portainer or older versions of Docker Compose) be aware that the "command" section may need to be formatted differently. For example:
-
-On Portainer you may need to do it without `-`
-``` yaml
-command:
-    --id 31frd0uzbjvp721
-    --secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6
-    --endpoint https://example.com
-```
-
-Or perhaps all on one line:
-
-```yaml
-command: --id 31frd0uzbjvp721 --secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6 --endpoint https://example.com
-```
-:::
+These container management UIs typically allow for passing commands and environment vars to the container similar to Docker compose. Look for a commands or arguments box and follow relevant guides. 
 
 And you could start it by simply running:
 
