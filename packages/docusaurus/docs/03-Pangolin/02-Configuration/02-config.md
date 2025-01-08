@@ -6,10 +6,13 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 
 ### app
 
--   `base_url`: string
+-   `dashboard_url`: string
     -   Example: `https://example.com` or `https://proxy.example.com`
-    -   The url where the application is hosted. This is used for many things, including generating links, and determing the root domain for cookies, etc.
+    -   The url where the application is hosted. This is used for many things, including generating links.
     -   You can run Pangolin on a subdomain or root domain. Users will be redirected to this url to complete the auth step.
+-   `base_domain`: string
+    -   Example: `example.com`
+    -   The base domain for the application. This is used for setting cookies and determining the base domain for resources.
 -   `log_level`: string
     -   Options: `debug`, `info`, `warn`, `error`
     -   The log level for the application.
@@ -36,11 +39,9 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 -   `session_cookie_name`: string
     -   Example: `p_session`
     -   The name of the session cookie. This is used to store the session token for the main application.
-    -   Cookies will be set for the base domain of the `base_url` config.
 -   `resource_session_cookie_name`: string
     -   Example: `p_resource_session`
     -   The prefix for the resource specific session cookie. When a user authenticates directly with a resource, this is used to store the session token for that resource.
-    -   Cookies will be set for the base domain of the `base_url` config.
 
 ### traefik
 
@@ -128,7 +129,8 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 
 ```yaml
 app:
-    base_url: https://example.com
+    dashboard_url: https://example.com
+    base_domain: example.com
     log_level: info
     save_logs: false
 
