@@ -84,7 +84,7 @@ npm run dev
 
 When running Pangolin for the first time there will be no exit nodes. This means that there have been no Gerbil "exit nodes" registered in the database. When Gerbil first starts up and requests its config from Pangolin for the first time it gets registered as an exit node.
 
-The easiest way to resovle this is to run Gerbil and have it register in your dev enviroment. Download the Gerbil binary and run it with localhost:
+The easiest way to resolve this is to run Gerbil and have it register in your dev environment. Download the Gerbil binary and run it with localhost:
 
 ```
 ./gerbil \
@@ -111,7 +111,3 @@ make local
 ```bash
 make local
 ```
-
-## Contributing Code
-
-- If you are taking on an existing bug or feature ticket, please comment on the issues page of the repo you're working on to avoid multiple people working on the same thing.
