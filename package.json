@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "start": "cd packages/docusaurus && npm start",
     "deploy": "AWS_PROFILE=fossorial npx sst deploy --stage prod",
     "typecheck": "tsc --noEmit"
   },

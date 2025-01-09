@@ -1,49 +1,49 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
-import type * as Preset from '@docusaurus/preset-classic';
+import { themes as prismThemes } from "prism-react-renderer";
+import type { Config } from "@docusaurus/types";
+import type * as Preset from "@docusaurus/preset-classic";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: 'Fossorial Docs',
-  tagline: 'Adapted for use in burrowing',
-  favicon: 'img/favicon.ico',
+  title: "Fossorial Docs",
+  tagline: "Adapted for use in burrowing",
+  favicon: "img/favicon.ico",
 
   // Set the production url of your site here
-  url: 'https://docs.fossorial.io',
+  url: "https://docs.fossorial.io",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  baseUrl: "/",
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'Fossorial', // Usually your GitHub org/user name.
-  projectName: 'docs', // Usually your repo name.
+  organizationName: "Fossorial", // Usually your GitHub org/user name.
+  projectName: "docs", // Usually your repo name.
 
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenLinks: "throw",
+  onBrokenMarkdownLinks: "warn",
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
   // may want to replace "en" with "zh-Hans".
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
+    defaultLocale: "en",
+    locales: ["en"],
   },
 
   presets: [
     [
-      'classic',
+      "classic",
       {
         docs: {
-          sidebarPath: './sidebars.ts',
-		  routeBasePath: '/'
+          sidebarPath: "./sidebars.ts",
+          routeBasePath: "/",
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-        //   editUrl:
-        //     'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          //   editUrl:
+          //     'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
-		blog: false,
+        blog: false,
         // blog: {
         //   showReadingTime: true,
         //   feedOptions: {
@@ -60,7 +60,7 @@ const config: Config = {
         //   onUntruncatedBlogPosts: 'warn',
         // },
         theme: {
-          customCss: './src/css/custom.css',
+          customCss: "./src/css/custom.css",
         },
       } satisfies Preset.Options,
     ],
@@ -68,55 +68,63 @@ const config: Config = {
 
   themeConfig: {
     // Replace with your project's social card
-    image: 'img/docusaurus-social-card.jpg',
+    image: "img/docusaurus-social-card.jpg",
+    algolia: {
+      // The application ID provided by Algolia
+      appId: "CVXQS7OHYA",
+      // Public API key: it is safe to commit it
+      apiKey: "37f86a9f9a04ab1c0f17339c86566ce5",
+      indexName: "fossorial",
+      contextualSearch: false,
+    },
     navbar: {
-      title: 'Fossorial',
+      title: "Fossorial",
       logo: {
-        alt: 'Fossorial Logo',
-        src: 'img/pangolin_orange.svg',
+        alt: "Fossorial Logo",
+        src: "img/pangolin_orange.svg",
       },
       items: [
         {
-          type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
-          position: 'left',
-          label: 'Docs',
+          type: "docSidebar",
+          sidebarId: "tutorialSidebar",
+          position: "left",
+          label: "Docs",
         },
         // {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/fosrl',
-          label: 'GitHub',
-          position: 'right',
+          href: "https://github.com/fosrl",
+          label: "GitHub",
+          position: "right",
         },
         {
-          href: 'https://discord.gg/HCJR8Xhme4',
-          label: 'Discord',
-          position: 'right',
-        }
+          href: "https://discord.gg/HCJR8Xhme4",
+          label: "Discord",
+          position: "right",
+        },
       ],
     },
     footer: {
-      style: 'dark',
+      style: "dark",
       links: [
         {
-          title: 'Docs',
+          title: "Docs",
           items: [
             {
-              label: 'Docs',
-              to: '/overview',
+              label: "Docs",
+              to: "/overview",
             },
           ],
         },
         {
-          title: 'Community',
+          title: "Community",
           items: [
             // {
             //   label: 'Stack Overflow',
             //   href: 'https://stackoverflow.com/questions/tagged/docusaurus',
             // },
             {
-              label: 'Discord',
-              href: 'https://discord.gg/HCJR8Xhme4',
+              label: "Discord",
+              href: "https://discord.gg/HCJR8Xhme4",
             },
             // {
             //   label: 'X',
@@ -125,15 +133,15 @@ const config: Config = {
           ],
         },
         {
-          title: 'More',
+          title: "More",
           items: [
             // {
             //   label: 'Blog',
             //   to: '/blog',
             // },
             {
-              label: 'GitHub',
-              href: 'https://github.com/fosrl',
+              label: "GitHub",
+              href: "https://github.com/fosrl",
             },
           ],
         },
