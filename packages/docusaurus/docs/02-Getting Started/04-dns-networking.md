@@ -56,6 +56,20 @@ Its important to **ONLY** expose the ports you need. Effectively by tunneling ou
 
 :::
 
+## Default Internal Subnet
+
+By default the config defaults to using the bellow settings:
+
+```yaml
+    block_size: 24
+    site_block_size: 30
+    subnet_group: 100.89.137.0/20
+```
+
+This means that Gerbil will choose the first /24 subnet in the `100.89.137.0/20` range to operate its network. `100.89.137.0/20` is in the CGNAT range which should avoid overlap with most private networks, but if it does please make sure to change this in your config **before** registering your first Gerbil.
+
+New sites will use a block size of 30. This means that each site gets a /30 within the /24 of the Gerbil exit node. This is enough for 4 IPs (3 unused with newt) which should be good in most cases, but if you are making heavy use of default WireGuard you may want to increase this size.
+
 ## Notes on Docker
 
 If you deploy Newt in Docker: "localhost" only refers to stuff inside of the container itself, so if you want to address other things in the Docker environment you need the internal docker IP of that service or the host when setting up your resources.

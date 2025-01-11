@@ -47,9 +47,9 @@ Then run Newt
 
 #### WireGuard
 
-With WireGuard you will be responsible for ensuring your targets are reachable with the /29 subnet provided or proxied/NATed from the WireGuard host.
+With WireGuard you will be responsible for ensuring your targets are reachable with the `site_block_size` subnet provided or proxied/NATed from the WireGuard host.
 
-You are provided a /29 subnet in the 10.0.0.0/16 range that Gerbil uses per site.
+You are provided a `site_block_size` subnet in the `subnet_group` range that Gerbil uses per site.
 
 For example on a Linux client, you can write your copied config to a wg0.conf file and run `wg-quick up ./wg0.conf`
 

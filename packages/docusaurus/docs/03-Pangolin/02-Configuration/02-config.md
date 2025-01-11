@@ -68,7 +68,9 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
     - `subnet_group`: string
       - IP address CIDR from which to choose smaller CIDR ranges for new Gerbil exit node registrations. Each "Gerbil" gets a subnet from this range.
     - `block_size`: int
-      - The block size of the smaller CIDR ranges for new Gerbil exit node registrations.
+      - The block size of the smallest CIDR ranges for new Gerbil exit node registrations.
+    - `site_block_size`: int
+      - The block size of the smallest CIDR ranges for new sites connected to Gerbil.
 
 ### rate_limits
 
@@ -153,8 +155,9 @@ gerbil:
     start_port: 51820
     base_endpoint: example.com
     use_subdomain: false
-    subnet_group: 10.0.0.0/8
-    block_size: 16
+    block_size: 24
+    site_block_size: 30
+    subnet_group: 100.89.137.0/20
 
 rate_limits:
     global:
