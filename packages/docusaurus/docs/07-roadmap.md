@@ -71,7 +71,7 @@ Are you experienced with authentication procedures and best practices? We would 
 - [ ] A CICD deployment workflow to Docker and Github
 - [ ] K8S installation via helm chart
 - [ ] UDP/TCP targets if people want to expose custom apis or other traffic themselves.
-- [ ] Sites that do not require newt or wireguard so you can traefik to anything
+- [x] Sites that do not require newt or wireguard so you can traefik to anything
 - [ ] Automatically create DNS records if provided with access to DNS provider (like Cloudflare API key)
 - [ ] Support tailscale as an exit node
 
