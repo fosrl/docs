@@ -37,8 +37,10 @@ sudo ./installer
 
 The installer will prompt you for the following basic information:
 
-1. **Domain Name**: Enter your fully qualified domain name that you have pointing to this instance
-2. **Let's Encrypt Email**: Provide an email address for SSL certificate registration with Lets Encrypt. This should be an email you have access to.
+1. **Base Domain Name**: Enter your base fully qualified domain name (without any subdomains) Example: `example.com`
+2. **Dashboard Domain Name**: The domain where the application will be hosted. This is used for many things, including generating links. You can run Pangolin on a subdomain or root domain. Example: `proxy.example.com`
+3. **Let's Encrypt Email**: Provide an email address for SSL certificate registration with Lets Encrypt. This should be an email you have access to.
+4. **Tunneling** You can choose not to install Gerbil for tunneling support - in this config it will just be a normal reverse proxy. See [how to use without tunneling](../03-Pangolin/03-without-tunneling.md).
 
 ### 3. Admin User Setup
 
