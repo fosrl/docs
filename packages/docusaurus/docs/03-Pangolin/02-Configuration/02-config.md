@@ -4,7 +4,7 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 
 ## Sections
 
-### app
+### `app`
 
 -   `dashboard_url`: string
     -   Example: `https://example.com` or `https://proxy.example.com`
@@ -22,7 +22,7 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
         -   Max size: 20MB
         -   Max files: 7 days
 
-### server
+### `server`
 
 -   `external_port`: int
     -   The port the external facing (public) API will listen on.
@@ -42,8 +42,11 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 -   `resource_session_cookie_name`: string
     -   Example: `p_resource_session`
     -   The prefix for the resource specific session cookie. When a user authenticates directly with a resource, this is used to store the session token for that resource.
+-   `resource_access_token_param`: string
+    -   Example: `p_token`
+    -   The query parameter used to pass the access token to the resource. Badger extracts this token and sends it to Pangolin to authenticate. This is used in direct share links that do not require a browser redirect.
 
-### traefik
+### `traefik`
 
 -   `cert_resolver`: string
     -   Example: `letsencrypt`
@@ -58,7 +61,7 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
     -   Whether to prefer a wildcard certificate when generating certificates. This is useful if you want to use a wildcard certificate for the base domain and all subdomains.
     -   Before setting this to `true`, please see the docs for setting up wildcard certificates with Let's Encrypt, <a href="/Pangolin/wildcard-certs">here</a>.
 
-### gerbil
+### `gerbil`
     - `start_port`: int
       - This is the starting port for WireGuard tunnels that new Gerbil exit nodes will use and increment as they register with Pangolin. Advised to choose a base of a range with no conflicts.
     - `base_endpoint`: string
@@ -72,7 +75,7 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
     - `site_block_size`: int
       - The block size of the smallest CIDR ranges for new sites connected to Gerbil.
 
-### rate_limits
+### `rate_limits`
 
 -   `global`: object
     -   The global rate limit configuration for all requests to the external Pangolin API.
@@ -83,7 +86,7 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
         -   Example: `100`
         -   The maximum number of requests allowed in the window.
 
-### email (optional)
+### `email` (optional)
 
 -   `smtp_host`: string
     -   The SMTP host for sending emails.
@@ -97,7 +100,7 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
     -   Example: `no-reply@example.com`
     -   The address to send emails from. This can be any email address, but it is recommended to use a no-reply address.
 
-### users
+### `users`
 
 -   `server_admin`: object
     -   The server admin who can always create new organizations. This user will always be created on startup.
@@ -113,7 +116,7 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
             -   At least one digit
             -   At least one special character
 
-### flags
+### `flags`
 
 -   `require_email_verification`: boolean
     -   Whether to require email verification for new users. If set to `true`, new users will need to verify their email address before they can log in.
@@ -144,6 +147,7 @@ server:
     secure_cookies: true
     session_cookie_name: p_session
     resource_session_cookie_name: p_resource_session
+    resource_access_token_param: p_token
 
 traefik:
     cert_resolver: letsencrypt
