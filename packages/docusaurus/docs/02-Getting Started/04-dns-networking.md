@@ -28,6 +28,12 @@ Example: **example.com**
 
 If you intend Pangolin to run at the root of your domain - meaning you would access the Pangolin UI from example.com (with no subdomain) - then you will need another A record pointing at the 
 
+:::warning
+
+Attention **Cloudflare** users: the **proxy should be turned off** for your records pointing to Pangolin! CF's proxy is not designed to allow non-HTTP traffic to your instance which is necessary for WireGuard to connect. It will also mess with how Badger handles authenticating with redirects, cookies, and tokens.
+
+:::
+
 :::note
 
 Sometimes you need to be patient with your DNS service provider. Once you make this change in their portal they need to propagate the change across all of the major DNS servers that run the internet and this can take some time depending on how on the ball your provider is. This can take anywhere from a couple of minutes to hours. It can be a good idea to make sure the DNS of your computer is pointing to Google's DNS `8.8.8.8` or the DNS of your provider if you are impatient.
