@@ -92,9 +92,9 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
     -   The SMTP host for sending emails.
 -   `smtp_port`: int
     -   The SMTP port for sending emails.
--   `smtp_username`: string
+-   `smtp_user`: string
     -   The SMTP username for sending emails.
--   `smtp_password`: string
+-   `smtp_pass`: string
     -   The SMTP password for sending emails.
 -   `no_reply`: string
     -   Example: `no-reply@example.com`
@@ -116,7 +116,7 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
             -   At least one digit
             -   At least one special character
 
-### `flags`
+### `flags` (optional)
 
 -   `require_email_verification`: boolean
     -   Whether to require email verification for new users. If set to `true`, new users will need to verify their email address before they can log in.
