@@ -151,7 +151,7 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
     -   Whether to allow users to sign up without an explicit invite. If set to `true`, the "Sign Up" button will be removed from the login form.
     -   Users will still be able to sign up if they have a valid invite.
 -   `disable_user_create_org`: boolean
-    -   Whether to allow users to create new organizations. If set to `false`, users will not be able to create new organizations.
+    -   Whether to allow users to create new organizations. If set to `true`, users will not be able to create new organizations.
     -   The server admin can always create new organizations.
 
 ## Example Configuration File
