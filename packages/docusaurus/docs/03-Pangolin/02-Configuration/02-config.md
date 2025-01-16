@@ -147,7 +147,7 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 -   `require_email_verification`: boolean
     -   Whether to require email verification for new users. If set to `true`, new users will need to verify their email address before they can log in.
     -   Only turn this on if you have email configured.
--   `signup_without_invite`: boolean
+-   `disable_signup_without_invite`: boolean
     -   Whether to allow users to sign up without an invite. If set to `false`, the "Sign Up" button will be removed from the login form.
     -   Users will still be able to sign up if they have a valid invite.
 -   `disable_user_create_org`: boolean

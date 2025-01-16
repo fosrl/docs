@@ -1,4 +1,4 @@
-# Manual Install
+# Docker Compose
 
 :::warning
 
