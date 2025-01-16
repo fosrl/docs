@@ -7,10 +7,12 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 ### `app`
 
 -   `dashboard_url`: string
+    -   Env: APP_DASHBOARDURL
     -   Example: `https://example.com` or `https://proxy.example.com`
     -   The url where the application is hosted. This is used for many things, including generating links.
     -   You can run Pangolin on a subdomain or root domain. Users will be redirected to this url to complete the auth step.
 -   `base_domain`: string
+    -   Env: APP_BASEDOMAIN
     -   Example: `example.com`
     -   The base domain for the application. This is used for setting cookies and determining the base domain for resources.
 -   `log_level`: string
@@ -25,10 +27,13 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 ### `server`
 
 -   `external_port`: int
+    -   Env: SERVER_EXTERNALPORT
     -   The port the external facing (public) API will listen on.
 -   `internal_port`: int
+    -   Env: SERVER_INTERNALPORT
     -   The port the internal private facing (private) API will listen on.
 -   `next_port`: int
+    -   Env: SERVER_NEXTPORT
     -   The port the frontend server will listen on.
 -   `internal_hostname`: string
     -   Example: `pangolin`
@@ -45,6 +50,23 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 -   `resource_access_token_param`: string
     -   Example: `p_token`
     -   The query parameter used to pass the access token to the resource. Badger extracts this token and sends it to Pangolin to authenticate. This is used in direct share links that do not require a browser redirect.
+-   `cors`: object (optional)
+    -   Configuration for Cross-Origin Resource Sharing (CORS).
+    -   `origins`: array of strings (optional)
+        -   Example: `["https://proxy.example.com"]`
+        -   List of allowed origins for cross-origin requests.
+    -   `methods`: array of strings (optional)
+        -   Example: `["GET", "POST", "PUT", "DELETE", "PATCH"]`
+        -   HTTP methods allowed for CORS requests.
+    -   `allowed_headers`: array of strings (optional)
+        -   Example: `["X-CSRF-Token", "Content-Type"]`
+        -   HTTP headers allowed in CORS requests.
+    -   `credentials`: boolean (optional)
+        -   Whether to allow credentials.
+        -   Default: true
+-   `trust_proxy`: boolean (optional)
+    -   Whether to trust the proxy headers (e.g., `X-Forwarded-For`) for determining the client IP address.
+    -   Default: `true`
 
 ### `traefik`
 
@@ -63,8 +85,10 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 
 ### `gerbil`
     - `start_port`: int
+      - Env: GERBIL_STARTPORT
       - This is the starting port for WireGuard tunnels that new Gerbil exit nodes will use and increment as they register with Pangolin. Advised to choose a base of a range with no conflicts.
     - `base_endpoint`: string
+      - Env: GERBIL_BASEENDPOINT
       - This is the domain name automatically included in Newt and WireGuard config for tunnel connections.
     - `use_subdomain`: boolean
       - If set to true, new Gerbil exit nodes will be assigned a unique subdomain off of the base domain. Advised to keep this to false.
@@ -105,8 +129,10 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 -   `server_admin`: object
     -   The server admin who can always create new organizations. This user will always be created on startup.
     -   `email`: string
+        -   Env: USERS_SERVERADMIN_EMAIL
         -   The email address of the server admin.
     -   `password`: string
+        -   Env: USERS_SERVERADMIN_PASSWORD
         -   The password of the server admin.
         -   This password will always overwrite the password in the database on startup. This is useful for resetting the password.
         -   The password must meet the following requirements:
