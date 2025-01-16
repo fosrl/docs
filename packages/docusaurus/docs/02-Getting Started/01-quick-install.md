@@ -22,11 +22,11 @@ Installer binaries for Linux can be found in the [Github releases](https://githu
 For example, on `amd64` download the installer with either wget or curl and make it executable:
 
 ```bash
-wget -O installer "https://github.com/fosrl/pangolin/releases/download/1.0.0-beta.5/installer_linux_amd64" && chmod +x ./installer
+wget -O installer "https://github.com/fosrl/pangolin/releases/download/1.0.0-beta.6/installer_linux_amd64" && chmod +x ./installer
 ```
 
 ```bash
-curl -L -o installer "https://github.com/fosrl/pangolin/releases/download/1.0.0-beta.5/installer_linux_amd64" && chmod +x ./installer
+curl -L -o installer "https://github.com/fosrl/pangolin/releases/download/1.0.0-beta.6/installer_linux_amd64" && chmod +x ./installer
 ```
 
 The installer must be run as root. If you're not already root, switch to the root user or use sudo:

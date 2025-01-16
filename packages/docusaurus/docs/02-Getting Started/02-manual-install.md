@@ -59,7 +59,7 @@ _For any Traefik configuration changes beyond what is needed in this tutorial, p
 ```yaml
 services:
   pangolin:
-    image: fosrl/pangolin:latest
+    image: fosrl/pangolin:1.0.0-beta.6
     container_name: pangolin
     restart: unless-stopped
     ports:
