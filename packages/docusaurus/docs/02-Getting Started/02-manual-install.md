@@ -62,9 +62,6 @@ services:
     image: fosrl/pangolin:1.0.0-beta.6
     container_name: pangolin
     restart: unless-stopped
-    ports:
-      - 3001:3001
-      - 3000:3000
     volumes:
       - ./config:/app/config
     healthcheck:
