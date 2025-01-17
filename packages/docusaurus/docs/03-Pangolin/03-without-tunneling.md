@@ -46,3 +46,7 @@ services:
       - ./config/traefik:/etc/traefik:ro # Volume to store the Traefik configuration
       - ./config/letsencrypt:/letsencrypt # Volume to store the Let's Encrypt certificates
 ```
+
+After first starting the app, make sure to fill out all of your information, like `dashboard_url`, `base_domain`, etc the `config.yml` that was generated for you in the volume.
+
+See all configuration options [here](https://docs.fossorial.io/Pangolin/Configuration/config).
