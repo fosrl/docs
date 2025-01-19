@@ -1,4 +1,4 @@
-# Manual Install
+# Docker Compose
 
 :::warning
 
@@ -12,8 +12,8 @@ This guide will walk you through setting up the Docker Compose stack manually wi
 
 - A Linux system with root access and a public IP address
   - We recommend Ubuntu or Debian based systems
-- [A domain name pointed to your server's IP address](./04-dns-networking.md)
-- [TCP ports 80, 443, and UDP port 51820 exposed to your Linux instance.](./04-dns-networking.md)
+- [A domain name pointed to your server's IP address](../02-dns-networking.md)
+- [TCP ports 80, 443, and UDP port 51820 exposed to your Linux instance.](../02-dns-networking.md)
 - An email address for Let's Encrypt certificate registration
 - (Optionally) a SMTP server
 

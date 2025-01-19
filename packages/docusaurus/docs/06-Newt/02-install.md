@@ -83,7 +83,18 @@ services:
         - --endpoint https://example.com
 ```
 
-#### Unraid, Portainer, and other UIs
+### Unraid
+
+Newt is available in the Unraid Community Applications store. You can install it by searching for Newt in the store and following the prompts. Enter in the ID, secret, and endpoint from Pangolin in the template fields.
+
+<p align="center">
+    <img src={require("./img/unraid_store.png").default} alt="Newt on CA" style={{
+        width: "400px",
+        height: "auto"
+    }}/>
+</p>
+
+### Portainer, and other UIs
 
 These container management UIs typically allow for passing commands and environment vars to the container similar to Docker compose. Look for a commands or arguments box and follow relevant guides. 
 
