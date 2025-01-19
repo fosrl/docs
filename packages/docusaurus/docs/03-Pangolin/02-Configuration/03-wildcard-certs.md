@@ -122,13 +122,18 @@ traefik:
   # highlight-start
   # Add the environment variables for your DNS provider.
   environment:
-    CF_API_EMAIL: "admin@example.com"
-    CF_API_KEY: "854060790571461693d6214d0b0cb1e6"
+    CLOUDFLARE_DNS_API_TOKEN: "your-cloudflare-api-token"
   # highlight-end
   volumes:
     - ./config/traefik:/etc/traefik:ro
     - ./config/letsencrypt:/letsencrypt
 ```
+
+:::note
+
+If you're using Cloudflare, make sure your API token has the permissions Zone/Zone/Read and Zone/DNS/Edit and make sure it applies to all zones.
+
+:::
 
 Traefik supports most DNS providers. You can find a full list of supported providers and how to configure them in the [Traefik documentation on providers](https://doc.traefik.io/traefik/https/acme/#providers).
 

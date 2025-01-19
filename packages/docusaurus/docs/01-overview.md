@@ -4,6 +4,10 @@ The Fossorial system - with Pangolin at its core - is a self-hosted tunneled rev
 
 Pangolin uses Traefik under the hood to do the actual HTTP proxying. A plugin, Badger, provides a way to authenticate every request with Pangolin. A second service, Gerbil, provides a WireGuard management server that Pangolin can use to create peers for connectivity. And finally, there is Newt, a CLI tool and Docker container that connects back to Newt and Gerbil with WireGuard fully in user space and proxies your local resources. This means that you do not need to run a privileged process or container in order to expose your services!
 
+## Videos
+
+- ["Pangolin: Your Own Self-Hosted Cloudflare Tunnel Alternative" by DB Tech](https://youtu.be/a-a-Xk1hXBQ?si=wbppkYJ3Skt3efXp)
+
 ## Components Overview
 
 Fossorial has a couple major components:
