@@ -22,6 +22,10 @@ All containers are available in the Unraid Community Apps (CA) store. If you're 
 
 This installation has a lot of moving parts and is a bit non-standard for Unraid because Pangolin and its components were designed to run as micro-services on a VPS in tunneling mode. However, some may want to use "Local" reverse proxying on their Unraid server or use their Unraid server as a tunnel controller with Gerbil. For either of these use cases, follow the steps outlined in this guide.
 
+## Video Tutorial
+
+If you prefer a video tutorial for this guide, you can find it [here](https://youtu.be/F3w1Ur175zI).
+
 ## Prerequisites
 
 - A working Unraid server.
@@ -54,6 +58,12 @@ This first part will enable Pangolin to work in "Local" reverse proxy mode. Newt
 #### 2. Configure Pangolin
 
 Set the network to the one you created earlier.
+
+:::note
+
+Pangolin environment variables will take precedence over the values in the `config.yml` file. If you set an environment variable, it will override the value in the `config.yml` file. This is useful for setting secrets and other sensitive information.
+
+:::
 
 <p align="center">
     ![graphic](./img/pangolin_config.png)
