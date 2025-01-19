@@ -71,7 +71,7 @@ services:
       retries: 5
 
   gerbil:
-    image: fosrl/gerbil:1.0.0-beta.2
+    image: fosrl/gerbil:1.0.0-beta.3
     container_name: gerbil
     restart: unless-stopped
     depends_on:
