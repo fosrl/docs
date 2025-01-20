@@ -19,7 +19,7 @@ Follow existing manual install steps, but Gerbil is not required. Your Docker co
 ```yaml
 services:
   pangolin:
-    image: fosrl/pangolin:1.0.0-beta.4
+    image: fosrl/pangolin:1.0.0-beta.7
     container_name: pangolin
     restart: unless-stopped
     volumes:
