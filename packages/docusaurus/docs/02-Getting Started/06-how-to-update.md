@@ -10,19 +10,32 @@ Some basic commands to get you started:
 sudo docker compose down
 ```
 
-2.  Pull the latest images
+2. Update the docker compose file with the new version number
+
+```yaml
+services:
+  pangolin:
+    image: fosrl/pangolin:1.0.0-beta.8 # increase the tag to the latest version number, or use "latest"
+    container_name: pangolin
+    restart: unless-stopped
+... 
+```
+
+Do this for each container you want to update.
+
+3.  Pull the latest images
 
 ```bash
 sudo docker compose pull
 ```
 
-3. Start the stack
+4. Start the stack
 
 ```bash
 sudo docker compose up -d
 ```
 
-4. Check the logs
+5. Check the logs
 
 ```bash
 sudo docker compose logs -f
