@@ -29,11 +29,15 @@ wget -O installer "https://github.com/fosrl/pangolin/releases/download/1.0.0-bet
 curl -L -o installer "https://github.com/fosrl/pangolin/releases/download/1.0.0-beta.8/installer_linux_amd64" && chmod +x ./installer
 ```
 
+The downloaded files will be named `installer` in the current directory.
+
 The installer must be run as root. If you're not already root, switch to the root user or use sudo:
 
 ```bash
 sudo ./installer
 ```
+
+The installer will place all files in the current directory. If you want to install Pangolin in a different directory, you can move the installer to that directory and run it there.
 
 ### 2. Basic Configuration
 

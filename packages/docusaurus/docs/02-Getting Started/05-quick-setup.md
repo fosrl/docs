@@ -97,8 +97,6 @@ It is not recommended to expose a resource without some form of authentication. 
 
 :::
 
-For advanced auth control with users, roles, passwords, pins, or email whitelists, see .....
-
 ### 6. Invite Users (optional)
 
 1. Head to the **Users and Roles** tab
