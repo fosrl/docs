@@ -1,8 +1,10 @@
 # Road Map
 
-The whole Fossorial project is still in beta, but we wanted to get started on a list of ideas and planned future improvements. If you have some ideas or areas of improvement, please leave a Github issue on the respective repository or contribute to this page [here](https://github.com/fosrl/docs/blob/main/packages/docusaurus/docs/07-roadmap.md).
+The whole Fossorial project is still in beta, but we wanted to get started on a list of ideas and for future improvements. If you have some ideas or areas of improvement, please leave a Github issue on the respective repository or contribute to this page [here](https://github.com/fosrl/docs/blob/main/packages/docusaurus/docs/07-roadmap.md).
 
-We are not committed to anything on this list. We will prioritize based on community feedback and our own internal goals. If you would like to see something on this list, please let us know!
+We are not committed to anything on this list, and the order is meaningless. We will prioritize based on community feedback and our own internal goals. If you would like to see something on this list, please let us know!
+
+Submit feature requests to the [Pangolin repository](https://github.com/orgs/fosrl/discussions). If you really want something that is already on this list, you should still post about it, so we know it is a priority for you. Also, other people can upvote your request.
 
 ## Development Roadmap
 
@@ -37,7 +39,6 @@ Are you experienced with authentication procedures and best practices? We would 
 - [ ] Support for multiple domains
   - [ ] Set domain per organization
   - [ ] Would need to refactor auth to support cross-site cookies
-- [ ] Allow connecting more than only domain name to pangolin
 - [ ] Support for running a resource at the root domain (without subdomain)
   - [ ] Make this optional via a flag in the config
 
