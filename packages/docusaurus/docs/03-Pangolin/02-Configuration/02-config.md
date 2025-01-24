@@ -160,30 +160,30 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 
 ```yaml
 app:
-    dashboard_url: https://example.com
-    base_domain: example.com
-    log_level: info
+    dashboard_url: "https://example.com"
+    base_domain: "example.com"
+    log_level: "info"
     save_logs: false
 
 server:
     external_port: 3000
     internal_port: 3001
     next_port: 3002
-    internal_hostname: pangolin
+    internal_hostname: "pangolin"
     secure_cookies: true
-    session_cookie_name: p_session
-    resource_session_cookie_name: p_resource_session
-    resource_access_token_param: p_token
+    session_cookie_name: "p_session"
+    resource_session_cookie_name: "p_resource_session"
+    resource_access_token_param: "p_token"
 
 traefik:
-    cert_resolver: letsencrypt
-    http_entrypoint: web
-    https_entrypoint: websecure
+    cert_resolver: "letsencrypt"
+    http_entrypoint: "web"
+    https_entrypoint: "websecure"
     prefer_wildcard_cert: true
 
 gerbil:
     start_port: 51820
-    base_endpoint: example.com
+    base_endpoint: "example.com"
     use_subdomain: false
     block_size: 24
     site_block_size: 30
@@ -195,16 +195,16 @@ rate_limits:
         max_requests: 100
 
 email:
-    smtp_host: host.hoster.net
+    smtp_host: "host.hoster.net"
     smtp_port: 587
-    smtp_user: no-reply@example.com
-    smtp_pass: aaaaaaaaaaaaaaaaaa
-    no_reply: no-reply@example.com
+    smtp_user: "no-reply@example.com"
+    smtp_pass: "aaaaaaaaaaaaaaaaaa"
+    no_reply: "no-reply@example.com"
 
 users:
     server_admin:
-        email: admin@example.com
-        password: Password123!
+        email: "admin@example.com"
+        password: "Password123!"
 
 flags:
     require_email_verification: true
