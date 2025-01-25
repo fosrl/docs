@@ -84,7 +84,6 @@ http:
     redirect-to-https:
       redirectScheme:
         scheme: https
-        permanent: true
 
   routers:
     # HTTP to HTTPS redirect router
