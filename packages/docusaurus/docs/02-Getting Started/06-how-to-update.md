@@ -1,3 +1,6 @@
+import CodeBlock from '@theme/CodeBlock';
+import UpdatingVersionsYaml from "@site/src/components/UpdatingVersionsYaml";
+
 # Updating Versions
 
 Keeping the stack updated is easy because the stack is a collection of Docker images. To update the stack, you can simply pull the latest images from Docker Hub and restart the stack.
@@ -12,14 +15,9 @@ sudo docker compose down
 
 2. Update the docker compose file with the new version number
 
-```yaml
-services:
-  pangolin:
-    image: fosrl/pangolin:1.0.0-beta.8 # increase the tag to the latest version number, or use "latest"
-    container_name: pangolin
-    restart: unless-stopped
-... 
-```
+<CodeBlock lang="yaml">
+  <UpdatingVersionsYaml />
+</CodeBlock>
 
 Do this for each container you want to update.
 

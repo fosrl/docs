@@ -1,3 +1,7 @@
+import CodeBlock from '@theme/CodeBlock';
+import DockerCompose from "@site/src/components/DockerCompose";
+import StaticTraefikConfig from "@site/src/components/StaticTraefikConfig";
+
 # Docker Compose
 
 :::warning
@@ -56,104 +60,17 @@ _For any Traefik configuration changes beyond what is needed in this tutorial, p
 
 ## Docker Compose File
 
-```yaml
-services:
-  pangolin:
-    image: fosrl/pangolin:1.0.0-beta.8
-    container_name: pangolin
-    restart: unless-stopped
-    volumes:
-      - ./config:/app/config
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3001/api/v1/"]
-      interval: "3s"
-      timeout: "3s"
-      retries: 5
-
-  gerbil:
-    image: fosrl/gerbil:1.0.0-beta.3
-    container_name: gerbil
-    restart: unless-stopped
-    depends_on:
-      pangolin:
-        condition: service_healthy
-    command:
-      - --reachableAt=http://gerbil:3003
-      - --generateAndSaveKeyTo=/var/config/key
-      - --remoteConfig=http://pangolin:3001/api/v1/gerbil/get-config
-      - --reportBandwidthTo=http://pangolin:3001/api/v1/gerbil/receive-bandwidth
-    volumes:
-      - ./config/:/var/config
-    cap_add:
-      - NET_ADMIN
-      - SYS_MODULE
-    ports:
-      - 51820:51820/udp
-      - 443:443 # Port for traefik because of the network_mode
-      - 80:80 # Port for traefik because of the network_mode
-
-  traefik:
-    image: traefik:v3.1
-    container_name: traefik
-    restart: unless-stopped
-    network_mode: service:gerbil # Ports appear on the gerbil service
-    depends_on:
-      pangolin:
-        condition: service_healthy
-    command:
-      - --configFile=/etc/traefik/traefik_config.yml
-    volumes:
-      - ./config/traefik:/etc/traefik:ro # Volume to store the Traefik configuration
-      - ./config/letsencrypt:/letsencrypt # Volume to store the Let's Encrypt certificates
-```
+<CodeBlock language="yaml">
+   <DockerCompose />
+</CodeBlock>
 
 ## Traefik Configuration
 
 `config/traefik/traefik_config.yml`
 
-```yaml
-api:
-  insecure: true
-  dashboard: true
-
-providers:
-  http:
-    endpoint: "http://pangolin:3001/api/v1/traefik-config"
-    pollInterval: "5s"
-  file:
-    filename: "/etc/traefik/dynamic_config.yml"
-
-experimental:
-  plugins:
-    badger:
-      moduleName: "github.com/fosrl/badger"
-      version: "v1.0.0-beta.2"
-
-log:
-  level: "INFO"
-  format: "common"
-
-certificatesResolvers:
-  letsencrypt:
-    acme:
-      httpChallenge:
-        entryPoint: web
-      email: admin@example.com # REPLACE THIS WITH YOUR EMAIL
-      storage: "/letsencrypt/acme.json"
-      caServer: "https://acme-v02.api.letsencrypt.org/directory"
-
-entryPoints:
-  web:
-    address: ":80"
-  websecure:
-    address: ":443"
-    http:
-      tls:
-        certResolver: "letsencrypt"
-
-serversTransport:
-  insecureSkipVerify: true
-```
+<CodeBlock language="yaml">
+   <StaticTraefikConfig />
+</CodeBlock>
 
 `config/traefik/dynamic_config.yml`
 

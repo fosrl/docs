@@ -1,13 +1,16 @@
+import CodeBlock from '@theme/CodeBlock';
+import WgetQuickInstaller from "@site/src/components/WgetQuickInstaller";
+
 # Install
 
 ## Prerequisites
 
-- A Linux system with root access and a public IP address
-  - We recommend Ubuntu or Debian based systems
-- [A domain name pointed to your server's IP address](./02-dns-networking.md)
-- [TCP ports 80, 443, and UDP port 51820 exposed to your Linux instance.](./02-dns-networking.md)
-- An email address for Let's Encrypt certificate registration
-- (Optionally) a SMTP server
+-   A Linux system with root access and a public IP address
+    -   We recommend Ubuntu or Debian based systems
+-   [A domain name pointed to your server's IP address](./02-dns-networking.md)
+-   [TCP ports 80, 443, and UDP port 51820 exposed to your Linux instance.](./02-dns-networking.md)
+-   An email address for Let's Encrypt certificate registration
+-   (Optionally) a SMTP server
 
 Note: If you have **Cloudflare** as your DNS provider [turn off the proxy service](./02-dns-networking.md).
 
@@ -21,13 +24,9 @@ Installer binaries for Linux can be found in the [Github releases](https://githu
 
 For example, on `amd64` download the installer with either wget or curl and make it executable:
 
-```bash
-wget -O installer "https://github.com/fosrl/pangolin/releases/download/1.0.0-beta.8/installer_linux_amd64" && chmod +x ./installer
-```
-
-```bash
-curl -L -o installer "https://github.com/fosrl/pangolin/releases/download/1.0.0-beta.8/installer_linux_amd64" && chmod +x ./installer
-```
+<CodeBlock language="bash">
+   <WgetQuickInstaller />
+</CodeBlock>
 
 The downloaded files will be named `installer` in the current directory.
 
@@ -54,11 +53,11 @@ You'll need to configure the admin user. This is the first user in the system. Y
 
 1. **Admin Email**: Defaults to `admin@yourdomain.com` but can be customized
 2. **Admin Password**: Must meet these requirements:
-   - At least 8 characters
-   - At least one uppercase letter
-   - At least one lowercase letter
-   - At least one digit
-   - At least one special character
+    - At least 8 characters
+    - At least one uppercase letter
+    - At least one lowercase letter
+    - At least one digit
+    - At least one special character
 
 ### 4. Security Settings
 
@@ -72,11 +71,12 @@ Configure security options:
 Decide whether to enable email functionality. This allows Pangolin to send transactional emails like OTP or email verification requests.
 
 If enabled, you'll need to provide:
-- SMTP host
-- SMTP port (defaults to 587)
-- SMTP username
-- SMTP password
-- No-reply email address. This is the sender email address that Pangolin will email from. Many times this should be the same as the username.
+
+-   SMTP host
+-   SMTP port (defaults to 587)
+-   SMTP username
+-   SMTP password
+-   No-reply email address. This is the sender email address that Pangolin will email from. Many times this should be the same as the username.
 
 ### 6. Docker Installation
 
@@ -87,11 +87,12 @@ If Docker isn't already installed, the installer will:
 3. Install the appropriate version for your distribution
 
 Supported distributions:
-- Ubuntu/Debian
-- Fedora
-- OpenSUSE
-- RHEL
-- Amazon Linux
+
+-   Ubuntu/Debian
+-   Fedora
+-   OpenSUSE
+-   RHEL
+-   Amazon Linux
 
 <img src={require("./img/2025-01-05_17-15.png").default} alt="Preview"/>
 
@@ -101,10 +102,10 @@ After configuration, the installer will:
 
 1. Pull the necessary Docker containers
 2. Create required directories:
-   - `config/`
-   - `config/letsencrypt/`
-   - `config/db/`
-   - `config/logs/`
+    - `config/`
+    - `config/letsencrypt/`
+    - `config/db/`
+    - `config/logs/`
 3. Generate configuration files
 4. Start the containers using Docker Compose
 
@@ -117,6 +118,6 @@ After successful installation:
 
 ## Notes
 
-- The installer checks for an existing configuration and won't overwrite it if found
-- Docker installation is optional if already present
+-   The installer checks for an existing configuration and won't overwrite it if found
+-   Docker installation is optional if already present
 <!-- - You can pull the latest and rerun the install script to update the containers! -->

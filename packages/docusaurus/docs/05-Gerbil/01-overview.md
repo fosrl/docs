@@ -54,7 +54,7 @@ Example:
 
 ```yaml
 services:
-  newt:
+  gerbil:
     image: fosrl/gerbil
     container_name: gerbil
     restart: unless-stopped
