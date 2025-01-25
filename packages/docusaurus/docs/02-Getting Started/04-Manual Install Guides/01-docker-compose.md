@@ -1,4 +1,3 @@
-import CodeBlock from '@theme/CodeBlock';
 import DockerCompose from "@site/src/components/DockerCompose";
 import StaticTraefikConfig from "@site/src/components/StaticTraefikConfig";
 
@@ -60,17 +59,13 @@ _For any Traefik configuration changes beyond what is needed in this tutorial, p
 
 ## Docker Compose File
 
-<CodeBlock language="yaml">
-   <DockerCompose />
-</CodeBlock>
+ <DockerCompose />
 
 ## Traefik Configuration
 
 `config/traefik/traefik_config.yml`
 
-<CodeBlock language="yaml">
-   <StaticTraefikConfig />
-</CodeBlock>
+<StaticTraefikConfig />
 
 `config/traefik/dynamic_config.yml`
 

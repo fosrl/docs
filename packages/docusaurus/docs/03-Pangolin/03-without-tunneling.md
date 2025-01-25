@@ -1,4 +1,3 @@
-import CodeBlock from '@theme/CodeBlock';
 import WithoutTunnelingCompose from "@site/src/components/WithoutTunnelingCompose";
 
 # Without Tunneling
@@ -19,9 +18,7 @@ When asked if you want to install Gerbil for tunneling, select no. Gerbil will b
 
 Follow existing manual install steps, but Gerbil is not required. Your Docker compose should look like the below.
 
-<CodeBlock lang="yaml">
-  <WithoutTunnelingCompose />
-</CodeBlock>
+<WithoutTunnelingCompose />
 
 After first starting the app, make sure to fill out all of your information, like `dashboard_url`, `base_domain`, etc the `config.yml` that was generated for you in the volume.
 

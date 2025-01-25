@@ -17,9 +17,7 @@ On Linux for example:
 
 Download Newt with either wget or curl or from your browser and make it executable:
 
-<CodeBlock lang="yaml">
-  <WgetNewtInstaller />
-</CodeBlock>
+<WgetNewtInstaller />
 
 And run it:
 

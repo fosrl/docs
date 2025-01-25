@@ -1,3 +1,4 @@
+import CodeBlock from "@theme/CodeBlock";
 import React, { useEffect, useState } from "react";
 import { fetchLatestRelease } from "../lib/fetchLatestRelease";
 
@@ -17,7 +18,7 @@ const UpdatingVersionsYaml: React.FC = () => {
         })();
     }, []);
 
-    return <>{text}</>;
+    return <CodeBlock language="yml">{text}</CodeBlock>;
 };
 
 export default UpdatingVersionsYaml;

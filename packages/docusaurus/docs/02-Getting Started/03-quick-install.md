@@ -24,9 +24,7 @@ Installer binaries for Linux can be found in the [Github releases](https://githu
 
 For example, on `amd64` download the installer with either wget or curl and make it executable:
 
-<CodeBlock language="bash">
-   <WgetQuickInstaller />
-</CodeBlock>
+<WgetQuickInstaller />
 
 The downloaded files will be named `installer` in the current directory.
 

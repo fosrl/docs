@@ -1,3 +1,4 @@
+import CodeBlock from "@theme/CodeBlock";
 import React, { useEffect, useState } from "react";
 import { fetchLatestRelease } from "../lib/fetchLatestRelease";
 
@@ -13,7 +14,7 @@ const WgetQuickInstall: React.FC = () => {
         })();
     }, []);
 
-    return <>{text}</>;
+    return <CodeBlock language="bash">{text}</CodeBlock>;
 };
 
 export default WgetQuickInstall;

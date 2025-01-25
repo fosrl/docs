@@ -1,4 +1,3 @@
-import CodeBlock from '@theme/CodeBlock';
 import UpdatingVersionsYaml from "@site/src/components/UpdatingVersionsYaml";
 
 # Updating Versions
@@ -15,9 +14,7 @@ sudo docker compose down
 
 2. Update the docker compose file with the new version number
 
-<CodeBlock lang="yaml">
-  <UpdatingVersionsYaml />
-</CodeBlock>
+<UpdatingVersionsYaml />
 
 Do this for each container you want to update.
 

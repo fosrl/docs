@@ -1,3 +1,4 @@
+import CodeBlock from "@theme/CodeBlock";
 import React, { useEffect, useState } from "react";
 import { fetchLatestRelease } from "../lib/fetchLatestRelease";
 
@@ -40,7 +41,7 @@ const WithoutTunnelingCompose: React.FC = () => {
         })();
     }, []);
 
-    return <>{text}</>;
+    return <CodeBlock language="yml">{text}</CodeBlock>;
 };
 
 export default WithoutTunnelingCompose;
