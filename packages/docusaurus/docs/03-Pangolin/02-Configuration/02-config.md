@@ -42,7 +42,7 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 -   `secure_cookies`: boolean
     -   Whether to set the `Secure` flag on cookies. This is recommended if you are running Pangolin over HTTPS.
 -   `session_cookie_name`: string
-    -   Example: `p_session`
+    -   Example: `p_session_token`
     -   The name of the session cookie. This is used to store the session token for the main application.
 -   `resource_access_token_param`: string
     -   Example: `p_token`
@@ -171,7 +171,7 @@ server:
     next_port: 3002
     internal_hostname: "pangolin"
     secure_cookies: true
-    session_cookie_name: "p_session"
+    session_cookie_name: "p_session_token"
     resource_access_token_param: "p_token"
     resource_session_request_param: "p_session_request"
 
