@@ -54,7 +54,7 @@ Example:
 
 ```yaml
 services:
-  newt:
+  gerbil:
     image: fosrl/gerbil
     container_name: gerbil
     restart: unless-stopped
@@ -67,7 +67,7 @@ services:
 
 :::tip
 
-CLI args can be passed as "command" fields when using the Docker container. Take a look at [this note](../06-Newt/02-install.md#unraid-portainer-and-other-uis) if your commands are not working.
+CLI args can be passed as "command" fields when using the Docker container. Take a look at [this note](../06-Newt/02-install.md) if your commands are not working.
 
 :::
 

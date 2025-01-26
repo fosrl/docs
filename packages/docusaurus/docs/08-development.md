@@ -34,7 +34,7 @@ Below is an example if you're working on the Pangolin repo.
 3. Create a new branch:
 
    ```bash
-   git checkout -b BRANCH_NAME dev
+   git checkout -b BRANCH_NAME main
    ```
 
    - It is recommended to give your branch a meaningful name, relevant to the feature or fix you are working on.
@@ -48,6 +48,8 @@ Below is an example if you're working on the Pangolin repo.
        - `feature`
        - `fix`
        - `patch`
+
+4. If you open a pull request, open it against the `main` branch of the original repository.
 
 ## Pangolin
 

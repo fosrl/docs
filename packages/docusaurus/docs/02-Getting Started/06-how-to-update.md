@@ -1,3 +1,5 @@
+import UpdatingVersionsYaml from "@site/src/components/UpdatingVersionsYaml";
+
 # Updating Versions
 
 Keeping the stack updated is easy because the stack is a collection of Docker images. To update the stack, you can simply pull the latest images from Docker Hub and restart the stack.
@@ -10,19 +12,25 @@ Some basic commands to get you started:
 sudo docker compose down
 ```
 
-2.  Pull the latest images
+2. Update the docker compose file with the new version number
+
+<UpdatingVersionsYaml />
+
+Do this for each container you want to update.
+
+3.  Pull the latest images
 
 ```bash
 sudo docker compose pull
 ```
 
-3. Start the stack
+4. Start the stack
 
 ```bash
 sudo docker compose up -d
 ```
 
-4. Check the logs
+5. Check the logs
 
 ```bash
 sudo docker compose logs -f

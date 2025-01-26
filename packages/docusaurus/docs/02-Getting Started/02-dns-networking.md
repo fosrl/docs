@@ -48,6 +48,12 @@ When you setup your VPS you want to make sure that you expose the following port
 
 If you are using HTTP SSL verification (default from the installer) then Lets Encrypt will try to reach Traefik on this port to verify the subdomain. Non SSL resources will also use this port.
 
+:::note
+
+If you use wildcard certificates with `DNS-01` verification, you can disable this port. Only the `443` port will be needed.
+
+:::
+
 ### TCP 443
 
 The Pangolin web UI and SSL resources use this port to connect with HTTPS.

@@ -1,3 +1,6 @@
+import CodeBlock from '@theme/CodeBlock';
+import WgetNewtInstaller from "@site/src/components/WgetNewtInstaller";
+
 # Install
 
 Newt can be used as either a static binary executable or a Docker container.
@@ -14,13 +17,7 @@ On Linux for example:
 
 Download Newt with either wget or curl or from your browser and make it executable:
 
-```bash
-wget -O newt "https://github.com/fosrl/newt/releases/download/1.0.0-beta.4/newt_linux_amd64" && chmod +x ./newt
-```
-
-```bash
-curl -L -o newt "https://github.com/fosrl/newt/releases/download/1.0.0-beta.4/newt_linux_amd64" && chmod +x ./newt
-```
+<WgetNewtInstaller />
 
 And run it:
 
@@ -41,7 +38,7 @@ mv ./newt /usr/local/bin
 
 You can find the built docker container [on Docker hub](https://hub.docker.com/r/fosrl/newt).
 
-To pull it: 
+To pull it:
 
 ```bash
 docker pull fosrl/newt:latest
@@ -59,28 +56,28 @@ You can also run it with Docker compose. For example, a service in your `docker-
 
 ```yaml
 services:
-  newt:
-    image: fosrl/newt
-    container_name: newt
-    restart: unless-stopped
-    environment:
-      - PANGOLIN_ENDPOINT=https://example.com
-      - NEWT_ID=2ix2t8xk22ubpfy 
-      - NEWT_SECRET=nnisrfsdfc7prqsp9ewo1dvtvci50j5uiqotez00dgap0ii2 
+    newt:
+        image: fosrl/newt
+        container_name: newt
+        restart: unless-stopped
+        environment:
+            - PANGOLIN_ENDPOINT=https://example.com
+            - NEWT_ID=2ix2t8xk22ubpfy
+            - NEWT_SECRET=nnisrfsdfc7prqsp9ewo1dvtvci50j5uiqotez00dgap0ii2
 ```
 
 You can also pass the CLI args to the container:
 
 ```yaml
 services:
-  newt:
-    image: fosrl/newt
-    container_name: newt
-    restart: unless-stopped
-    command:
-        - --id 31frd0uzbjvp721
-        - --secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6
-        - --endpoint https://example.com
+    newt:
+        image: fosrl/newt
+        container_name: newt
+        restart: unless-stopped
+        command:
+            - --id 31frd0uzbjvp721
+            - --secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6
+            - --endpoint https://example.com
 ```
 
 ### Unraid
@@ -96,7 +93,7 @@ Newt is available in the Unraid Community Applications store. You can install it
 
 ### Portainer, and other UIs
 
-These container management UIs typically allow for passing commands and environment vars to the container similar to Docker compose. Look for a commands or arguments box and follow relevant guides. 
+These container management UIs typically allow for passing commands and environment vars to the container similar to Docker compose. Look for a commands or arguments box and follow relevant guides.
 
 And you could start it by simply running:
 
