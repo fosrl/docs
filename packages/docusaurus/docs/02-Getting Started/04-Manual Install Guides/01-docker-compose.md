@@ -147,6 +147,9 @@ entryPoints:
     address: ":80"
   websecure:
     address: ":443"
+    transport:
+      respondingTimeouts:
+        readTimeout: 30m
     http:
       tls:
         certResolver: "letsencrypt"
