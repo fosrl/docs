@@ -44,12 +44,12 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 -   `session_cookie_name`: string
     -   Example: `p_session`
     -   The name of the session cookie. This is used to store the session token for the main application.
--   `resource_session_cookie_name`: string
-    -   Example: `p_resource_session`
-    -   The prefix for the resource specific session cookie. When a user authenticates directly with a resource, this is used to store the session token for that resource.
 -   `resource_access_token_param`: string
     -   Example: `p_token`
     -   The query parameter used to pass the access token to the resource. Badger extracts this token and sends it to Pangolin to authenticate. This is used in direct share links that do not require a browser redirect.
+-   `resource_session_request_param`: string
+    -   Example: `p_session_request`
+    -   The query parameter used to pass the session request token to be exchanged for a real session token in Badger.
 -   `cors`: object (optional)
     -   Configuration for Cross-Origin Resource Sharing (CORS).
     -   `origins`: array of strings (optional)
@@ -172,8 +172,8 @@ server:
     internal_hostname: "pangolin"
     secure_cookies: true
     session_cookie_name: "p_session"
-    resource_session_cookie_name: "p_resource_session"
     resource_access_token_param: "p_token"
+    resource_session_request_param: "p_session_request"
 
 traefik:
     cert_resolver: "letsencrypt"
