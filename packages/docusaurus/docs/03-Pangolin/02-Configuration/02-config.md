@@ -67,6 +67,12 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 -   `trust_proxy`: boolean (optional)
     -   Whether to trust the proxy headers (e.g., `X-Forwarded-For`) for determining the client IP address.
     -   Default: `true`
+-   `dashboard_session_length_hours`: int (optional)
+    -   The length of time in hours that the dashboard session will last after logging in.
+    -   Default: `720`
+-   `resource_session_length_hours`: int (optional)
+    -   The length of time in hours that a session for each resource will last after logging in.
+    -   Default: `720`
 
 ### `traefik`
 
@@ -112,14 +118,17 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 
 ### `email` (optional)
 
--   `smtp_host`: string
+-   `smtp_host` (optional): string
     -   The SMTP host for sending emails.
--   `smtp_port`: int
+-   `smtp_port` (optional): int
     -   The SMTP port for sending emails.
--   `smtp_user`: string
+-   `smtp_user` (optional): string
     -   The SMTP username for sending emails.
--   `smtp_pass`: string
+-   `smtp_pass` (optional): string
     -   The SMTP password for sending emails.
+-   `smtp_secure` (optional): boolean
+    -   Whether to use a secure connection when sending emails. Use this if you're using port 465.
+    -   Default: `false`
 -   `no_reply`: string
     -   Example: `no-reply@example.com`
     -   The address to send emails from. This can be any email address, but it is recommended to use a no-reply address.
