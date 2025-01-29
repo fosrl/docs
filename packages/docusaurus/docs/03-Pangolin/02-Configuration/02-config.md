@@ -88,6 +88,9 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 -   `prefer_wildcard_cert`: boolean
     -   Whether to prefer a wildcard certificate when generating certificates. This is useful if you want to use a wildcard certificate for the base domain and all subdomains.
     -   Before setting this to `true`, please see the docs for setting up wildcard certificates with Let's Encrypt, <a href="/Pangolin/wildcard-certs">here</a>.
+-   `additional_middlewares`: array of strings (optional)
+    -   Example: `["middleware1", "middleware2"]`
+    -   Additional middlewares to apply to the resource router generated at runtime. These must be defined in another Traefik configuration provider like the dynamic file provider.
 
 ### `gerbil`
     - `start_port`: int
