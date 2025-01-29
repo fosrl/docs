@@ -129,9 +129,9 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 -   `smtp_secure` (optional): boolean
     -   Whether to use a secure connection when sending emails. Use this if you're using port 465.
     -   Default: `false`
--   `no_reply`: string
+-   `no_reply` (optional): string
     -   Example: `no-reply@example.com`
-    -   The address to send emails from. This can be any email address, but it is recommended to use a no-reply address.
+    -   The address to send emails from. This can be any email address. Most often this will be the same as the `smtp_user`.
 
 ### `users`
 
