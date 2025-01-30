@@ -38,21 +38,21 @@ So for example a UDP EntryPoint would look like:
 
 ```yaml
 entryPoints:
-  udp-1704:
-    address: ":1704/udp"
+    udp-1704:
+        address: ":1704/udp"
 ```
 
 And for TCP:
 
 ```yaml
 entryPoints:
-  tcp-1602:
-    address: ":1602/tcp"
+    tcp-1602:
+        address: ":1602/tcp"
 ```
 
 :::info
 
-The *name* if the EntryPoint is IMPORTANT because it must be referenced by the dynamic config. ALWAYS name your EntryPoint in the format `protocol-port` as shown in the examples!
+The _name_ if the EntryPoint is IMPORTANT because it must be referenced by the dynamic config. ALWAYS name your EntryPoint in the format `protocol-port` as shown in the examples!
 
 :::
 
@@ -60,16 +60,16 @@ The whole thing would look something like this:
 
 ```yaml
 entryPoints:
-  web:
-    address: ':80'
-  websecure:
-    address: ':443'
-    http:
-      tls:
-        certResolver: letsencrypt
-    transport:
-      respondingTimeouts:
-        readTimeout: 30m
+    web:
+        address: ":80"
+    websecure:
+        address: ":443"
+        http:
+            tls:
+                certResolver: letsencrypt
+        transport:
+            respondingTimeouts:
+                readTimeout: 30m
     tcp-1602:
         address: ":1602/tcp"
     udp-1704:
