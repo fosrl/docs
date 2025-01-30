@@ -1,5 +1,11 @@
 # TCP & UDP Support
 
+:::warning
+
+Before doing anything, make sure you've updated Newt to at least version 1.0.0-beta.5. Older versions of Newt will not work with TCP and UDP resources.
+
+:::
+
 Pangolin supports raw TCP and UDP traffic because under the hood Badger and Newt are just using basic WireGuard tunnels that can pass anything! There is a little manual setup you need to do before you can create a raw TCP or UDP resource:
 
 ## Configuring Firewall
