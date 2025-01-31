@@ -41,8 +41,6 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
     -   Example: `pangolin`
     -   The hostname of the Pangolin container. This is used for internal communication between the components.
     -   If running with Docker Compose, this should be the name of the container, which is likely `pangolin`.
--   `secure_cookies`: boolean
-    -   Whether to set the `Secure` flag on cookies. This is recommended if you are running Pangolin over HTTPS.
 -   `session_cookie_name`: string
     -   Example: `p_session_token`
     -   The name of the session cookie. This is used to store the session token for the main application.
@@ -186,7 +184,6 @@ server:
     internal_port: 3001
     next_port: 3002
     internal_hostname: "pangolin"
-    secure_cookies: true
     session_cookie_name: "p_session_token"
     resource_access_token_param: "p_token"
     resource_session_request_param: "p_session_request"
@@ -226,4 +223,5 @@ flags:
     require_email_verification: true
     disable_signup_without_invite: true
     disable_user_create_org: true
+    allow_raw_resources: true
 ```

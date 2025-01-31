@@ -64,7 +64,7 @@ npm install
 
 2. Ensure you have a config file
 
-Make sure you have a `config/` directory at the root with a `config.yml` inside. Refer to the Pangolin Configuration docs or the `config.example.yml` in the repo for sample of what to include in that file. You may need to tweak this to run in dev, such as setting the `dashboard_url` to `http://localhost` and `base_domain` to `localhost` and making sure `secure_cookies` is `false`.
+Make sure you have a `config/` directory at the root with a `config.yml` inside. Refer to the Pangolin Configuration docs or the `config.example.yml` in the repo for sample of what to include in that file. You may need to tweak this to run in dev, such as setting the `dashboard_url` to `http://localhost:3002`.
 
 3. Generate the database schema and push it
 
