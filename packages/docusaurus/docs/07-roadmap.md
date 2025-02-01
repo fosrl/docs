@@ -1,14 +1,12 @@
 # Road Map
 
-The whole Fossorial project is still in beta, but we wanted to get started on a list of ideas and for future improvements. If you have some ideas or areas of improvement, please leave a Github issue on the respective repository or contribute to this page [here](https://github.com/fosrl/docs/blob/main/packages/docusaurus/docs/07-roadmap.md).
-
-We are not committed to anything on this list, and the order is meaningless. We will prioritize based on community feedback and our own internal goals. If you would like to see something on this list, please let us know!
+We keep track of active development on our [GitHub Project](https://github.com/orgs/fosrl/projects/1).
 
 Submit feature requests to the [Pangolin repository](https://github.com/orgs/fosrl/discussions). If you really want something that is already on this list, you should still post about it, so we know it is a priority for you. Also, other people can upvote your request.
 
-## Development Roadmap
+## Ideas
 
-Outside of general bug fixes and improvements related to beta:
+Outside of general bug fixes and improvements related to beta these are some long term ideas we have. We are not committed to anything on this list, and the order is meaningless. We will prioritize based on community feedback in GitHub and our own internal goals. If you would like to see something on this list, please let us know!
 
 ### Authentication Review and Penetration Tests
 
@@ -18,7 +16,7 @@ Are you experienced with authentication procedures and best practices? We would 
 - [ ] Add table filters on resources
   - [ ] Filter by site
   - [ ] Click "Show resources" on site dropdown which takes you to resources table with filter defined
-- [ ] Transfer resource to different site
+- [x] Transfer resource to different site
 - [ ] Allow resource without a subdomain (use base domain) - limited to one resource per domain
 - [ ] Create temporary link from resource page
 - [ ] Show temporary links in table on resource page
@@ -71,7 +69,7 @@ Are you experienced with authentication procedures and best practices? We would 
 - [ ] Additional proxy features like headers to use Pangolin auth on downstream resources
 - [ ] A CICD deployment workflow to Docker and Github
 - [ ] K8S installation via helm chart
-- [ ] UDP/TCP targets if people want to expose custom apis or other traffic themselves.
+- [x] UDP/TCP targets if people want to expose custom apis or other traffic themselves.
 - [x] Sites that do not require newt or wireguard so you can traefik to anything
 - [ ] Automatically create DNS records if provided with access to DNS provider (like Cloudflare API key)
 - [ ] Support tailscale as an exit node
