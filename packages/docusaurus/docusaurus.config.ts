@@ -89,23 +89,24 @@ const config: Config = {
         src: "img/pangolin_orange.svg",
       },
       items: [
-        {
-          type: "docSidebar",
-          sidebarId: "tutorialSidebar",
-          position: "left",
-          label: "Docs",
-        },
+        // {
+        //   type: "docSidebar",
+        //   sidebarId: "tutorialSidebar",
+        //   position: "left",
+        //   label: "Docs",
+        // },
         // {to: '/blog', label: 'Blog', position: 'left'},
-        {
-          href: "https://github.com/fosrl",
-          label: "GitHub",
-          position: "right",
-        },
         {
           href: "https://discord.gg/HCJR8Xhme4",
           label: "Discord",
           position: "right",
         },
+        {
+          href: "https://github.com/fosrl",
+          position: "right",
+          className: 'header-github-link',
+          'aria-label': 'GitHub repository',
+        }
       ],
     },
     // footer: {

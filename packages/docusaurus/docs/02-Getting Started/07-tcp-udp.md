@@ -8,6 +8,10 @@ Before doing anything, make sure you've updated Newt to at least version 1.0.0-b
 
 Pangolin supports raw TCP and UDP traffic because under the hood Badger and Newt are just using basic WireGuard tunnels that can pass anything! There is a little manual setup you need to do before you can create a raw TCP or UDP resource:
 
+### Video Demo
+
+- ["Self-host a public Minecraft server without opening ports using Crafty and Pangolin" by Fossorial](https://youtu.be/acWB5wQQoOE?si=yONbB4o8r_gZqqU1&t=448)
+
 ## Configuring Firewall
 
 This is highly OS and VPS dependent. Just in the same way you opened port 51280, 443, and 80, you need to open your desired port to your VPS so that Traefik can pass traffic out to the internet.
@@ -92,8 +96,8 @@ After editing the Traefik config you need to restart it! You can do `sudo docker
 
 Finally! Now after all of that config you can create the resource in Pangolin. You can simply create a new resource and toggle the HTTP switch off. This will allow you to enter the SAME point you configured above and the protocol.
 
-<p align="center">
+<div align="center">
     ![graphic](./img/create_udp_resource.png)
-</p>
+</div>
 
 After you create the resource you can add targets just like any other resource!

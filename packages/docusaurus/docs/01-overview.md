@@ -7,6 +7,7 @@ Pangolin uses Traefik under the hood to do the actual HTTP proxying. A plugin, B
 ## Videos
 
 - ["Pangolin: Your Own Self-Hosted Cloudflare Tunnel Alternative" by DB Tech](https://youtu.be/a-a-Xk1hXBQ?si=wbppkYJ3Skt3efXp)
+- ["Self-host a public Minecraft server without opening ports using Crafty and Pangolin" by Fossorial](https://youtu.be/acWB5wQQoOE?si=YsrCPYTz6JpLCDjW)
 
 ## Components Overview
 
