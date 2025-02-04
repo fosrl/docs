@@ -110,7 +110,7 @@ next-router:
 
 ```yaml
 traefik:
-  image: traefik:v3.1
+  image: traefik:v3.3.3
   container_name: traefik
   restart: unless-stopped
   network_mode: service:gerbil

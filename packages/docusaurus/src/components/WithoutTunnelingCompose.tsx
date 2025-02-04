@@ -23,7 +23,7 @@ const WithoutTunnelingCompose: React.FC = () => {
       retries: 5
 
   traefik:
-    image: traefik:v3.1
+    image: traefik:v3.3.3
     container_name: traefik
     restart: unless-stopped
     ports: # added ports to expose from traefik

@@ -47,7 +47,7 @@ const DockerCompose: React.FC = () => {
       - 80:80 # Port for traefik because of the network_mode
 
   traefik:
-    image: traefik:v3.1
+    image: traefik:v3.3.3
     container_name: traefik
     restart: unless-stopped
     network_mode: service:gerbil # Ports appear on the gerbil service

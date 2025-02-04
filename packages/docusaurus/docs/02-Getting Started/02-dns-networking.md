@@ -20,6 +20,8 @@ Example: **\*.example.com**
 
 You will need a wildcard subdomain for each level you want to create and you can not have more than one * in a row for many providers. So if you wanted your resources to include a subdomain like "proxy", then you would want *.proxy.example.com.
 
+If you plan to use a base domain for a resource, you will need to create a separate A record for that domain.
+
 ### The Root
 
 Use @ (or nothing depending on the provider)
