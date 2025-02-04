@@ -2,6 +2,12 @@ import UpdatingVersionsYaml from "@site/src/components/UpdatingVersionsYaml";
 
 # Updating Versions
 
+:::warning
+
+To be safe, we recommend that you back up your data before updating Pangolin so you can roll back. Copy the `config` directory to another location before performing the update.
+
+:::
+
 Keeping the stack updated is easy because the stack is a collection of Docker images. To update the stack, you can simply pull the latest images from Docker Hub and restart the stack.
 
 Some basic commands to get you started:
