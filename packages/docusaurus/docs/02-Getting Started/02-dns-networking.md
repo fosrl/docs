@@ -14,11 +14,11 @@ In your DNS service you will want to create A (or AAAA for IPv6) records pointin
 
 ### Wildcards
 
-Use *
+Use \*
 
 Example: **\*.example.com**
 
-You will need a wildcard subdomain for each level you want to create and you can not have more than one * in a row for many providers. So if you wanted your resources to include a subdomain like "proxy", then you would want *.proxy.example.com.
+You will need a wildcard subdomain for each level you want to create and you can not have more than one _ in a row for many providers. So if you wanted your resources to include a subdomain like "proxy", then you would want _.proxy.example.com.
 
 If you plan to use a base domain for a resource, you will need to create a separate A record for that domain.
 
@@ -28,13 +28,7 @@ Use @ (or nothing depending on the provider)
 
 Example: **example.com**
 
-If you intend Pangolin to run at the root of your domain - meaning you would access the Pangolin UI from example.com (with no subdomain) - then you will need another A record pointing at the 
-
-:::warning
-
-Attention **Cloudflare** users: the **proxy should be turned off** for your records pointing to Pangolin! CF's proxy is not designed to allow non-HTTP traffic to your instance which is necessary for WireGuard to connect. It will also mess with how Badger handles authenticating with redirects, cookies, and tokens.
-
-:::
+If you intend Pangolin to run at the root of your domain - meaning you would access the Pangolin UI from example.com (with no subdomain) - then you will need another A record pointing at the
 
 :::note
 
@@ -42,7 +36,7 @@ Sometimes you need to be patient with your DNS service provider. Once you make t
 
 :::
 
-## Ports to Expose 
+## Ports to Expose
 
 When you setup your VPS you want to make sure that you expose the following ports **on the VPS itself**.
 
@@ -75,6 +69,8 @@ Its important to **ONLY** expose the ports you need. Effectively by tunneling ou
 By default the config defaults to using the bellow settings:
 
 ```yaml
+gerbil:
+    ...
     block_size: 24
     site_block_size: 30
     subnet_group: 100.89.137.0/20
@@ -87,3 +83,25 @@ New sites will use a block size of 30. This means that each site gets a /30 with
 ## Notes on Docker
 
 If you deploy Newt in Docker: "localhost" only refers to stuff inside of the container itself, so if you want to address other things in the Docker environment you need the internal docker IP of that service or the host when setting up your resources.
+
+For "Local" sites running in Docker, you usually want to address the host machine. One way to do this is by using the special address: `172.17.0.1`.
+
+## Notes on Cloudflare Proxy
+
+:::warning
+
+As soon as you enable the Cloudflare proxy, you're bound to Cloudflare's terms of service since traffic is routed through their network.
+
+:::
+
+Pangolin can be used with Cloudflare proxy (orange cloud) enabled. Ideally you should [setup wildcard certificates](../03-Pangolin/02-Configuration/03-wildcard-certs.md) with Traefik using the DNS challenge and set Cloudflare to Full (Strict) SSL mode.
+
+Since Cloudflare proxy obscures the destination IP of the host, you will also need to explicitly set your VPS IP address for Gerbil in the `config.yml` file to allow WireGuard to connect to the VPS.
+
+```yaml
+gerbil:
+    ...
+    start_port: 51820
+    # highlight-next-line
+    base_endpoint: "104.21.16.1" # Replace with your VPS IP
+```
