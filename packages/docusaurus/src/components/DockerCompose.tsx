@@ -58,7 +58,11 @@ const DockerCompose: React.FC = () => {
       - --configFile=/etc/traefik/traefik_config.yml
     volumes:
       - ./config/traefik:/etc/traefik:ro # Volume to store the Traefik configuration
-      - ./config/letsencrypt:/letsencrypt # Volume to store the Let's Encrypt certificates`
+      - ./config/letsencrypt:/letsencrypt # Volume to store the Let's Encrypt certificates
+networks:
+  default:
+    driver: bridge
+    name: pangolin`
             );
         })();
     }, []);
