@@ -167,6 +167,8 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
     -   The server admin can always create new organizations.
 -   `allow_raw_resources` (optional): boolean
     -   Whether to allow users to create raw TCP/UDP resources. If set to `false`, users will only be able to create http/https resources.
+-   `allow_base_domain_resources` (optional): boolean
+    -   Whether to allow users to create resources on the base domain. If set to `false`, users will only be able to create resources on subdomains.
 
 ## Example Configuration File
 
@@ -224,4 +226,5 @@ flags:
     disable_signup_without_invite: true
     disable_user_create_org: true
     allow_raw_resources: true
+    allow_base_domain_resources: true
 ```
