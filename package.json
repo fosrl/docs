@@ -17,8 +17,5 @@
   },
   "workspaces": [
     "packages/*"
-  ],
-  "dependencies": {
-    "@dipakparmar/docusaurus-plugin-umami": "2.1.7"
-  }
+  ]
 }

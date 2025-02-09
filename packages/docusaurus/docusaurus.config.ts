@@ -157,25 +157,22 @@ const config: Config = {
         prism: {
             theme: prismThemes.github,
             darkTheme: prismThemes.dracula
-        },
-
-        plugins: [
-            [
-                "@dipakparmar/docusaurus-plugin-umami",
-                /** @type {import('@dipakparmar/docusaurus-plugin-umami').Options} */
-                {
-                    websiteID: "d9a3a131-d2f4-4f8f-922b-80d668e96640", // Required
-                    analyticsDomain: "umami.schwartznetwork.net", // Required
-                    scriptName: "", // Optional
-                    dataHostURL: "", // Optional
-                    dataAutoTrack: true, // Optional
-                    dataDoNotTrack: true, // Optional
-                    dataCache: true, // Optional
-                    dataDomains: "docs.fossorial.io" // comma separated list of domains, *Recommended*
-                }
-            ]
+        }
+    } satisfies Preset.ThemeConfig,
+    plugins: [
+        [
+            "@dipakparmar/docusaurus-plugin-umami",
+            /** @type {import('@dipakparmar/docusaurus-plugin-umami').Options} */
+            {
+                websiteID: "d9a3a131-d2f4-4f8f-922b-80d668e96640", // Required
+                analyticsDomain: "umami.schwartznetwork.net", // Required
+                dataAutoTrack: false, // Optional
+                dataDoNotTrack: false, // Optional
+                dataCache: true, // Optional
+                dataDomains: "docs.fossorial.io" // comma separated list of domains, *Recommended*
+            }
         ]
-    } satisfies Preset.ThemeConfig
+    ]
 };
 
 export default config;

@@ -17,7 +17,7 @@ Are you experienced with authentication procedures and best practices? We would 
   - [ ] Filter by site
   - [ ] Click "Show resources" on site dropdown which takes you to resources table with filter defined
 - [x] Transfer resource to different site
-- [ ] Allow resource without a subdomain (use base domain) - limited to one resource per domain
+- [x] Allow resource without a subdomain (use base domain) - limited to one resource per domain
 - [ ] Create temporary link from resource page
 - [ ] Show temporary links in table on resource page
 - [ ] Track temporary link usage and session count
@@ -37,12 +37,12 @@ Are you experienced with authentication procedures and best practices? We would 
 - [ ] Support for multiple domains
   - [ ] Set domain per organization
   - [ ] Would need to refactor auth to support cross-site cookies
-- [ ] Support for running a resource at the root domain (without subdomain)
-  - [ ] Make this optional via a flag in the config
+- [x] Support for running a resource at the root domain (without subdomain)
+  - [x] Make this optional via a flag in the config
 
 ### Authentication & Integration
 - [ ] Google, GitHub, etc. OAuth support
-- [ ] Cache authentication in badger to speed up proxy requests
+- [x] Cache authentication in badger to speed up proxy requests
 - [ ] Nicely formatted error pages for badger
 - [ ] Bearer token support for resources (useful for protecting APIs)
 - [ ] Auth token in headers or URL parameters (useful for APIs)
