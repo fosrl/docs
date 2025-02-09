@@ -9,13 +9,16 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "sst": "^2",
+    "@tsconfig/node18": "^18.2.4",
     "aws-cdk-lib": "2.171.1",
     "constructs": "10.3.0",
-    "typescript": "^5.7.2",
-    "@tsconfig/node18": "^18.2.4"
+    "sst": "^2",
+    "typescript": "^5.7.2"
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "@dipakparmar/docusaurus-plugin-umami": "2.1.7"
+  }
 }
