@@ -8,6 +8,10 @@ All setup remains the same, except Pangolin and Traefik must now be on the same 
 
 When Gerbil starts up, it will register itself with Pangolin. By not doing this you will only have the option to choose the "Local" connection method. This will mean that Traefik will use the local network. 
 
+## Community Guides
+
+- ["Install and Run Pangolin Locally on your own Server" by Noted (Article)](https://noted.lol/pangolin-local/)
+
 ## How to
 
 ### Installer

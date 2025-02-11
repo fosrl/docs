@@ -12,8 +12,6 @@ import WgetQuickInstaller from "@site/src/components/WgetQuickInstaller";
 -   An email address for Let's Encrypt certificate registration
 -   (Optionally) a SMTP server
 
-Note: If you have **Cloudflare** as your DNS provider [turn off the proxy service](./02-dns-networking.md).
-
 ## Installation Steps
 
 We also have a short and quick [YouTube video](https://youtu.be/W0uVLjTyAn8) showing the install process!
