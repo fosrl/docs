@@ -80,6 +80,24 @@ services:
             - --endpoint https://example.com
 ```
 
+Finally a basic systemd service:
+
+```
+[Unit]
+Description=Newt VPN Client
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/newt --id 31frd0uzbjvp721 --secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6 --endpoint https://example.com
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Make sure to `mv ./newt /usr/local/bin/newt`!
+
 ### Unraid
 
 Newt is available in the Unraid Community Applications store. You can install it by searching for Newt in the store and following the prompts. Enter in the ID, secret, and endpoint from Pangolin in the template fields.
