@@ -52,7 +52,7 @@ Are you experienced with authentication procedures and best practices? We would 
 ### UI/UX Improvements
 - [ ] Improved sidebar and navigation
 - [ ] Add refresh buttons to tables
-- [ ] Table page size selector
+- [x] Table page size selector
 - [ ] Loading skeletons
 - [ ] iFrame dashboard to launch apps (similar to Organizr or other dashboards)
   - [ ] Pin apps to sidebar on dashboard
@@ -72,7 +72,7 @@ Are you experienced with authentication procedures and best practices? We would 
 - [x] UDP/TCP targets if people want to expose custom apis or other traffic themselves.
 - [x] Sites that do not require newt or wireguard so you can traefik to anything
 - [ ] Automatically create DNS records if provided with access to DNS provider (like Cloudflare API key)
-- [ ] Support tailscale as an exit node
+- [ ] Support Tailscale as an exit node
 
 ### SAAS
 

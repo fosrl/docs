@@ -12,6 +12,10 @@ import WgetQuickInstaller from "@site/src/components/WgetQuickInstaller";
 -   An email address for Let's Encrypt certificate registration
 -   (Optionally) a SMTP server
 
+## Using a VPS
+
+If you need a VPS to run Pangolin, [RackNerd](https://my.racknerd.com/aff.php?aff=13788) is a great option, and often has generous promotions. More options can be found in our [VPS guide](./01-choosing-a-vps.md).
+
 ## Installation Steps
 
 We also have a short and quick [YouTube video](https://youtu.be/W0uVLjTyAn8) showing the install process!
@@ -36,7 +40,7 @@ The installer will place all files in the current directory. If you want to inst
 
 ### 2. Basic Configuration
 
-The installer will prompt you for the following basic information:
+The installer will prompt you for the following basic information. For example:
 
 1. **Base Domain Name**: Enter your base fully qualified domain name (without any subdomains) Example: `example.com`
 2. **Dashboard Domain Name**: The domain where the application will be hosted. This is used for many things, including generating links. You can run Pangolin on a subdomain or root domain. Example: `proxy.example.com`
@@ -57,7 +61,7 @@ You'll need to configure the admin user. This is the first user in the system. Y
 
 ### 4. Security Settings
 
-Configure security options:
+It will ask you to configure some basic security options. For example:
 
 1. **Signup Without Invite**: Choose whether to disable user registration without invites (defaults to disabled). This removes the "Sign Up" button on the login form and is recommended for private deployments.
 2. **Organization Creation**: Decide if users can create their own organizations (defaults to enabled)
@@ -97,11 +101,7 @@ Supported distributions:
 After configuration, the installer will:
 
 1. Pull the necessary Docker containers
-2. Create required directories:
-    - `config/`
-    - `config/letsencrypt/`
-    - `config/db/`
-    - `config/logs/`
+2. Create required directories
 3. Generate configuration files
 4. Start the containers using Docker Compose
 
@@ -116,4 +116,3 @@ After successful installation:
 
 -   The installer checks for an existing configuration and won't overwrite it if found
 -   Docker installation is optional if already present
-<!-- - You can pull the latest and rerun the install script to update the containers! -->
