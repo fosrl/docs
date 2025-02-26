@@ -4,7 +4,11 @@ Our stack is lightweight and efficient, so you don’t need a high-powered serve
 
 ## [Rack Nerd](https://my.racknerd.com/aff.php?aff=13788)
 
-Many of our users have had a great experience with [RackNerd](https://my.racknerd.com/aff.php?aff=13788). Depending on promotions, you can likely get a VPS with **1 vCPU, 1GB RAM, and ~20GB SSD for just around $12/year**. That's a great deal!
+Many of our users have had a great experience with [RackNerd](https://my.racknerd.com/aff.php?aff=13788). 
+
+- [**1 vCPU, 1GB RAM, and ~20GB SSD for just around $11.29/year or less than $1 a month**](https://my.racknerd.com/aff.php?aff=13788&pid=903). That's a great deal and is plenty to run pangolin!
+- [1 vCPU, 2GB RAM, and ~40GB SSD for just around $18.29/year or $1.5/month](https://my.racknerd.com/aff.php?aff=13788&pid=904)
+- [2 vCPU, 3.5GB RAM, and ~65GB SSD for just around $32.49/year or $2.7/month](https://my.racknerd.com/aff.php?aff=13788&pid=905)
 
 We are part of the [RackNerd](https://my.racknerd.com/aff.php?aff=13788) affiliate program, so if you sign up using [our link](https://my.racknerd.com/aff.php?aff=13788), we receive a small commission which helps us maintain the project and keep it free for everyone.
 
