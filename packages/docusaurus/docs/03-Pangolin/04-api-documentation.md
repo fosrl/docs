@@ -1,162 +1,222 @@
-API documentation for pangolin. This documentation includes public endpoints, request/response formats, usage examples, and any limitations or constraints.
-
 ## API Documentation
+
+Initial API documentation for pangolin. This documentation includes public endpoints, request/response formats, usage examples, and any limitations or constraints. This document is not complete but will be added to over time to compass more of the API.
 
 ### Base URL
 ```
-https://pangolin.yourdomain.com/v1
+https://pangolin.yourdomain.com/api/v1/
 ```
 
-### 1. Public Endpoints
+I'll create an improved API documentation based on the files provided. Here's the updated markdown:
 
-#### 1.1 User Management
+# API Documentation
 
-- **Create User**
-  - **Endpoint:** `POST /users`
-  - **Description:** Creates a new user account.
+## 1. Public Endpoints
+
+### 1.1 User Management
+
+- **Get User**
+  - **Endpoint:** `GET /user`
+  - **Description:** Retrieves information about the currently authenticated user.
+  - **Authentication:** Session cookie required
+  - **Response Format:**
+    ```json
+    {
+      "data": {
+        "userId": "user_id",
+        "email": "user@example.com",
+        "twoFactorEnabled": false,
+        "emailVerified": true,
+        "serverAdmin": false
+      },
+      "success": true,
+      "error": false,
+      "message": "User retrieved successfully",
+      "status": 200
+    }
+    ```
+  - **Usage Example:**
+    ```bash
+    curl -X GET https://api.yourdomain.com/user -b "session=your_session_cookie"
+    ```
+
+### 1.2 Authentication
+
+- **Login User**
+  - **Endpoint:** `POST /auth/login`
+  - **Description:** Authenticates a user and creates a session cookie.
   - **Request Format:**
     ```json
     {
       "email": "user@example.com",
       "password": "securepassword",
-      "name": "John Doe"
+      "code": "123456" // Optional: Two-factor authentication code if enabled
     }
     ```
-  - **Response Format:**
+  - **Response Format (Standard):**
     ```json
     {
-      "id": "user_id",
-      "email": "user@example.com",
-      "name": "John Doe",
-      "createdAt": "2025-02-18T20:51:00Z"
+      "data": null,
+      "success": true,
+      "error": false,
+      "message": "Logged in successfully",
+      "status": 200
+    }
+    ```
+  - **Response Format (2FA Required):**
+    ```json
+    {
+      "data": {
+        "codeRequested": true
+      },
+      "success": true,
+      "error": false,
+      "message": "Two-factor authentication required",
+      "status": 202
+    }
+    ```
+  - **Response Format (Email Verification Required):**
+    ```json
+    {
+      "data": {
+        "emailVerificationRequired": true
+      },
+      "success": true,
+      "error": false,
+      "message": "Email verification code sent",
+      "status": 200
     }
     ```
   - **Usage Example:**
     ```bash
-    curl -X POST https://pangolin.yourdomain.com/v1/users \
-         -H "Content-Type: application/json" \
-         -d '{"email":"user@example.com","password":"securepassword","name":"John Doe"}'
-    ```
-  - **Limitations:** Email must be unique.
-
-- **Get User**
-  - **Endpoint:** `GET /users/{id}`
-  - **Description:** Retrieves user information by ID.
-  - **Response Format:**
-    ```json
-    {
-      "id": "user_id",
-      "email": "user@example.com",
-      "name": "John Doe",
-      "createdAt": "2025-02-18T20:51:00Z"
-    }
-    ```
-  - **Usage Example:**
-    ```bash
-    curl -X GET https://pangolin.yourdomain.com/v1/users/user_id
-    ```
-
-#### 1.2 Authentication
-
-- **Login User**
-  - **Endpoint:** `POST /auth/login`
-  - **Description:** Authenticates a user and returns an access token.
-  - **Request Format:**
-    ```json
-    {
-      "email": "user@example.com",
-      "password": "securepassword"
-    }
-    ```
-  - **Response Format:**
-    ```json
-    {
-      "token": "access_token",
-      "expiresIn": 3600
-    }
-    ```
-  - **Usage Example:**
-    ```bash
-    curl -X POST https://pangolin.yourdomain.com/v1/auth/login \
+    curl -X POST https://api.yourdomain.com/auth/login \
          -H "Content-Type: application/json" \
          -d '{"email":"user@example.com","password":"securepassword"}'
     ```
 
-#### 1.3 Resource Management
+### 1.3 Resource Management
 
 - **Create Resource**
-  - **Endpoint:** `POST /resources`
-  - **Description:** Creates a new resource.
-  - **Request Format:**
+  - **Endpoint:** `PUT /org/{orgId}/site/{siteId}/resource`
+  - **Description:** Creates a new resource for a specific organization and site.
+  - **Authentication:** Session cookie required
+  - **Request Format (HTTP Resource):**
     ```json
     {
       "name": "Resource Name",
-      "type": "HTTP",
-      "url": "https://example.com"
+      "subdomain": "mysubdomain", // Optional
+      "isBaseDomain": false, // Optional
+      "http": true,
+      "protocol": "https",
+      "domainId": "domain_id"
+    }
+    ```
+  - **Request Format (Raw Resource):**
+    ```json
+    {
+      "name": "Resource Name",
+      "http": false,
+      "protocol": "tcp",
+      "proxyPort": 8080
     }
     ```
   - **Response Format:**
     ```json
     {
-      "id": "resource_id",
-      "name": "Resource Name",
-      "type": "HTTP",
-      "url": "https://example.com",
-      "createdAt": "2025-02-18T20:51:00Z"
+      "data": {
+        "resourceId": 123,
+        "siteId": 456,
+        "fullDomain": "mysubdomain.example.com",
+        "domainId": "domain_id",
+        "orgId": "org_id",
+        "name": "Resource Name",
+        "subdomain": "mysubdomain",
+        "http": true,
+        "protocol": "https",
+        "ssl": true,
+        "isBaseDomain": false
+      },
+      "success": true,
+      "error": false,
+      "message": "Http resource created successfully",
+      "status": 201
     }
     ```
   - **Usage Example:**
     ```bash
-    curl -X POST https://pangolin.yourdomain.com/v1/resources \
-         -H "Authorization: Bearer access_token" \
+    curl -X PUT https://api.yourdomain.com/org/org_id/site/456/resource \
+         -b "session=your_session_cookie" \
          -H "Content-Type: application/json" \
-         -d '{"name":"Resource Name","type":"HTTP","url":"https://example.com"}'
+         -d '{"name":"Resource Name","http":true,"protocol":"https","domainId":"domain_id"}'
     ```
 
 - **Get Resource**
-  - **Endpoint:** `GET /resources/{id}`
+  - **Endpoint:** `GET /resource/{resourceId}`
   - **Description:** Retrieves resource information by ID.
+  - **Authentication:** Session cookie required
   - **Response Format:**
     ```json
     {
-      "id": "resource_id",
-      "name": "Resource Name",
-      "type": "HTTP",
-      "url": "https://example.com",
-      "createdAt": "2025-02-18T20:51:00Z"
+      "data": {
+        "resourceId": 123,
+        "siteId": 456,
+        "fullDomain": "mysubdomain.example.com",
+        "domainId": "domain_id",
+        "orgId": "org_id",
+        "name": "Resource Name",
+        "subdomain": "mysubdomain",
+        "http": true,
+        "protocol": "https",
+        "ssl": true,
+        "isBaseDomain": false
+      },
+      "success": true,
+      "error": false,
+      "message": "Resource retrieved successfully",
+      "status": 200
     }
     ```
   - **Usage Example:**
     ```bash
-    curl -X GET https://pangolin.yourdomain.com/v1/resources/resource_id \
-         -H "Authorization: Bearer access_token"
+    curl -X GET https://api.yourdomain.com/resource/123 \
+         -b "session=your_session_cookie"
     ```
 
-#### 1.4 Invite Management
+### 1.4 Invite Management
 
 - **Send Invite**
-  - **Endpoint:** `POST /invites`
-  - **Description:** Sends an invite to a user.
+  - **Endpoint:** `POST /org/{orgId}/create-invite`
+  - **Description:** Sends an invite to a user to join an organization.
+  - **Authentication:** Session cookie required
   - **Request Format:**
     ```json
     {
-      "email": "invitee@example.com"
+      "email": "invitee@example.com",
+      "roleId": 123,
+      "validHours": 24,
+      "sendEmail": true // Optional
     }
     ```
   - **Response Format:**
     ```json
     {
-      "inviteId": "invite_id",
-      "status": "sent"
+      "data": {
+        "inviteLink": "https://dashboard.yourdomain.com/invite?token=abc123def456",
+        "expiresAt": 1708380000000
+      },
+      "success": true,
+      "error": false,
+      "message": "User invited successfully",
+      "status": 200
     }
     ```
   - **Usage Example:**
-   ```bash
-   curl -X POST https://pangolin.yourdomain.com/v1/invites \
-        -H 'Authorization: Bearer access_token' \
-        -H 'Content-Type: application/json' \
-        -d '{"email":"invitee@example.com"}'
-   ```
+    ```bash
+    curl -X POST https://api.yourdomain.com/org/org_id/create-invite \
+         -b "session=your_session_cookie" \
+         -H "Content-Type: application/json" \
+         -d '{"email":"invitee@example.com","roleId":123,"validHours":24,"sendEmail":true}'
+    ```
 
 ### 2. Request/Response Formats
 
@@ -169,8 +229,7 @@ Examples of how to interact with the API are included in the endpoint descriptio
 ### 4. Limitations or Constraints
 
 - Each email address must be unique when creating a user.
-- Resources must be associated with an organization, and users must have appropriate permissions to create or manage resources.
-- Rate limits may apply to API calls (not specified in the current documentation but should be implemented to prevent abuse).
-- Ensure that sensitive data (like passwords) is transmitted securely over HTTPS.
+- Resources and sites must be associated with an organization, and users must have appropriate permissions to create or manage resources.
+- Rate limits apply to API calls.
 
-This documentation provides a foundational overview of the API's public endpoints, request/response formats, usage examples, and any limitations. We will expand upon this as our API evolves or as additional features are added.
+This documentation provides a foundational overview of the API's public endpoints, request/response formats, usage examples, and any limitations. We will expand upon this as our API evolves and we have more time to document endpoints and as additional features are added.

@@ -22,8 +22,8 @@ The main components of the Gerbil project include:
 
 ### Interaction Flow:
 1. The main application starts and initializes the logger.
-2. It reads configuration from `config_example.json` or an equivalent file.
-3. Based on the configuration, it interacts with the WireGuard API using the `wgctrl` library to set up tunnels and peers.
+2. It reads configuration from `config_example.json` or an equivalent file or a remote http api hosted in Pangolin.
+3. Based on the configuration, it interacts with the WireGuard API using the `wgctrl` library and netlink to set up tunnels and peers.
 4. Logs are generated throughout the process for monitoring and debugging.
 
 ## 3. Data Flow Diagrams
@@ -40,14 +40,7 @@ The main components of the Gerbil project include:
           v
 +---------+---------+
 |                   |
-|   Main Application|
-|                   |
-+---------+---------+
-          |
-          v
-+---------+---------+
-|                   |
-|      Logger       |
+|    Application    |
 |                   |
 +---------+---------+
           |
@@ -72,20 +65,8 @@ The main components of the Gerbil project include:
 - **JSON Configuration**: Provides a human-readable format that is easy to modify without requiring recompilation.
 - **Modular Logging**: Encapsulated logging functionality allows for consistent logging practices across different parts of the application.
 
-### Rationale:
-These design choices enhance maintainability, readability, and performance while providing flexibility in configuration management.
-
 ## 5. System Constraints and Limitations
 
 ### Constraints:
 - **Platform Dependency**: The application relies on Linux-based systems due to its use of netlink sockets for network management.
 - **Privileged Operations**: Requires elevated permissions to create network interfaces and modify routing tables.
-  
-### Limitations:
-- **Single-threaded Execution**: While Go supports concurrency, certain operations (like interface creation) may block other operations if not managed correctly.
-- **Error Handling Complexity**: Managing errors from external systems (like WireGuard) can complicate flow control within the application.
-
-### Future Considerations:
-To enhance scalability and resilience, consider implementing asynchronous handling of network operations and improving error recovery mechanisms.
-
-This documentation serves as a foundational reference for developers working on or contributing to the Gerbil project. It provides insights into how components interact within the system architecture while highlighting design decisions that shape its functionality.
