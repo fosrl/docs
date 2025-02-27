@@ -23,7 +23,7 @@ It is highly reccommended that you read the [official Traefik documentation](htt
 
 1. Make sure the stack is not running.
 2. Update the Traefik configuration to use the DNS-01 challenge instead of the HTTP-01 challenge. This tells Traefik to use your DNS provider to create the DNS records needed for the challenge.
-3. Set the `prefer_wildcard_cert` flag to `true` in the Pangolin configuration file.
+3. Set the `prefer_wildcard_cert` flag to `true` in the Pangolin configuration file for your domain.
 - This settings will try to encourage Traefik to request one wildcard certificate for each level of the domain used by your existing resources.
 - For example: If you have two resources `blog.example.com` and `blog.subdomain.example.com`, Traefik should try to request a wildcard certificate for `*.example.com` and `*.subdomain.example.com` automatically for you.
 

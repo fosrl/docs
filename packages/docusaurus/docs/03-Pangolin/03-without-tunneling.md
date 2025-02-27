@@ -24,6 +24,4 @@ Follow existing manual install steps, but Gerbil is not required. Your Docker co
 
 <WithoutTunnelingCompose />
 
-After first starting the app, make sure to fill out all of your information, like `dashboard_url`, `base_domain`, etc the `config.yml` that was generated for you in the volume.
-
 See all configuration options [here](https://docs.fossorial.io/Pangolin/Configuration/config).

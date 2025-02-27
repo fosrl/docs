@@ -34,9 +34,7 @@ Are you experienced with authentication procedures and best practices? We would 
 - [ ] Remember me for authentication sessions
 
 ### Organization & Domain Management
-- [ ] Support for multiple domains
-  - [ ] Set domain per organization
-  - [ ] Would need to refactor auth to support cross-site cookies
+- [x] Support for multiple domains
 - [x] Support for running a resource at the root domain (without subdomain)
   - [x] Make this optional via a flag in the config
 
