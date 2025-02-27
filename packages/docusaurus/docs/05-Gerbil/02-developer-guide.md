@@ -1,4 +1,4 @@
-# Developer Guide for the Gerbil Project
+# Developer Guide
 
 This guide provides essential information for developers working on the Gerbil project, which is a Go application for managing WireGuard tunnels. It includes setup instructions, an overview of the project structure, development workflow, testing approach, and common troubleshooting steps.
 

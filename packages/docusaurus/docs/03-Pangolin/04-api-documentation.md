@@ -1,4 +1,4 @@
-## API Documentation
+# API Documentation
 
 Initial API documentation for pangolin. This documentation includes public endpoints, request/response formats, usage examples, and any limitations or constraints. This document is not complete but will be added to over time to compass more of the API.
 
@@ -8,8 +8,6 @@ https://pangolin.yourdomain.com/api/v1/
 ```
 
 I'll create an improved API documentation based on the files provided. Here's the updated markdown:
-
-# API Documentation
 
 ## 1. Public Endpoints
 

@@ -1,4 +1,4 @@
-# System Architecture Documentation for the Gerbil Project
+# System Architecture
 
 This document outlines the system architecture of the Gerbil project, a Go application designed for managing WireGuard tunnels. It includes a high-level overview, component interactions, data flow diagrams, design decisions and rationale, as well as system constraints and limitations.
 
