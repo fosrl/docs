@@ -1,3 +1,5 @@
+import WgetNewtInstaller from "@site/src/components/WgetNewtInstaller";
+
 # Setup
 
 ## Prerequisites
@@ -32,9 +34,7 @@ There are 2 ways to setup Newt: with the CLI application or the Docker container
 
 On Linux, you can wget the newt binary and run the command copied during the create site step. Make sure to replace amd64 with your architecture!
 
-```bash
-wget -O newt "https://github.com/fosrl/newt/releases/download/1.0.0-beta.3/newt_linux_amd64" && chmod +x ./newt
-``` 
+<WgetNewtInstaller />
 
 Then run Newt
 
