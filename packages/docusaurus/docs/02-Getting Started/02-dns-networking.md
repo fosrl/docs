@@ -10,31 +10,23 @@ Some notes about how to set up key parts of the networking in this project are b
 
 ## DNS
 
-In your DNS service you will want to create A (or AAAA for IPv6) records pointing at your VPS hosting Pangolin.
-
-### Wildcards
-
-Use \*
-
-Example: **\*.example.com**
-
-You will need a wildcard subdomain for each level you want to create and you can not have more than one _ in a row for many providers. So if you wanted your resources to include a subdomain like "proxy", then you would want _.proxy.example.com.
-
-If you plan to use a base domain for a resource, you will need to create a separate A record for that domain.
-
-### The Root
-
-Use @ (or nothing depending on the provider)
-
-Example: **example.com**
-
-If you intend Pangolin to run at the root of your domain - meaning you would access the Pangolin UI from example.com (with no subdomain) - then you will need another A record pointing at the
-
 :::note
 
 Sometimes you need to be patient with your DNS service provider. Once you make this change in their portal they need to propagate the change across all of the major DNS servers that run the internet and this can take some time depending on how on the ball your provider is. This can take anywhere from a couple of minutes to hours. It can be a good idea to make sure the DNS of your computer is pointing to Google's DNS `8.8.8.8` or the DNS of your provider if you are impatient.
 
 :::
+
+In your DNS service you will want to create A (or AAAA for IPv6) records pointing at your VPS hosting Pangolin.
+
+### Wildcards
+
+You will need a wildcard subdomain for each level you want to create and you can not have more than one in a row for many providers. So if you wanted your resource's domain to be `app.example.com`, then you would want `*.example.com`.
+
+If you plan to use a base domain for a resource, you will need to create a separate A record for that domain.
+
+### The Root
+
+If you intend to use the root of your domain, then you will need an additional A record pointing at the IP of your VPS. For example, if you want to use `example.com` as a resource, you will need an A record for `example.com` pointing at your VPS.
 
 ## Ports to Expose
 
@@ -70,7 +62,6 @@ By default the config defaults to using the bellow settings:
 
 ```yaml
 gerbil:
-    ...
     block_size: 24
     site_block_size: 30
     subnet_group: 100.89.137.0/20
@@ -82,9 +73,9 @@ New sites will use a block size of 30. This means that each site gets a /30 with
 
 ## Notes on Docker
 
-If you deploy Newt in Docker: "localhost" only refers to stuff inside of the container itself, so if you want to address other things in the Docker environment you need the internal docker IP of that service or the host when setting up your resources.
+If you deploy Newt in Docker: `localhost` only refers to stuff inside of the container itself, so if you want to address other things in the Docker environment you need the internal docker IP of that service or the host when setting up your resources.
 
-For "Local" sites running in Docker, you usually want to address the host machine. One way to do this is by using the special address: `172.17.0.1`.
+For "Local" sites running in Docker in the same compose as Pangolin: You usually want to address the host machine. One way to do this is by using the special address: `172.17.0.1`.
 
 ## Notes on Cloudflare Proxy
 
@@ -100,7 +91,6 @@ Since Cloudflare proxy obscures the destination IP of the host, you will also ne
 
 ```yaml
 gerbil:
-    ...
     start_port: 51820
     # highlight-next-line
     base_endpoint: "104.21.16.1" # Replace with your VPS IP

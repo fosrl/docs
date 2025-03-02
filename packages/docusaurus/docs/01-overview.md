@@ -1,15 +1,27 @@
 # Overview
 
-The Fossorial system - with Pangolin at its core - is a self-hosted tunneled reverse proxy with identity and access management, designed to securely expose private resources through encrypted [WireGuard](https://www.WireGuard.com/) tunnels running in user space. Think self hosted Cloudflare tunnels.
+:::tip
+
+Want to install Pangolin? See our quick install guide [here](https://docs.fossorial.io/Getting%20Started/quick-install).
+
+:::
+
+The Fossorial system, with Pangolin at its core, is a self-hosted tunneled reverse proxy with identity and access management, designed to securely expose private resources through encrypted [WireGuard](https://www.WireGuard.com/) tunnels running in user space. Think self hosted Cloudflare tunnels.
 
 Pangolin uses Traefik under the hood to do the actual HTTP proxying. A plugin, Badger, provides a way to authenticate every request with Pangolin. A second service, Gerbil, provides a WireGuard management server that Pangolin can use to create peers for connectivity. And finally, there is Newt, a CLI tool and Docker container that connects back to Newt and Gerbil with WireGuard fully in user space and proxies your local resources. This means that you do not need to run a privileged process or container in order to expose your services!
 
-## Videos and Guides
+## Community Videos and Guides
 
-- ["Pangolin: Your Own Self-Hosted Cloudflare Tunnel Alternative" by DB Tech (YouTube)](https://youtu.be/a-a-Xk1hXBQ?si=wbppkYJ3Skt3efXp)
-- ["Self-host a public Minecraft server without opening ports using Crafty and Pangolin" by Fossorial (YouTube)](https://youtu.be/acWB5wQQoOE?si=YsrCPYTz6JpLCDjW)
-- ["DS-Lite & IPv6 Problem ENDLICH gelöst! So öffnest du Ports mit Pangolin" by Apfelcast (YouTube)](https://youtu.be/z3Ao9CWH0GU?si=HJHyYFaROlijVmzO)
-- ["Pangolin: Easy Self-Hosted Tunneled Reverse Proxy with Built-in Auth via Linode" by Noted (Article)](https://noted.lol/pangolin/)
+:::note
+
+Note that these guides may be out of date, as the project is still in active development. Please refer to the official documentation for the most up-to-date information.
+
+:::
+
+- "Pangolin: Your Own Self-Hosted Cloudflare Tunnel Alternative" by DB Tech [(YouTube)](https://youtu.be/a-a-Xk1hXBQ?si=wbppkYJ3Skt3efXp)
+- "Self-host a public Minecraft server without opening ports using Crafty and Pangolin" by Fossorial [(YouTube)](https://youtu.be/acWB5wQQoOE?si=YsrCPYTz6JpLCDjW)
+- "DS-Lite & IPv6 Problem ENDLICH gelöst! So öffnest du Ports mit Pangolin" by Apfelcast [(YouTube)](https://youtu.be/z3Ao9CWH0GU?si=HJHyYFaROlijVmzO)
+- "Pangolin: Easy Self-Hosted Tunneled Reverse Proxy with Built-in Auth via VPS" by Noted [(Article)](https://noted.lol/pangolin/)
 
 ## Components Overview
 
@@ -33,7 +45,7 @@ Fossorial has a couple major components:
     - Out-of-the-box compatibility with plugins like [Fail2Ban](https://plugins.traefik.io/plugins/628c9ebcffc0cd18356a979f/fail2-ban) or [CrowdSec](https://plugins.traefik.io/plugins/6335346ca4caa9ddeffda116/crowdsec-bouncer-traefik-plugin).
     - Enhanced security via our custom Traefik plugin Badger, which acts as an authentication bouncer.
 
-### [**Badger**](https://github.com/traefik/badger) (Traefik Plugin):
+### [**Badger**](https://github.com/traefik/badger) (Traefik Plugin Middleware):
     A custom Traefik plugin that acts as an authentication bouncer. Badger:
      - Intercepts requests to the Traefik reverse proxy.
      - Redirects unauthenticated requests to the Pangolin server for authentication.
@@ -57,6 +69,6 @@ A fossorial animal is one adapted to digging which lives primarily but not solel
 
 Built by Owen & Milo Schwartz
 
-"Pangolin" icon used as a initial logo is by Coret Steyn from [Noun Project](https://thenounproject.com/icon/pangolin-1798092/).
+"Pangolin" icon used as an initial logo is by Coret Steyn from [Noun Project](https://thenounproject.com/icon/pangolin-1798092/).
 
 All of our fossorial animal names come from the good people at [animalia.bio](https://animalia.bio). They kindly donated their curated list of [fossorial animals](https://animalia.bio/fossorial-animals) found on their website and provided permission to use their images. 

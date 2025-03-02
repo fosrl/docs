@@ -176,8 +176,6 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 
 ## Example Configuration File
 
-`config.yml`
-
 ```yaml
 app:
     dashboard_url: "https://example.com"

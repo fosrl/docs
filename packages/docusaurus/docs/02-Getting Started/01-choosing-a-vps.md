@@ -2,7 +2,7 @@
 
 Our stack is lightweight and efficient, so you don’t need a high-powered server to get started. A minimal VPS instance with **1 vCPU, 1GB RAM, and 8GB SSD** will perform perfectly well for most use cases. In some cases, you may be able to get away with even less.
 
-## [Rack Nerd](https://my.racknerd.com/aff.php?aff=13788)
+## Rack Nerd
 
 Many of our users have had a great experience with [RackNerd](https://my.racknerd.com/aff.php?aff=13788). 
 
@@ -16,30 +16,16 @@ We are part of the [RackNerd](https://my.racknerd.com/aff.php?aff=13788) affilia
 
 Here’s a list of other popular VPS platforms in no particular order:
 
-**[Amazon EC2](https://instances.vantage.sh/)**
+**[Amazon EC2](https://instances.vantage.sh/)**: Starts around $8.50/month for 1 vCPU, 1GB RAM, and 8GB SSD.
 
-- Pricing: Starts around $8.50/month for 1 vCPU, 1GB RAM, and 8GB SSD.
+**[DigitalOcean](https://www.digitalocean.com/pricing/droplets)**: Starts around $6/month for 1 vCPU, 1GB RAM, and 25GB SSD.
 
-**[DigitalOcean](https://www.digitalocean.com/pricing/droplets)**
+**[Vultr](https://www.vultr.com/pricing)**: Starts around $5/month for 1 vCPU, 1GB RAM, and 25GB SSD.
 
-- Pricing: Starts around $6/month for 1 vCPU, 1GB RAM, and 25GB SSD.
+**[Linode](https://www.linode.com/pricing/)**: Starts around $5/month for 1 vCPU, 1GB RAM, and 25GB SSD.
 
-**[Vultr](https://www.vultr.com/pricing)**
+**[Hetzner Cloud](https://www.hetzner.com/cloud)**: Starts around $4.59/month for 2 vCPU, 4GB RAM, and 40GB SSD.
 
-- Pricing: Starts around $5/month for 1 vCPU, 1GB RAM, and 25GB SSD.
+**[UpCloud](https://upcloud.com/pricing/)**: Starts around $3.30/month for 1 vCPU, 1GB RAM, and 10GB SSD.
 
-**[Linode](https://www.linode.com/pricing/)**
-
-- Pricing: Starts around $5/month for 1 vCPU, 1GB RAM, and 25GB SSD.
-
-**[Hetzner Cloud](https://www.hetzner.com/cloud)**
-
-- Pricing: Starts around $4.59/month for 2 vCPU, 4GB RAM, and 40GB SSD.
-
-**[UpCloud](https://upcloud.com/pricing/)**
-
-- Pricing: Starts around $3.30/month for 1 vCPU, 1GB RAM, and 10GB SSD.
-
-**[OVHcloud](https://www.ovhcloud.com/en/vps/)**
-
-- Pricing: Starts around $5.50/month for 2 vCPU, 2GB RAM, and 40GB SSD.
+**[OVHcloud](https://www.ovhcloud.com/en/vps/)**: Starts around $5.50/month for 2 vCPU, 2GB RAM, and 40GB SSD.

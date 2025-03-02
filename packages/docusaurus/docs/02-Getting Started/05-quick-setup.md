@@ -81,8 +81,6 @@ After you create your resource if you are using https certificates with Let's En
 
 :::
 
-<img src={require("./img/2025-01-05_17-16_2.png").default} alt="Preview"/>
-
 #### Authentication
 
 1. Choose the **Authentication** page under the resource
@@ -102,7 +100,7 @@ It is not recommended to expose a resource without some form of authentication. 
 1. Head to the **Users and Roles** tab
 2. Press `Invite User` 
 3. Enter an email for the new user. If you have setup SMTP during the setup you can choose to send an email invite to the new user
-4. Select the role for the new user. All users must have a role. The admin role gives the user access to all resources and to create new resources and sites. The member role only provides access to resources explicitly attached to the role (none by default). For more information, see .....
+4. Select the role for the new user. All users must have a role. The admin role gives the user access to all resources and to create new resources and sites. The member role only provides access to resources explicitly attached to the role (none by default).
 5. Choose how long this invite will be valid for and choose `Create Invitation`
 6. If you chose not to send the email or it is not setup, then be sure to copy the invite and send it to the user
 

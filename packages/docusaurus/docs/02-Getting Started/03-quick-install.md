@@ -24,9 +24,13 @@ We also have a short and quick [YouTube video](https://youtu.be/W0uVLjTyAn8) sho
 
 ### 1. Downloading and Running the Installer
 
-Installer binaries for Linux can be found in the [Github releases](https://github.com/fosrl/pangolin/releases) for ARM and AMD64 (x86_64).
+:::tip
 
-For example, on `amd64` download the installer with either wget or curl and make it executable:
+The installer will place all files in the current directory. If you want to install Pangolin in a different directory, you can move the installer to that directory and run it there.
+
+:::
+
+Installer binaries for Linux can be found in the [Github releases](https://github.com/fosrl/pangolin/releases) for ARM and AMD64 (x86_64).
 
 <WgetQuickInstaller />
 
@@ -38,8 +42,6 @@ The installer must be run as root. If you're not already root, switch to the roo
 sudo ./installer
 ```
 
-The installer will place all files in the current directory. If you want to install Pangolin in a different directory, you can move the installer to that directory and run it there.
-
 ### 2. Basic Configuration
 
 The installer will prompt you for the following basic information. For example:
@@ -47,7 +49,7 @@ The installer will prompt you for the following basic information. For example:
 1. **Base Domain Name**: Enter your base fully qualified domain name (without any subdomains) Example: `example.com`
 2. **Dashboard Domain Name**: The domain where the application will be hosted. This is used for many things, including generating links. You can run Pangolin on a subdomain or root domain. Example: `proxy.example.com`
 3. **Let's Encrypt Email**: Provide an email address for SSL certificate registration with Lets Encrypt. This should be an email you have access to.
-4. **Tunneling** You can choose not to install Gerbil for tunneling support - in this config it will just be a normal reverse proxy. See [how to use without tunneling](../03-Pangolin/03-without-tunneling.md).
+4. **Tunneling** You can choose not to install Gerbil for tunneling support - in this config it will just be a normal reverse proxy. See [how to use without tunneling](/03-Pangolin/03-without-tunneling.md).
 
 ### 3. Admin User Setup
 
@@ -95,8 +97,6 @@ Supported distributions:
 -   OpenSUSE
 -   RHEL
 -   Amazon Linux
-
-<img src={require("./img/2025-01-05_17-15.png").default} alt="Preview"/>
 
 ### 7. Container Deployment
 

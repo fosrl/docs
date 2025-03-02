@@ -36,6 +36,7 @@ const config: Config = {
             "classic",
             {
                 docs: {
+                    sidebarCollapsed: false,
                     sidebarPath: "./sidebars.ts",
                     routeBasePath: "/"
                     // Please change this to your repo.
@@ -74,6 +75,12 @@ const config: Config = {
             disableSwitch: false,
             respectPrefersColorScheme: true
         },
+        // announcementBar: {
+        //     id: "support_us",
+        //     content:
+        //         'If you like Pangolin, please <a target="_blank" rel="noopener noreferrer" href="https://github.com/fosrl/pangolin">star us on GitHub!</a>',
+        //     isCloseable: false
+        // },
         algolia: {
             // The application ID provided by Algolia
             appId: "CVXQS7OHYA",
@@ -97,9 +104,14 @@ const config: Config = {
                 // },
                 // {to: '/blog', label: 'Blog', position: 'left'},
                 {
+                    href: "mailto:numbat@fossorial.io",
+                    label: "numbat@fossorial.io",
+                    position: "left"
+                },
+                {
                     href: "https://discord.gg/HCJR8Xhme4",
                     label: "Discord",
-                    position: "right"
+                    position: "left"
                 },
                 {
                     href: "https://github.com/fosrl",
@@ -155,8 +167,8 @@ const config: Config = {
         //   copyright: `${new Date().getFullYear()} Built by Fossorial`,
         // },
         prism: {
-            theme: prismThemes.github,
-            darkTheme: prismThemes.dracula
+            theme: prismThemes.oneLight,
+            darkTheme: prismThemes.oneDark
         }
     } satisfies Preset.ThemeConfig,
     plugins: [
