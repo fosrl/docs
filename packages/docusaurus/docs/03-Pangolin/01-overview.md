@@ -46,7 +46,7 @@ _Sites page of Pangolin dashboard (dark mode) showing multiple tunnels connected
 
 ### Modular Design
 
--   Extend functionality with existing [Traefik](https://github.com/traefik/traefik) plugins, such as [CrowdSec](https://plugins.traefik.io/plugins/6335346ca4caa9ddeffda116/crowdsec-bouncer-traefik-plugin) and [Geoblock](github.com/PascalMinder/geoblock).
+-   Extend functionality with existing [Traefik](https://github.com/traefik/traefik) plugins, such as [CrowdSec](https://plugins.traefik.io/plugins/6335346ca4caa9ddeffda116/crowdsec-bouncer-traefik-plugin) and [Geoblock](https://github.com/PascalMinder/geoblock).
     - **Automatically install and configure Crowdsec via Pangolin's installer script.**
 -   Attach as many sites to the central server as you wish.
 
