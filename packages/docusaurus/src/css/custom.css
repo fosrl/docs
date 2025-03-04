@@ -226,3 +226,11 @@ div[class^="announcementBarContent"] a:hover {
         display: none !important;
     }
 }
+
+.breadcrumbs li:first-child {
+    display: none;
+}
+
+.breadcrumbs li:nth-child(2) .breadcrumbs__link{
+    padding-left: 0px !important;
+}

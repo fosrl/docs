@@ -14,7 +14,7 @@ It is highly reccommended that you read the [official Traefik documentation](htt
 
 ## Benefits of Wildcard Certificates
 
-1. Wildcard certificates allow you to secure your base domain and all subdomains with a single certificate. This reduces the number of certificates you need to manage.
+1. Wildcard certificates allow you to secure your all subdomains with a single certificate. This reduces the number of certificates you need to manage.
 2. You can add new subdomains to resources without needing to generate a new certificate each time. Without a wildcard certificate, you would need to wait (up to a few minutes usually) for a new certificate to be generated and loaded by Traefik.
 - For example: A wildcard cert `*.example.com` could protect `api.example.com`, `blog.example.com`, and another `*.subdomain.example.com` could protect `api.subdomain.example.com`, `blog.subdomain.example.com`, etc.
 3. The [rate limits](https://letsencrypt.org/docs/rate-limits/) for Let's Encrypt are per domain. Using a wildcard certificate reduces the number of domains you have, which can help you avoid hitting these limits.
@@ -147,7 +147,7 @@ You can ensure Traefik doesn't try to use the old certs by deleting the previous
 
 Start the stack and watch the logs. You should notice that Traefik is making calls to your DNS provider to create the necessary records to complete the challenge. For debugging purposes, you may find it useful to set the log level of Traefik to `debug` in the `traefik_config.yml` file.
 
-After Traefik is done waiting for the cert to verify. Try to create a new resource with a unused subdomain. Traefik should not try to generated a new certificate, but instead use the wildcard certificate. The domain should also be secured immediately instead of waiting for a new certificate to be generated.
+After Traefik is done waiting for the cert to verify, try to create a new resource with an unused subdomain. Traefik should not try to generated a new certificate, but instead use the wildcard certificate. The domain should also be secured immediately instead of waiting for a new certificate to be generated.
 
 You can also check the volume (in the example above at `config/letsencrypt/`) for the correct certificates. In the `acme.json` file you should see something similar to the following. Note the `*.` in the domain.
 

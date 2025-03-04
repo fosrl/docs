@@ -216,15 +216,15 @@ I'll create an improved API documentation based on the files provided. Here's th
          -d '{"email":"invitee@example.com","roleId":123,"validHours":24,"sendEmail":true}'
     ```
 
-### 2. Request/Response Formats
+## 2. Request/Response Formats
 
 All requests should include the appropriate headers, particularly `Content-Type` set to `application/json` for JSON payloads and an `Authorization` header for authenticated requests.
 
-### 3. Usage Examples
+## 3. Usage Examples
 
 Examples of how to interact with the API are included in the endpoint descriptions above using `curl`. These examples illustrate how to make requests and handle responses.
 
-### 4. Limitations or Constraints
+## 4. Limitations or Constraints
 
 - Each email address must be unique when creating a user.
 - Resources and sites must be associated with an organization, and users must have appropriate permissions to create or manage resources.

@@ -19,7 +19,7 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
     - Logs rotate
         - Max size: 20MB
         - Max files: 7 days
-- `log_failed_attempts`: boolean
+- `log_failed_attempts` (optional): boolean
     - Whether to log failed authentication attempts. This is useful for security tools like Crowdsec and Fail2ban.
 
 ### `server`
@@ -72,8 +72,10 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 
 ### `domains`
 
+At least one domain must be configured. 
+
 - `<domain_key>`: string
-    - The unique key for the domain configuration.
+    - The unique key for the domain configuration. This can be anything you want.
     - `base_domain`: string
         - Example: `example.com`
     - `cert_resolver`: string
@@ -139,6 +141,9 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 - `no_reply` (optional): string
     - Example: `no-reply@example.com`
     - The address to send emails from. This can be any email address. Most often this will be the same as the `smtp_user`.
+- `smtp_tls_reject_unauthorized` (optional): boolean
+    - Do not fail if the server certificate cannot be verified.
+    - Default: `false`
 
 ### `users`
 
@@ -175,6 +180,8 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
     - Whether to allow users to create resources on the base domain. If set to `false`, users will only be able to create resources on subdomains.
 
 ## Example Configuration File
+
+This is just an example and is not meant to be used as is. It is not complete. You should customize the configuration to your needs.
 
 ```yaml
 app:
