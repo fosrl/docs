@@ -177,7 +177,7 @@ const config: Config = {
             /** @type {import('@dipakparmar/docusaurus-plugin-umami').Options} */
             {
                 websiteID: "d9a3a131-d2f4-4f8f-922b-80d668e96640", // Required
-                analyticsDomain: "umami.schwartznetwork.net", // Required
+                analyticsDomain: "umami.dev.fossorial.io", // Required
                 dataAutoTrack: false, // Optional
                 dataDoNotTrack: false, // Optional
                 dataCache: true, // Optional
