@@ -85,7 +85,7 @@ As soon as you enable the Cloudflare proxy, you're bound to Cloudflare's terms o
 
 :::
 
-Pangolin can be used with Cloudflare proxy (orange cloud) enabled. Ideally you should [setup wildcard certificates](../03-Pangolin/02-Configuration/03-wildcard-certs.md) with Traefik using the DNS challenge and set Cloudflare to Full (Strict) SSL mode.
+Pangolin can be used with Cloudflare proxy (orange cloud) enabled. Ideally you should [setup wildcard certificates](../03-Pangolin/02-Configuration/03-wildcard-certs.md) with Traefik using the DNS challenge and set Cloudflare to Full (Strict) SSL mode. Pangolin through Cloudflare will not work under Full or Automatic SSL/TLS. Cloudflare's documentation about SSL/TLS Encryption is available [here](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes/).
 
 Since Cloudflare proxy obscures the destination IP of the host, you will also need to explicitly set your VPS IP address for Gerbil in the `config.yml` file to allow WireGuard to connect to the VPS.
 
