@@ -1,5 +1,6 @@
 import DockerCompose from "@site/src/components/DockerCompose";
 import StaticTraefikConfig from "@site/src/components/StaticTraefikConfig";
+import DynamicTraefikConfig from "@site/src/components/DynamicTraefikConfig";
 
 # Docker Compose
 
@@ -71,61 +72,7 @@ The dynamic configuration file is where you define the HTTP routers and services
 
 The domain you enter here is what will be used to access the main Pangolin dashboard. Make sure you have the DNS set up correctly for this domain. Point it to the IP address of the server running Pangolin.
 
-```yaml
-http:
-  middlewares:
-    redirect-to-https:
-      redirectScheme:
-        scheme: https
-
-  routers:
-    # HTTP to HTTPS redirect router
-    main-app-router-redirect:
-      rule: "Host(`proxy.example.com`)" # REPLACE THIS WITH YOUR DOMAIN
-      service: next-service
-      entryPoints:
-        - web
-      middlewares:
-        - redirect-to-https
-
-    # Next.js router (handles everything except API and WebSocket paths)
-    next-router:
-      rule: "Host(`proxy.example.com`) && !PathPrefix(`/api/v1`)" # REPLACE THIS WITH YOUR DOMAIN
-      service: next-service
-      entryPoints:
-        - websecure
-      tls:
-        certResolver: letsencrypt
-
-    # API router (handles /api/v1 paths)
-    api-router:
-      rule: "Host(`proxy.example.com`) && PathPrefix(`/api/v1`)" # REPLACE THIS WITH YOUR DOMAIN
-      service: api-service
-      entryPoints:
-        - websecure
-      tls:
-        certResolver: letsencrypt
-
-    # WebSocket router
-    ws-router:
-      rule: "Host(`proxy.example.com`)" # REPLACE THIS WITH YOUR DOMAIN
-      service: api-service
-      entryPoints:
-        - websecure
-      tls:
-        certResolver: letsencrypt
-
-  services:
-    next-service:
-      loadBalancer:
-        servers:
-          - url: "http://pangolin:3002" # Next.js server
-
-    api-service:
-      loadBalancer:
-        servers:
-          - url: "http://pangolin:3000" # API/WebSocket server
-```
+<DynamicTraefikConfig />
 
 ## Pangolin Configuration
 

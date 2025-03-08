@@ -1,3 +1,6 @@
+import StaticTraefikConfig from "@site/src/components/StaticTraefikConfig";
+import DynamicTraefikConfig from "@site/src/components/DynamicTraefikConfig";
+
 # Unraid
 
 :::warning
@@ -19,10 +22,6 @@ The first part of this tutorial will explain how to use Pangolin and Traefik as 
 All containers are available in the Unraid Community Apps (CA) store. If you're not familiar with Unraid, you can find more information on their [website](https://unraid.net/).
 
 This installation has a lot of moving parts and is a bit non-standard for Unraid because Pangolin and its components were designed to run as micro-services on a VPS in tunneling mode. However, some may want to use "Local" reverse proxying on their Unraid server or use their Unraid server as a tunnel controller with Gerbil. For either of these use cases, follow the steps outlined in this guide.
-
-## Video Tutorial
-
-If you prefer a video tutorial for this guide, you can find it [here](https://youtu.be/F3w1Ur175zI).
 
 ## Prerequisites
 
@@ -51,64 +50,58 @@ This first part will enable Pangolin to work in "Local" reverse proxy mode. Newt
 
 ### Install and Setup Pangolin
 
-#### 1. Install Pangolin via the CA Store
+#### 1. Create the Config Files 
 
-#### 2. Configure Pangolin
+Pangolin uses a yaml file for configuration. If this is not present on start up, the container will throw an error and exit.
+
+Create a `config.yml` file in the `config` folder.
+
+See the [Configuration](https://docs.fossorial.io/Pangolin/Configuration/config) section for what to put in this file.
+
+```
+pangolin/
+├─ config/
+│  ├─ config.yml
+```
+
+#### 2. Install Pangolin via the CA Store
+
+#### 3. Configure Pangolin
 
 Set the network to the one you created earlier.
-
-:::note
-
-Pangolin environment variables will take precedence over the values in the `config.yml` file. If you set an environment variable, it will override the value in the `config.yml` file. This is useful for setting secrets and other sensitive information.
-
-:::
 
 <p align="center">
     ![graphic](./img/pangolin_config.png)
 </p>
 
-Some important considerations:
+Server Admin Email and Password:
 
-Server Admin Email:
-
-The server admin email is mainly used to set up the first "Server Admin" account which you will use to log in for the first time. If you allow Pangolin to generate the Traefik config for you, this will also be used as the Let's Encrypt admin email for certs. If you wish to use a different email for Let's Encrypt, you would need to manually edit the Traefik config file after it's been created. For the vast majority of people, it is perfectly fine to use the same email for both.
-
-Generate Traefik Config:
-
-This is primarily here for your convenience. Setting this to `true` will have Pangolin generate the Traefik files for you and insert the needed info based on the other Pangolin config settings. Traefik files will be placed in `<appdata>/config/traefik`. On each container restart, these files will be overwritten by Pangolin. Thus, if you edit the Traefik files manually, you should set this to `false`. It's best to keep this enabled on first start to generate the files for you to edit later.
-
-If you're using a different Traefik config other than the one provided by Pangolin, it is okay to leave this enabled. It will not overwrite your config unless your config is in the `<appdata>/config/traefik` path which it unlikely is.
+The server admin email is mainly used to set up the first "Server Admin" account which you will use to log in for the first time. These values will override anything you set in the config file.
 
 Ports:
 
 Due to the way Pangolin was designed to work with docker compose and a config file, the way it handles ports is a little different as compared to other popular Unraid containers. For all host ports:
 
-The host ports, container ports, and ports in the config should match for simplicity. This is because the Pangolin config also has ports in it. If you decide to use a non-default port, you would need to add the matching environment variable or edit the `config.yml` file to match. For example:
+The host ports, container ports, and ports in the config should match for simplicity. This is because the Pangolin config also has ports in it. If you decide to use a non-default port, you would need to edit the port in the template and the config file.
 
-If I wanted to change Host Port 1, I would do the following:
+For example, to change the port for the WebUI:
 
 - Click edit on the port
 - Set the "Container Port" to the new port you want to use
 - Set the "Host Port" to the new port you want to use
-- Add a new environment variable with key `SERVER_NEXTPORT` and value as the new port you want to use
+- Edit Pangolin's config file and set server.next_port to the new port you want to use
 
-This does not apply to the WireGuard port.
+#### 4. Start the Pangolin Container
 
-Any Gerbil Config:
+:::warning
 
-You can leave these here even if you don't plan to use Gerbil.
+Pangolin will not start without a config file. If you have not created the config file or the config file is invalid, the container will throw an error and exit.
 
-Gerbil Base Endpoint:
+:::
 
-This should match the Dashboard Url field.
+#### 5. Log in to the dashboard
 
-#### 3. Save the config and start the Pangolin container.
-
-Upon starting, Pangolin will create the needed files in the appdata path. You can access the dashboard WebUI by the "Host Port 1" port on your Unraid machine.
-
-#### 4. Log in to the dashboard
-
-Log in with the admin email and password you set in the config. Follow the setup steps.
+Log in with the admin email and password you set earlier. Follow the setup steps.
 
 - Create your first Organization
 - Create your first "Local" site for local reverse proxying
@@ -117,9 +110,33 @@ Log in with the admin email and password you set in the config. Follow the setup
 
 Before starting with Traefik, shut down the Pangolin container.
 
-#### 1. Install Traefik via the CA Store
+#### 1. Create the Config Files
 
-This section will use the Traefik template from the "IBRACORP" repository. If you already have a Traefik installation running, you should manually configure your Traefik config to work with Pangolin. Take a look at the Traefik files in the Docker Compose guide to see what to add to your config.
+Update the appdata path with new files for Traefik. At this point there may be some extra files generated by Pangolin.
+
+```bash
+pangolin/
+├─ config/
+│  ├─ config.yml
+# highlight-start
+│  ├─ letsencrypt/
+│  ├─ traefik/
+│  │  ├─ dynamic_config.yml
+│  │  ├─ traefik_config.yml
+# highlight-end
+```
+
+`pangolin/traefik_config.yml`:
+
+<StaticTraefikConfig />
+
+`pangolin/dynamic_config.yml`:
+
+<DynamicTraefikConfig />
+
+#### 2. Install Traefik via the CA Store
+
+This section will use the Traefik template from the "IBRACORP" repository. If you already have a Traefik installation running, you should manually configure your Traefik config to work with Pangolin.
 
 <p align="center">
     <img src={require("./img/traefik_repo.png").default} alt="Traefik Repo" style={{
@@ -128,7 +145,7 @@ This section will use the Traefik template from the "IBRACORP" repository. If yo
     }}/>
 </p>
 
-#### 2. Configure Traefik
+#### 3. Configure Traefik
 
 <p align="center">
     ![graphic](./img/traefik_config.png)
@@ -144,7 +161,7 @@ Set the network type to the one you created earlier.
 
 Post Arguments:
 
-Tell Traefik where the config file is located by adding the following to the "Post Arguments" field:
+Tell Traefik where the config file is located by adding the following to the "Post Arguments" field. This is not the host path, but the path inside the container.
 
 ```bash
 --configFile=/etc/traefik/traefik_config.yml
@@ -162,7 +179,11 @@ Ports:
 
 You will need to port forward the https and http ports listed in the config on your network's router.
 
-## 2. Add Gerbil for Tunneling (Optional)
+#### 4. Port Forwarding
+
+You will need to port forward the ports you set in the Traefik config on your network's router. This is so that Traefik can receive traffic from the internet. You should forward 443 to the https port and 80 to the http port you set in the Traefik config.
+
+## 4. Add Gerbil for Tunneling (Optional)
 
 :::note
 
@@ -206,7 +227,13 @@ You must open these ports because Traefik will be routed through Gerbil. These p
 
 As discussed earlier we need to network Traefik through Gerbil. This is pretty easy. We will do all of this in the Traefik container settings.
 
-Toggle advanced settings, and add `--net=container:Gerbil` to the "Extra Parameters" section. Then, set "Network Type" to "None".
+Toggle advanced settings, and add the following to the "Extra Parameters" section. 
+
+```bash
+--net=container:Gerbil
+```
+
+Then, set "Network Type" to "None".
 
 <p align="center">
     ![graphic](./img/traefik_networking.png)
@@ -220,7 +247,11 @@ We recommend to start the whole stack in the following order:
 2. Gerbil
 3. Traefik
 
-#### 5. Verify Tunnels are Functional
+#### 5. Port Forwarding
+
+You will need to port forward the WireGuard port you set in the Gerbil config on your network's router. This is so that the client can connect to the server.
+
+#### 6. Verify Tunnels are Functional
 
 Your logs for Gerbil should look something like this:
 
