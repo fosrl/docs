@@ -7,7 +7,6 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 ### `app`
 
 - `dashboard_url`: string
-    - Env: APP_DASHBOARDURL
     - Example: `https://example.com` or `https://proxy.example.com`
     - The url where the application is hosted. This is used for many things, including generating links.
     - You can run Pangolin on a subdomain or root domain. Users will be redirected to this url to complete the auth step.
@@ -25,13 +24,10 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 ### `server`
 
 - `external_port`: int
-    - Env: SERVER_EXTERNALPORT
     - The port the external facing (public) API will listen on.
 - `internal_port`: int
-    - Env: SERVER_INTERNALPORT
     - The port the internal private facing (private) API will listen on.
 - `next_port`: int
-    - Env: SERVER_NEXTPORT
     - The port the frontend server will listen on.
 - `internal_hostname`: string
     - Example: `pangolin`
@@ -100,10 +96,8 @@ At least one domain must be configured.
 ### `gerbil`
 
     - `start_port`: int
-      - Env: GERBIL_STARTPORT
       - This is the starting port for WireGuard tunnels that new Gerbil exit nodes will use and increment as they register with Pangolin. Advised to choose a base of a range with no conflicts.
     - `base_endpoint`: string
-      - Env: GERBIL_BASEENDPOINT
       - This is the domain name automatically included in Newt and WireGuard config for tunnel connections.
     - `use_subdomain`: boolean
       - If set to true, new Gerbil exit nodes will be assigned a unique subdomain off of the base domain. Advised to keep this to false.
