@@ -68,6 +68,8 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 
 ### `domains`
 
+[How do I get a domain?](../../02-Getting%20Started/02-dns-networking.md)
+
 At least one domain must be configured. 
 
 - `<domain_key>`: string

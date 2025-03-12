@@ -8,6 +8,14 @@ You will not need to open any ports on your private (the network running Newt) n
 
 Some notes about how to set up key parts of the networking in this project are below. This is not a comprehensive guide to networking, but should help you get started.
 
+## Domains
+
+You will want your own domain. These can be had for cheap and are a good way to begin to own your digital life on the internet. Any domain will do fine.
+
+You can [buy a cheap domain at Namecheap](https://namecheap.pxf.io/c/6099916/386170/5618) 
+
+We use Namecheap for our own domains and they provide a good service. Using the link will support us through their affiliate program if you make a purchase which is a good way to support the project.
+
 ## DNS
 
 :::note

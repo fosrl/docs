@@ -62,6 +62,8 @@ _Sites page of Pangolin dashboard (dark mode) showing multiple tunnels connected
 
     - Point your domain name to the VPS and configure Pangolin with your preferred settings.
 
+You can [buy a cheap domain at Namecheap](https://namecheap.pxf.io/c/6099916/386170/5618) 
+
 3. **Connect Private Sites**:
 
     - Install Newt or use another WireGuard client on private sites.
