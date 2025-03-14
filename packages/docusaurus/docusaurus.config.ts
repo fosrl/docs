@@ -105,7 +105,7 @@ const config: Config = {
                 // {to: '/blog', label: 'Blog', position: 'left'},
                 {
                     href: "https://fossorial.io",
-                    label: "Website",
+                    label: "fossorial.io",
                     position: "left"
                 },
                 {

@@ -60,7 +60,7 @@
     --chart-color-4: hsl(280, 65%, 60%);
     --chart-color-5: hsl(340, 75%, 55%);
 
-    --ifm-navbar-background-color: #1B1B1D;
+    --ifm-navbar-background-color: #1A1A1A;
 }
 
 .main {
@@ -233,4 +233,8 @@ div[class^="announcementBarContent"] a:hover {
 
 .breadcrumbs li:nth-child(2) .breadcrumbs__link{
     padding-left: 0px !important;
+}
+
+body {
+    background-color: #1A1A1A !important;
 }
