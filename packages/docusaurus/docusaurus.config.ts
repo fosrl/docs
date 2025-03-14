@@ -104,8 +104,8 @@ const config: Config = {
                 // },
                 // {to: '/blog', label: 'Blog', position: 'left'},
                 {
-                    href: "mailto:numbat@fossorial.io",
-                    label: "numbat@fossorial.io",
+                    href: "https://fossorial.io",
+                    label: "Website",
                     position: "left"
                 },
                 {
