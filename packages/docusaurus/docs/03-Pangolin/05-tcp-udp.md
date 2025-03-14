@@ -14,7 +14,7 @@ Pangolin supports raw TCP and UDP traffic because under the hood because Newt ca
 
 ## Configuring Firewall
 
-This is highly OS and VPS dependent. Just in the same way you opened port 51280, 443, and 80, you need to open your desired port to your VPS so that Traefik can pass traffic out to the internet.
+This is highly OS and VPS dependent. Just in the same way you opened port 51820, 443, and 80, you need to open your desired port to your VPS so that Traefik can pass traffic out to the internet.
 
 ## Configuring Docker
 
