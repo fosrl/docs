@@ -1,10 +1,13 @@
-# **Home Assistant Newt Add-on**
+# Home Assistant Add-on
 
----
+:::note
 
-This Home Assistant add-on allows you to easily run **Newt** from [Fossorial](https://docs.fossorial.io/Newt/overview) directly in Home Assistant. The add-on lets you configure **PANGOLIN_ENDPOINT**, **NEWT_ID**, and **NEWT_SECRET** via the Home Assistant interface.
+This is a community add-on and is not officially supported. If you have any issues, please reach out to the [author](https://github.com/Ferdinand99/home-assistant-newt-addon).
 
----
+:::
+
+This Home Assistant add-on allows you to easily run **Newt** directly in Home Assistant. The add-on lets you configure **PANGOLIN_ENDPOINT**, **NEWT_ID**, and **NEWT_SECRET** via the Home Assistant interface.
+
 ## Features
 
 
@@ -13,7 +16,6 @@ This Home Assistant add-on allows you to easily run **Newt** from [Fossorial](ht
 - Supports `amd64`, `armv7`, `armhf`, and `aarch64` architectures  
 - Automatic restart on crash
 
----
 ## Installation
 
 
@@ -35,7 +37,6 @@ This Home Assistant add-on allows you to easily run **Newt** from [Fossorial](ht
 
 1. Click **Add** and wait for the repository to load.
 
----
 ### **2. Install and Start the Add-on**
 
 
@@ -47,7 +48,6 @@ This Home Assistant add-on allows you to easily run **Newt** from [Fossorial](ht
 3. Click **Save** and then **Start**.
 4. Check the **Logs** tab to verify that everything is running correctly.
 
----
 ## **Configuration**
 
 
@@ -59,7 +59,6 @@ NEWT_ID: "your_newt_id"
 NEWT_SECRET: "your_newt_secret"
 ```
 
----
 ### **Docker Environment Variables**
 
 The following environment variables are passed to the `Newt` container:
@@ -68,7 +67,6 @@ The following environment variables are passed to the `Newt` container:
 - `NEWT_ID`
 - `NEWT_SECRET`
 
---- 
 ## Troubleshooting
 
 
@@ -101,19 +99,9 @@ The following environment variables are passed to the `Newt` container:
 
 If this fails, there may be a restriction in Home Assistant OS.
 
----
 ## Useful Links
 
 - [HA addon repo](https://github.com/Ferdinand99/home-assistant-newt-addon)
 - [Newt Documentation](https://docs.fossorial.io/Newt/overview)
 - [Home Assistant](https://www.home-assistant.io/)
 - [Docker Docs](https://docs.docker.com/)
-
-
-## Contribute
-
-Have suggestions for improvements? Create a **Pull Request** or report an issue in the **Issues** tab!
-
----
-
-© 2025 - Made with ❤️ for Home Assistant users 🚀

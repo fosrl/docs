@@ -235,6 +235,6 @@ div[class^="announcementBarContent"] a:hover {
     padding-left: 0px !important;
 }
 
-body {
+html[data-theme="dark"] {
     background-color: #1A1A1A !important;
 }
