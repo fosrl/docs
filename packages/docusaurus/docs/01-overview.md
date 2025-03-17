@@ -45,7 +45,7 @@ Fossorial has a couple major components:
     - Out-of-the-box compatibility with plugins like [Fail2Ban](https://plugins.traefik.io/plugins/628c9ebcffc0cd18356a979f/fail2-ban) or [CrowdSec](https://plugins.traefik.io/plugins/6335346ca4caa9ddeffda116/crowdsec-bouncer-traefik-plugin).
     - Enhanced security via our custom Traefik plugin Badger, which acts as an authentication bouncer.
 
-### [**Badger**](https://github.com/traefik/badger) (Traefik Plugin Middleware):
+### [**Badger**](https://github.com/fosrl/badger) (Traefik Plugin Middleware):
     A custom Traefik plugin that acts as an authentication bouncer. Badger:
      - Intercepts requests to the Traefik reverse proxy.
      - Redirects unauthenticated requests to the Pangolin server for authentication.
