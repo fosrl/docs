@@ -39,7 +39,7 @@ const DynamicTraefikConfig: React.FC = () => {
 
     # WebSocket router
     ws-router:
-      rule: "Host(\`proxy.example.com\`)" # REPLACE THIS WITH YOUR DOMAIN
+      rule: "Host(\`pangolin.example.com\`)" # REPLACE THIS WITH YOUR DOMAIN
       service: api-service
       entryPoints:
         - websecure
