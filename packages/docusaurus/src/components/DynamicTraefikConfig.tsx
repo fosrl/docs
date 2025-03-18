@@ -12,7 +12,7 @@ const DynamicTraefikConfig: React.FC = () => {
   routers:
     # HTTP to HTTPS redirect router
     main-app-router-redirect:
-      rule: "Host(\`proxy.example.com\`)" # REPLACE THIS WITH YOUR DOMAIN
+      rule: "Host(\`pangolin.example.com\`)" # REPLACE THIS WITH YOUR DOMAIN
       service: next-service
       entryPoints:
         - web
@@ -21,7 +21,7 @@ const DynamicTraefikConfig: React.FC = () => {
 
     # Next.js router (handles everything except API and WebSocket paths)
     next-router:
-      rule: "Host(\`proxy.example.com\`) && !PathPrefix(\`/api/v1\`)" # REPLACE THIS WITH YOUR DOMAIN
+      rule: "Host(\`pangolin.example.com\`) && !PathPrefix(\`/api/v1\`)" # REPLACE THIS WITH YOUR DOMAIN
       service: next-service
       entryPoints:
         - websecure
@@ -30,7 +30,7 @@ const DynamicTraefikConfig: React.FC = () => {
 
     # API router (handles /api/v1 paths)
     api-router:
-      rule: "Host(\`proxy.example.com\`) && PathPrefix(\`/api/v1\`)" # REPLACE THIS WITH YOUR DOMAIN
+      rule: "Host(\`pangolin.example.com\`) && PathPrefix(\`/api/v1\`)" # REPLACE THIS WITH YOUR DOMAIN
       service: api-service
       entryPoints:
         - websecure
@@ -39,7 +39,7 @@ const DynamicTraefikConfig: React.FC = () => {
 
     # WebSocket router
     ws-router:
-      rule: "Host(\`proxy.example.com\`)" # REPLACE THIS WITH YOUR DOMAIN
+      rule: "Host(\`pangolin.example.com\`)" # REPLACE THIS WITH YOUR DOMAIN
       service: api-service
       entryPoints:
         - websecure

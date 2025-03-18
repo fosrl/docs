@@ -7,7 +7,7 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 ### `app`
 
 - `dashboard_url`: string
-    - Example: `https://example.com` or `https://proxy.example.com`
+    - Example: `https://example.com` or `https://pangolin.example.com`
     - The url where the application is hosted. This is used for many things, including generating links.
     - You can run Pangolin on a subdomain or root domain. Users will be redirected to this url to complete the auth step.
 - `log_level`: string
@@ -45,7 +45,7 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 - `cors`: object (optional)
     - Configuration for Cross-Origin Resource Sharing (CORS).
     - `origins`: array of strings (optional)
-        - Example: `["https://proxy.example.com"]`
+        - Example: `["https://pangolin.example.com"]`
         - List of allowed origins for cross-origin requests.
     - `methods`: array of strings (optional)
         - Example: `["GET", "POST", "PUT", "DELETE", "PATCH"]`
