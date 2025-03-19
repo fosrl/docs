@@ -7,8 +7,6 @@ Initial API documentation for pangolin. This documentation includes public endpo
 https://pangolin.yourdomain.com/api/v1/
 ```
 
-I'll create an improved API documentation based on the files provided. Here's the updated markdown:
-
 ## 1. Public Endpoints
 
 ### 1.1 User Management
