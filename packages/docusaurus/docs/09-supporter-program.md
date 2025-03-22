@@ -2,9 +2,9 @@
 
 ## What is this? 
 
-Pangolin is free and open source software and will always continue to be.
+Pangolin is free and open source software and will always continue to be. We will not use this to paywall features.
 
-Your support on this program allows us to continue to support Pangolin with bug fixes, new features, and support.
+Working on Pangolin takes a lot of time! Your support on this program allows us to continue to support Pangolin with bug fixes, new features, and support.
 
 ## How does this work?
 
@@ -15,6 +15,8 @@ We are using GitHub sponsors. In order to support and obtain your key:
 3. Copy the supporter key
 4. Go to your Pangolin instance and click the supporter button
 5. Enter the supporter key
+
+<img src={require("./img/redeem-key.png").default} alt="Tiers"/>
 
 ## How many times can I use my key?
 
@@ -34,11 +36,17 @@ Unlimited users
 
 You can add as many users as you want and the support button and other marks will never return. 
 
+<img src={require("./img/supporter-tiers.png").default} alt="Tiers"/>
+
 ## How can I upgrade?
 
 You can upgrade by purchasing the Full Supporter ($95) tier. After you purchase this tier your account will be automatically upgraded and you can restart your Pangolin server to update the status. 
 
 Due to the way GitHub tiers work even if you have purchased the lower tier you must purchase the higher tier. We apologize for the inconvenience but thank you for the extra donation. 
+
+## Can I hide the supporter button?
+
+You can hide the supporter button without paying by clicking the "Hide for 7 days" button at the bottom of the dialog.
 
 ## What happens if I buy a tier again?
 

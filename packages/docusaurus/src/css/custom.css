@@ -187,45 +187,45 @@ div[class^="announcementBarContent"] a:hover {
 /* Default (mobile styles remain unchanged) */
 
 /* Desktop: Apply new styles only when screen is larger than 768px */
-@media (min-width: 769px) {
-    .navbarSearchContainer_bmvg .DocSearch-Button {
-        border: 1px solid rgb(150, 153, 156); /* Outline instead of background */
-        background: transparent; /* No background */
-        border-radius: 6px; /* Less rounded */
-        padding: 8px 16px; /* Slightly larger */
-        width: 220px; /* Longer search bar */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: border-color 0.2s ease-in-out;
-        box-shadow: none !important; /* Removes any glow */
-    }
-
-    .navbarSearchContainer_bmvg .DocSearch-Button:hover,
-    .navbarSearchContainer_bmvg .DocSearch-Button:focus {
-        border-color: rgb(100, 102, 105); /* Slightly darker border on hover */
-        box-shadow: none !important; /* No glow */
-    }
-
-    /* Ensures search text & icon are properly aligned */
-    .navbarSearchContainer_bmvg .DocSearch-Button-Container {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    /* Adjust search icon size */
-    .navbarSearchContainer_bmvg .DocSearch-Search-Icon {
-        width: 18px;
-        height: 18px;
-        color: rgb(100, 102, 105);
-    }
-
-    /* Remove Command+K shortcut icons */
-    .navbarSearchContainer_bmvg .DocSearch-Button-Keys {
-        display: none !important;
-    }
-}
+/* @media (min-width: 769px) { */
+/*     .navbarSearchContainer_bmvg .DocSearch-Button { */
+/*         border: 1px solid rgb(150, 153, 156); /* Outline instead of background */ */
+/*         background: transparent; /* No background */ */
+/*         border-radius: 6px; /* Less rounded */ */
+/*         padding: 8px 16px; /* Slightly larger */ */
+/*         width: 220px; /* Longer search bar */ */
+/*         display: flex; */
+/*         align-items: center; */
+/*         justify-content: center; */
+/*         transition: border-color 0.2s ease-in-out; */
+/*         box-shadow: none !important; /* Removes any glow */ */
+/*     } */
+/*  */
+/*     .navbarSearchContainer_bmvg .DocSearch-Button:hover, */
+/*     .navbarSearchContainer_bmvg .DocSearch-Button:focus { */
+/*         border-color: rgb(100, 102, 105); /* Slightly darker border on hover */ */
+/*         box-shadow: none !important; /* No glow */ */
+/*     } */
+/*  */
+/*     /* Ensures search text & icon are properly aligned */ */
+/*     .navbarSearchContainer_bmvg .DocSearch-Button-Container { */
+/*         display: flex; */
+/*         align-items: center; */
+/*         gap: 8px; */
+/*     } */
+/*  */
+/*     /* Adjust search icon size */ */
+/*     .navbarSearchContainer_bmvg .DocSearch-Search-Icon { */
+/*         width: 18px; */
+/*         height: 18px; */
+/*         color: rgb(100, 102, 105); */
+/*     } */
+/*  */
+/*     /* Remove Command+K shortcut icons */ */
+/*     .navbarSearchContainer_bmvg .DocSearch-Button-Keys { */
+/*         display: none !important; */
+/*     } */
+/* } */
 
 .breadcrumbs li:first-child {
     display: none;
