@@ -2,7 +2,7 @@
 
 ## What is this? 
 
-Pangolin will always be free and open source, but maintaining the project takes a lot of time and resources. To help support ongoing development — including bug fixes, [new features](https://github.com/orgs/fosrl/projects/1/views/1), and community support — we’ve added a way for users to directly contribute. We will not use this to paywall features.
+Pangolin will always be free and open source, but maintaining the project takes a lot of time and resources. To help support ongoing development — including bug fixes, [new features](https://github.com/orgs/fosrl/projects/1/views/1), and community support — we’ve added a way for users to directly contribute. **We will not use this to paywall features.**
 
 If you’d like to support the project, you can purchase a supporter key to remove the support button and other marks from the UI. Afterward, you will get to learn a little bit about your adopted Pangolin!
 
