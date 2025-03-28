@@ -27,6 +27,8 @@ This table compiles paths that need to be allowed for various apps to work with 
 | Nextcloud | `/` (Main interface)<br />`/index.php` (Core handler)<br />`/remote.php` (Remote access)<br />`/status.php` (Status checks)<br />`/ocs` (Collaboration Services API)<br />`/apps` (Applications)<br />`/remote.php/webdav` (WebDAV endpoint)<br />`/remote.php/dav` (CalDAV/CardDAV)<br />`/remote.php/caldav` (Calendar sync)<br />`/remote.php/carddav` (Contacts sync)<br />`/ocs/v1.php` (API endpoints)<br />`/ocs/v2.php` (API v2 endpoints)<br />`/login` (Authentication)<br />`/.well-known/*` (Service discovery)<br />`/.well-known/webfinger` (WebFinger protocol)<br />`/s/*` (Shared files/folders) |
 | **Photo Management** |  |
 | Immich | `/api/*`<br />`/.well-known/immich` |
+| **File Management** |  |
+| Filebrowser | `/static/*`<br />`/share/*` <br/> `/api/public/dl/*` |
 | **Notes & Knowledge Management** |  |
 | Joplin Notes Server | `/api/*`<br />`/shares/*`<br />`/css/*`<br />`/images/*`<br />Always Deny - Path - `/login/*` (optional) |
 | Erugo | `/api/*`<br />`/shares/*`<br />`/build/*`<br />`/get-logo` |
