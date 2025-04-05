@@ -1,6 +1,7 @@
 # GeoBlock
 
 ##Installation
+
 1. Add following lines to your `/config/traefik/traefik_config.yml` file.
 ```yaml
 entryPoints:
@@ -15,6 +16,7 @@ experimental:
       moduleName: github.com/PascalMinder/geoblock
       version: v0.3.2
 ```
+
 2. Add following lines to your `/config/traefik/dynamic_config.yml` file. With `blackListMode: false` GeoBlock is running in whitelist mode and just allows the added countries. Keep in mind to add countries when you are traveling. Find all county codes in the [documentation](https://github.com/PascalMinder/geoblock#full-plugin-sample-configuration).
 ```yaml
 http:
@@ -37,13 +39,15 @@ http:
           countries:
             - DE # add/replace with your country code
 ```
+
 3. Restart traefik
 ```bash
 docker restart traefik
 ```
 
 ## Testing
-Change 
+
+Change these options to true to see the GeoBlock activities in the traefik logs.
           logLocalRequests: true
           logAllowedRequests: true
           logApiRequests: true 
