@@ -1,23 +1,22 @@
 # Overview
 
-Due to a modular design you can extend the functionality with existing Traefik plugins, such as Crowdsec and Geoblock.
+he modular design of this system enables the extension of its functionality through the integration of existing Traefik plugins, such as Crowdsec and Geoblock.
 
 ## Traefik plugins
 
-See a full list of available plugins at [Plugin Catalog](https://plugins.traefik.io/plugins).
+For a complete list of available plugins, please refer to the [Plugin Catalog](https://plugins.traefik.io/plugins).
 
 ### Crowdsec Bouncer
 
-By installing crowdsec through the Pangolin installer the Crwodsec Traefik Bouncer will be installed and configured by default.
-You can adjust the configuration to your needs by following this [documentation](https://docs.fossorial.io/Modules/crowdsec).
+When installing Crowdsec via the Pangolin installer, the Crowdsec Traefik Bouncer will be automatically installed and configured by default. The configuration can be customized to meet your specific requirements. For detailed guidance, refer to the [documentation](https://docs.fossorial.io/Modules/crowdsec).
 
-For more details see references:
-[Traefik Plugin Catalog](https://plugins.traefik.io/plugins/6335346ca4caa9ddeffda116/crowdsec-bouncer-traefik-plugin)
-[Github Repository](https://github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin)
+For additional information, consult the following resources:
+- [Traefik Plugin Catalog](https://plugins.traefik.io/plugins/6335346ca4caa9ddeffda116/crowdsec-bouncer-traefik-plugin)
+- [Github Repository](https://github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin)
 
 ### Geoblock
 
-Geoblock is a simple plugin for Traefik to block or allow requests based on their country of origin. Uses [GeoJs.io](https://www.geojs.io/).
+Geoblock is a straightforward Traefik plugin that allows you to block or permit requests based on their country of origin. It leverages [GeoJs.io](https://www.geojs.io/) for geolocation services.
 
-For more details see references:
-[Github Repository](https://github.com/PascalMinder/geoblock)
+For more details, please refer to the following resources:
+- [Github Repository](https://github.com/PascalMinder/geoblock)
