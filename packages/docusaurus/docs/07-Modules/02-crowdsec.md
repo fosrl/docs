@@ -1,20 +1,20 @@
 # Crowdsec
 
-CrowdSec is a free, modern & collaborative behavior detection engine, coupled with a global IP reputation network. It is an open-source massively multiplayer firewall that analyzes visitor behavior and provides an adapted response to all kinds of attacks.
+CrowdSec is a modern, open-source, collaborative behavior detection engine, integrated with a global IP reputation network. It functions as a massively multiplayer firewall, analyzing visitor behavior and responding appropriately to various types of attacks.
 
 ## Installation
 
-Crowdsec can be installed with the Pangolin Installer. 
+Crowdsec can be installed using the Pangolin Installer. 
 
 ## Configuration
 
-By default Crowdsec is installed with a very basic configuration including the [Crowdsec Bouncer Traefik plugin](https://plugins.traefik.io/plugins/6335346ca4caa9ddeffda116/crowdsec-bouncer-traefik-plugin).
+By default, Crowdsec is installed with a basic configuration, which includes the [Crowdsec Bouncer Traefik plugin](https://plugins.traefik.io/plugins/6335346ca4caa9ddeffda116/crowdsec-bouncer-traefik-plugin).
 
 ### Choose the right logs
 
 #### Syslog
 
-For systems with Syslog these volumes has to be added in `docker-compose.yml`.
+For systems utilizing Syslog, the following volumes should be added to the `docker-compose.yml` file:
 ```yaml
 service:
   crowdsec:
@@ -23,7 +23,7 @@ service:
       - /var/log/syslog:/var/log/syslog:ro
 ```
 
-Add a `syslog.yaml` file to `/config/crowdsec/acquis.d` with the following content.
+Create a `syslog.yaml` file under `/config/crowdsec/acquis.d` with the following content:
 ```yaml
 filenames:
  - /var/log/auth.log
@@ -34,9 +34,12 @@ labels:
 
 #### Journalctl
 
-Run `iptables -A INPUT -j LOG --log-prefix "iptables: "` on your host system to log iptables into jounralctl.
+To log iptables to journalctl, execute the following command on your host system:
+```bash
+iptables -A INPUT -j LOG --log-prefix "iptables: "
+```
 
-Adjusted `docker-compose.yml`.
+Update the `docker-compose.yml` file as follows:
 ```yaml
 service:
   crowdsec:
@@ -50,7 +53,7 @@ service:
       - /var/log/journal:/var/log/host:ro
 ```
 
-Add a `journalctl.yaml` file to `/config/crowdsec/acquis.d` with the following content.
+Create a `journalctl.yaml` file under `/config/crowdsec/acquis.d` with the following content:
 ```yaml
 source: journalctl
 journalctl_filter: 
@@ -59,37 +62,36 @@ labels:
   type: syslog
 ```
 
-### Secure host system (SSH)
+### Securing the Host System (SSH)
 
-By defautl only Traefik requests are secured through the crowdsec bouncer. If you also want to protect your host system eg. ssh you have to add a firewall bouncer to your host system.
+By default, only Traefik requests are secured through the Crowdsec bouncer. To extend protection to your host system (e.g., SSH), follow these steps to add a firewall bouncer:
 
-1. Install the Crowdsec repositories. [Documentation](https://docs.crowdsec.net/docs/next/getting_started/install_crowdsec/#install-our-repositories)
+1. Install the Crowdsec repositories. Refer to the [installation documentation](https://docs.crowdsec.net/docs/next/getting_started/install_crowdsec/#install-our-repositories):
 ```bash
 curl -s https://install.crowdsec.net | sudo sh
 ```
 
-2. Install the firewall bouncer. [Documentation](https://docs.crowdsec.net/u/bouncers/firewall/)
-Just for Debian/Ubuntu using IPTables, see documentation link for other options!
+2. Install the firewall bouncer. For Debian/Ubuntu systems using IPTables, refer to the [documentation](https://docs.crowdsec.net/u/bouncers/firewall/):
 ```bash
 sudo apt install crowdsec-firewall-bouncer-iptables
 ```
 
-3. Create an API key for the firewall bouncer to be able to communicate with your crowdsec docker container. ("vps-firewall" can be changed, it is just the name for the key)
+3. Create an API key for the firewall bouncer to communicate with your CrowdSec Docker container. ("vps-firewall" is a placeholder name for the key):
 ```bash
 docker exec -it crowdsec cscli bouncers add vps-firewall
 ```
 
-4. Copy the dispalyed API key and paste it into the bouncer config file.
+4. Copy the dispalyed API key and insert it into the bouncer's configuration file:
 ```bash
 nano /etc/crowdsec/bouncers/crowdsec-firewall-bouncer.yaml
 ```
 
-5. Restart the firewall bouncer.
+5. Restart the firewall bouncer:
 ```bash
 systemctl restart crowdsec-firewall-bouncer
 ```
 
-6. Add the communication port `8080` to your crowdsec container in `docker-compose.yaml` and restart the crowdsec container.
+6. Update the `docker-compose.yml` file to expose communication port `8080` for the CrowdSec container and restart the container:
 ```yaml
 service:
   crowdsec:
@@ -98,7 +100,12 @@ service:
       - 8080:8080
 ```
 
-Use `docker exec crowdsec cscli metrics` to verify the working communication between firewall bouncer and crowdsec container, you should see something like this:
+7. Verify communication between the firewall bouncer and the CrowdSec container by running:
+```bash
+docker exec crowdsec cscli metrics
+```
+
+The output should look like this:
 ```bash
 +------------------------------------------------------------------+
 | Local API Bouncers Metrics                                       |
@@ -111,16 +118,16 @@ Use `docker exec crowdsec cscli metrics` to verify the working communication bet
 +---------------------------+----------------------+--------+------+
 ```
 
-### Custom ban.html
+## Custom Ban Page
 
-You can show your attackers a custom ban page. [Documentation](https://github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin/tree/main/examples/custom-ban-page)
+To display a custom ban page to attackers, follow these steps: 
 
-1. Place a ban.html page in your `/config/traefik` folder. If you don't want to create your own page you can use this official example page.
+1. Place a `ban.html` page in the `/config/traefik` directory. If you prefer not to create your own, you can download the official example:
 ```bash
 wget https://github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin/blob/main/ban.html
 ```
 
-2. Add the following line to you `/config/traefik/dynamic_config.yml` file.
+2. Update the `/config/traefik/dynamic_config.yml` file to include the following:
 ```yaml
 http:
   middlewares:
@@ -130,16 +137,16 @@ http:
           banHTMLFilePath: /etc/traefik/ban.html
 ```
 
-### Custom captcha.html
+## Custom Captcha Page
 
-To use captcha you have to provide and configure a captcha.html. [Documentation](https://github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin/tree/main/examples/captcha)
+To use a custom captcha page, follow these steps:
 
-1. Place a captcha.html page in your `/config/traefik` folder. If you don't want to create your own page you can use this official example page.
+1. Place a `captcha.html` page in the `/config/traefik` directory. If you don't want to create your own, you can download the official example:
 ```bash
 wget https://github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin/blob/main/captcha.html
 ```
 
-2. Add the following line to you `/config/traefik/dynamic_config.yml` file and replace <...> with your credentials.
+2. Update the `/config/traefik/dynamic_config.yml` file with the following configuration, replacing `<SERVICE>` with your captcha provider (e.g. hCaptcha, reCaptcha, Turnstile), and `<KEY>` with the appropriate site and secret keys:
 ```yaml
 http:
   middlewares:
@@ -148,17 +155,21 @@ http:
         crowdsec:
           captchaHTMLFilePath: /etc/traefik/captcha.html
           captchaGracePeriodSeconds: 300
-          captchaProvider: <SERVICE> #your service hcaptcha, recaptcha or turnstile
+          captchaProvider: <SERVICE>
           captchaSiteKey: <KEY>
           captchaSecretKey: <KEY>
 ```
 
-### Testing
+## Testing
 
-You can test your configuration with the following commands. You will get banned for just 1 minute.
+You can test your configuration by adding a temporary ban or captcha for your IP. The ban will last for one minute.
+
+To add a ban:
 ```bash
 docker exec crowdsec cscli decisions add --ip <YOUR IP> -d 1m --type ban
 ```
+
+To trigger a captcha challenge:
 ```bash
 docker exec crowdsec cscli decisions add --ip <YOUR IP> -d 1m --type captcha
 ```
