@@ -20,7 +20,7 @@ const WithoutTunnelingCompose: React.FC = () => {
       test: ["CMD", "curl", "-f", "http://localhost:3001/api/v1/"]
       interval: "3s"
       timeout: "3s"
-      retries: 5
+      retries: 15
 
   traefik:
     image: traefik:v3.3.3

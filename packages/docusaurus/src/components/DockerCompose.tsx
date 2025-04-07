@@ -22,7 +22,7 @@ const DockerCompose: React.FC = () => {
       test: ["CMD", "curl", "-f", "http://localhost:3001/api/v1/"]
       interval: "3s"
       timeout: "3s"
-      retries: 5
+      retries: 15
 
   gerbil:
     image: fosrl/gerbil:${gerbilVersion}
