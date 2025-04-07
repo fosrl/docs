@@ -10,7 +10,7 @@ entryPoints:
   websecure:
     http:
       middlewares:
-        - pangolin-geoblock@file
+        - geoblock@file
 
 experimental:
   plugins:
@@ -23,7 +23,7 @@ experimental:
 ```yaml
 http:
   middlewares:
-    pangolin-geoblock:
+    geoblock:
       plugin:
         geoblock:
           silentStartUp: false
