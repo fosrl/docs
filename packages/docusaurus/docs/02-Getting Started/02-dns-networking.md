@@ -38,7 +38,15 @@ If you intend to use the root of your domain, then you will need an additional A
 
 ## Ports to Expose
 
-When you setup your VPS you want to make sure that you expose the following ports **on the VPS itself**.
+:::warning
+
+**Docker Port Exposure Caveat:**  
+Docker automatically creates iptables NAT rules when container ports are published (using `-p` or docker-compose). These rules can bypass host firewall settings (such as UFW or firewalld), causing ports to be accessible from external networks even if they aren’t explicitly allowed by your firewall. Always verify your exposed ports (e.g., with [nmap](https://nmap.org/) or [RustScan](https://github.com/bee-san/RustScan)) and ensure you only expose the ports that are absolutely necessary. For more details, see [Docker’s port publishing documentation](https://docs.docker.com/engine/network/packet-filtering-firewalls/#port-publishing-and-mapping).
+
+:::
+
+
+Following ports should be exposed on Operating system level.
 
 ### TCP 80
 
@@ -60,7 +68,7 @@ This is the default WireGuard port and is used for Newt and WireGuard clients to
 
 :::warning
 
-Its important to **ONLY** expose the ports you need. Effectively by tunneling out to the VPS you are including the VPS in your security boundary and should consider it part of your network and secure it as such.
+Its important to **ONLY** expose and verify exposed the ports you need. Effectively by tunneling out to the VPS you are including the VPS in your security boundary and should consider it part of your network and secure it as such.
 
 :::
 
