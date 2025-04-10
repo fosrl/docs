@@ -9,6 +9,7 @@ import WgetQuickInstaller from "@site/src/components/WgetQuickInstaller";
     -   We recommend Ubuntu or Debian based systems
 -   [A domain name pointed to your server's IP address](./02-dns-networking.md)
 -   [TCP ports 80, 443, and UDP port 51820 exposed to your Linux instance.](./02-dns-networking.md)
+    -   **Note:** Docker’s NAT-based port publishing feature automatically exposes all ports defined in `docker-compose` file. This behavior can bypass your host firewall settings, potentially exposing services that you did not intend to make public. It is important to review and manage these port configurations to minimize security risks.
 -   An email address for Let's Encrypt certificate registration
 -   (Optionally) a SMTP server
 
