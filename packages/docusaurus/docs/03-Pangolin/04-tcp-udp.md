@@ -36,6 +36,10 @@ gerbil:
     - 1704:1704/udp # ADDED
     - 1602:1602 # ADDED
 ```
+:::warning
+Docker’s NAT-based port publishing feature automatically exposes all `ports:` defined in the `docker-compose` file on all network interfaces. This behavior can bypass your host firewall settings, potentially exposing services that you did not intend to make public.
+Please see [complete warning about exposing ports](/Getting%20Started/dns-networking#ports-to-expose).
+:::
 
 ## Configuring Traefik
 
