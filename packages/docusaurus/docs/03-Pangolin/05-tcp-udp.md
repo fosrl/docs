@@ -77,6 +77,15 @@ entryPoints:
         address: ":1704/udp"
 ```
 
+## Update Config
+
+Make sure that the `allow_raw_resources` flag in your `/config/config.yml` is set to `true`.
+
+```yaml
+flags:
+    allow_raw_resources: true
+```
+
 ## Restart The Stack
 
 After you've made all of the changes above, you need to restart the stack. This can be done with the following command:
