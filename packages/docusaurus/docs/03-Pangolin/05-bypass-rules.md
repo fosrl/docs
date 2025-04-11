@@ -46,16 +46,36 @@ Right now you can match on the following items:
 
 ### Path
 
-Path match rules allow you to specify URL patterns using simple text and wildcards. A valid pattern can include regular path segments, slashes, and wildcards (\*) which match any characters.
-Examples:
+Path match rules allow URL patterns defined with plain text and wildcards (`*`) that match any characters. Patterns and URLs are split into segments (using `/`), and **each segment is matched individually**.
 
-- `blog/posts` - Matches exact path
-- `blog/*` - Matches all paths under blog
-- `*/2023/*` - Matches any path with 2023 as a middle segment
-- `product*` - Matches paths starting with "product"
-- `*admin*` - Matches any path containing "admin"
+#### Examples:
+- `blog/posts`  
+  Matches the exact path `/blog/posts`.
 
-Wildcards can appear anywhere in a segment, and special characters like dashes, underscores, and common punctuation are allowed. Avoid empty segments, double slashes, and non-URL characters.
+- `blog/*`  
+  Matches any path under `/blog` (e.g., `/blog/travel`).
+
+- `*/2023/*`  
+  Matches paths with `/2023/` as a middle segment (e.g., `/news/2023/summary`).
+
+- `article*`  
+  Matches **segments** starting with "article" (e.g., `/article-123`).
+
+- `*admin*`  
+  Matches **segments** containing "admin" (e.g., `/my-admin-panel`).
+
+- `personal-*/*`  
+  Matches paths where the first segment starts with `blog-` and is followed by any segment (e.g., `/personal-blog/post`).
+
+#### Segment-by-Segment Matching
+- **Normalization:**  
+  Both patterns and URLs are split into segments. For example, `/blog/journal/entry` becomes `["blog", "journal", "entry"]`, while `/blog*` becomes `["blog*"]`.
+
+- **Validation:**  
+  Each pattern segment must correspond to a URL segment, and wildcards match zero or more characters within that segment. A pattern like `/blog*` only matches the first segment, so URLs with extra segments require additional placeholders (e.g., `/blog*/*`).
+
+
+
 
 ### CIDR
 
