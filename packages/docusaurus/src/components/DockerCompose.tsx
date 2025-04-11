@@ -3,15 +3,15 @@ import React, { useEffect, useState } from "react";
 import { fetchLatestRelease } from "../lib/fetchLatestRelease";
 
 const DockerCompose: React.FC = () => {
-    const [text, setText] = useState<string>("");
+  const [text, setText] = useState<string>("");
 
-    useEffect(() => {
-        (async () => {
-            const pangolinVersion = await fetchLatestRelease("fosrl/pangolin");
-            const gerbilVersion = await fetchLatestRelease("fosrl/gerbil");
+  useEffect(() => {
+    (async () => {
+      const pangolinVersion = await fetchLatestRelease("fosrl/pangolin");
+      const gerbilVersion = await fetchLatestRelease("fosrl/gerbil");
 
-            setText(
-                `services:
+      setText(
+        `services:
   pangolin:
     image: fosrl/pangolin:${pangolinVersion}
     container_name: pangolin
@@ -63,11 +63,11 @@ networks:
   default:
     driver: bridge
     name: pangolin`
-            );
-        })();
-    }, []);
+      );
+    })();
+  }, []);
 
-    return <CodeBlock language="yml">{text}</CodeBlock>;
+  return <CodeBlock language="yml">{text}</CodeBlock>;
 };
 
 export default DockerCompose;

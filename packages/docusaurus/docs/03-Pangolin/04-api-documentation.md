@@ -3,6 +3,7 @@
 Initial API documentation for pangolin. This documentation includes public endpoints, request/response formats, usage examples, and any limitations or constraints. This document is not complete but will be added to over time to compass more of the API.
 
 ### Base URL
+
 ```
 https://pangolin.yourdomain.com/api/v1/
 ```
@@ -93,6 +94,7 @@ https://pangolin.yourdomain.com/api/v1/
 ### 1.3 Resource Management
 
 - **Create Resource**
+
   - **Endpoint:** `PUT /org/{orgId}/site/{siteId}/resource`
   - **Description:** Creates a new resource for a specific organization and site.
   - **Authentication:** Session cookie required

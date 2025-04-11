@@ -28,13 +28,13 @@ If you are using the standard install with a Docker network you will need to exp
 
 ```yaml
 gerbil:
-    ports:
-        - 51820:51820/udp # LEAVE ALONE: For Wireguard
-        - 443:443 # LEAVE ALONE: For HTTPS
-        - 80:80 # LEAVE ALONE: For HTTP
+  ports:
+    - 51820:51820/udp # LEAVE ALONE: For Wireguard
+    - 443:443 # LEAVE ALONE: For HTTPS
+    - 80:80 # LEAVE ALONE: For HTTP
 
-        - 1704:1704/udp # ADDED
-        - 1602:1602 # ADDED
+    - 1704:1704/udp # ADDED
+    - 1602:1602 # ADDED
 ```
 
 ## Configuring Traefik
@@ -45,10 +45,10 @@ But this is pretty simple! All you need to do is edit your static Traefik config
 
 ```yaml
 entryPoints:
-    udp-1704:
-        address: ":1704/udp"
-    tcp-1602:
-        address: ":1602/tcp"
+  udp-1704:
+    address: ":1704/udp"
+  tcp-1602:
+    address: ":1602/tcp"
 ```
 
 :::info
@@ -61,20 +61,20 @@ Now, the whole entry points section would look something like this:
 
 ```yaml
 entryPoints:
-    web:
-        address: ":80"
-    websecure:
-        address: ":443"
-        http:
-            tls:
-                certResolver: letsencrypt
-        transport:
-            respondingTimeouts:
-                readTimeout: 30m
-    tcp-1602:
-        address: ":1602/tcp"
-    udp-1704:
-        address: ":1704/udp"
+  web:
+    address: ":80"
+  websecure:
+    address: ":443"
+    http:
+      tls:
+        certResolver: letsencrypt
+    transport:
+      respondingTimeouts:
+        readTimeout: 30m
+  tcp-1602:
+    address: ":1602/tcp"
+  udp-1704:
+    address: ":1704/udp"
 ```
 
 ## Update Config
@@ -83,7 +83,7 @@ Make sure that the `allow_raw_resources` flag in your `/config/config.yml` is se
 
 ```yaml
 flags:
-    allow_raw_resources: true
+  allow_raw_resources: true
 ```
 
 ## Restart The Stack

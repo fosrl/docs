@@ -16,7 +16,9 @@ It is highly reccommended that you read the [official Traefik documentation](htt
 
 1. Wildcard certificates allow you to secure your all subdomains with a single certificate. This reduces the number of certificates you need to manage.
 2. You can add new subdomains to resources without needing to generate a new certificate each time. Without a wildcard certificate, you would need to wait (up to a few minutes usually) for a new certificate to be generated and loaded by Traefik.
+
 - For example: A wildcard cert `*.example.com` could protect `api.example.com`, `blog.example.com`, and another `*.subdomain.example.com` could protect `api.subdomain.example.com`, `blog.subdomain.example.com`, etc.
+
 3. The [rate limits](https://letsencrypt.org/docs/rate-limits/) for Let's Encrypt are per domain. Using a wildcard certificate reduces the number of domains you have, which can help you avoid hitting these limits.
 
 ## Setting Up Wildcard Certificates
@@ -24,6 +26,7 @@ It is highly reccommended that you read the [official Traefik documentation](htt
 1. Make sure the stack is not running.
 2. Update the Traefik configuration to use the DNS-01 challenge instead of the HTTP-01 challenge. This tells Traefik to use your DNS provider to create the DNS records needed for the challenge.
 3. Set the `prefer_wildcard_cert` flag to `true` in the Pangolin configuration file for your domain.
+
 - This settings will try to encourage Traefik to request one wildcard certificate for each level of the domain used by your existing resources.
 - For example: If you have two resources `blog.example.com` and `blog.subdomain.example.com`, Traefik should try to request a wildcard certificate for `*.example.com` and `*.subdomain.example.com` automatically for you.
 

@@ -5,7 +5,7 @@ This website is built using [Docusaurus](https://docusaurus.io/), a modern stati
 ### Installation
 
 ```
-$ npm i 
+$ npm i
 ```
 
 ### Local Development
@@ -21,7 +21,7 @@ This command starts a local development server and opens up a browser window. Mo
 Using SSH:
 
 ```
-$ npx sst deploy --stage prod 
+$ npx sst deploy --stage prod
 ```
 
 # License

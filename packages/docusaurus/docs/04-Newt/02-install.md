@@ -74,28 +74,28 @@ You can also run it with Docker compose. For example, a service in your `docker-
 
 ```yaml
 services:
-    newt:
-        image: fosrl/newt
-        container_name: newt
-        restart: unless-stopped
-        environment:
-            - PANGOLIN_ENDPOINT=https://example.com
-            - NEWT_ID=2ix2t8xk22ubpfy
-            - NEWT_SECRET=nnisrfsdfc7prqsp9ewo1dvtvci50j5uiqotez00dgap0ii2
+  newt:
+    image: fosrl/newt
+    container_name: newt
+    restart: unless-stopped
+    environment:
+      - PANGOLIN_ENDPOINT=https://example.com
+      - NEWT_ID=2ix2t8xk22ubpfy
+      - NEWT_SECRET=nnisrfsdfc7prqsp9ewo1dvtvci50j5uiqotez00dgap0ii2
 ```
 
 You can also pass the CLI args to the container:
 
 ```yaml
 services:
-    newt:
-        image: fosrl/newt
-        container_name: newt
-        restart: unless-stopped
-        command:
-            - --id 31frd0uzbjvp721
-            - --secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6
-            - --endpoint https://example.com
+  newt:
+    image: fosrl/newt
+    container_name: newt
+    restart: unless-stopped
+    command:
+      - --id 31frd0uzbjvp721
+      - --secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6
+      - --endpoint https://example.com
 ```
 
 ### Unraid

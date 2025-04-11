@@ -1,6 +1,6 @@
 # Metrics
 
-This is a basic example of collecting metrics from Traefik and CrowdSec using Prometheus and visualizing them with Grafana dashboards. 
+This is a basic example of collecting metrics from Traefik and CrowdSec using Prometheus and visualizing them with Grafana dashboards.
 
 :::warning
 
@@ -19,9 +19,9 @@ For claiming metrics from Traefik we have to adjust some configuration files.
 
 ```yaml
 service:
-    gerbil:
-        ports:
-        - 8082:8082
+  gerbil:
+    ports:
+      - 8082:8082
 ```
 
 2. Update the `/config/traefik/traefik_config.yml` file to include the following:
@@ -29,7 +29,7 @@ service:
 ```yaml
 entryPoints:
   metrics:
-    address: ':8082'
+    address: ":8082"
 
 metrics:
   prometheus:
@@ -58,9 +58,9 @@ For claiming metrics from Crowdsec we have to adjust the docker compose files.
 
 ```yaml
 service:
-    crowdsec:
-        ports:
-        - 6060:6060
+  crowdsec:
+    ports:
+      - 6060:6060
 ```
 
 2. Restart the Crowdsec container to apply the changes:
@@ -92,8 +92,8 @@ services:
 
 ```yaml
 global:
-  scrape_interval: 15s 
-  evaluation_interval: 15s 
+  scrape_interval: 15s
+  evaluation_interval: 15s
 
 scrape_configs:
   - job_name: "prometheus"
@@ -102,11 +102,11 @@ scrape_configs:
 
   - job_name: traefik
     static_configs:
-      - targets: ['172.17.0.1:8082']
+      - targets: ["172.17.0.1:8082"]
 
   - job_name: crowdsec
     static_configs:
-      - targets: ['172.17.0.1:6060']
+      - targets: ["172.17.0.1:6060"]
 ```
 
 3. Create a folder `data` in `/config/prometheus` and change the ower and owning group:

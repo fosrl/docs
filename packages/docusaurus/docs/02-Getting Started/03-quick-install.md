@@ -5,13 +5,13 @@ import WgetQuickInstaller from "@site/src/components/WgetQuickInstaller";
 
 ## Prerequisites
 
--   A Linux system with root access and a public IP address
-    -   We recommend Ubuntu or Debian based systems
--   [A domain name pointed to your server's IP address](./02-dns-networking.md)
--   [TCP ports 80, 443, and UDP port 51820 exposed to your Linux instance.](./02-dns-networking.md)
-    -   **Note:** Docker’s NAT-based port publishing feature automatically exposes all ports defined in `docker-compose` file. This behavior can bypass your host firewall settings, potentially exposing services that you did not intend to make public. It is important to review and manage these port configurations to minimize security risks.
--   An email address for Let's Encrypt certificate registration
--   (Optionally) a SMTP server
+- A Linux system with root access and a public IP address
+  - We recommend Ubuntu or Debian based systems
+- [A domain name pointed to your server's IP address](./02-dns-networking.md)
+- [TCP ports 80, 443, and UDP port 51820 exposed to your Linux instance.](./02-dns-networking.md)
+  - **Note:** Docker’s NAT-based port publishing feature automatically exposes all ports defined in `docker-compose` file. This behavior can bypass your host firewall settings, potentially exposing services that you did not intend to make public. It is important to review and manage these port configurations to minimize security risks.
+- An email address for Let's Encrypt certificate registration
+- (Optionally) a SMTP server
 
 ## Using a VPS
 
@@ -58,11 +58,11 @@ You'll need to configure the admin user. This is the first user in the system. Y
 
 1. **Admin Email**: Defaults to `admin@yourdomain.com` but can be customized
 2. **Admin Password**: Must meet these requirements:
-    - At least 8 characters
-    - At least one uppercase letter
-    - At least one lowercase letter
-    - At least one digit
-    - At least one special character
+   - At least 8 characters
+   - At least one uppercase letter
+   - At least one lowercase letter
+   - At least one digit
+   - At least one special character
 
 ### 4. Security Settings
 
@@ -77,11 +77,11 @@ Decide whether to enable email functionality. This allows Pangolin to send trans
 
 If enabled, you'll need to provide:
 
--   SMTP host
--   SMTP port (defaults to 587)
--   SMTP username
--   SMTP password
--   No-reply email address. This is the sender email address that Pangolin will email from. Many times this should be the same as the username.
+- SMTP host
+- SMTP port (defaults to 587)
+- SMTP username
+- SMTP password
+- No-reply email address. This is the sender email address that Pangolin will email from. Many times this should be the same as the username.
 
 ### 6. Docker Installation
 
@@ -93,11 +93,11 @@ If Docker isn't already installed, the installer will:
 
 Supported distributions:
 
--   Ubuntu/Debian
--   Fedora
--   OpenSUSE
--   RHEL
--   Amazon Linux
+- Ubuntu/Debian
+- Fedora
+- OpenSUSE
+- RHEL
+- Amazon Linux
 
 ### 7. Container Deployment
 
@@ -117,5 +117,5 @@ After successful installation:
 
 ## Notes
 
--   The installer checks for an existing configuration and won't overwrite it if found
--   Docker installation is optional if already present
+- The installer checks for an existing configuration and won't overwrite it if found
+- Docker installation is optional if already present

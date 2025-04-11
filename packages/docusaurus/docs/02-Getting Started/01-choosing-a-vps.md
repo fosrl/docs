@@ -4,7 +4,7 @@ Our stack is lightweight and efficient, so you don’t need a high-powered serve
 
 ## Rack Nerd
 
-Many of our users have had a great experience with [RackNerd](https://my.racknerd.com/aff.php?aff=13788). 
+Many of our users have had a great experience with [RackNerd](https://my.racknerd.com/aff.php?aff=13788).
 
 - [**1 vCPU, 1GB RAM, and ~20GB SSD for just around $11.29/year or less than $1 a month**](https://my.racknerd.com/aff.php?aff=13788&pid=903). That's a great deal and is plenty to run pangolin!
 - [1 vCPU, 2GB RAM, and ~40GB SSD for just around $18.29/year or $1.5/month](https://my.racknerd.com/aff.php?aff=13788&pid=904)

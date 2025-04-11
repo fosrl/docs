@@ -3,13 +3,13 @@ import React, { useEffect, useState } from "react";
 import { fetchLatestRelease } from "../lib/fetchLatestRelease";
 
 const WithoutTunnelingCompose: React.FC = () => {
-    const [text, setText] = useState<string>("");
+  const [text, setText] = useState<string>("");
 
-    useEffect(() => {
-        (async () => {
-            const pangolinVersion = await fetchLatestRelease("fosrl/pangolin");
+  useEffect(() => {
+    (async () => {
+      const pangolinVersion = await fetchLatestRelease("fosrl/pangolin");
 
-            setText(`services:
+      setText(`services:
   pangolin:
     image: fosrl/pangolin:${pangolinVersion}
     container_name: pangolin
@@ -38,10 +38,10 @@ const WithoutTunnelingCompose: React.FC = () => {
       - ./config/traefik:/etc/traefik:ro # Volume to store the Traefik configuration
       - ./config/letsencrypt:/letsencrypt # Volume to store the Let's Encrypt certificates
 `);
-        })();
-    }, []);
+    })();
+  }, []);
 
-    return <CodeBlock language="yml">{text}</CodeBlock>;
+  return <CodeBlock language="yml">{text}</CodeBlock>;
 };
 
 export default WithoutTunnelingCompose;

@@ -1,15 +1,15 @@
-import CodeBlock from '@theme/CodeBlock';
+import CodeBlock from "@theme/CodeBlock";
 import React, { useEffect, useState } from "react";
 import { fetchLatestRelease } from "../lib/fetchLatestRelease";
 
 const StaticTraefikConfig: React.FC = () => {
-    const [text, setText] = useState<string>("");
+  const [text, setText] = useState<string>("");
 
-    useEffect(() => {
-        (async () => {
-            const badgerVersion = await fetchLatestRelease("fosrl/badger");
+  useEffect(() => {
+    (async () => {
+      const badgerVersion = await fetchLatestRelease("fosrl/badger");
 
-            setText(`api:
+      setText(`api:
   insecure: true
   dashboard: true
 
@@ -53,14 +53,10 @@ entryPoints:
 
 serversTransport:
   insecureSkipVerify: true`);
-        })();
-    }, []);
+    })();
+  }, []);
 
-    return (
-        <CodeBlock language="yml">
-            {text}
-        </CodeBlock>
-    );
+  return <CodeBlock language="yml">{text}</CodeBlock>;
 };
 
 export default StaticTraefikConfig;

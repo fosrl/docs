@@ -7,12 +7,15 @@ This guide provides essential information for developers working on the Gerbil p
 To get started with the Gerbil project, follow these setup instructions:
 
 ### Prerequisites
+
 - **Go**: Ensure that you have Go installed on your system. The project uses Go version 1.23.1 or later. You can download it from [golang.org](https://golang.org/dl/).
 - **Docker**: Install Docker to build and run the application in a containerized environment.
 - **Git**: Make sure Git is installed to clone the repository.
 
 ### Installation Steps
+
 1. **Clone the Repository**:
+
    ```bash
    git clone https://github.com/fosrl/gerbil.git
    cd gerbil
@@ -20,12 +23,14 @@ To get started with the Gerbil project, follow these setup instructions:
 
 2. **Install Dependencies**:
    Run the following command to download all required Go dependencies:
+
    ```bash
    go mod download
    ```
 
 3. **Build the Application**:
    You can build the application using Docker or directly using Go:
+
    - **Using Docker**:
      ```bash
      docker build -t gerbil .
@@ -37,13 +42,13 @@ To get started with the Gerbil project, follow these setup instructions:
 
 4. **Run the Application**:
    To run the application, execute:
-    ```bash
-    ./gerbil \
-    --reachableAt=http://gerbil:3003 \
-    --generateAndSaveKeyTo=/var/config/key \
-    --remoteConfig=http://pangolin:3001/api/v1/gerbil/get-config \
-    --reportBandwidthTo=http://pangolin:3001/api/v1/gerbil/receive-bandwidth
-    ```
+   ```bash
+   ./gerbil \
+   --reachableAt=http://gerbil:3003 \
+   --generateAndSaveKeyTo=/var/config/key \
+   --remoteConfig=http://pangolin:3001/api/v1/gerbil/get-config \
+   --reportBandwidthTo=http://pangolin:3001/api/v1/gerbil/receive-bandwidth
+   ```
 
 ## 2. Project Structure Overview
 
@@ -75,6 +80,7 @@ gerbil/
 The development workflow for contributing to Gerbil involves several key steps:
 
 1. **Branching**: Create a new branch for your feature or bug fix.
+
    ```bash
    git checkout -b feature/my-feature-name
    ```
@@ -84,11 +90,13 @@ The development workflow for contributing to Gerbil involves several key steps:
 3. **Testing Locally**: Run tests locally to ensure your changes do not break existing functionality.
 
 4. **Committing Changes**: Commit your changes with a descriptive message.
+
    ```bash
    git commit -m "Add feature X"
    ```
 
 5. **Pushing Changes**: Push your branch to the remote repository.
+
    ```bash
    git push origin feature/my-feature-name
    ```

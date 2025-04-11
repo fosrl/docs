@@ -12,7 +12,7 @@ Some notes about how to set up key parts of the networking in this project are b
 
 You will want your own domain. These can be had for cheap and are a good way to begin to own your digital life on the internet. Any domain will do fine.
 
-You can [buy a cheap domain at Namecheap](https://namecheap.pxf.io/c/6099916/386170/5618) 
+You can [buy a cheap domain at Namecheap](https://namecheap.pxf.io/c/6099916/386170/5618)
 
 We use Namecheap for our own domains and they provide a good service. Using the link will support us through their affiliate program if you make a purchase which is a good way to support the project.
 
@@ -44,7 +44,6 @@ If you intend to use the root of your domain, then you will need an additional A
 Docker automatically creates iptables NAT rules when container ports are published (using `-p` or docker-compose). These rules can bypass host firewall settings (such as UFW or firewalld), causing ports to be accessible from external networks even if they aren’t explicitly allowed by your firewall. Always verify your exposed ports (e.g., with [nmap](https://nmap.org/) or [RustScan](https://github.com/bee-san/RustScan)) and ensure you only expose the ports that are absolutely necessary. For more details, see [Docker’s port publishing documentation](https://docs.docker.com/engine/network/packet-filtering-firewalls/#port-publishing-and-mapping).
 
 :::
-
 
 Following ports should be exposed on Operating system level.
 
@@ -78,9 +77,9 @@ By default the config defaults to using the bellow settings:
 
 ```yaml
 gerbil:
-    block_size: 24
-    site_block_size: 30
-    subnet_group: 100.89.137.0/20
+  block_size: 24
+  site_block_size: 30
+  subnet_group: 100.89.137.0/20
 ```
 
 This means that Gerbil will choose the first /24 subnet in the `100.89.137.0/20` range to operate its network. `100.89.137.0/20` is in the CGNAT range which should avoid overlap with most private networks, but if it does please make sure to change this in your config **before** registering your first Gerbil.
@@ -101,7 +100,7 @@ As soon as you enable the Cloudflare proxy, you're bound to Cloudflare's terms o
 
 :::
 
-Pangolin can be used with Cloudflare proxy (orange cloud) enabled. Ideally you should [setup wildcard certificates](../03-Pangolin/02-Configuration/03-wildcard-certs.md) with Traefik using the DNS challenge and **set Cloudflare to Full (Strict) SSL mode**. 
+Pangolin can be used with Cloudflare proxy (orange cloud) enabled. Ideally you should [setup wildcard certificates](../03-Pangolin/02-Configuration/03-wildcard-certs.md) with Traefik using the DNS challenge and **set Cloudflare to Full (Strict) SSL mode**.
 
 Pangolin through Cloudflare will not work under Full or Automatic SSL/TLS. Cloudflare's documentation about SSL/TLS Encryption is available [here](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes/).
 
@@ -109,7 +108,7 @@ Since Cloudflare proxy obscures the destination IP of the host, you will also ne
 
 ```yaml
 gerbil:
-    start_port: 51820
-    # highlight-next-line
-    base_endpoint: "104.21.16.1" # Replace with your VPS IP
+  start_port: 51820
+  # highlight-next-line
+  base_endpoint: "104.21.16.1" # Replace with your VPS IP
 ```

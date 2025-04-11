@@ -1,9 +1,9 @@
-import CodeBlock from '@theme/CodeBlock';
+import CodeBlock from "@theme/CodeBlock";
 
 const DynamicTraefikConfig: React.FC = () => {
-    return (
-        <CodeBlock language="yml">
-        {`http:
+  return (
+    <CodeBlock language="yml">
+      {`http:
   middlewares:
     redirect-to-https:
       redirectScheme:
@@ -57,8 +57,8 @@ const DynamicTraefikConfig: React.FC = () => {
         servers:
           - url: "http://pangolin:3000" # API/WebSocket server
 `}
-        </CodeBlock>
-    );
+    </CodeBlock>
+  );
 };
 
 export default DynamicTraefikConfig;
