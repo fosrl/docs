@@ -107,9 +107,13 @@ systemctl restart crowdsec-firewall-bouncer
 service:
   crowdsec:
     ports:
-      - 6060:6060
-      - 8080:8080
+      - 6060:6060 # Metrics port
+      - 8080:8080 # Local API port
 ```
+:::warning
+Docker’s NAT-based port publishing feature automatically exposes all `ports:` defined in the `docker-compose` file on all network interfaces. This behavior can bypass your host firewall settings, potentially exposing services that you did not intend to make public.
+Please see [complete warning about exposing ports](/Getting%20Started/dns-networking#ports-to-expose).
+:::
 
 7. Verify communication between the firewall bouncer and the CrowdSec container by running:
 
