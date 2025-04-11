@@ -60,6 +60,31 @@ The following environment variables are passed to the `Newt` container:
 - `NEWT_ID`
 - `NEWT_SECRET`
 
+## Exposing Home Assistant through addon
+1. Connect addon to your Pangolin by completing environment variables and starting the addon
+2. In Pangolin create new HTTPS resource for your new Tunnel with subdomain
+3. Within the created Resource add new Target Configuration
+
+| Method | IP / Hostname | Port |
+| --- | ----------- | --- |
+| HTTPS | 127.0.0.1 | 8123 |
+
+4. In Home Assistant's `configuration.yaml` add these two sections:
+```yaml
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 127.0.0.1
+homeassistant:
+  allowlist_external_urls:
+    - "https://<subdomain>.example.com" # <-- Replace with URL of created resource in Pangolin
+```
+:::note
+Please see [http](https://www.home-assistant.io/integrations/http/) documentation and [allowlist_external_urls](https://www.home-assistant.io/integrations/homeassistant/#external_url) on Home Assistant site
+:::
+5. Restart Home Assistant and your new Pangolin Proxy should be alive
+
+
 ## Troubleshooting
 
 #### **Add-on does not start?**
