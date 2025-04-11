@@ -120,19 +120,21 @@ aside {
 }
 
 .theme-admonition {
-    border: 1px solid rgb(218, 221, 225);
+    border: 0px solid rgb(218, 221, 225);
 }
 
 .prism-code {
     border: 1px solid rgb(218, 221, 225);
 }
 
+
 html[data-theme="dark"] .theme-admonition {
-    border: 1px solid rgb(115, 115, 115); /* Subtle contrast against #1B1B1D */
+    border: 0px solid #333333;
 }
 
 html[data-theme="dark"] .prism-code {
-    border: 1px solid rgb(115, 115, 115); /* Matches the admonition style */
+    border: 1px solid #333333;
+    background-color: #242424 !important; /* Darker background for code blocks */
 }
 
 div[class^="announcementBarContent"] a {
