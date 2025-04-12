@@ -23,6 +23,10 @@ service:
     ports:
       - 8082:8082
 ```
+:::warning
+Docker’s NAT-based port publishing feature automatically exposes all `ports:` defined in `docker-compose` file. This behavior can bypass your host firewall settings, potentially exposing services that you did not intend to make public.
+Please see [complete warning about exposing ports](/Getting%20Started/dns-networking#ports-to-expose).
+:::
 
 2. Update the `/config/traefik/traefik_config.yml` file to include the following:
 
@@ -62,6 +66,11 @@ service:
     ports:
       - 6060:6060
 ```
+:::warning
+Docker’s NAT-based port publishing feature automatically exposes all `ports:` defined in the `docker-compose` file on all network interfaces. This behavior can bypass your host firewall settings, potentially exposing services that you did not intend to make public.
+Please see [complete warning about exposing ports](/Getting%20Started/dns-networking#ports-to-expose).
+:::
+
 
 2. Restart the Crowdsec container to apply the changes:
 
@@ -87,6 +96,11 @@ services:
       - ./config/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - ./config/prometheus/data:/prometheus
 ```
+:::warning
+Docker’s NAT-based port publishing feature automatically exposes all `ports:` defined in the `docker-compose` file on all network interfaces. This behavior can bypass your host firewall settings, potentially exposing services that you did not intend to make public.
+Please see [complete warning about exposing ports](/Getting%20Started/dns-networking#ports-to-expose).
+:::
+
 
 2. Create a `prometheus.yml` file in the `/config/prometheus` directory with the following content:
 
@@ -138,6 +152,10 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ./config/grafana/data:/var/lib/grafana
 ```
+:::warning
+Docker’s NAT-based port publishing feature automatically exposes all `ports:` defined in the `docker-compose` file on all network interfaces. This behavior can bypass your host firewall settings, potentially exposing services that you did not intend to make public.
+Please see [complete warning about exposing ports](/Getting%20Started/dns-networking#ports-to-expose).
+:::
 
 2. Start the Grafana container:
 
