@@ -198,3 +198,10 @@ div[class^="announcementBarContent"] a:hover {
 html[data-theme="dark"] {
   background-color: #1a1a1a !important;
 }
+
+.alert--secondary{
+  background-color: #F2F2F2 !important;
+}
+html[data-theme="dark"] .alert--secondary{
+  background-color: #474748 !important;
+}

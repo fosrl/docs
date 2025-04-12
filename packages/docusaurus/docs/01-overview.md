@@ -18,12 +18,13 @@ Note that these guides may be out of date, as the project is still in active dev
 
 :::
 
-- "Pangolin: Your Own Self-Hosted Cloudflare Tunnel Alternative" by DB Tech [(YouTube)](https://youtu.be/a-a-Xk1hXBQ?si=wbppkYJ3Skt3efXp)
-- "Pangolin: Self-Host Your Services Securely (All-in-One Solution)" by LinuxCloudHacks [(YouTube)](https://www.youtube.com/watch?v=I3fhhwptHzc&t)
-- "Self-host a public Minecraft server without opening ports using Crafty and Pangolin" by Fossorial [(YouTube)](https://youtu.be/acWB5wQQoOE?si=YsrCPYTz6JpLCDjW)
-- "DS-Lite & IPv6 Problem ENDLICH gelöst! So öffnest du Ports mit Pangolin" by Apfelcast [(YouTube)](https://youtu.be/z3Ao9CWH0GU?si=HJHyYFaROlijVmzO)
-- "Pangolin: Easy Self-Hosted Tunneled Reverse Proxy with Built-in Auth via VPS" by Noted [(Article)](https://noted.lol/pangolin/)
-- "Cómo instalar Pangolin con Docker usando un script - Alternativa a Cloudflare Tunnel" by José Maria Labarta [(YouTube)](https://www.youtube.com/watch?v=i9AmiJPjqUQ)
+- "Pangolin: Your Own Self-Hosted Cloudflare Tunnel Alternative" by **DB Tech** [(YouTube)](https://youtu.be/a-a-Xk1hXBQ?si=wbppkYJ3Skt3efXp)
+- "Better Than Cloudflare Tunnels? - Pangolin Guide" by **Jim's Garage** [(YouTube)](https://youtu.be/8VdwOL7nYkY?si=2j-7V3CYLPJy7LmB)
+- "Pangolin: Self-Host Your Services Securely (All-in-One Solution)" by **LinuxCloudHacks** [(YouTube)](https://www.youtube.com/watch?v=I3fhhwptHzc&t)
+- "Self-host a public Minecraft server without opening ports using Crafty and Pangolin" by **Fossorial** [(YouTube)](https://youtu.be/acWB5wQQoOE?si=YsrCPYTz6JpLCDjW)
+- "DS-Lite & IPv6 Problem ENDLICH gelöst! So öffnest du Ports mit Pangolin" by **Apfelcast** [(YouTube)](https://youtu.be/z3Ao9CWH0GU?si=HJHyYFaROlijVmzO)
+- "Pangolin: Easy Self-Hosted Tunneled Reverse Proxy with Built-in Auth via VPS" by **Noted** [(Article)](https://noted.lol/pangolin/)
+- "Cómo instalar Pangolin con Docker usando un script - Alternativa a Cloudflare Tunnel" by **José Maria Labarta** [(YouTube)](https://www.youtube.com/watch?v=i9AmiJPjqUQ)
 
 ## Components Overview
 
