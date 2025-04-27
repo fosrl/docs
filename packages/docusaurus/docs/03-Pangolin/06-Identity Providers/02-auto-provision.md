@@ -14,7 +14,7 @@ If auto provision is disabled, organization admins will need to manually create 
 
 ## Selection Algorithm
 
-It helpful to think of the auto provisioning process as follows:
+It is helpful to think of the auto provisioning process as follows:
 
 1. User successfully logs in using an identity provider.
 2. Pangolin creates a user account for the user.
@@ -152,4 +152,4 @@ contains(groups, '{{orgId}}')
 }
 ```
 
-The `{{orgId}}` placeholder will be replaced with the organization ID when the expression is evaluated.
+When Pangolin evaluates this expression against the "home-lab" organization, it will replace `{{orgId}}` with "home-lab". The result of the expression will return true since the user is a member of the "home-lab" group.

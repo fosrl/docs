@@ -17,10 +17,10 @@ Use JMESPath to select attributes from the claims token. See [JMESPath](https://
 
 Determine how to access information from the claims token returned by the identity provider. This is used to map the user information from the identity provider to the user information in Pangolin.
 
-- Identifer Path
+- Identifer Path (required)
   - This must be unique each user within an identity provider.
-- Email Path
-- Name Path
-- Scopes
+- Email Path (optional)
+- Name Path (optional)
+- Scopes (not JMESPath; must be space-delimited strings)
   - The scopes to request from the identity provider.
   - Generally, `openid profile email` is sufficient.
