@@ -1,0 +1,71 @@
+---
+id: post-resource-by-resource-id-whitelist
+title: "postResourceByResourceIdWhitelist"
+description: "Set email whitelist for a resource. This will replace all existing emails."
+sidebar_label: "postResourceByResourceIdWhitelist"
+hide_title: true
+hide_table_of_contents: true
+api: eJytVE1v2zAM/SsCscM+lGQdsItPbYYdcmrQZhgwxwMYm4nVypYryUk8w/99oBwnMbrttIshSyT13uOjWsjIpVZVXpkSIngkL6hApcUhV560cl5sjRUoLDlT25SmYpUrJw5Ka2Gp0piSQK0FHZXzqtz16W4KEjzuHEQxPJxSIZHgKK2t8g1EcQtzQktW3NU+hyhOukSCqcgig1lkEEFlnB+y582wWmTfB3AgoUKLBXmyLtR0aU4FQtSCbyqCCJy3qtxBJ8HSS60sZRB5W5OEEgsOsOeyIEGxChX6HBgNZ5Dzc5M1XDE1pafS8xKrSqs0IJ09OdbuD1ebzROlAaNlXl6R49Neoas4tBYbvtxTEfaxbO63gc6YhIStsQV6iPoi0MnXIRV6T5Z5/Fyv39/G6/VhOkk+rNfTGCe/7iY/kvaT7N5Al3QSCjwu+ls/f+xGGsUDzkQCZpliqqiXV0y2qB11XZ/mKlO6wI+rks/N0MAeUg4RzAapZ+1F9G52uOqmI7sfWllbzUn7m9CLwTmPrHIv5Mg/ZyFy7yuuFOIggk2IAobJnXq49PTrEYtK03VPYqgd2VvqT6apKbhULy3rpcqt4XgG2Y/M/oatrjzXgSWWO6NVKRalp13vZHG3XLD9WIsCg1NOzuMdMbhazJvLepGJa4+PhvTKh/95Xnv9PB39rNKoSkYdmtCeOhifhwUkRKPBuTQxkZBz26MY2naDjr5Z3XW8/VKT5clPJOzRKtywZnELmXK8zk6W+gfftw8nf74TfwM8zFTJE7VHXfMfSHimZjzswf85YUY2oOgDvvR3TVZc5lLg1byzJc82X94/rkDC5vROFCYLDwseQIZvAGACn2DcsNeCxnJX445j+5rsURy7+eReOSyuHoUxxbbtI1bmmcquOzP2/M9ku+43ibIMvA==
+sidebar_class_name: "post api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"postResourceByResourceIdWhitelist"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/resource/{resourceId}/whitelist"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Set email whitelist for a resource. This will replace all existing emails.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"resourceId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"emails":{"type":"array","items":{"anyOf":[{"type":"string","format":"email"},{"type":"string","pattern":"^\\*@[\\w.-]+\\.[a-zA-Z]{2,}$"}]},"maxItems":50}},"required":["emails"],"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

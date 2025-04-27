@@ -1,6 +1,7 @@
 import { themes as prismThemes } from "prism-react-renderer";
 import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
+import type * as OpenApiPlugin from "docusaurus-plugin-openapi-docs";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -38,7 +39,8 @@ const config: Config = {
                 docs: {
                     sidebarCollapsed: false,
                     sidebarPath: "./sidebars.ts",
-                    routeBasePath: "/"
+                    routeBasePath: "/",
+                    docItemComponent: "@theme/ApiItem" // Derived from docusaurus-theme-openapi
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
                     //   editUrl:
@@ -64,7 +66,7 @@ const config: Config = {
                     customCss: "./src/css/custom.css"
                 }
             } satisfies Preset.Options
-        ]
+        ],
     ],
 
     themeConfig: {
@@ -183,8 +185,25 @@ const config: Config = {
                 dataCache: true, // Optional
                 dataDomains: "docs.fossorial.io" // comma separated list of domains, *Recommended*
             }
+        ],
+        [
+            "docusaurus-plugin-openapi-docs",
+            {
+                id: "api", // plugin id
+                docsPluginId: "classic", // configured for preset-classic
+                config: {
+                    petstore: {
+                        specPath: "./openapi.yml",
+                        outputDir: "docs/03-Pangolin/07-API",
+                        sidebarOptions: {
+                            groupPathsBy: "tag"
+                        }
+                    } satisfies OpenApiPlugin.Options
+                }
+            }
         ]
-    ]
+    ],
+    themes: ["docusaurus-theme-openapi-docs"] // export theme components
 };
 
 export default config;

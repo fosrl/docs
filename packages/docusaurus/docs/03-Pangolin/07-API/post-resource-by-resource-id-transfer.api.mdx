@@ -1,0 +1,71 @@
+---
+id: post-resource-by-resource-id-transfer
+title: "postResourceByResourceIdTransfer"
+description: "Transfer a resource to a different site. This will also transfer the targets associated with the resource."
+sidebar_label: "postResourceByResourceIdTransfer"
+hide_title: true
+hide_table_of_contents: true
+api: eJy9U01v2zAM/SsCTxugLe3Vt2bYIYdhQZudDB8Ym7HV2pIr0WkDQ/99oGznA+t23CWgGYp87/FxhIpC6U3PxlnIYOfRhgN5hcpTcIMvSbFTqCpzOJAnyyoYpq9q15ig3kzbKmyDU7y844YUo6+Jg8IQXGmQqVJvhpv039L1K2hgrANkOTzOOSg0BCoHb/gEWT7CmtCTVw8DN5DlRSw0uJ48CthNBRn0LvDyen1aok210AANPXrsiMmH1DKUDXUI2Qh86gkyCOyNrSFq8PQ6GE8VZOwH0mCxkwJ/7goajIjUIzcgYOQFBV676iQdS2eZLEuIfd+aMgFdPQeR9oPRbv9MJQtGL7TYUEh1hmXYpc5YpjqR6Yw13dBBdqeB3st2COZIP5akwI43RPKlWaEBq8oIHmy3V+MO2AaKcXoWemdDAhE1dMSNW0ROQsoWYLXosRovysQVXxQP5I+L3INv5c3xPum1LPdJlJjI3qz4zLhh7qVTqoMM9qkKBKWo+XjR/fs7dn1L17rdRdnTwUlOgEzOPt6L4wxLLWzR1q41Vm1E2slQ6mG7ERsI3Q7TxmYHSEYt5lLr0yXeVOrKajendGWH/3xVk4RM77zqWzRWSKU9jPMO87OnQUN24+/zGgsNjew9y2Ec9xjol29jlPTrQF7Os9BwRG9wL4rmI1QmSFzNnvqHHJ8eZ4N+Vn/DOyfRnkDGtIN8gYYXOt2eZCyihoawIp9QTAXfpllfdtLm0uCPqxRTnn2+/fm0Aw37+Zo7V6XzxzfQ6TcBcIlPsm7KjdCirQespXbqKS7FWz/P/tVLIEg/pDiOU8XOvZCN8cyY5VvIxvgbHZj8Zg==
+sidebar_class_name: "post api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"postResourceByResourceIdTransfer"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/resource/{resourceId}/transfer"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Transfer a resource to a different site. This will also transfer the targets associated with the resource.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"resourceId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"siteId":{"type":"integer","minimum":0,"exclusiveMinimum":true}},"required":["siteId"],"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

@@ -1,0 +1,71 @@
+---
+id: put-idp-oidc
+title: "putIdpOidc"
+description: "Create an OIDC IdP."
+sidebar_label: "putIdpOidc"
+hide_title: true
+hide_table_of_contents: true
+api: eJyNlEFP5DAMhf9K5XN2R1x7A3YPlVaiWuA06iHTeDqBNgmJOzCq8t9XTsq0wCK4Vc5r8/z81RMoDK3XjrQ1UMK1R0lYSFPcVL+ui0rVP0EAyS5AuYVKoSFNp6L29qgVemgEBGxHr+kE5XaCK5QefXE50gHKbRMbAdahl/z5SkEJbqRKuRutWhDg8WnEQFdWnaCcoLWG0BA/Sud63abXNg+BrU0Q2gMOkp/o5BBKsLsHbAkEOM+XkMbAp0YOuFIF8tp0IGDQ5g+ajp1dRAFtr9EQm/qm9BZbj/QNuRzpcO/7/yn31g+SoITRa4gCyD6i+aZWp/T3Gn0t+aovfeAgdf9/bRQppk8PQ2tdTvPrXm2iIeg8pVm/s7ZHaSDGPGbtUTFCaTir8N+Fu4S3yuZD62d/jQCplGZMZF+vKNjLPmCM+fbgrAmpmyhgQDrYmURGJyUAG63cxmYqA/oj+pB4Hnk0sDleQFyhfssk5njeAH/u/kDkkkvWcRpJlcJgmv8u3P9+kYPrceF2SXoB9H3tlcSlfkZuKS1oLbX3CC0nK1aW4oLIUnsl483dawTIj8i0mr3lrjjKvFuOF+xKE3cLtTSd7bUpKkPY5QVRXNYVw+dsoEGaVSZupKJSrpj3xpudtdobn62vPBTCF9q4XmrDl4z5p8vz34JWPLBEQCPgYANxdZp2MuC972Pk8tOInvdcI+AovZY7bmXbRAEHlLwOGZlHPLGT7OnHHd/N8n5kDx/2GmN1RrK+vwMBu3kdDlbxK14+86qUz1ACW0xtJ/ZSbYJemm6UHWvzJ+O8g9a/YwZQvD6w0flImtPK4DRlxR3TEyOIuZ9EE8QmxvgPeC0ddg==
+sidebar_class_name: "put api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"putIdpOidc"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"put"}
+  path={"/idp/oidc"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Create an OIDC IdP.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={undefined}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"name":{"type":"string","minLength":1},"clientId":{"type":"string","minLength":1},"clientSecret":{"type":"string","minLength":1},"authUrl":{"type":"string","format":"uri"},"tokenUrl":{"type":"string","format":"uri"},"identifierPath":{"type":"string","minLength":1},"emailPath":{"type":"string"},"namePath":{"type":"string"},"scopes":{"type":"string","minLength":1},"autoProvision":{"type":"boolean"}},"required":["name","clientId","clientSecret","authUrl","tokenUrl","identifierPath","scopes"],"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

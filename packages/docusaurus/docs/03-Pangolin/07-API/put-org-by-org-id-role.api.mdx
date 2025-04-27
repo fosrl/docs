@@ -1,0 +1,71 @@
+---
+id: put-org-by-org-id-role
+title: "putOrgByOrgIdRole"
+description: "Create a role."
+sidebar_label: "putOrgByOrgIdRole"
+hide_title: true
+hide_table_of_contents: true
+api: eJx9U01v2zAM/SsGTxugLciAXnxrih0CDEjQtacgByZmbbW2pFJyWs/Qfx8oOUnTdjtZlvjx3uPjCBX5PWsXtDVQwg0TBiqwYNvSd1AQsPZQbmDFNRr9B1OcglvbEmwVeNr3rMMA5WaEBSETF9d9aKDcbONWgXXEKWdZQQmuDyuuF8OK62WVSihwyNhRIPapht831CGUI4TBEZTgA2tTQ1TA9NxrpgrKwD0pMNhJgJVioEALfoehAWksweTDwlaDFNtbE8gEOaJzrd4nULNHL6w/6Wp3j7QPAo+FQtDk5TW3fI9NQafNLzK18J4r6PD1+Pfj6iqqS40/MLugtsk9tgqwqrRkYLt+g+EBW08x5iTvrPEJWVTQUWjspHLSVfrDzHI9G5NGccZZck98OOrdcytRh3lS7TjO36JHpnwx1BP2JgQnlVIclLBLUYmLaHp7Vv/nK3aupbN6Z9UurXcetDYPVuIFZH47zMWKOkgdWKOpbatNsTSB6myv4nq9lFRnfejQvOnm+lCsuC4WQ/osq2Iy3ruhnBzyyQ5kzoFew8y1qI10SsKNk8wbcSEoKI9m5Gk/GuuDPI/jDj3dcxujXD/3xLIzWwUHZI07IbYZodJeztU05/+A/HI7WeZr8S+E0yWaAaRN28sfKHii4bQ2cRsVNIQVcQKQ325ym293UuGc+2FzxDIn263v70DBblq4zlaSwvgiauBLbm0Tk+SrdDdCi6busZbYXFIshJdmm8yljgcB+im5ccwRd/aJTIwnrkH+hWuMfwHksq25
+sidebar_class_name: "put api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"putOrgByOrgIdRole"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"put"}
+  path={"/org/{orgId}/role"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Create a role.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"orgId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"name":{"type":"string","minLength":1,"maxLength":255},"description":{"type":"string"}},"required":["name"],"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

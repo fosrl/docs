@@ -1,0 +1,71 @@
+---
+id: post-resource-by-resource-id-users
+title: "postResourceByResourceIdUsers"
+description: "Set users for a resource. This will replace all existing users."
+sidebar_label: "postResourceByResourceIdUsers"
+hide_title: true
+hide_table_of_contents: true
+api: eJytUz1v2zAQ/SvETS3AxsiqLS46eKqROJOg4SxdJCYUqZCUY0Hgfy+OkmwLTTN1EUjqPt57926EinzpVBeUNZDBEwXRe3JevFgnUDjytncl3YlDo7z4UFoLR53GkgRqLeisfFCmnpLuQELA2kOWw+OcCRKePTkoJHgqe6fCAFk+wpbQkRMPfWggy4tYSLAdOWQguwoy6KwPS5HtsJx2FVfzIKFDhy0FvnA9XzbUImQjhKEjyMAHp0wNUYKj9145qiALricJBlsOcJeSIEEx+w5DA4yEM8iHra0GrlhaE8gEPmLXaVUmlJtXz5p90toeX6kMjNExp6DI81/WaFf5m0B0DgfuHqj1n2CPK/T5pUIhAatKMQrU+5smL6g9xTnPd9b41DpKaCk0dtE1ycfCw2ZRYTNe9YibfhbZkzstCvdOc8LpPkm0DPOJyU/8ViO9cGlC6LhSioMMjikKGCIL+HiV+tcZ207TSqp80aKIPKQXy38Z0uTX0z1bTgXOgj2a2mplxM4EqicriYf9jj3ArFtM45rHzy9isZXYDtfzrhKLyVbbcWOE/7EokzyBzmHTaVSGYSaNx3k4+cWiICFb2XWaTyGh4WlmOYzjET09Ox0jP7/35HjPCgkndAqPLFA+QqU8n6vZKV8Q/PY4++67+BfYxcSGLXxC3fMNJLzRsF6vyMNrCCtyCcUU8HPq9ePAZa4F/towdtvFvfvfTweQcJw3s7VVWmX8AJm+CYBNfJIn09sIGk3dY82xU022H66NOhtTLgdG+inFcZwiDvaNTIwXxoHvTDbGP+gQ2Ts=
+sidebar_class_name: "post api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"postResourceByResourceIdUsers"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/resource/{resourceId}/users"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Set users for a resource. This will replace all existing users.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"resourceId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"userIds":{"type":"array","items":{"type":"string"}}},"required":["userIds"],"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

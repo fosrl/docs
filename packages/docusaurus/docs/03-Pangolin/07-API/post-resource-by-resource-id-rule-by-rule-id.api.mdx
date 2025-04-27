@@ -1,0 +1,71 @@
+---
+id: post-resource-by-resource-id-rule-by-rule-id
+title: "postResourceByResourceIdRuleByRuleId"
+description: "Update a resource rule."
+sidebar_label: "postResourceByResourceIdRuleByRuleId"
+hide_title: true
+hide_table_of_contents: true
+api: eJy9VD1v2zAQ/SvCTS3A1s2qzXYDVECBCI4zGRrO0kViIpEKSTkRBP734ijJsts0Q4cuNk2Tj/c+7gYoyOZGtk5qBTE8tAU6ijAyZHVncopMV9NXEOCwtBAfYDf9AQJ2XU2QCbCUd0a6HuLDABtCQyZad66C+JD5TIBuySA/kBQQQ6utm0E2/bxKCkbb9PyZFCCgRYMNOTI2wNq8ogYhHsD1LUEM1hmpSvACDL100lABsTMdCVDY8AEzI0km1qKrwIt/AjqXeA2WjTfIuo0uekbMtXKkHC+xbWuZB9arJ8vavvO0Pj5R7pisYY2cJBvu5qMbv5cogFTXsAnr7fY23YOA77u7FDIvoEGXVx9d2SbfdyAgSUFAut7/CLdOWHf03q1Gqp+kSvbwxnN9Uo8On49K5agkw7qRwmPNsp3/PGpdEyrwV6oeFpxMABaFZJ5YpxfsH7G25P140bZa2aAJMyRX6TlAISBcHaxme1bDYpRfsfurYcyAB86oOc1Z6kzNF083wcM5vffszmjAVYbPpCrnWkYK55hkOBU4ssO7JQu3b9i0NV16uVg2OTUbMlmwSL9o/e1CWk6k5/g9aoZlLiPu6YabUzp+DlJUpa6lihJ2Z2y6aJ0m7BLL1mCI1RRs3onmBow2/bJOiogbMezxd4j+1aS4CPtHQ2NUztGbW7U1SsWFBPmHyb/Dub1AQHzVagwSNsdGzgRU7Hx8gGE4oqUHU3vP2y8dGR4+GatpJCsWfC6kndQLqfqAwafdFNLP0d+qnjZR9RemgYBn6pdhwwPmf766yOW5nSvCgkzgPh7Yjm992TPMAvDHcOI+OPdXenfPOT1OQ63RRZiC+Mqe4OtYgA58QreEvQFqVGWHJZ8dMbkx8LqFppYR84IrfZfiMIwn9vqZlPdnxo5/M1nvfwFhDUf0
+sidebar_class_name: "post api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"postResourceByResourceIdRuleByRuleId"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/resource/{resourceId}/rule/{ruleId}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Update a resource rule.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"ruleId","in":"path"},{"schema":{"type":"string"},"required":true,"name":"resourceId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"action":{"type":"string","enum":["ACCEPT","DROP"]},"match":{"type":"string","enum":["CIDR","IP","PATH"]},"value":{"type":"string","minLength":1},"priority":{"type":"integer"},"enabled":{"type":"boolean"}},"required":["priority"],"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

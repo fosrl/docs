@@ -1,0 +1,71 @@
+---
+id: post-client-by-client-id
+title: "postClientByClientId"
+description: "Update a client by its client ID."
+sidebar_label: "postClientByClientId"
+hide_title: true
+hide_table_of_contents: true
+api: eJyNU01v2zAM/SsGTxugLeiAXnxruh0CDFjQpicjB8ZibbW2rEp0FsPQfx8ox/nYumGXRKIp8r3HxxE0hdIbx6azkMOT08iUYVY2hixnuyEzHObb6utnUMBYBcgLuE9B2CoIVPbe8AB5McKS0JPP7nquIS+2caugc+RROqw05OC6wNPb5TD9rzQocOixJSYfUplQ1tQi5CPw4AhyCOyNrSAq8PTWG08acvY9KbDYSkJ5rmWEi0OuQdpLPgVednqQemVnWYDnI6BzjSkTtMVLEAXeadztXqhkQeiFCBsK8nXq+js8Ba2x38lWwv5GQYuH+fbl9jYqCIZppcPFS/QeBwHN1IZ3CMeoALU2ghKb9QWIZ2wCxZTgKbjOhgQtKmiJ624WO4krCGAxabQYZ60iyPT8fla9942k7W+ScPNcH0WSifXVdE9Qa2YnlVIe5LBLWSDARNaH8wC+HbB1DZ0FPAt3UqaYY9soo3zuJFsgTh7d34gJDUsVWKOtusbYbGWZqsll2d16JT4R7i3ai14SySbPZcthPiXLXO3BhUn+byUmGZgOvHANGivtk5bjUfriaE9QkJ+MulVQy3zyAsZxh4GefBOjhN968rJOWwV79AZ3QrYYQZsgZ32c/T9gf3g4bsnH7G8AZ/9Zcd8em15uoOCVhst1ijKGmlCTTximz/dTp08bKXJ+/sdGiY9Oblz/eNyAgt1xE9tOyxuPP0Gl39S+S2yS21JshAZt1WMluVPNtBLXFjxaTs0HQfouwXGcMjbdK9kYT3xZ7kI2xl/1KLuT
+sidebar_class_name: "post api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"postClientByClientId"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/client/{clientId}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Update a client by its client ID.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"clientId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"name":{"type":"string","minLength":1,"maxLength":255},"siteIds":{"type":"array","items":{"type":"string"}}},"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

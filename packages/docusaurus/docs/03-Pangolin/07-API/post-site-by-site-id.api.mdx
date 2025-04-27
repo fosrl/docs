@@ -1,0 +1,71 @@
+---
+id: post-site-by-site-id
+title: "postSiteBySiteId"
+description: "Update a site."
+sidebar_label: "postSiteBySiteId"
+hide_title: true
+hide_table_of_contents: true
+api: eJx9U8tu2zAQ/BVhTy3A1nCBXHSLix4MFKgROyfDh7W1kZhIJEOuXAsC/71YSvKjcXuR+VjOzsyOeygoHLx2rK2BHJ5dgUwZZkEzfQUFjGWAfAtrzQQ7BYEOrdfcQb7tYUHoyWePLVeQb3dxp8A68ihgywJycDawvFx08l0WoMChx4aYfEgQ4VBRg5D3wJ0jyCGw16aEqMDTe6s9FZCzb0mBwSYVTEhaCDvkCqSxVFPghS06QTtYw2RYluhcrQ+J1Ow1iMw7be3+lQ4s/LxIYE1Bboeef5NT0Gjzk0wpuucKGjxNu28PDzEqwKLQ0hDr1RXeC9aBYoxJXHDWhNQlKmiIKzs5llwSMJiJ2Fk/SI4g9vvjZF3rayk5zpP+aTBrUTaQvxnPWUPF7AQp1UEO+1QFQkrcebr4+OOEjavp4sPVcLR5sXIhbIboHOcSF83yAFZoSltrky0NUzkkIntcLeWpSGzQXMHKSSYJyRbd8JsGfBPNq5HeSekgjenEM1ejNtIn+dOPVm5TbkBBPuZnp6ASr/Mt9P0eAz37OkY5fm/JS753Co7oNe5F0baHQgdZF+Mc/8Pv09MY3c/Zv8iNh2g6kDZ1KztQ8EbdJeNxFxVUhAX5xGC4/D70+bIRiMvjDzGXVJxztfq13oCC/fj3aGwhbzz+BpW+qblNWlJ20lkPNZqyxVJqB8wU7ttAjQFS00KY3pXX90PFxr6RifGslmUvYmP8A6QpjNg=
+sidebar_class_name: "post api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"postSiteBySiteId"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/site/{siteId}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Update a site.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"siteId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"name":{"type":"string","minLength":1,"maxLength":255}},"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

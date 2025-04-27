@@ -1,0 +1,71 @@
+---
+id: get-org-by-org-id-resources
+title: "getOrgByOrgIdResources"
+description: "List resources for an organization."
+sidebar_label: "getOrgByOrgIdResources"
+hide_title: true
+hide_table_of_contents: true
+api: eJyNkkGL2zAQhf+KmVMLotlcddtAKYFClu32FHxQ4rEt1pa8o3Goa/Tfyyh24pTNsidb4umbmTdvhALDkWzH1jvQ8NMGzgiD7+mIISs9ZcZlnirj7F8jom+ggE0VQO9ht7gHBc/TO8gVBDz2ZHkAvR9hg4aQsseea9D7POYKfIeU3m0L0FAh76jaDDuqtsWMCaCgM2RaZKSQQOFYY2tAj8BDh6AhMFlXQVRA+NZbwgI0U48KnGlF4IUICqxM1xmuIar7HAUFlqZvGDSsHx4ebsGlacKV3NjW8kx+65GGT6M/5PqyDPg/OBd96LwLGECPUUGLXPvJu2SUeAsrT9VqTEPHFS2MDEin2cWeGpGe1ok7b+qXNJ7ot/u6DFIzd0JKOtBwSCqIUVotvSilxDlIp7XkxHIjyifjKt9Yl20dY3Xee/b4tBUbOh+4NU5eTwZUyNmOqmwzpM+2yJaJuMnrCEfvGB1/PrrnWRj/8KprjHXSQzJknDzcS2ZAgZ6jc7UxV1D7wKIZx4MJ+JuaGOX6vCYxt7DBHJrFWl9xWKTlZJpeGkhZuaO9JOAqzuVAVtTvV7lry5fnKWdfs3vjT5fGDcual26SDTFfZu7H9xdQYG7zMeVBzT/S57vocTwrXvwruhgvlVjOUinGf7+KjPo=
+sidebar_class_name: "get api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"getOrgByOrgIdResources"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/org/{orgId}/resources"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+List resources for an organization.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"orgId","in":"path"},{"schema":{"type":"string","default":"1000"},"required":false,"name":"limit","in":"query"},{"schema":{"type":"string","default":"0"},"required":false,"name":"offset","in":"query"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

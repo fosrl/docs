@@ -1,0 +1,71 @@
+---
+id: put-org-by-org-id-site-by-site-id-resource
+title: "putOrgByOrgIdSiteBySiteIdResource"
+description: "Create a resource."
+sidebar_label: "putOrgByOrgIdSiteBySiteIdResource"
+hide_title: true
+hide_table_of_contents: true
+api: eJy9VU2P0zAQ/SvRnEAylAWVQ27bhUMlpFbLcqp6mDazqZfEDmOnbIjy39HYSZMuuyAQcEn8MZ6PN37PLWTk9qwrr62BFK6Y0FOCCZOzNe/pJSjwmDtIN7DiHI3+hsFWwXVvAlsFjvY1a99AumlhQcjEyWXtD5Butt1Wga2Iw7llBilUtV9xvmhWnC+zj9rTopHvMju5VFAhY0me2AWfbn+gEiFtwTcVQQrOszY5dAqYvtSaKYPUc00KDJbBIHgEBVoKq9AfoFN/4shKlud+ttGYnF/YrBFne2s8GS9DrKpC70O1szsnsE6jomlWt6GkPr7d3dHeS8UsKHlNTuxi8IdZKii1+UAmF2gvFJR4P8xez+edAlfvMluiNo9WqN0CHb17aLCztiA0YtGjNu6ZutwRy9bB++rxQxVbb/e2eDRmTOfM57B5hvkmlqzGxoWAE+8TX1sFmGVaMMZiPQHuFgtH0ud/g+5fR6die9+sLfvJrjaecuKYji7rckgmjt/O52/mv4/dGOkX4G27Lnp3lTUu4NUpKMkfbE/eQE9BBWaW81kbGNLNJPisjSl0Mx657IiPA5FrLuTc8SKwaNCNj8KP2Joz9Thh0tcTeBTwDVbhCgnHrkc2vr/Hsipo7PLY3Qk5xsVzTkTmD31+NfQ1Lo+dHI+P13vKM3NrJQGpOgrr8UKEVHtJDNZocltokyyl01EYk8v1MlwI63yJZpJ+VftkxXmyaMJvmSUiljIN/2WWTGTzTM4nsvSEskdwPd37WVUIAJ2KHWr7Dm9E/kBBOqigQCPz003jyTNwsM7LmbbdoaNPXHSdLH+pieVp2Co4ImvcCQqbFjLtZJz1N+8n2T+77u/68+SptPtFNA1ImKKWGSj4TM34Gogy/MeoEbRuK/pAmBGHsuPeVQzz4kY8jGd/eD2EJifyrT/dgIJd/+iUNpMjjF+lD/g1hrahksClsNZCgSavMRfb6FJog+cE6wmlhsHkhTovrm2jxY39TKbrTrV6mUNQj+9GuNX4
+sidebar_class_name: "put api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"putOrgByOrgIdSiteBySiteIdResource"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"put"}
+  path={"/org/{orgId}/site/{siteId}/resource"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Create a resource.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"siteId","in":"path"},{"schema":{"type":"string"},"required":true,"name":"orgId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"anyOf":[{"type":"object","properties":{"name":{"type":"string","minLength":1,"maxLength":255},"subdomain":{"type":"string"},"isBaseDomain":{"type":"boolean"},"siteId":{"type":"number"},"http":{"type":"boolean"},"protocol":{"type":"string"},"domainId":{"type":"string"}},"required":["name","siteId","http","protocol","domainId"],"additionalProperties":false},{"type":"object","properties":{"name":{"type":"string","minLength":1,"maxLength":255},"siteId":{"type":"number"},"http":{"type":"boolean"},"protocol":{"type":"string"},"proxyPort":{"type":"integer","minimum":1,"maximum":65535}},"required":["name","siteId","http","protocol","proxyPort"],"additionalProperties":false}]}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

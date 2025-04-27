@@ -105,11 +105,6 @@ html[data-theme="dark"] .navbar {
     box-sizing: border-box; /* Ensures padding doesn’t affect max-width */
 }
 
-article {
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-}
 
 aside {
     font-size: 0.9rem;

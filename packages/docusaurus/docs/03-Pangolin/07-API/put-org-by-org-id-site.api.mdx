@@ -1,0 +1,71 @@
+---
+id: put-org-by-org-id-site
+title: "putOrgByOrgIdSite"
+description: "Create a new site."
+sidebar_label: "putOrgByOrgIdSite"
+hide_title: true
+hide_table_of_contents: true
+api: eJx9VEtv2zAM/isGTxugLe2AXnxrih2CPRL0cQpyYGzWUWtLrkTnMUP/faBsx8ma7pJYFB8f+X1UCzn5zOmatTWQwp0jZEowMbRLvGb6CgoYCw/pEh40EyiYuwKN/oMxZKXAU9Y4zQdIly1MCR255LbhDaTLVVgpsDW56DzLIYW64bkrpoe5K2Z5n7FGhxUxOR9z+GxDFULaAh9qghQ8O20KCAocvTXaUQ4pu4YUGKzEwUoyUKClhxp5A1JYnMnz1OYHSZZZw2RYPrGuS51FUJMXL51fqGrXL5SxwHPSAmvyctuV/Bebgkqbn2QK6ftaQYX74fTt5iYooL3m3zYnGcIxWBumglwXraumgvRKXLOy8XpLvwajNBsU1M36Bx0uDsY3a0N88crQjs+qnkRR5j6Iwjx35P3Fu87wfgRkBOwyVgQFO+2oaNAJM6XNsIRVOONw2Q2zT7iKRbWQguXiZObPWHoKoYv1tTU+MhEUVMQb26sq6kjmDRPrikkbNREmvpOYJ7cd9NW4Ury211Elg3wfhP+O4jMRH9vcMNeSKfpBCuvoBQJLNHQ/qu37Hqu6pFEtJyM6kcHVyOjoMBA5Wgb+Tnx62kbLka3R1KOOXARZjWcrgGQK3a5vr8VLswCFBZrCltokM5Fkt6/J7WImobX1XKE5aaduOJm7Ipke4t8sT/pNPntNTlbug4elg8i050ldojZSLbLT9lwuZbVBQTpseKRzpWBjPct1267R05MrQxDzW0NOHqKVgi06jWtpbtlCrr18572Y/gP0030vz8/JRwh7I5oDSJmykRMoeI1MdkjDKijYEObkIoDu7q4r8+VRMoyx754j0eVR24unR1Cw7l+xyuYS4nAHKv7G0jZ2EsUbbS2UaIoGC/HtUopO8VzRvYLV8CFALzbXtp3Ho30lE8KxV5az9BrCX9w7Ico=
+sidebar_class_name: "put api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"putOrgByOrgIdSite"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"put"}
+  path={"/org/{orgId}/site"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Create a new site.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"orgId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"name":{"type":"string","minLength":1,"maxLength":255},"exitNodeId":{"type":"integer","minimum":0,"exclusiveMinimum":true},"pubKey":{"type":"string"},"subnet":{"type":"string"},"newtId":{"type":"string"},"secret":{"type":"string"},"address":{"type":"string"},"type":{"type":"string","enum":["newt","wireguard","local"]}},"required":["name","type"],"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

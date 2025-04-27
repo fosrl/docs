@@ -1,0 +1,71 @@
+---
+id: put-org-by-org-id-api-key
+title: "putOrgByOrgIdApi-key"
+description: "Create a new API key scoped to the organization."
+sidebar_label: "putOrgByOrgIdApi-key"
+hide_title: true
+hide_table_of_contents: true
+api: eJydU8tu2zAQ/BViTy3A1EiBXHSLix6MFnCQJifDh7W0kZhIJEOunKgC/71YyrJjNM2hF4mP3eHMcDhCRbEMxrNxFgr4FgiZFCpLL+r6ZqWeaFCxdJ4qxU5xQ8qFGq35jdLxBTQw1hGKDazfrIMGaf5BA2w1RCr7YHiAYjPCkjBQUNc9N1BstmmrwXkKuW1VQQG+53Wol8M61Kvq2puLJxpAg8eAHTGFmGFi2VCHUIzAgycoIHIwtgYNnbE/ydYCf5k0BHruTaAKCg49abDYSbkTdNBgRLVHbkCYSDFFXrpqEOjSWSbLMkTvW1NmlovHKF69w8HtHqlkIRtEExuKsjsd+TFTDR2+zrOvV1fpjPpmwtimNK1H72zM4ElDR9y4g3PZKIGAhQv1Yswy0wKPNkYK+9nDPrRSuL/M2udb+iWqJuJnd3Xk3zB7Qcp1UMAuV4EwE2duTx5+f8XOt3TyYNaexPgHJxvCZsre/lLSZFga4AZt7Vpj1coy1VM8JJDS6l3kDu0bWN+zWodaLYf8W1XqFJyzgL+50//K+uQA0ysvfIvGCp1s43jwfSPJAg3FHLDZ+q2GxkWWinHcYaT70KYky889BXkbWw17DAZ3YsBmhMpEGVdQPGAb6QMln24PSfms/kXysIhWLNlj28sMNAi1+TWkbdLQEFYUMoFp79t0zMWdIJx6/3oQkqFjFG/u70DD7vCOOldJS8AX0Pmbj3ZZSQ5aXhuhRVv3WEvtBCmZwvP0HdKm54EQfVfcOE4Vd+6JbEpHrSxz0ZrSHzUlsKI=
+sidebar_class_name: "put api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"putOrgByOrgIdApi-key"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"put"}
+  path={"/org/{orgId}/api-key"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Create a new API key scoped to the organization.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string","minLength":1},"required":true,"name":"orgId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"name":{"type":"string","minLength":1,"maxLength":255}},"required":["name"]}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      
