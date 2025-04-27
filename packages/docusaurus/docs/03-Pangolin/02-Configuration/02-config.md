@@ -23,8 +23,10 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 
 ### `server`
 
+- `external_port`: int (optional)
+  - The port the integration API will listen on.
 - `external_port`: int
-  - The port the external facing (public) API will listen on.
+  - The port the front-end API will listen on.
 - `internal_port`: int
   - The port the internal private facing (private) API will listen on.
 - `next_port`: int
@@ -73,6 +75,10 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 - `resource_session_length_hours`: int (optional)
   - The length of time in hours that a session for each resource will last after logging in.
   - Default: `720`
+- `secret`: string
+  - A 32-byte base64 encoded string used to encrypt data in the database.
+  - Generate one with: `openssl rand -base64 32`
+  - Example: "N6KkZsm9WdK7ZXvVFEqyNgLw2iPeLX7hUpRy8WiWzVA="
 
 ### `domains`
 
@@ -210,6 +216,7 @@ server:
     id: "P-Access-Token-Id"
     token: "P-Access-Token"
   resource_session_request_param: "p_session_request"
+  secret: "" # 32-byte base64 encoded string; generate with: openssl rand -base64 32
 
 traefik:
   cert_resolver: "letsencrypt"
