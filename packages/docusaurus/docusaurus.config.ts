@@ -37,7 +37,7 @@ const config: Config = {
       "classic",
       {
         docs: {
-          sidebarCollapsed: false,
+          sidebarCollapsed: true,
           sidebarPath: "./sidebars.ts",
           routeBasePath: "/",
           docItemComponent: "@theme/ApiItem" // Derived from docusaurus-theme-openapi
