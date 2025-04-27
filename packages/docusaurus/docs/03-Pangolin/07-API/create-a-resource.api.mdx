@@ -1,0 +1,71 @@
+---
+id: create-a-resource
+title: "Create a resource."
+description: "Create a resource."
+sidebar_label: "Create a resource."
+hide_title: true
+hide_table_of_contents: true
+api: eJy9VU1v00AQ/SvRnEBaCAWFg29t4VAJqVFpT5EPE3vqbGvvurPrtMHyf0eza8dOSUEg4LYfs/PxZt7bFnJyGevaa2sggXMm9DTDGZOzDWf0FhR4LBwkK7jkAo3+hsFWwVVvAqkCR1nD2u8gWbVwRsjEs9PGbyBZpV2qoEbGijyxCxYu21CFkLTgdzVBAs6zNgV0CpgeGs2UQ+K5IQUGq2CgPV3koEBLmjX6DXTqTxxZLp77SaMxOX9m8504y6zxZLwssa5LnYWa53dOQJpGRbO7vA0l9fHt+o4yDwpqtjWx1+TELgZ/nqWCSpsvZAoB6kRBhU/D7v1i0SlwzTq3FWpztELtztDRp+cGa2tLQiMWPWrjnWmqNbFcbbyvjz+q2Xqb2fJozJjOgc/h8gDzVSxZjY0LASfeJ75SBZjnWjDGcjkB7hZLR9Lnf4PuX0enZvu0W1r2k1ttPBXEMR1dNdWQTFx/XCw+LH4fuzHSL8BLuy56d7U1LuDVKajIb2wuDGgCnMKDBOaWi3kbGNLNJfi8jSl080EPJCvi7UDkhkt5tz0JLBpU4KvwI7bmQAv2mPT1BB4FfINVGCHh2NXIxs9PWNUljV0euzshx3h4yInI/KHP74a+xuOxk+PzcbynPDO3VhKQqqNMbk9EFrWXxGCJprClNrML6TQHqZidLi/CQFjnKzST9I8q7IEIT+TnBT2OIHp68vO6lEI7FTvR9p1cicyBgmRQO4FA9vuJ4ol4b6zz8qZt1+johsuuk+OHhlgEPVWwRda4lmpXLeTayTrvJ+wn2b+66mf69eyltPtDNDuQMGUjO1BwT7tR9UUB/mPUCFqXig4Q5sSh7Hh3HsO8uRYP49sffgmhw55ky5trULDuP5fK5vKE8VH6gI8xtA2VBM6EsxZKNEWDhdhGl0IPPCRSTxw1LCY/0WFxbRstru09ma7b1+plD0ElvgPQKrwh
+sidebar_class_name: "put api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Create a resource."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"put"}
+  path={"/org/{orgId}/site/{siteId}/resource"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Create a resource.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"siteId","in":"path"},{"schema":{"type":"string"},"required":true,"name":"orgId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"anyOf":[{"type":"object","properties":{"name":{"type":"string","minLength":1,"maxLength":255},"subdomain":{"type":"string"},"isBaseDomain":{"type":"boolean"},"siteId":{"type":"number"},"http":{"type":"boolean"},"protocol":{"type":"string"},"domainId":{"type":"string"}},"required":["name","siteId","http","protocol","domainId"],"additionalProperties":false},{"type":"object","properties":{"name":{"type":"string","minLength":1,"maxLength":255},"siteId":{"type":"number"},"http":{"type":"boolean"},"protocol":{"type":"string"},"proxyPort":{"type":"integer","minimum":1,"maximum":65535}},"required":["name","siteId","http","protocol","proxyPort"],"additionalProperties":false}]}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

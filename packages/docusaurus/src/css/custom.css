@@ -8,187 +8,194 @@
 
 /* You can override the default Infima variables here. */
 :root {
-    /* Primary colors converted from HSL to hex */
-    --ifm-color-primary: hsl(24.6, 95%, 53.1%);
-    --ifm-color-primary-dark: hsl(24.6, 95%, 48%);
-    --ifm-color-primary-darker: hsl(24.6, 95%, 43%);
-    --ifm-color-primary-darkest: hsl(24.6, 95%, 38%);
-    --ifm-color-primary-light: hsl(24.6, 95%, 58%);
-    --ifm-color-primary-lighter: hsl(24.6, 95%, 63%);
-    --ifm-color-primary-lightest: hsl(24.6, 95%, 68%);
+  /* Primary colors converted from HSL to hex */
+  --ifm-color-primary: hsl(24.6, 95%, 53.1%);
+  --ifm-color-primary-dark: hsl(24.6, 95%, 48%);
+  --ifm-color-primary-darker: hsl(24.6, 95%, 43%);
+  --ifm-color-primary-darkest: hsl(24.6, 95%, 38%);
+  --ifm-color-primary-light: hsl(24.6, 95%, 58%);
+  --ifm-color-primary-lighter: hsl(24.6, 95%, 63%);
+  --ifm-color-primary-lightest: hsl(24.6, 95%, 68%);
 
-    /* Additional custom variables */
-    --ifm-background-color: #FFFFFF;
-    --ifm-font-color-base: hsl(20, 0%, 10%);
-    --ifm-code-font-size: 85%;
-    --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  /* Additional custom variables */
+  --ifm-background-color: #ffffff;
+  --ifm-font-color-base: hsl(20, 0%, 10%);
+  --ifm-code-font-size: 85%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 
-    /* Chart colors */
-    --chart-color-1: hsl(12, 76%, 61%);
-    --chart-color-2: hsl(173, 58%, 39%);
-    --chart-color-3: hsl(197, 37%, 24%);
-    --chart-color-4: hsl(43, 74%, 66%);
-    --chart-color-5: hsl(27, 87%, 67%);
+  /* Chart colors */
+  --chart-color-1: hsl(12, 76%, 61%);
+  --chart-color-2: hsl(173, 58%, 39%);
+  --chart-color-3: hsl(197, 37%, 24%);
+  --chart-color-4: hsl(43, 74%, 66%);
+  --chart-color-5: hsl(27, 87%, 67%);
 
-    --ifm-global-shadow-lw: none;
-    --ifm-font-family-base: "Inter";
+  --ifm-global-shadow-lw: none;
+  --ifm-font-family-base: "Inter";
 
-    --ifm-breadcrumb-item-background-active: --ifm-background-color;
+  --ifm-breadcrumb-item-background-active: --ifm-background-color;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme="dark"] {
-    /* Primary colors for dark mode */
-    --ifm-color-primary: hsl(20.5, 90.2%, 48.2%);
-    --ifm-color-primary-dark: hsl(20.5, 90.2%, 43%);
-    --ifm-color-primary-darker: hsl(20.5, 90.2%, 38%);
-    --ifm-color-primary-darkest: hsl(20.5, 90.2%, 33%);
-    --ifm-color-primary-light: hsl(20.5, 90.2%, 53%);
-    --ifm-color-primary-lighter: hsl(20.5, 90.2%, 58%);
-    --ifm-color-primary-lightest: hsl(20.5, 90.2%, 63%);
+  /* Primary colors for dark mode */
+  --ifm-color-primary: hsl(20.5, 90.2%, 48.2%);
+  --ifm-color-primary-dark: hsl(20.5, 90.2%, 43%);
+  --ifm-color-primary-darker: hsl(20.5, 90.2%, 38%);
+  --ifm-color-primary-darkest: hsl(20.5, 90.2%, 33%);
+  --ifm-color-primary-light: hsl(20.5, 90.2%, 53%);
+  --ifm-color-primary-lighter: hsl(20.5, 90.2%, 58%);
+  --ifm-color-primary-lightest: hsl(20.5, 90.2%, 63%);
 
-    --ifm-background-color: #1A1A1A;
+  --ifm-background-color: #1a1a1a;
 
-    /* Additional custom variables for dark mode */
-    --ifm-font-color-base: hsl(60, 9.1%, 97.8%);
-    --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  /* Additional custom variables for dark mode */
+  --ifm-font-color-base: hsl(60, 9.1%, 97.8%);
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 
-    /* Chart colors for dark mode */
-    --chart-color-1: hsl(220, 70%, 50%);
-    --chart-color-2: hsl(160, 60%, 45%);
-    --chart-color-3: hsl(30, 80%, 55%);
-    --chart-color-4: hsl(280, 65%, 60%);
-    --chart-color-5: hsl(340, 75%, 55%);
+  /* Chart colors for dark mode */
+  --chart-color-1: hsl(220, 70%, 50%);
+  --chart-color-2: hsl(160, 60%, 45%);
+  --chart-color-3: hsl(30, 80%, 55%);
+  --chart-color-4: hsl(280, 65%, 60%);
+  --chart-color-5: hsl(340, 75%, 55%);
 
-    --ifm-navbar-background-color: #1A1A1A;
+  --ifm-navbar-background-color: #1a1a1a;
 }
 
 .main {
-    font-family: "Comic Sans MS", sans-serif;
+  font-family: "Comic Sans MS", sans-serif;
 }
 
 .header-github-link:hover {
-    opacity: 0.6;
+  opacity: 0.6;
 }
 
 .header-github-link:before {
-    content: "";
-    width: 24px;
-    height: 24px;
-    display: flex;
-    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E")
-        no-repeat;
+  content: "";
+  width: 24px;
+  height: 24px;
+  display: flex;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E")
+    no-repeat;
 }
 
 html[data-theme="dark"] .header-github-link:before {
-    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='white' d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E")
-        no-repeat;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='white' d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E")
+    no-repeat;
 }
 
 .navbar {
-    border-bottom: 0px solid rgb(218, 221, 225);
-    max-width: 1600px;  /* Limits the content width */
-    width: 100%;  /* Ensures it scales responsively */
-    margin: 0 auto;  /* Centers the inner content */
-    padding: 0 20px;  /* Optional: Adds padding to prevent content from touching edges */
-    box-sizing: border-box;
+  border-bottom: 0px solid rgb(218, 221, 225);
+  max-width: 1600px; /* Limits the content width */
+  width: 100%; /* Ensures it scales responsively */
+  margin: 0 auto; /* Centers the inner content */
+  padding: 0 20px; /* Optional: Adds padding to prevent content from touching edges */
+  box-sizing: border-box;
 }
 
 html[data-theme="dark"] .navbar {
-    border-bottom: 0px solid #444950;
+  border-bottom: 0px solid #444950;
 }
 
 .main-wrapper {
-    max-width: 1600px;
-    width: 100%; /* Ensures responsiveness */
-    margin: 0 auto; /* Centers the container */
-    box-sizing: border-box; /* Ensures padding doesn’t affect max-width */
+  max-width: 1600px;
+  width: 100%; /* Ensures responsiveness */
+  margin: 0 auto; /* Centers the container */
+  box-sizing: border-box; /* Ensures padding doesn’t affect max-width */
 }
 
-
 aside {
-    font-size: 0.9rem;
+  font-size: 0.9rem;
 }
 
 .theme-doc-sidebar-container {
-    border-right: 0px !important;
+  border-right: 0px !important;
 }
 
 .theme-admonition {
-    border: 1px solid rgb(218, 221, 225);
+  border: 0px solid rgb(218, 221, 225);
 }
 
 .prism-code {
-    border: 1px solid rgb(218, 221, 225);
+  border: 1px solid rgb(218, 221, 225);
 }
 
 html[data-theme="dark"] .theme-admonition {
-    border: 1px solid rgb(115, 115, 115); /* Subtle contrast against #1B1B1D */
+  border: 0px solid #333333;
 }
 
 html[data-theme="dark"] .prism-code {
-    border: 1px solid rgb(115, 115, 115); /* Matches the admonition style */
+  border: 1px solid #333333;
+  background-color: #242424 !important; /* Darker background for code blocks */
 }
 
 div[class^="announcementBarContent"] a {
-    color: var(--ifm-link-color);
-    text-decoration: inherit;
+  color: var(--ifm-link-color);
+  text-decoration: inherit;
 }
 
 div[class^="announcementBarContent"] a:hover {
-    color: var(--ifm-link-color);
-    text-decoration: underline;
+  color: var(--ifm-link-color);
+  text-decoration: underline;
 }
 
 .navbar .navbar__items {
-    flex: auto;
+  flex: auto;
 }
 
 .dropdown__link {
-    font-size: inherit;
+  font-size: inherit;
 }
 
 @media screen and (max-width: 996px) {
-    :root {
-        --ifm-font-size-base: 16px;
-    }
-    article header h1 {
-        font-size: 1.5rem !important;
-    }
-    .hero .hero__title {
-        font-size: 2.5rem;
-    }
+  :root {
+    --ifm-font-size-base: 16px;
+  }
+  article header h1 {
+    font-size: 1.5rem !important;
+  }
+  .hero .hero__title {
+    font-size: 2.5rem;
+  }
 }
 
 @media screen and (min-width: 997px) {
-    :root {
-        --ifm-font-size-base: 16px;
-    }
-    article header h1 {
-        font-size: 2rem !important;
-    }
+  :root {
+    --ifm-font-size-base: 16px;
+  }
+  article header h1 {
+    font-size: 2rem !important;
+  }
 }
 
 .pagination-nav__label::before {
-    display: none;
+  display: none;
 }
 .pagination-nav__label::after {
-    display: none;
+  display: none;
 }
 
 .table-of-contents {
-    border: 0px;
+  border: 0px;
 }
 /* Default (mobile styles remain unchanged) */
 
 .breadcrumbs li:first-child {
-    display: none;
+  display: none;
 }
 
-.breadcrumbs li:nth-child(2) .breadcrumbs__link{
-    padding-left: 0px !important;
+.breadcrumbs li:nth-child(2) .breadcrumbs__link {
+  padding-left: 0px !important;
 }
 
 html[data-theme="dark"] {
-    background-color: #1A1A1A !important;
+  background-color: #1a1a1a !important;
+}
+
+.alert--secondary{
+  background-color: #F2F2F2 !important;
+}
+html[data-theme="dark"] .alert--secondary{
+  background-color: #474748 !important;
 }

@@ -1,0 +1,71 @@
+---
+id: invite-a-user-to-join-an-organization
+title: "Invite a user to join an organization."
+description: "Invite a user to join an organization."
+sidebar_label: "Invite a user to join an organization."
+hide_title: true
+hide_table_of_contents: true
+api: eJyVVEtv2zAM/isGTxugNu1lGHxaOxRYDkODtjsFOTA266i1JJeS02SG/vtAyXmt3bDdJIqi+D2oAWryFesuaGehhKld60AFFr0nLoIrnpy2BdrCcYNW/0TJOwcFARsP5Rxuj+KwUOCp6lmHLZTzAa4Jmbi46sMKyvkiLhR0yGgoEPuU4asVGYRygLDtCErwgbVtICpgeuk1Uw1l4J4UWDSS4LiZ1qBAS7sdhhVIWUkmH65dvZVilbOBbJAldl2rq9Tf5MkLyHdedcsnqgIo6Nh1xEGTl1MyqNu3zSl4dGwwQDlmSLeupWl9lGt7sySWozW2uv7mevZvjxUYbbXpDZQXCmhTtb3Xa/q+C2boBjd5e/npcxSObX3zW2tL51pCm4lryBJjoPfOT5idjwD2/Z90u1CAda2FOmxnR8w8YuspxlzLd876xFdUYCisXC3KOJ/4FIFKmDhuJkOSLk4qJgx0ppPVQODweueHnltJX18mVXdmuhe9siQnltqjW4XQSaWUJ2hTVgIrmt8d3HGzQdO1dKQuiNW/UI6fV84c2BBNjtW7OOE+a3PMtkSiWPPRyQOCKo/V+lJGRgd5GGZoG9dqW0xtoIaTNYur2VS0E9oMJpOOfv/niTwZ5KMR+I+ZzmQG2oRJ16JObkqKDKOQcxk/UFDupvBUy4WClehezmEYlujpB7cxSvilJ5Y/YSGEssalMDEfoNZe1vXoqb+g+HA3uvZj8adWxyDabfZxLztQ8Ezb/ccRF1HBirAmTg3ks6/5mbMHqXC4++bvEFPuLT67vX8ABcvxzzGuljuMr2IgfM1vuwQlWTfFBmjRNj02kptrikvx1M+jf9VuIZ2+i24YcsaDeyYb4x5skL2AjfEX+IMEzQ==
+sidebar_class_name: "post api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Invite a user to join an organization."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/org/{orgId}/create-invite"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Invite a user to join an organization.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"orgId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"email":{"type":"string","format":"email"},"roleId":{"type":"number"},"validHours":{"type":"number","minimum":0,"exclusiveMinimum":true,"maximum":168},"sendEmail":{"type":"boolean"},"regenerate":{"type":"boolean"}},"required":["email","roleId","validHours"],"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

@@ -31,7 +31,7 @@ This installation has a lot of moving parts and is a bit non-standard for Unraid
 
 ## Create a Docker Network
 
-Before starting, create a new docker network on Unraid. This will simplify things, and allow the containers to communicate with each other via their container names. If you already have a network, there is no need to create another one. 
+Before starting, create a new docker network on Unraid. This will simplify things, and allow the containers to communicate with each other via their container names. If you already have a network, there is no need to create another one.
 
 1. Open the web terminal in Unraid
 2. Run the following command:
@@ -50,7 +50,7 @@ This first part will enable Pangolin to work in "Local" reverse proxy mode. Newt
 
 ### Install and Setup Pangolin
 
-#### 1. Create the Config Files 
+#### 1. Create the Config Files
 
 Pangolin uses a yaml file for configuration. If this is not present on start up, the container will throw an error and exit.
 
@@ -195,7 +195,7 @@ Before setting up Gerbil, shut down Traefik and Pangolin.
 
 If you plan to use tunneling features of Pangolin with Newt or WireGuard, you will need to add Gerbil to the stack. Gerbil is the tunnel controller for Pangolin and is used to manage the tunnels between the Pangolin server and the client.
 
-Luckily, adding Gerbil is fairly easy. 
+Luckily, adding Gerbil is fairly easy.
 
 The important concept to understand going forward, is we need to network Traefik through Gerbil. All Traefik traffic goes through the Gerbil container and exits.
 
@@ -227,7 +227,7 @@ You must open these ports because Traefik will be routed through Gerbil. These p
 
 As discussed earlier we need to network Traefik through Gerbil. This is pretty easy. We will do all of this in the Traefik container settings.
 
-Toggle advanced settings, and add the following to the "Extra Parameters" section. 
+Toggle advanced settings, and add the following to the "Extra Parameters" section.
 
 ```bash
 --net=container:Gerbil

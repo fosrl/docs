@@ -1,0 +1,71 @@
+---
+id: create-an-idp-policy-for-an-existing-idp-on-an-organization
+title: "Create an IDP policy for an existing IDP on an organization."
+description: "Create an IDP policy for an existing IDP on an organization."
+sidebar_label: "Create an IDP policy for an existing IDP on an organization."
+hide_title: true
+hide_table_of_contents: true
+api: eJylVMFu2zAM/RWDpw3QFvTqW9vtkMOAoGtPgQ9MzNpqbUml6KyeoX8fKCdp06a79BLIEvnI98iXCWqKW7ZBrHdQwjUTChXoiuWPVRF8Z7djce9Zb+jZRrGuyU/e6ZXnBp39i5r9HQwINhHKNSxrcmJlLFbsd7YmhspApO3AVkYo1xNcETJxcTlIC+W6SpWBgIw9CXHMEXHbUo9QTiBjICjBDf2GGAy4oetw0xGUwgMlA0xPg2WqobzHLpIBh71m2DosazBglVpAaSGZM8BR2LoGToAU+YjjuXmLU83BFOXK16OCbb0TcqJHDKGz26zK4iGqsGeq+s0DbQUMBPaBWCxFfWXf0S8MQTs616Ln5uPnZADr2mph7FavcLMuKaXMMQbvYq6WDPQkra+V15CbUXYlLGwdFlPWLy08N4spa5BAx8i7w4wG7jR4d5EFOQz4t1Kd2ZyM+dhuKxIUKcdBCZscldtXuW5ehP35jH3QSb8R5sD4VI9XMll37zVLW51Xe3ehC2pF0WCFrvGddcXSCTWcR1VcrpaaGnyUHvPQ9vP/pCtOLPZqUT7ttllNoWdZhA6t0+7zSKb9HNdqATBQHpzgWTUr54WuDLQ+ioZN0wYj3XGXkl4/DcTq08rADtnOZltPUNuo5xej7VtAN4KGdoN+gYFHGo/+U8+9S/xQky83ew9+LT6i+P+iM7dUJQMtof73aOfz2/Vc5tutIrzkvvOrbvPRGKu7WzCw2du897WmMP4Bk39zaZ+ZzAbWuwk6dM2AjcbOkNmcpz7Y7705HLTRs+SmaY649Y/kUjpyFf1Wrin9Awpy+Os=
+sidebar_class_name: "put api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Create an IDP policy for an existing IDP on an organization."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"put"}
+  path={"/idp/{idpId}/org/{orgId}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Create an IDP policy for an existing IDP on an organization.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"number","nullable":true},"required":false,"name":"idpId","in":"path"},{"schema":{"type":"string"},"required":true,"name":"orgId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"roleMapping":{"type":"string"},"orgMapping":{"type":"string"}},"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

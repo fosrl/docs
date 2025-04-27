@@ -1,0 +1,71 @@
+---
+id: list-all-clients-for-an-organization
+title: "List all clients for an organization."
+description: "List all clients for an organization."
+sidebar_label: "List all clients for an organization."
+hide_title: true
+hide_table_of_contents: true
+api: eJyVkkGL2zAQhf+KeacWRJNcdduWUgKFLu32FHzQxrItVpa80jg0FfrvZRQ7m5RN2d5s8/nNzHsvodFxH8xIxjtIfDWRKmVttbdGO4pV60OlXOVDp5z5rRj7AAFSXYTc4VPBIPDtAkAtEPV+CoaOkLuEj1oFHaq7iXrIXZ1rgVEFNWjSIRYi7ns9KMgEOo4aEpGCcR2yQNDPkwm6gaQwaQGnBgZ86LYNBAyvPSrqkcVtHYFGt2qyBInNer2+Fm6VjS/K1gyGFuXnSYfjm6X/qevbNuq/hWvm4+hd1BEyZYFBU+8bSHQFLqdJrHzoVqkcnVdzOGCbw2HxcAqWwcOmqC4B/OC1i/Z1DOczeqKRlQoHicdCIWdetPVM8ohTPw4bDt+QZfJeuc5b46qtI92Fkn11d79lE0YfaVCO/57Pf2u1rgqZsPeOuGL/0c3TXaR/0Wq0yjjep5iTZjd33B4IyKVEi6G1QO8jMZHSo4r6Z7A58+dTXGxzY6J6tBfxPunjRWsOyk48vnTmBntuwgtc80swTL8+5aYt777PfXtf3Tp+/qjc8XLmeZtiQq4vu/fl8wME1HVT5maI5YH3fFU6pRPx4J+0y/k8ifidJ+X8B70JgW0=
+sidebar_class_name: "get api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"List all clients for an organization."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/org/{orgId}/clients"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+List all clients for an organization.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"orgId","in":"path"},{"schema":{"type":"string","default":"1000"},"required":false,"name":"limit","in":"query"},{"schema":{"type":"string","default":"0"},"required":false,"name":"offset","in":"query"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

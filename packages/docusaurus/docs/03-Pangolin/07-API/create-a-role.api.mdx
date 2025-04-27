@@ -1,0 +1,71 @@
+---
+id: create-a-role
+title: "Create a role."
+description: "Create a role."
+sidebar_label: "Create a role."
+hide_title: true
+hide_table_of_contents: true
+api: eJx9U01v2zAM/SsGTxugLeiAXnxrix4CDFjQtacgByZmbbW2pFJ02szQfx8oO0nTZrvp44l87/FpgIrihm0Q6x2UcMOEQgUW7Fv6DgYE6wjlEn5xjc7+wYwzcOdbgpWBSJuereygXA5wTcjExVUvDZTLVVoZCMjYkRDHjIibhjqEcgDZBYISorB1NSQDTC+9ZaqgFO7JgMNOAZ7reQUGrLILKA1oWQVTlGtf7bTYxjshJ7rEEFq7yTRnT1E1nenq10+0ETAQ2AdisRT1dmz5kZuBzrqf5GpVdWGgw7f97sflZTKnDn5SdiJtOfZYGcCqsvoC28U7Do/YRkppfBSDdzEzSwY6ksZX6kGfiasTJcw817Mhe5RmOjLQkfB273fPraK2F9m1/bB+qx+j5JORHbg3IkErZRyUsM6orEU9vTu6f/uGXWjp6N7RtdNgHQdt3aNXvJIc77YXGjQrWgcW6GrfWlfMnVDNeZLF1WKuT4OP0qF71+1TXj8M45CMM8ketQq9ySy0aJ12yIYNk71LTR8YKPch5Cn1jY+i18OwxkgP3Kakxy89sf6ElYEtssW1CloOUNmo62qa739IfrmbovK1+BfD6RDdDrRN2+sODDzT7vBd0ioZaAgr4kxgvLsZ23y71wrHt59+jEblELfFwz0YWE8frfOVPmF8VTfwdWzts5Kcp3w2QIuu7rFW7FhSo4OnIZtCZfYLJXpW3DCMiHv/TC6lg1bRvWpN6S+xF588
+sidebar_class_name: "put api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Create a role."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"put"}
+  path={"/org/{orgId}/role"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Create a role.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"orgId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"name":{"type":"string","minLength":1,"maxLength":255},"description":{"type":"string"}},"required":["name"],"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

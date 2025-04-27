@@ -1,0 +1,71 @@
+---
+id: set-actions-for-an-api-key-this-will-replace-any-existing-actions
+title: "Set actions for an API key. This will replace any existing actions."
+description: "Set actions for an API key. This will replace any existing actions."
+sidebar_label: "Set actions for an API key. This will replace any existing actions."
+hide_title: true
+hide_table_of_contents: true
+api: eJytU0tP3DAQ/ivRnFrJsOKaG1Q9rKjECranaA+zyZAYEtuMnYU08n+vxklgl9L2wiWynXl9jxmhIl+ydkFbAzncUciwlIvP7i1naLLLzTp7pOE82zbaZ8+6bTMm12JJGZohoxftgzb1knYOCgLWHvICbrhGo39hKq5AKl3TADsFnsqedRggL0a4ImTi7LIPDeTFLu4UOGTsKBD7FOHLhjqEfIQwOIIcfGBtalDQafODTC2ZF1EB01OvmSrIA/ekwGAn4ej0NQ3rChRogekwNCB9JJ58uLLVINVLawKZIEd0rtVlGn314IWcD8aw+wcqAyhwbB1x0ORTbqJiXfmjUGTGQfoH6vx/kcQTLMVRxZ0CrCotV2w3R23vsfUU50zvrPFpmKigo9DYSmBbn4YV9DmsLNer0XK9ruIKnT57pGE1LlTF1SwoiFp8WKTouZXcw0Xib9HxTpiZwJ+o+QqzCcFJpRQHOexTFMi0wu7tmw7fX7BzLb3jsViI2kXR8N7Kfxlq8u3hQmyng+TBBk1tW22ytQlUc9JQbAxRJQo6TGrO3vgcy5+s0ZGRPmujJhYDvYSVa1EbwZKkGGc5C7AsNsqToKBgVlSejuy/iLpT0Igb8gLGcY+efnIbozw/9cSylzsFB2SNe+G0GKHSXs7V7LR/QP5yOzv3a/a30ZelMDLfAdtebqBABj5a1yhqN4QVcZph+v1t6nS2lSJv6X9srBj01fubm7stKNjPm97ZSnIYn0Glb2pv3cROPk5vI7Ro6h5riZ1qimPx1Nuzl9VykEk/BDiOU8TWPpKJ8RVvkLuAjfE3E0/ncQ==
+sidebar_class_name: "post api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Set actions for an API key. This will replace any existing actions."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/org/{orgId}/api-key/{apiKeyId}/actions"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Set actions for an API key. This will replace any existing actions.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string","minLength":1},"required":true,"name":"apiKeyId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"actionIds":{"type":"array","items":{"type":"string","minLength":1}}},"required":["actionIds"],"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

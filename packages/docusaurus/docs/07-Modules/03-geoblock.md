@@ -7,6 +7,7 @@ GeoBlock is a Traefik middleware that uses IP-based geolocation to allow or bloc
 To integrate GeoBlock into your Traefik setup, follow the steps below:
 
 1. Add the following configuration to your `/config/traefik/traefik_config.yml` file:
+
 ```yaml
 entryPoints:
   websecure:
@@ -22,6 +23,7 @@ experimental:
 ```
 
 2. Add the following configuration to your `/config/traefik/dynamic_config.yml` file. Setting `blackListMode: false` enables GeoBlock in whitelist mode, allowing only the specified countries. Remember to add the appropriate countries when traveling. A list of country codes can be found in the [documentation](https://github.com/PascalMinder/geoblock#full-plugin-sample-configuration).
+
 ```yaml
 http:
   middlewares:
@@ -45,6 +47,7 @@ http:
 ```
 
 3. Restart Traefik to apply the changes:
+
 ```bash
 docker restart traefik
 ```
@@ -52,8 +55,9 @@ docker restart traefik
 ## Testing
 
 To monitor GeoBlock activities in the Traefik logs, enable logging by setting the following options to `true`:
+
 ```yaml
-          logLocalRequests: true
-          logAllowedRequests: true
-          logApiRequests: true
+logLocalRequests: true
+logAllowedRequests: true
+logApiRequests: true
 ```

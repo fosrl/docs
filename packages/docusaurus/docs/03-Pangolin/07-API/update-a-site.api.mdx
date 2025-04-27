@@ -1,0 +1,71 @@
+---
+id: update-a-site
+title: "Update a site."
+description: "Update a site."
+sidebar_label: "Update a site."
+hide_title: true
+hide_table_of_contents: true
+api: eJx9k8Fu2zAQRH/FmFMLsDVSIBfdkqIHAwVqJM7J8GFtbSQmEsWQK9eGwH8vlpJjp0l7MShyuTtvOB5QctwF68V2DgUefEnCM5pFK/wVBkJVRLHGvRXGxiDyrg9WjijWA26ZAofZTS81ivUmbQw8BWpZOMRcEXc1t4RigBw9o0CUYF2FZBD4pbeBSxQSejZw1OYCK7woYWBVjyepoX21mqPcduVRu+06J+xEl+R9Y3ekAPOnqBQfjO22T7wTGPjQeQ5iOerpOPNvcQatdT/ZVYp1ZdDS4fT17fo6JQMqS6sDqVle9HukJnJKKcNF37mYpySDlqXuSuXpYlahWAXmCjsfRuQEdTfsT9b1odGS/VXmP/l+r2Sj+DfuvzLUIl475ToU2OYqqCh15+7s448Dtb7hsw8Xj2PdY6cHqmZMxv5K02BFL2BJruoa62YLJ1yFbP7sZrnQq4rYkrto+y5UbzJ38ZgfxG+EEj7I3DdknU7IzgyTieucGBgUU3I2BrW6XKwxDFuK/BCalHT7peegwd0Y7ClY2irLekBpo67L6QX/o+/T3RTaz7N/iZs2yR2hY5pev2DwzMdzutMmGdRMJYesYDz8Ps75stIW58vvAq55eE3U8tf9Cgbb6Y/RdqXeCfQbJv/m4V1myanJewMaclVPldaOPXOs30Zpio45LVTph3jDMFasumd2Kb3Sin4rbEp/APrpfyM=
+sidebar_class_name: "post api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Update a site."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/site/{siteId}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Update a site.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"siteId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"name":{"type":"string","minLength":1,"maxLength":255}},"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

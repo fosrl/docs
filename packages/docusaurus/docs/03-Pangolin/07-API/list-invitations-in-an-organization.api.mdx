@@ -1,0 +1,71 @@
+---
+id: list-invitations-in-an-organization
+title: "List invitations in an organization."
+description: "List invitations in an organization."
+sidebar_label: "List invitations in an organization."
+hide_title: true
+hide_table_of_contents: true
+api: eJyVkk+L2zAQxb+KeacWRJNcddtCKYFCl3Z7Cj4o8dgWa0teaRyaGn33Mso/p2yW7c0ent7MvPlNqCjugh3YegeNbzZyYd3espFKLKwrjCt8aIyzf3LtExTYNBF6g++zOhTWl4coFSLtxmD5AL2Z8JlMoFA8jNxCb8pUKgwmmJ6YQsyKuGupN9AT+DAQNCIH6xokhUAvow1UQXMYScGZXgQ+NOsKClYmHwy3SOq+j0JFtRk7hsZquVzeGtemi1fnzvaWz84vI4XDu63f9PV1Helf41L0cfAuUoSekkJP3PoKGk0W59U0Fj40iykvnRazG0GiDvtzjmPoRLxfZefzEX7K6Nn/9hSXVVrmQZyyDhrbrEJKMmztRSktjpjsVwKB5U6Uj8Y1vrOuWDumJuShiofHtQQx+Mi9cfL6FME7CbvBcsLOOybH/0HocSum37wYOmOdTJOjmU55boQfKOgrRtdIS4XWRxbVNG1NpF+hS0nKx6NJ0JWNZtvNjvxMhxk7e9ONMkIm5472wsNVXMpPsKJ+vcvdZD78OFH3sbgXwKlo3GHe8zJNDiKVcwK/fnmCgrll5cSGOn/InK9aT9NR8eSfyaV06cTyL51S+guuw4a2
+sidebar_class_name: "get api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"List invitations in an organization."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/org/{orgId}/invitations"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+List invitations in an organization.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"orgId","in":"path"},{"schema":{"type":"string","default":"1000"},"required":false,"name":"limit","in":"query"},{"schema":{"type":"string","default":"0"},"required":false,"name":"offset","in":"query"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

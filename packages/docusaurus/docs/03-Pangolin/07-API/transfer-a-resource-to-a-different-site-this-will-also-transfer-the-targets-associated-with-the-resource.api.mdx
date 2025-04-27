@@ -1,0 +1,71 @@
+---
+id: transfer-a-resource-to-a-different-site-this-will-also-transfer-the-targets-associated-with-the-resource
+title: "Transfer a resource to a different site. This will also transfer the targets associated with the resource."
+description: "Transfer a resource to a different site. This will also transfer the targets associated with the resource."
+sidebar_label: "Transfer a resource to a different site. This will also transfer the targets associated with the resource."
+hide_title: true
+hide_table_of_contents: true
+api: eJy9VMFu2zAM/RWBpw3QmvbqWzvs0MOwoM1ORg6MzdhqZcmV6LSBoX8fKNtJg3U79mLINEW+9/joEWqKVTA9G++ggE1AF/cUFKpA0Q+hIsVeoarNfk+BHKtomK7UpjVRvRprFdroFS/3uCXFGBriqDBGXxlkqtWr4TZ/W6pegQbGJkJRwsMcg62GSNUQDB+hKEe4IwwU1O3ALRTlNm019BiwI6YQc0asWuoQihH42BMUEDkY10DSEOhlMIFqKDgMpMFhJwkLgPsaNBjh3CO3ILXlBkW+8/VRKlbeMTmWI/a9NRWKSKunKEp90Nrvnqhi0NAH31NgQzHnGZZm5zzjmBoKoKEzznRDB8W1Bnqr7BDNgX4uQYGdLoiUS7GtBqxrI3jQrt+126ONlNJ0LfbexQwiaeiIW18LXR8zSGFdwGrRYzWelUmrZZ4gEwmHRe4hWLlzuMl6LbN6FCUmshcTOzFumXuplPOggF3OAkEpaj6cdf/xhl1v6b1u10nmtPcSEyCTUQ83YiDDkgtrdI23xql7kTbkOanb9b3YQOh2mCc2O+BTPX6xXu889cmbNs2B6Y1XvUXjRJk8zHE2QnlaDNBQXCzJyQtbDa2YpyhhHHcY6XewKUn4ZaAgK7vVcMBgcCdjKUeoTZRzPRvzP3J8eZhd/lX9C+8cRHcEaWMHeQMNz3S83Ou0TRpawppCRjElfJ96fdtImXOBv1ZbnH1alvWvxw1o2M2/hM7X+R+Cr6DzMwPwmU/2f46NYNE1AzaSO9UUq+PlUsxLoJeDIP2Q4jhOGRv/TC6lE2OWdyGb0h/SSgOh
+sidebar_class_name: "post api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Transfer a resource to a different site. This will also transfer the targets associated with the resource."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/resource/{resourceId}/transfer"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Transfer a resource to a different site. This will also transfer the targets associated with the resource.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"resourceId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"siteId":{"type":"integer","minimum":0,"exclusiveMinimum":true}},"required":["siteId"],"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

@@ -1,0 +1,71 @@
+---
+id: update-a-resource
+title: "Update a resource."
+description: "Update a resource."
+sidebar_label: "Update a resource."
+hide_title: true
+hide_table_of_contents: true
+api: eJy1VE1v00AQ/SthxKGFTUNBQcIXlEIPkZCI+iEkEoMm9jTedr3r7q5DguX/jmbtJE5J4IC4WPZ6dua9mXmvgpRcYmXhpdEQwW2Roqce9iw5U9qEzkCAx4WDaApX7RnEAhwlpZV+DdG0ggtCS7Y3Kn0G0TSuYwEFWszJk3UhwiUZ5QhRBX5dEETgvJV6AbUAS4+ltJRC5G1JAjTmHLABME5BgGRsBfoMODffIOcvTLrmjInRnrTnVywKJRNkMoN7x4y6pVGpz3cBTgvCzO8p8SCgsKYg6yU5jmsQPIUqIJf6E+kFkzwXkONq8/V6OKwFuHKemhyl/vvdAr0ny6S+nbx/Fs1mg9lscHoyxf7PUf/rq/67/vf45Wx2dvpi/+g5N8w51akwN0YR6uaHOfxjrkzyMEoScu5wAOUo1ZdMelLS+UuNc8UDORQq3QU6+viUaCeCh7C+KhUdKdY0aZwe3AY6XptTp6nk4aKadCZ2h8pRLf7TWAtrVuuJsb5zV2pPC7LNZZmX+eZq8/52OHwz/CcycV3XQRuuMNoF/LWAnHxmUpaCcYEfKyKCwUYrg2qnmhpYpHa5UWBpFYcuz4OENvK9ZnE07dkT8RZw5n3BmUIcEwhRAT8L7GonxcsV5oWiXad3Hd72gRXOO6TvwqYyuMZ3lufsM9LzfZigXhgldW/MbbZBzr3RZMz7wcxz1J0qBy1rz9U6FnHE4BqunlZ+UChe7Fo0DavaHk+3fgQCoo43xQIyHkY0haqao6Nbq+qajx9LsmyPsYAlWskdCINIpWu7EUb9B6wnV601nvaOgWwPUa+By6iSv0DAA633PbSOawEZYUo2oGgCPjS1+jecZpfgNxvlldku3+Tz9Q0ImLf2m5s0+DX+ABGeAYAJfMJihbMKFOpFiQuObXIGDexvW7tdYvPS8ep9ilXVRNyYB9J1vWXs+RuCfH4BYldU2w==
+sidebar_class_name: "post api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Update a resource."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/resource/{resourceId}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Update a resource.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"resourceId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"allOf":[{"type":"object","properties":{"name":{"type":"string","minLength":1,"maxLength":255},"subdomain":{"type":"string","minLength":1,"pattern":"^(?!:\\/\\/)([a-zA-Z0-9-_]+\\.)*[a-zA-Z0-9-_]+$"},"ssl":{"type":"boolean"},"sso":{"type":"boolean"},"blockAccess":{"type":"boolean"},"emailWhitelistEnabled":{"type":"boolean"},"isBaseDomain":{"type":"boolean"},"applyRules":{"type":"boolean"},"domainId":{"type":"string"},"enabled":{"type":"boolean"}},"additionalProperties":false},{"type":"object","properties":{"name":{"type":"string","minLength":1,"maxLength":255},"proxyPort":{"type":"integer","minimum":1,"maximum":65535},"enabled":{"type":"boolean"}},"additionalProperties":false}]}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

@@ -1,0 +1,71 @@
+---
+id: create-a-resource-rule
+title: "Create a resource rule."
+description: "Create a resource rule."
+sidebar_label: "Create a resource rule."
+hide_title: true
+hide_table_of_contents: true
+api: eJx9VEtv2zAM/isGTxugLevVtzQtsAADZmTpKciBsVlbrSypkpw2MPTfB8p2Hluamx+fSH4PqoeKfOmkDdJoyGHhCANlmDnypnMlZa5T9B0EBKw95BtYjT9AwKpTBFsBnsrOyXCAfNPDPaEjl8270EC+2catAIsOWwrkfEL4sqEWIe8hHCxBDj44qWuIAhy9ddJRBXlwHQnQ2DJgGmZZgQDJc1oMDXBtPkE+3JvqwBVLowPpwI9orZIlMrHZi2d2V1qb3QuVAQRYZyy5IMmns+Wgx78jCiDdtSzDfLF4LNYg4GH1u4BtFNBiKJtbRxbLhxUIWBYgoJivf6ZTe1QdXTvVSv2LdM0q3kWeT5pB4yNU6kA1OdaNNO4Uy3b8uTNGEWqIF6puJmbTuNMAZw22ArCqJMNQFWeyPKPyFONQ0VujfRKLqVNoTMW2dElLNieH2WTbrD8ZGGccKODQuP2UiM4pxu/vkqVTnP6wWYMfF6E6cmxCsFwp4ZhzQiXKbPjqFI3HD2ytonNrTw6Oxk3+jI6cnDhJ/+NMaQ5o5DQ+Gy7LXIa6+zveFhm4HRSoa6OkzpZslktpzObFkk2zxocWU8rGnH++fRdbehbzWws7iBToI8ysQqm5Z1K6Hx3aHBcLBOQXS+bG1W6MDwzs+x16enIqRv781pHjdd+yXE6yJMnISvpRnhSWG3N/WY2h/Jp9Nuv4EfXhzBUQ8EqHyzsh8iI1hBW5NMUAWAy9vq25zKnAf9cCR+4Y4OKJE7Ebb5PWVOn6wXeWBN+H/ibRSblM33pQqOsOa8YOJTmCeBnWMZxieuBBrzLs+wGxNq+kYzwSDvzOXGP8C8FH7m0=
+sidebar_class_name: "put api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Create a resource rule."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"put"}
+  path={"/resource/{resourceId}/rule"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Create a resource rule.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"resourceId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"action":{"type":"string","enum":["ACCEPT","DROP"]},"match":{"type":"string","enum":["CIDR","IP","PATH"]},"value":{"type":"string","minLength":1},"priority":{"type":"integer"},"enabled":{"type":"boolean"}},"required":["action","match","value","priority"],"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

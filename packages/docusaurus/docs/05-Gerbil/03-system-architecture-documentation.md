@@ -7,6 +7,7 @@ This document outlines the system architecture of the Gerbil project, a Go appli
 The Gerbil project is structured around a central application that interacts with the WireGuard VPN service to create, manage, and configure tunnels. The application is built using Go and leverages various libraries for logging, networking, and configuration management.
 
 ### Key Features:
+
 - **WireGuard Management**: Create and manage WireGuard interfaces and peers.
 - **Logging**: Centralized logging functionality to track application behavior.
 - **Configuration**: JSON-based configuration management for easy setup and modification.
@@ -21,6 +22,7 @@ The main components of the Gerbil project include:
 - **Dockerfile**: Defines how to build and run the application in a containerized environment.
 
 ### Interaction Flow:
+
 1. The main application starts and initializes the logger.
 2. It reads configuration from `config_example.json` or an equivalent file or a remote http api hosted in Pangolin.
 3. Based on the configuration, it interacts with the WireGuard API using the `wgctrl` library and netlink to set up tunnels and peers.
@@ -53,6 +55,7 @@ The main components of the Gerbil project include:
 ```
 
 ### Description:
+
 - **Configuration**: The application reads from a configuration file that specifies settings like private keys, listen ports, and peers.
 - **Main Application**: Orchestrates the flow by initializing components and executing commands based on user input.
 - **Logger**: Captures events during execution for later review.
@@ -61,6 +64,7 @@ The main components of the Gerbil project include:
 ## 4. Design Decisions and Rationale
 
 ### Key Design Decisions:
+
 - **Use of Go**: Chosen for its performance, concurrency support, and ease of deployment.
 - **JSON Configuration**: Provides a human-readable format that is easy to modify without requiring recompilation.
 - **Modular Logging**: Encapsulated logging functionality allows for consistent logging practices across different parts of the application.
@@ -68,5 +72,6 @@ The main components of the Gerbil project include:
 ## 5. System Constraints and Limitations
 
 ### Constraints:
+
 - **Platform Dependency**: The application relies on Linux-based systems due to its use of netlink sockets for network management.
 - **Privileged Operations**: Requires elevated permissions to create network interfaces and modify routing tables.

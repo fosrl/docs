@@ -1,0 +1,71 @@
+---
+id: create-a-new-client
+title: "Create a new client."
+description: "Create a new client."
+sidebar_label: "Create a new client."
+hide_title: true
+hide_table_of_contents: true
+api: eJx9VE1v2zAM/SsGTxugLe2AXnxrix0CbFjQtSfDB8ZmbbWy5EpymszQfx8of8RZk12CmKLI9/ge1UNJrrCy9dJoSOHeEnpKMNH0nhRKkvZfQYDHykGawX2MgIBftkIt/2C8lgtwVHRW+gOkWQ93hJZsctv5GtIsD7mAFi025Mm6mOGKmhqEtAd/aAlScN5KXUEQYOmtk5ZKSL3tSIDGhhOMrdYlCJCMskVfA5flZHL+zpQHLlYY7Rlf2gO2rZJFxLd6ccztTFezfaGC6bTWtGS9JMenQ8t/sQlopP5BumJW1wIa3E9f325uggAnPa1Lt7iJ1uKBQXtqlnGpPVVkh5Ky6RpIrwTQvlCdkzv6OQV5AiEIMKpZl2en5aiw5M8fdVt94WgIfCRImrtm3A/ycCJGNkzlyHJCNWOYO471cwFYlpIVQLVZDPgZlaMQhvquNdrFsQcBDfnalCxwF1VhmVNYGVut+miAsComBzqyu8lOnVWct7uOppi8+JvlHhQ9ceTMu/a+5UoxD1LYxixgYGyZh6O5vu+xaRUdzXGc2ax6dpXPSi2OR4EWkVGXY2Ryo2pYHKmfDTdidsNS7q45SXoGABvUlVFSJ2s2kY0OT243a77aGucb1AuYF/b5ZOkXe3Nx/weEnvZ+1SqUmrvFqfejShlvKAhIp0UdhcoF1MZ5Tuj7LTp6sioEDr91ZPm9yAXs0ErcMr2sh1I6/l+ORvkP2E8Poz0/J5cwTouoeQ13qDr+AgGvdJgflZAHATVhSTYCGM7uhzZfHrnC8e6Hd4UdN/t28/QIArbjc9SYkq9YfAcRf2NrE5lEW8ZYDwp11WHFuUNJdiCeenX0ppj+MNCz5Pp+yHg0r6RDmLl6/mauIfwFwRsEQw==
+sidebar_class_name: "put api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Create a new client."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"put"}
+  path={"/org/{orgId}/client"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Create a new client.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"orgId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"name":{"type":"string","minLength":1,"maxLength":255},"siteIds":{"type":"array","items":{"type":"integer","minimum":0,"exclusiveMinimum":true}},"olmId":{"type":"string"},"secret":{"type":"string"},"subnet":{"type":"string"},"type":{"type":"string","enum":["olm"]}},"required":["name","siteIds","olmId","secret","subnet","type"],"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

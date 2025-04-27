@@ -1,0 +1,71 @@
+---
+id: set-the-pin-code-for-a-resource-setting-the-pin-code-to-null-will-remove-it
+title: "Set the PIN code for a resource. Setting the PIN code to null will remove it."
+description: "Set the PIN code for a resource. Setting the PIN code to null will remove it."
+sidebar_label: "Set the PIN code for a resource. Setting the PIN code to null will remove it."
+hide_title: true
+hide_table_of_contents: true
+api: eJytVD1v2zAQ/SvEoUMLsDGydNCWFB28NIbtTooK0NJZYkKRCnlyYgj878VR8ofQtFMWgaLu47137zRAhaH0uiPtLGSwQRLUoFgtf4rSVSj2zgslPAbX+xJvxAaJtK3nQeSE7Y0Rr9oY4bF1BxSabkACqTpAlsN6KgCFhIBl7zUdIcsHuEfl0Yu7nhrI8iIWEjrlVYuEPqSIUDbYKsgGoGOHkEEgr20NUYLHl157rCAj36MEq1oOOKFdViBBM61OUQNcmzMw0L2rjlyxdJbQEh9V1xldKtZh8RRYjHdau90TlgQSOu869KQx8NdOW9YhlbHHh33CPUfLtIjQM5rfj4/V8C1+gigHYOHUzuDI4Z2bIs6Y5uduhQRVVZoRK7O6ArRXJmCMY17onA0JZpTQIjWuYkFcoBFTAxksToothot2cXFqxCPzh9M8em845XCbBD0Nc8NSjWrMRnrWoSHquFKKgwx2KQoYJMu9vgzmx5tqO4MzYa+Gru3e8TcGNJr2cMtO08Q5sFK2dkZbsbSEtU8DFXerJacy61al0U5W+Wi/z7bpyl8fv1ijqoRvtOiM0pb5pdEM01Tz8x6AhGy2E1cOatgIWQ7DsFMBf3kTI1+/9Oh5QQsJB+X1aMd8gEoHPleTyf5D+PN6suwX8S+406WyR+A2puc3kPCMx/kWxyJKaFBV6BOKMeD72OvrlstcCvy1yGzTs/FXD5stSNhNP4B2dJdXryDTMwFwiU8yc7obwChb96rm2LEm+1bNHT45Wp4OVz+BOcVhGCO27hltjGfGxO9MNsY/r67rzg==
+sidebar_class_name: "post api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Set the PIN code for a resource. Setting the PIN code to null will remove it."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/resource/{resourceId}/pincode"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Set the PIN code for a resource. Setting the PIN code to null will remove it.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"resourceId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"pincode":{"anyOf":[{"type":"string","pattern":"^\\d{6}$"},{"nullable":true},{"nullable":true}]}},"required":["pincode"],"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

@@ -1,0 +1,71 @@
+---
+id: update-a-target
+title: "Update a target."
+description: "Update a target."
+sidebar_label: "Update a target."
+hide_title: true
+hide_table_of_contents: true
+api: eJx9U81u2zAMfpWApw3QlhZDd/CtHXYoMGBBm54MH5iYtdXakirRWQND7z5QchIHzXYxZIoi+f1whJrC1mvH2hoo4MnVyLTABaNviL+CAsYmQFHCOkWgUhBoO3jNeyjKEe4IPfnF7cAtFGUVKwUOPfbE5EPKCNuWeoRiBN47ggICe20aiAo8vQ3aUw0F+4EUGOwlITe/r0GBlqkccgtSWfIp8J2t91Jvaw2TYTmic53eosBYvgTBcqGx3bzQlkGB89aRZ01BbrW7OFxP3Nr645UCM3Qdbjo6jN1r84tMIwxcK+jx/fh3FRU463lWRRumhjykZ7of+sOjfP5+c/PtJiogIx3m7TfWdoQG4hlxpYxfKcC61oIeu9UM3DN2gWLMT4KzJiTIM3TgbEiUCMcFLDP3y/GgQQQR3O8Oag6+k7TddRLkYIVHoTqzeWaI4/Ats5NKKU/ApKyEReR6OAn78x17J9xmYU6sHyc+RjKzVzOyRI8ornm2UkCmzsbeXYuVNUthWKFpbKfN4l608Mk1i9vVPSS1AveY/DO58cJOnC3NzIcX9ycTwPTOS9ehNtIlsThOpJeT4UFBcbR+paAVZYoSxnGDgZ58F6OE3wbysnuVgh16nY1YjlDrMLGQVP/PlJ8eJvt8XvxrwCmIZg/SphvkDxS80n6+oLGKClrCmnyaIV//yJ2+rKXI6fmHHRUHHVVd/X5cg4LNtNu9reWNxz+g0je1twlN8lmKjdChaQZsJDfXFEvhufkms6nDQSa9CHAcc8bavpKJ8YRX/gVsjH8BvrLDbg==
+sidebar_class_name: "post api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Update a target."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/target/{targetId}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Update a target.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"targetId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"ip":{"type":"string"},"method":{"type":"string","nullable":true,"minLength":1,"maxLength":10},"port":{"type":"integer","minimum":1,"maximum":65535},"enabled":{"type":"boolean"}},"required":["ip"],"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

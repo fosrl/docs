@@ -10,46 +10,39 @@ This Home Assistant add-on allows you to easily run **Newt** directly in Home As
 
 ## Features
 
-
-- Easy installation via Home Assistant Add-on Store  
-- Automated setup and execution of the Newt container  
-- Supports `amd64`, `armv7`, `armhf`, and `aarch64` architectures  
+- Easy installation via Home Assistant Add-on Store
+- Automated setup and execution of the Newt container
+- Supports `amd64`, `armv7`, `armhf`, and `aarch64` architectures
 - Automatic restart on crash
 
 ## Installation
 
-
 ### **1. Add the GitHub Repository as an Add-on Source**
-
 
 - Go to **Settings → Add-ons → Add-on Store**.
 - Click the menu (three dots in the top right) and select **Repositories**.
 - Add the following URL:
-    
-   ```
-   https://github.com/Ferdinand99/home-assistant-newt-addon
-   ```
-   or
-   
-   ```
-   https://git.opland.net/Ferdinand99/home-assistant-newt-addon/
-   ```
+  ```
+  https://github.com/Ferdinand99/home-assistant-newt-addon
+  ```
+  or
+  ```
+  https://git.opland.net/Ferdinand99/home-assistant-newt-addon/
+  ```
 
 1. Click **Add** and wait for the repository to load.
 
 ### **2. Install and Start the Add-on**
 
-
 1. Find **Newt Add-on** in the list and click **Install**.
 2. Go to the **Configuration** tab and enter your values for:
-    - **PANGOLIN_ENDPOINT** (e.g., `https://example.com`)
-    - **NEWT_ID**
-    - **NEWT_SECRET**
+   - **PANGOLIN_ENDPOINT** (e.g., `https://example.com`)
+   - **NEWT_ID**
+   - **NEWT_SECRET**
 3. Click **Save** and then **Start**.
 4. Check the **Logs** tab to verify that everything is running correctly.
 
 ## **Configuration**
-
 
 After installation, you can configure the add-on via the Home Assistant UI:
 
@@ -67,8 +60,32 @@ The following environment variables are passed to the `Newt` container:
 - `NEWT_ID`
 - `NEWT_SECRET`
 
-## Troubleshooting
+## Exposing Home Assistant through addon
+1. Connect addon to your Pangolin by completing environment variables and starting the addon
+2. In Pangolin create new HTTPS resource for your new Tunnel with subdomain
+3. Within the created Resource add new Target Configuration
 
+| Method | IP / Hostname | Port |
+| --- | ----------- | --- |
+| HTTPS | 127.0.0.1 | 8123 |
+
+4. In Home Assistant's `configuration.yaml` add these two sections:
+```yaml
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 127.0.0.1
+homeassistant:
+  allowlist_external_urls:
+    - "https://<subdomain>.example.com" # <-- Replace with URL of created resource in Pangolin
+```
+:::note
+Please see [http](https://www.home-assistant.io/integrations/http/) documentation and [allowlist_external_urls](https://www.home-assistant.io/integrations/homeassistant/#external_url) on Home Assistant site
+:::
+5. Restart Home Assistant and your new Pangolin Proxy should be alive
+
+
+## Troubleshooting
 
 #### **Add-on does not start?**
 
@@ -79,23 +96,20 @@ The following environment variables are passed to the `Newt` container:
 
 - Restart the add-on after making changes.
 - Try removing the container manually:
-    
-    ```shell
-    docker stop newt
-    docker rm newt
-    ```
-    
+
+  ```shell
+  docker stop newt
+  docker rm newt
+  ```
 
 - Then start the add-on again.
 
 #### **Docker not available?**
 
 - Home Assistant OS manages Docker automatically, but check if the system has access to Docker by running:
-    
-    ```shell
-    docker info
-    ```
-    
+  ```shell
+  docker info
+  ```
 
 If this fails, there may be a restriction in Home Assistant OS.
 

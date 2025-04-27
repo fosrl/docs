@@ -1,0 +1,71 @@
+---
+id: set-roles-for-a-resource-this-will-replace-all-existing-roles
+title: "Set roles for a resource. This will replace all existing roles."
+description: "Set roles for a resource. This will replace all existing roles."
+sidebar_label: "Set roles for a resource. This will replace all existing roles."
+hide_title: true
+hide_table_of_contents: true
+api: eJytVL1u2zAQfhXhphZg42TVlhQdPBQ1HHcSNJyli8SEIpUj5dgQ+O7FUbJjoWmXdqPou+P3dx6hJl+x7oN2FnJ4pJCxM+SzJ8cZZkzeDVzRTbZrtc/etDEZU2+wogyNyeiofdC2mZpuQEHAxkNewHbuBAVbZwhKBZ6qgXU4QV6M8EDIxNn9EFrIizKWCnpk7CgQ+1Thq5Y6hHyEcOoJcvCBtW0gKmB6HTRTDXnggRRY7KTgjHZdgwItfHoMLchs6SAfHlx9komVs4FskCP2vdEVigCrZy8qfPC02z9TFUBBz64nDpq8/Cqs17W/KkRmPMnrgbrre20DNcSgoNNWd0MH+a0COlZm8PpA38+XwifGBcXi8kypAOtaC1Q0myskT2i8tKU+3zvrE76ooKPQulqUcD7hF0FyWJ2lWo3vosVVchHEKT6cbRjYSMPhLul49vBRFJpEWDh5IdyG0MukVAc57FMVCERRefvux7cjdr2hhZ7FbRnFwicn14JlyufhTiKmg5TDBm3jjLbZWsTlZGF2v1lLQoRuh8nMORz/Hu3Fqlxl6H9szSRaoGNY9Qa1FQ5J+XG2rLikGxTki6RPrpUKWvE4L2Ac9+jpJ5sY5fp1IJalKxUckDXuRb1ihFp7Oddzfv5C8NN2TuPn7E9gz/m3kv4DmkG+QMELnZabGcXZlrAmTiimgq/TW192MuZ9wG/LKRm8ZHrz43EHCvbzUneuTv8C+Cai4NsEwCU+07rK3QgGbTNgI7XTTAklLuM7x1WdD4L0Q4rjOFXs3AvZGC+Mg3wL2Rh/AYjP3J8=
+sidebar_class_name: "post api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Set roles for a resource. This will replace all existing roles."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/resource/{resourceId}/roles"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Set roles for a resource. This will replace all existing roles.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"resourceId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"roleIds":{"type":"array","items":{"type":"integer","minimum":0,"exclusiveMinimum":true}}},"required":["roleIds"],"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

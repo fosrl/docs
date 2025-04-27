@@ -12,7 +12,7 @@ Some notes about how to set up key parts of the networking in this project are b
 
 You will want your own domain. These can be had for cheap and are a good way to begin to own your digital life on the internet. Any domain will do fine.
 
-You can [buy a cheap domain at Namecheap](https://namecheap.pxf.io/c/6099916/386170/5618) 
+You can [buy a cheap domain at Namecheap](https://namecheap.pxf.io/c/6099916/386170/5618)
 
 We use Namecheap for our own domains and they provide a good service. Using the link will support us through their affiliate program if you make a purchase which is a good way to support the project.
 
@@ -39,38 +39,59 @@ If you intend to use the root of your domain, then you will need an additional A
 ## Ports to Expose
 
 :::warning
+Docker automatically creates iptables NAT rules when container ports are published (using `-p` or in docker-compose via `ports:`), which can bypass host firewall settings such as [UFW](https://en.wikipedia.org/wiki/Uncomplicated_Firewall) or [firewalld](https://en.wikipedia.org/wiki/Firewalld). This may cause ports to be accessible from external networks even if they aren’t explicitly allowed by your firewall.
 
-**Docker Port Exposure Caveat:**  
-Docker automatically creates iptables NAT rules when container ports are published (using `-p` or docker-compose). These rules can bypass host firewall settings (such as UFW or firewalld), causing ports to be accessible from external networks even if they aren’t explicitly allowed by your firewall. Always verify your exposed ports (e.g., with [nmap](https://nmap.org/) or [RustScan](https://github.com/bee-san/RustScan)) and ensure you only expose the ports that are absolutely necessary. For more details, see [Docker’s port publishing documentation](https://docs.docker.com/engine/network/packet-filtering-firewalls/#port-publishing-and-mapping).
+**Mitigation:** For ports that should not be exposed externally, consider binding them on the host to the loopback interface (i.e., `127.0.0.1`) in your docker-compose configuration. For example, instead of using:
 
+```yaml
+ports:
+  - "8080:8080"
+```
+
+you can restrict the exposure only to localhost interface with:
+
+```yaml
+ports:
+  - "127.0.0.1:8080:8080"
+```
+
+This approach limits access to that port only to the host machine. Note that this method is not suitable for all exposed ports—use it only for those services that should remain internal.
+
+Always verify your exposed ports (e.g., with [nmap](https://nmap.org/) or [RustScan](https://github.com/bee-san/RustScan)) and ensure you expose **only** the ports that are absolutely necessary. By tunneling out to the VPS, you are effectively including the VPS in your security boundary, so you must secure it as part of your overall network strategy. For more details, see [Docker’s port publishing documentation](https://docs.docker.com/engine/network/packet-filtering-firewalls/#port-publishing-and-mapping).
 :::
 
 
-Following ports should be exposed on Operating system level.
+For Pangolin to work correctly, the following ports must be open at the operating system level and exposed on all or external interfaces (i.e., bound to `0.0.0.0`).
 
 ### TCP 80
 
-If you are using HTTP SSL verification (default from the installer) then Lets Encrypt will try to reach Traefik on this port to verify the subdomain. Non SSL resources will also use this port.
+If you are using HTTP SSL verification (default from the installer), Let's Encrypt will attempt to reach Traefik on this port to verify the subdomain. Additionally, non-SSL resources will use this port.
 
 :::note
-
-If you use wildcard certificates with `DNS-01` verification, you can disable this port. Only the `443` port will be needed.
-
+If you use wildcard certificates with `DNS-01` verification, you can disable this port; only the `443` port will then be needed.
 :::
 
 ### TCP 443
 
-The Pangolin web UI and SSL resources use this port to connect with HTTPS.
+The Pangolin web UI and SSL resources use this port to establish secure HTTPS connections. This port is essential and must be available on all network interfaces.
 
 ### UDP 51820
 
-This is the default WireGuard port and is used for Newt and WireGuard clients to connect to Gerbil. If you change this in the config file then you would use that port.
+This is the default WireGuard port and is used for Newt and WireGuard clients to connect to Gerbil. If you change this in the configuration file, use the new port accordingly. This port is also essential and must be available on all network interfaces.
 
-:::warning
+### Correctly exposed Pangolin's ports
 
-Its important to **ONLY** expose and verify exposed the ports you need. Effectively by tunneling out to the VPS you are including the VPS in your security boundary and should consider it part of your network and secure it as such.
+By default the config defaults to using the bellow settings that these ports are exposed on all interfaces:
 
-:::
+```yaml
+gerbil:
+  ports:
+    - "80:80"        # TCP port for HTTP/SSL verification and non-SSL resources
+    - "443:443"      # TCP port for HTTPS, necessary for the Pangolin web UI and SSL resources
+    - "51820:51820"  # UDP port for WireGuard, used by Newt and WireGuard clients
+```
+
+Ensure that your host firewall settings allow incoming connections on these ports.
 
 ## Default Internal Subnet
 
@@ -78,9 +99,9 @@ By default the config defaults to using the bellow settings:
 
 ```yaml
 gerbil:
-    block_size: 24
-    site_block_size: 30
-    subnet_group: 100.89.137.0/20
+  block_size: 24
+  site_block_size: 30
+  subnet_group: 100.89.137.0/20
 ```
 
 This means that Gerbil will choose the first /24 subnet in the `100.89.137.0/20` range to operate its network. `100.89.137.0/20` is in the CGNAT range which should avoid overlap with most private networks, but if it does please make sure to change this in your config **before** registering your first Gerbil.
@@ -101,7 +122,7 @@ As soon as you enable the Cloudflare proxy, you're bound to Cloudflare's terms o
 
 :::
 
-Pangolin can be used with Cloudflare proxy (orange cloud) enabled. Ideally you should [setup wildcard certificates](../03-Pangolin/02-Configuration/03-wildcard-certs.md) with Traefik using the DNS challenge and **set Cloudflare to Full (Strict) SSL mode**. 
+Pangolin can be used with Cloudflare proxy (orange cloud) enabled. Ideally you should [setup wildcard certificates](../03-Pangolin/02-Configuration/03-wildcard-certs.md) with Traefik using the DNS challenge and **set Cloudflare to Full (Strict) SSL mode**.
 
 Pangolin through Cloudflare will not work under Full or Automatic SSL/TLS. Cloudflare's documentation about SSL/TLS Encryption is available [here](https://developers.cloudflare.com/ssl/origin-configuration/ssl-modes/).
 
@@ -109,7 +130,7 @@ Since Cloudflare proxy obscures the destination IP of the host, you will also ne
 
 ```yaml
 gerbil:
-    start_port: 51820
-    # highlight-next-line
-    base_endpoint: "104.21.16.1" # Replace with your VPS IP
+  start_port: 51820
+  # highlight-next-line
+  base_endpoint: "104.21.16.1" # Replace with your VPS IP
 ```

@@ -1,0 +1,71 @@
+---
+id: update-a-client-by-its-client-id
+title: "Update a client by its client ID."
+description: "Update a client by its client ID."
+sidebar_label: "Update a client by its client ID."
+hide_title: true
+hide_table_of_contents: true
+api: eJyNU01v2zAM/SsGTxugLeiAXnxrux0CDFjQj5ORA2OxtlpbUiU6a2Dovw+U4yTtsqEXw5KfyfceH0fQFOtgPBtnoYQHr5GpwKLuDFkuNrvCcJxPy+9fQQFjE6Gs4CZfwlpBpHoIhndQViNcEwYKxdXALZTVOq0VeAzYE1OIGRHrlnqEcgTeeYISIgdjG0gKAr0MJpCGksNACiz2Apj6LzUoMELTI7cglQVPka+d3km92lkWTuUI6H1nahRdi6co4s40dpsnqhkU+OA8BTYU5evU9T09Bb2xP8k2IuxCQY+v8+nb5WVSEA3TUseTPzEE3Alppj6eEZySAtTaCEvsVickHrGLlDIgUPTOxkwtKeiJW6fFBBczdfGihMXk0WKcvUoggwnb2fUhdALbXmTj5pHdiSWT6jeDO1Btmb1UyjgoYZNRIMTE1tvjAH68Yu87Ohp4NO7gTDXfrZOM8tEJWihO8dteSL4MSxVYoW1cZ2yxtExNyKMsrlZLyYlo79Ge9PpIct9k/SQtH4v95AfTKy98h8YKj2zquJ9Btc8pKCgPiV0raGVQZQXjuMFID6FLSa5fBgqyMmsFWwwGN6K6GkGbKO96H4L/0P50u1+Xz8W/CM5BtBLDLXaDnEDBM+1O9yrJPFpCTSFzmD7fTJ2+3EuR4+9/rZYE6hDL1a+7e1Cw2a9k77T8E/A3qPzM7V1Wk2OX70bo0DYDNoKdaubdeJvFffbU/CJMzwocxwlx757JpnTQy3IWsSn9AXMpsTc=
+sidebar_class_name: "post api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Update a client by its client ID."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/client/{clientId}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Update a client by its client ID.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"clientId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"name":{"type":"string","minLength":1,"maxLength":255},"siteIds":{"type":"array","items":{"type":"string"}}},"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

@@ -1,0 +1,71 @@
+---
+id: list-all-actions-set-for-an-api-key
+title: "List all actions set for an API key."
+description: "List all actions set for an API key."
+sidebar_label: "List all actions set for an API key."
+hide_title: true
+hide_table_of_contents: true
+api: eJyVkkFv2zAMhf+KwdMGaHNy1a0DhiFogRVbdwp8UGLaFiJLrkQH8wT994GKnSZDU3Q3W3h8JB+/CDWGvdcDaWdBwoMOVChjCrXnl1AEpKJxvlC2uHvcFAecPoMAUm0AuYXvvlVW/1G5WgAr7nGCSkDA/eg1TSC3Eb6g8uiLu5E6kNsqVQIG5VWPhD5kRdh32CuQEWgaECQE8tq2IKDX9gFty5XrJMDj86g91iDJjyjAqp7latD3OG1qEKB5j0FRB0m8ZVxjo0ZDIGG9Wq3gyrtRJryYG91rWpyfR/TTu63f9HVNE/Bf44r1YXA2YAAZk4AeqXM1SGizOK8moXS+LaPz7aZOpRr0pwNOZVxySOV8QOBT+OOS8+gN1x7XudFypJ+8SW53farzZh3RwE5ZBxJ2WQUp8eyNYyW3ODF0XDMhmgwrH5VtndG22FjC1mdSmCTOZXCBemW5ek7knfhdMRth7yyhpf/A97QV4W8qB6O05WlyNHGOdwvO8yVlDhgEzAnz0wVrS8iVgM4F4roYdyrgL29S4ufTVTn6Wge1MxcUsN0LXEdlRh4qo3VDewbmRVzxj9esfr3Lzaw+/Jix/FjcimR+VHa67LlMc84hVZeUfvv6xMlcAzQDI5YPHvVV9xhPiid3QJvSuRnxP3dK6S+DTZGh
+sidebar_class_name: "get api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"List all actions set for an API key."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/org/{orgId}/api-key/{apiKeyId}/actions"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+List all actions set for an API key.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string","minLength":1},"required":true,"name":"apiKeyId","in":"path"},{"schema":{"type":"string","default":"1000"},"required":false,"name":"limit","in":"query"},{"schema":{"type":"string","default":"0"},"required":false,"name":"offset","in":"query"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

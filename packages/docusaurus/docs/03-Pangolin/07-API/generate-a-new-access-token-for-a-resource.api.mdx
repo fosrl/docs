@@ -1,0 +1,71 @@
+---
+id: generate-a-new-access-token-for-a-resource
+title: "Generate a new access token for a resource."
+description: "Generate a new access token for a resource."
+sidebar_label: "Generate a new access token for a resource."
+hide_title: true
+hide_table_of_contents: true
+api: eJyVVMFu2zAM/RXjnTZAXdqrb+2wDj0MC9ruFPjA2Gys1pZcSU4bGPr3gbKdNE03oJdAoUjq8b1HD6jYl053QVuDHD/ZsKPAGWWGXzIqS/Y+C/aJTfZgXUaZY297V/I3KATaeOQr3E4xKFyOFfdSgULBc9k7HXbIVwOumBy77LIPNfJVEQuFjhy1HNj5lOHLmltCPiDsOkYOH5w2G0QFx8+9dlwhD65nBUOtJMx4biooaJmho1BDeksF+3Blq510LK0JbIIcqesaXZIMvXj0MvkHT9v1I5cBCp2zHbug2cvtlhpdXVt3x6U1lX9ToE3gDTsotNrotm+Rnyvwa9n0Xm/51xwU/FEh6NDwh6MeaXJyHxWoqrTcUrN8g+2BGs8xxkSW76zxCXFUaDnUthJurE8TCUU5FjN5i+FAY1yMqp8l1SESuu2sT+8aqdteJIJnce+EupGdI4n30OsQOumU8pBjnbLSKEL/7UGoH6/UdiMtJ0Sf7zmbuXhH1RsKtXmwqQk7P95tL3CoX5LZ2Eab7EY0c8kJ2eXyRkqFo5YS85PHPrcV79Tb2+6zyzVSF/g1LLqGtBFsif9h0m+1Nz8U8qNFOJKwUKhF93yFYViT5z+uiVHCzz07Wc1CYUtO01rIWQ2otJdzNXnqPzN9uZ3W8mv2L8xTkMwO8kzTyz8oPPHueH9jERVqpopdQjEmfB/fOruXNocGJysshtz7fPn77h4K62n1W1ulbwW9QKXfBMCmeZJtU2xAQ2bT00Zyx55p2Y69PHlXzQdB+uGIwzBmpG9hjPuJR1FiEWP8C8DX5fU=
+sidebar_class_name: "post api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Generate a new access token for a resource."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/resource/{resourceId}/access-token"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Generate a new access token for a resource.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"resourceId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"validForSeconds":{"type":"integer","minimum":0,"exclusiveMinimum":true},"title":{"type":"string"},"description":{"type":"string"}},"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

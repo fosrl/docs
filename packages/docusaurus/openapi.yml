@@ -22,7 +22,9 @@ paths:
         - Site
       security:
         - Bearer Auth: []
-      operationId: getOrgByOrgIdSiteByNiceId
+      summary: >-
+        Get a site by orgId and niceId. NiceId is a readable ID for the site and
+        unique on a per org basis.
       parameters:
         - schema:
             type: string
@@ -42,7 +44,7 @@ paths:
         - Site
       security:
         - Bearer Auth: []
-      operationId: getSiteBySiteId
+      summary: Get a site by siteId.
       parameters:
         - schema:
             type: number
@@ -56,7 +58,7 @@ paths:
         - Site
       security:
         - Bearer Auth: []
-      operationId: deleteSiteBySiteId
+      summary: Delete a site and all its associated data.
       parameters:
         - schema:
             type: string
@@ -70,7 +72,7 @@ paths:
         - Site
       security:
         - Bearer Auth: []
-      operationId: postSiteBySiteId
+      summary: Update a site.
       parameters:
         - schema:
             type: string
@@ -97,7 +99,7 @@ paths:
         - Organization
       security:
         - Bearer Auth: []
-      operationId: putOrgByOrgIdSite
+      summary: Create a new site.
       parameters:
         - schema:
             type: string
@@ -147,7 +149,7 @@ paths:
         - Site
       security:
         - Bearer Auth: []
-      operationId: getOrgByOrgIdSites
+      summary: List all sites in an organization
       parameters:
         - schema:
             type: string
@@ -177,7 +179,9 @@ paths:
         - Site
       security:
         - Bearer Auth: []
-      operationId: getOrgByOrgIdPick-site-defaults
+      summary: >-
+        Return pre-requisite data for creating a site, such as the exit node,
+        subnet, Newt credentials, etc.
       parameters:
         - schema:
             type: string
@@ -192,7 +196,7 @@ paths:
         - Organization
       security:
         - Bearer Auth: []
-      operationId: getOrgByOrgId
+      summary: Get an organization
       parameters:
         - schema:
             type: string
@@ -206,7 +210,7 @@ paths:
         - Organization
       security:
         - Bearer Auth: []
-      operationId: deleteOrgByOrgId
+      summary: Delete an organization
       parameters:
         - schema:
             type: string
@@ -220,7 +224,7 @@ paths:
         - Organization
       security:
         - Bearer Auth: []
-      operationId: postOrgByOrgId
+      summary: Update an organization
       parameters:
         - schema:
             type: string
@@ -247,7 +251,7 @@ paths:
         - Role
       security:
         - Bearer Auth: []
-      operationId: postResourceByResourceIdRoles
+      summary: Set roles for a resource. This will replace all existing roles.
       parameters:
         - schema:
             type: string
@@ -277,7 +281,7 @@ paths:
         - Role
       security:
         - Bearer Auth: []
-      operationId: getResourceByResourceIdRoles
+      summary: List all roles for a resource.
       parameters:
         - schema:
             type: string
@@ -293,7 +297,7 @@ paths:
         - Role
       security:
         - Bearer Auth: []
-      operationId: putOrgByOrgIdRole
+      summary: Create a role.
       parameters:
         - schema:
             type: string
@@ -323,7 +327,7 @@ paths:
         - Role
       security:
         - Bearer Auth: []
-      operationId: deleteRoleByRoleId
+      summary: Delete a role.
       parameters:
         - schema:
             type: string
@@ -350,7 +354,7 @@ paths:
         - Role
       security:
         - Bearer Auth: []
-      operationId: getOrgsByOrgIdRoles
+      summary: List roles.
       parameters:
         - schema:
             type: string
@@ -377,7 +381,7 @@ paths:
         - Organization
       security:
         - Bearer Auth: []
-      operationId: putOrg
+      summary: Create a new organization
       requestBody:
         content:
           application/json:
@@ -406,7 +410,7 @@ paths:
         - User
       security:
         - Bearer Auth: []
-      operationId: getUser:userIdOrgs
+      summary: List all organizations for a user.
       parameters:
         - schema:
             type: string
@@ -428,7 +432,7 @@ paths:
         - Organization
       security:
         - Bearer Auth: []
-      operationId: getOrgs
+      summary: List all organizations in the system.
       parameters:
         - schema:
             type: string
@@ -450,7 +454,7 @@ paths:
         - Resource
       security:
         - Bearer Auth: []
-      operationId: getResourceByResourceId
+      summary: Get a resource.
       parameters:
         - schema:
             type: string
@@ -464,7 +468,7 @@ paths:
         - Resource
       security:
         - Bearer Auth: []
-      operationId: deleteResourceByResourceId
+      summary: Delete a resource.
       parameters:
         - schema:
             type: string
@@ -478,7 +482,7 @@ paths:
         - Resource
       security:
         - Bearer Auth: []
-      operationId: postResourceByResourceId
+      summary: Update a resource.
       parameters:
         - schema:
             type: string
@@ -539,7 +543,7 @@ paths:
         - Resource
       security:
         - Bearer Auth: []
-      operationId: putOrgByOrgIdSiteBySiteIdResource
+      summary: Create a resource.
       parameters:
         - schema:
             type: string
@@ -613,7 +617,7 @@ paths:
         - Resource
       security:
         - Bearer Auth: []
-      operationId: getSiteBySiteIdResources
+      summary: List resources for a site.
       parameters:
         - schema:
             type: number
@@ -641,7 +645,7 @@ paths:
         - Resource
       security:
         - Bearer Auth: []
-      operationId: getOrgByOrgIdResources
+      summary: List resources for an organization.
       parameters:
         - schema:
             type: string
@@ -669,7 +673,7 @@ paths:
         - User
       security:
         - Bearer Auth: []
-      operationId: postResourceByResourceIdUsers
+      summary: Set users for a resource. This will replace all existing users.
       parameters:
         - schema:
             type: string
@@ -697,7 +701,7 @@ paths:
         - User
       security:
         - Bearer Auth: []
-      operationId: getResourceByResourceIdUsers
+      summary: List all users for a resource.
       parameters:
         - schema:
             type: string
@@ -714,7 +718,9 @@ paths:
         - Resource
       security:
         - Bearer Auth: []
-      operationId: postResourceByResourceIdPassword
+      summary: >-
+        Set the password for a resource. Setting the password to null will
+        remove it.
       parameters:
         - schema:
             type: string
@@ -745,7 +751,9 @@ paths:
         - Resource
       security:
         - Bearer Auth: []
-      operationId: postResourceByResourceIdPincode
+      summary: >-
+        Set the PIN code for a resource. Setting the PIN code to null will
+        remove it.
       parameters:
         - schema:
             type: string
@@ -777,7 +785,9 @@ paths:
         - Resource
       security:
         - Bearer Auth: []
-      operationId: postResourceByResourceIdWhitelist
+      summary: >-
+        Set email whitelist for a resource. This will replace all existing
+        emails.
       parameters:
         - schema:
             type: string
@@ -809,7 +819,7 @@ paths:
         - Resource
       security:
         - Bearer Auth: []
-      operationId: getResourceByResourceIdWhitelist
+      summary: Get the whitelist of emails for a specific resource.
       parameters:
         - schema:
             type: string
@@ -826,7 +836,9 @@ paths:
         - Resource
       security:
         - Bearer Auth: []
-      operationId: postResourceByResourceIdTransfer
+      summary: >-
+        Transfer a resource to a different site. This will also transfer the
+        targets associated with the resource.
       parameters:
         - schema:
             type: string
@@ -855,7 +867,7 @@ paths:
         - Rule
       security:
         - Bearer Auth: []
-      operationId: putResourceByResourceIdRule
+      summary: Create a resource rule.
       parameters:
         - schema:
             type: string
@@ -901,7 +913,7 @@ paths:
         - Rule
       security:
         - Bearer Auth: []
-      operationId: deleteResourceByResourceIdRuleByRuleId
+      summary: Delete a resource rule.
       parameters:
         - schema:
             type: string
@@ -921,7 +933,7 @@ paths:
         - Rule
       security:
         - Bearer Auth: []
-      operationId: postResourceByResourceIdRuleByRuleId
+      summary: Update a resource rule.
       parameters:
         - schema:
             type: string
@@ -969,7 +981,7 @@ paths:
         - Rule
       security:
         - Bearer Auth: []
-      operationId: getResourceByResourceIdRules
+      summary: List rules for a resource.
       parameters:
         - schema:
             type: string
@@ -996,7 +1008,7 @@ paths:
         - Organization
       security:
         - Bearer Auth: []
-      operationId: getOrgByOrgIdDomains
+      summary: List all domains for a organization.
       parameters:
         - schema:
             type: string
@@ -1023,7 +1035,7 @@ paths:
         - Target
       security:
         - Bearer Auth: []
-      operationId: getTargetByTargetId
+      summary: Get a target.
       parameters:
         - schema:
             type: string
@@ -1037,7 +1049,7 @@ paths:
         - Target
       security:
         - Bearer Auth: []
-      operationId: deleteTargetByTargetId
+      summary: Delete a target.
       parameters:
         - schema:
             type: string
@@ -1051,7 +1063,7 @@ paths:
         - Target
       security:
         - Bearer Auth: []
-      operationId: postTargetByTargetId
+      summary: Update a target.
       parameters:
         - schema:
             type: string
@@ -1089,7 +1101,7 @@ paths:
         - Target
       security:
         - Bearer Auth: []
-      operationId: putResourceByResourceIdTarget
+      summary: Create a target for a resource.
       parameters:
         - schema:
             type: string
@@ -1127,7 +1139,7 @@ paths:
         - Target
       security:
         - Bearer Auth: []
-      operationId: getResourceByResourceIdTargets
+      summary: List targets for a resource.
       parameters:
         - schema:
             type: string
@@ -1155,7 +1167,7 @@ paths:
         - User
       security:
         - Bearer Auth: []
-      operationId: deleteOrgByOrgIdUserByUserId
+      summary: Remove a user from an organization.
       parameters:
         - schema:
             type: string
@@ -1175,7 +1187,7 @@ paths:
         - User
       security:
         - Bearer Auth: []
-      operationId: getOrgByOrgIdUserByUserId
+      summary: Get a user in an organization.
       parameters:
         - schema:
             type: string
@@ -1196,7 +1208,7 @@ paths:
         - User
       security:
         - Bearer Auth: []
-      operationId: getOrgByOrgIdUsers
+      summary: List users in an organization.
       parameters:
         - schema:
             type: string
@@ -1224,7 +1236,7 @@ paths:
         - User
       security:
         - Bearer Auth: []
-      operationId: postRoleByRoleIdAddByUserId
+      summary: Add a role to a user.
       parameters:
         - schema:
             type: string
@@ -1244,7 +1256,7 @@ paths:
         - Organization
       security:
         - Bearer Auth: []
-      operationId: postOrgByOrgIdCreate-invite
+      summary: Invite a user to join an organization.
       parameters:
         - schema:
             type: string
@@ -1285,7 +1297,7 @@ paths:
         - Invitation
       security:
         - Bearer Auth: []
-      operationId: getOrgByOrgIdInvitations
+      summary: List invitations in an organization.
       parameters:
         - schema:
             type: string
@@ -1313,7 +1325,7 @@ paths:
         - Site
       security:
         - Bearer Auth: []
-      operationId: getSiteBySiteIdPick-client-defaults
+      summary: Return pre-requisite data for creating a client.
       parameters:
         - schema:
             type: string
@@ -1329,7 +1341,7 @@ paths:
         - Organization
       security:
         - Bearer Auth: []
-      operationId: putOrgByOrgIdClient
+      summary: Create a new client.
       parameters:
         - schema:
             type: string
@@ -1378,7 +1390,7 @@ paths:
         - Client
       security:
         - Bearer Auth: []
-      operationId: deleteClientByClientId
+      summary: Delete a client by its client ID.
       parameters:
         - schema:
             type: string
@@ -1392,7 +1404,7 @@ paths:
         - Client
       security:
         - Bearer Auth: []
-      operationId: postClientByClientId
+      summary: Update a client by its client ID.
       parameters:
         - schema:
             type: string
@@ -1423,7 +1435,7 @@ paths:
         - Organization
       security:
         - Bearer Auth: []
-      operationId: getOrgByOrgIdClients
+      summary: List all clients for an organization.
       parameters:
         - schema:
             type: string
@@ -1451,7 +1463,7 @@ paths:
         - Organization
       security:
         - Bearer Auth: []
-      operationId: getOrgByOrgIdClientByClientId
+      summary: Get a client by its client ID.
       parameters:
         - schema:
             type: string
@@ -1472,7 +1484,7 @@ paths:
         - Access Token
       security:
         - Bearer Auth: []
-      operationId: postResourceByResourceIdAccess-token
+      summary: Generate a new access token for a resource.
       parameters:
         - schema:
             type: string
@@ -1503,7 +1515,7 @@ paths:
         - Access Token
       security:
         - Bearer Auth: []
-      operationId: getOrgByOrgIdAccess-tokens
+      summary: List all access tokens in an organization.
       parameters:
         - schema:
             type: string
@@ -1531,7 +1543,7 @@ paths:
         - Access Token
       security:
         - Bearer Auth: []
-      operationId: getResourceByResourceIdAccess-tokens
+      summary: List all access tokens in an organization.
       parameters:
         - schema:
             type: number
@@ -1558,7 +1570,7 @@ paths:
         - Access Token
       security:
         - Bearer Auth: []
-      operationId: deleteAccess-tokenByAccessTokenId
+      summary: Delete a access token.
       parameters:
         - schema:
             type: string
@@ -1573,7 +1585,7 @@ paths:
         - Identity Provider
       security:
         - Bearer Auth: []
-      operationId: putIdpOidc
+      summary: Create an OIDC IdP.
       requestBody:
         content:
           application/json:
@@ -1624,7 +1636,7 @@ paths:
         - Identity Provider
       security:
         - Bearer Auth: []
-      operationId: postIdp:idpIdOidc
+      summary: Update an OIDC IdP.
       parameters:
         - schema:
             type: number
@@ -1671,7 +1683,7 @@ paths:
         - Identity Provider
       security:
         - Bearer Auth: []
-      operationId: deleteIdpByIdpId
+      summary: Delete IDP.
       parameters:
         - schema:
             type: number
@@ -1686,7 +1698,7 @@ paths:
         - Identity Provider
       security:
         - Bearer Auth: []
-      operationId: getIdpByIdpId
+      summary: Get an IDP by its IDP ID.
       parameters:
         - schema:
             type: number
@@ -1702,7 +1714,7 @@ paths:
         - Identity Provider
       security:
         - Bearer Auth: []
-      operationId: getIdp
+      summary: List all IDP in the system.
       parameters:
         - schema:
             type: string
@@ -1724,7 +1736,7 @@ paths:
         - Identity Provider
       security:
         - Bearer Auth: []
-      operationId: putIdpByIdpIdOrgByOrgId
+      summary: Create an IDP policy for an existing IDP on an organization.
       parameters:
         - schema:
             type: number
@@ -1755,7 +1767,7 @@ paths:
         - Identity Provider
       security:
         - Bearer Auth: []
-      operationId: deleteIdpByIdpIdOrgByOrgId
+      summary: Create an OIDC IdP for an organization.
       parameters:
         - schema:
             type: number
@@ -1775,7 +1787,7 @@ paths:
         - Identity Provider
       security:
         - Bearer Auth: []
-      operationId: postIdpByIdpIdOrgByOrgId
+      summary: Update an IDP org policy.
       parameters:
         - schema:
             type: number
@@ -1807,7 +1819,7 @@ paths:
         - Identity Provider
       security:
         - Bearer Auth: []
-      operationId: getIdpByIdpIdOrg
+      summary: List all org policies on an IDP.
       parameters:
         - schema:
             type: number
@@ -1836,7 +1848,7 @@ paths:
         - API Key
       security:
         - Bearer Auth: []
-      operationId: deleteOrgByOrgIdApi-keyByApiKeyId
+      summary: Delete an API key.
       parameters:
         - schema:
             type: string
@@ -1853,7 +1865,7 @@ paths:
         - API Key
       security:
         - Bearer Auth: []
-      operationId: getOrgByOrgIdApi-keyByApiKeyIdActions
+      summary: List all actions set for an API key.
       parameters:
         - schema:
             type: string
@@ -1881,7 +1893,7 @@ paths:
         - API Key
       security:
         - Bearer Auth: []
-      operationId: postOrgByOrgIdApi-keyByApiKeyIdActions
+      summary: Set actions for an API key. This will replace any existing actions.
       parameters:
         - schema:
             type: string
@@ -1912,7 +1924,7 @@ paths:
         - API Key
       security:
         - Bearer Auth: []
-      operationId: getOrgByOrgIdApi-keys
+      summary: List all API keys for an organization
       parameters:
         - schema:
             type: string
@@ -1940,7 +1952,7 @@ paths:
         - API Key
       security:
         - Bearer Auth: []
-      operationId: putOrgByOrgIdApi-key
+      summary: Create a new API key scoped to the organization.
       parameters:
         - schema:
             type: string

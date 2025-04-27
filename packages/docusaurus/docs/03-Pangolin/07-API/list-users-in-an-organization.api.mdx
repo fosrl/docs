@@ -1,0 +1,71 @@
+---
+id: list-users-in-an-organization
+title: "List users in an organization."
+description: "List users in an organization."
+sidebar_label: "List users in an organization."
+hide_title: true
+hide_table_of_contents: true
+api: eJyNks1u2zAQhF9FmFMDELV95S0FisJAgQZNcjJ0oK21REQiFXJl1CX47sXSP7GLuM1NJEezu7NfQkNxE+zI1jtofLeRqylSiJV1lXGVD61x9reR989QYNNG6BV+XNxD4TlSQK0QaTMFy3voVcIXMoFCdT9xB72qc60wmmAGYgqxKOKmo8FAJ/B+JGhEDta1yAqBXicbqIHmMJGCM4MIfGiXDRSsdDsa7pDVbR+FhrZm6hkai/l8fm28NX18c+7tYPnk/DpR2H/Y+p++fruN9LdxLfo4ehcpQqesMBB3voFGW8RlNI2ZD+0slaHzrOwFEnLYnRKcQi+y3aJ4nuJ/lKaL8/USzkN0zKM4FR001kWFnKXNrRellDhAsVvI4i33onwwrvW9ddXSMbWhAFDdPywlgtFHHoyTv4/D/5enK/wSNt4xOf4QiYdJmH7xbOyNddJBiSMd01sJLVDQJ2gOAdYKnY8s7ymtTaTn0Ocs14flSKyNjWbdXyzzhfYXjOxMP0nxQsgN7Xnvb+JaDsGK+v0qN9P49PNI1111a/TjpXH7y5rnbkoEub4k7dvXJyiYazKOJKjTh/T5rnVKB8WTfyGX87kSy1kq5fwHcCV3kg==
+sidebar_class_name: "get api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"List users in an organization."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/org/{orgId}/users"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+List users in an organization.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"string"},"required":true,"name":"orgId","in":"path"},{"schema":{"type":"string","default":"1000"},"required":false,"name":"limit","in":"query"},{"schema":{"type":"string","default":"0"},"required":false,"name":"offset","in":"query"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      

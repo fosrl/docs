@@ -1,0 +1,71 @@
+---
+id: update-an-oidc-id-p
+title: "Update an OIDC IdP."
+description: "Update an OIDC IdP."
+sidebar_label: "Update an OIDC IdP."
+hide_title: true
+hide_table_of_contents: true
+api: eJx9lE1v2zAMhv+KwbOxoFff2m0HH4YaLXoKcmAsJlYnSxpFBwsC//eBShOlhbObQb4SP95HPoGh1LONYoOHBt6iQaEKffXc/vhetab7BjUI7hM0a2gNebFyrDoOB2uIYVNDon5iK0do1id4ImTi6nGSAZr1Zt7UEJFxJCFOWZH6gUaE5gRyjAQN+GncEkMNfnIOt46gEZ5oroHpz2SZDDQ7dIlq8DjqCWtia6AGqx1HlAG0jqopyVMwR729D17Ii35ijM72qCOu3pPOudBG2L5TL1BD5BCJxVLS7LnkVZWErd/DXEPvLHlpzX+Sr9QzyaIAJxne2C3mJPwmfy9pswU7S9zp4EsSGtG6u1kd6G4y9SGe517qOGTbkz1v8EOxDcERepUY2uHk5CU4+oUx6sGlmz5kz7y/r9KCxli1DF1340gmYZ7njEeKwafc71zDSDIEo0SElH3MQ8LKmrhqMjKrYE0PSiwfLjhOumdYHR4yQxeWX5WO8yI+EX3tcxCJelPW6RayKvethL0UFn/+xTE6KixdZrxF6GvsQk6JX4EpocJJiX3Fo2RuqCjBAkOJXRj4VPvWen2dy2aXIwse30Lsd0EXoi6c/zuHBx3Iii4KOvT74KyvWi+05/xwq8euhXn+B5YRoOk=
+sidebar_class_name: "post api-method"
+info_path: 03-Pangolin/07-API/pangolin-integration-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Update an OIDC IdP."}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/idp/:idpId/oidc"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Update an OIDC IdP.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"schema":{"type":"number","nullable":true},"required":false,"name":"idpId","in":"path"}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={{"content":{"application/json":{"schema":{"type":"object","properties":{"name":{"type":"string"},"clientId":{"type":"string"},"clientSecret":{"type":"string"},"authUrl":{"type":"string"},"tokenUrl":{"type":"string"},"identifierPath":{"type":"string"},"emailPath":{"type":"string"},"namePath":{"type":"string"},"scopes":{"type":"string"},"autoProvision":{"type":"boolean"},"defaultRoleMapping":{"type":"string"},"defaultOrgMapping":{"type":"string"}},"additionalProperties":false}}}}}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{}}
+>
+  
+</StatusCodes>
+
+
+      
