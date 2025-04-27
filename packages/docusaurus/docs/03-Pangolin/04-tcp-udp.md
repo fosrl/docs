@@ -6,7 +6,7 @@ Before doing anything, make sure you've updated Newt to at least version 1.0.0-b
 
 :::
 
-Pangolin supports raw TCP and UDP traffic because under the hood because Newt can pass anything through the tunnel! There is a minor amount of manual setup you need to do to create a raw TCP or UDP resource.
+Pangolin supports raw TCP and UDP traffic because under the hood Newt can pass anything through the tunnel! There is a minor amount of manual setup you need to do to create a raw TCP or UDP resource.
 
 ### Video Demo
 
