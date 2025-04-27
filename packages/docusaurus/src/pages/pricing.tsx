@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Layout from '@theme/Layout';
 
 const PricingComponent = () => {
   const [siteCount, setSiteCount] = useState(1);
@@ -27,7 +28,8 @@ const PricingComponent = () => {
   };
   
   return (
-    <>
+
+    <Layout title="Hello" description="Hello React Page">
       <div style={styles.pricingContainer}>
         {/* Open Source Plan */}
         <div style={styles.card}>
@@ -172,7 +174,7 @@ const PricingComponent = () => {
           </button>
         </div>
       </div>
-      </>
+    </Layout>
   );
 };
 
