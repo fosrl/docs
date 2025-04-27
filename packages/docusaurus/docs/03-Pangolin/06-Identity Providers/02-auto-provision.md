@@ -1,5 +1,11 @@
 # Auto Provision (Professional)
 
+:::note
+
+Auto provisioning users requires a paid license.
+
+:::
+
 Auto provisioning is a feature that allows you to automatically create and manage user accounts in Pangolin when they log in using an external identity provider. This is useful for organizations that want to streamline the onboarding process for new users and ensure that their user accounts are always up-to-date.
 
 You will be able to programatically decide the roles and organizations for new users based on the information provided by the identity provider.
