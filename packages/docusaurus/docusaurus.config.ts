@@ -194,9 +194,10 @@ const config: Config = {
         config: {
           petstore: {
             specPath: "./openapi.yml",
-            outputDir: "docs/03-Pangolin/07-API (Professional)",
+            outputDir: "docs/03-Pangolin/07-API",
             sidebarOptions: {
-              groupPathsBy: "tag"
+              groupPathsBy: "tag",
+              categoryLinkSource: "tag",
             }
           } satisfies OpenApiPlugin.Options
         }
