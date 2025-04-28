@@ -120,7 +120,12 @@ const config: Config = {
           position: "right",
           className: "header-github-link",
           "aria-label": "GitHub repository"
-        }
+        },
+        {
+          href: "https://support.fossorial.io",
+          label: "Support Portal (Professional License)",
+          position: "left"
+        },
       ]
     },
     // footer: {
