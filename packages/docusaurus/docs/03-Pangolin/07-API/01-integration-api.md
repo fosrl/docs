@@ -47,7 +47,7 @@ http:
   routers:
     # ...existing routers...
     int-api-router-redirect:
-      rule: "Host(`api.fosrl.com`)"
+      rule: "Host(`api.example.com`)"
       service: int-api-service
       entryPoints:
         - web
@@ -55,7 +55,7 @@ http:
         - redirect-to-https
 
     int-api-router:
-      rule: "Host(`api.fosrl.com`)"
+      rule: "Host(`api.example.com`)"
       service: int-api-service
       entryPoints:
         - websecure
