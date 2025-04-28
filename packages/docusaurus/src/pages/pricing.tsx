@@ -391,6 +391,10 @@ const PricingComponent = () => {
             Within 48 hours of your purchase you should receive an email invite
             to our support portal where you can interact with us.
           </p>
+
+          <p style={styles.textMuted}>--</p>
+
+          <p style={styles.textMuted}>By purchasing any license key you agree to abide by the <a href="/license.html">Fossorial Commercial License and Terms</a></p>
         </div>
       </div>
     </Layout>
