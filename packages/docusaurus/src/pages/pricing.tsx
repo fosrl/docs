@@ -91,7 +91,7 @@ const PricingComponent = () => {
                   clipRule="evenodd"
                 />
               </svg>
-                <a href="/supporter-program">Check out the Supporter Program</a>
+              <a href="/supporter-program">Check out the Supporter Program</a>
             </li>
           </ul>
           <button
@@ -182,7 +182,7 @@ const PricingComponent = () => {
           </ul>
 
           <div style={styles.counterContainer}>
-            <span style={styles.counterLabel}>Number of sites</span>
+            <span style={styles.counterLabel}>Base Number of Sites</span>
             <div style={styles.counterControls}>
               <button onClick={decreaseSiteCount} style={styles.counterButton}>
                 -
@@ -323,7 +323,9 @@ const PricingComponent = () => {
             </li>
           </ul>
 
-          <div style={styles.customPricing}>Custom pricing <span style={styles.pricePeriod}>(1k+/month)</span></div>
+          <div style={styles.customPricing}>
+            Custom pricing <span style={styles.pricePeriod}>(1k+/month)</span>
+          </div>
 
           <a
             href="mailto:numbat@fossorial.io"
@@ -338,194 +340,269 @@ const PricingComponent = () => {
           </a>
         </div>
       </div>
+
+      <div style={styles.pricingContainer}>
+        <div style={styles.cardLarge}>
+          <h1 style={styles.cardTitle}>Professional License FAQ</h1>
+
+          <h4>How often will I be billed?</h4>
+
+          <p style={styles.textMuted}>
+            The Professional plan is billed monthly.
+          </p>
+
+          <h4>What if I need more sites?</h4>
+          <p style={styles.textMuted}>
+            When you purchase the license above you are provided with a key to
+            unlock the features and a BASE number of sites for your instance.
+          </p>
+          <p style={styles.textMuted}>
+            You can buy more sites at any time from within your Pangolin
+            instance. Navigate to the licensing page, indicate the amount of
+            sites you would like to purchase, and complete the order.
+          </p>
+
+          <h4>How do I manage all of my keys?</h4>
+
+          <p style={styles.textMuted}>
+            You can log into{" "}
+            <a href="https://app.lemonsqueezy.com/my-orders/">Lemon Squeezy</a>{" "}
+            with the same email that your purchased your keys with. From here
+            you can deactivate an instance or manage subscriptions.
+          </p>
+
+          <h4>Can I reuse the license keys?</h4>
+          <p style={styles.textMuted}>
+            No, the license keys are tied to the instance they were purchased
+            for. If you need to move your instance to a new server, please log
+            into Lemon Squeezy, deactivate the key, and then re-activate it on
+            the new server.
+          </p>
+
+          <h4>There is an issue with my order!</h4>
+
+          <p style={styles.textMuted}>
+            Please <a href="mailto:numbat@fossorial.io">email us</a> immediately
+            with any issues.
+          </p>
+
+          <h4>Where do I create support tickets?</h4>
+          <p style={styles.textMuted}>
+            Within 48 hours of your purchase you should receive an email invite
+            to our support portal where you can interact with us.
+          </p>
+        </div>
+      </div>
     </Layout>
   );
 };
 
-
 // CSS Styles object
 const styles = {
   container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '24px',
-    backgroundColor: 'var(--ifm-background-color)',
-    minHeight: '100vh',
-    fontFamily: 'system-ui, -apple-system, sans-serif'
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: "24px",
+    backgroundColor: "var(--ifm-background-color)",
+    minHeight: "100vh",
+    fontFamily: "system-ui, -apple-system, sans-serif"
   },
   heading: {
-    fontSize: '30px',
-    fontWeight: 'bold',
-    marginBottom: '48px',
-    color: '#111827'
+    fontSize: "30px",
+    fontWeight: "bold",
+    marginBottom: "48px",
+    color: "#111827"
   },
   pricingContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: '24px',
-    width: '100%',
-    padding: '24px',
-    flexWrap: 'wrap'
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: "24px",
+    width: "100%",
+    padding: "24px",
+    flexWrap: "wrap"
   },
   card: {
-    backgroundColor: 'var(--ifm-card-background-color, white)',
-    borderRadius: '8px',
-    boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
-    padding: '24px',
-    border: '1px solid var(--ifm-color-emphasis-300, #e5e7eb)',
-    position: 'relative',
-    overflow: 'hidden',
-    width: '300px',
-    flex: '1 1 300px',
-    maxWidth: '400px',
-    minHeight: '500px',
-    display: 'flex',
-    flexDirection: 'column'
+    backgroundColor: "var(--ifm-card-background-color, white)",
+    borderRadius: "8px",
+    boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1)",
+    padding: "24px",
+    border: "1px solid var(--ifm-color-emphasis-300, #e5e7eb)",
+    position: "relative",
+    overflow: "hidden",
+    width: "300px",
+    flex: "1 1 300px",
+    maxWidth: "400px",
+    minHeight: "500px",
+    display: "flex",
+    flexDirection: "column"
+  },
+  // card that spans the entire width of the container with the same styles as the other cards and spacing on the sides
+  cardLarge: {
+    backgroundColor: "var(--ifm-card-background-color, white)",
+    borderRadius: "8px",
+    boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1)",
+    padding: "24px",
+    border: "1px solid var(--ifm-color-emphasis-300, #e5e7eb)",
+    position: "relative",
+    overflow: "hidden",
+    width: "100%",
+    flex: "1 1 100%",
+    maxWidth: "1250px",
+    minHeight: "500px",
+    display: "flex",
+    flexDirection: "column",
+    // margin: "0 24px",
+    marginBottom: "24px",
+    zIndex: "1"
   },
   highlightedCard: {
-    backgroundColor: 'var(--ifm-card-background-color, white)',
-    borderRadius: '8px',
-    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-    padding: '24px',
-    border: '1px solid var(--ifm-color-primary, hsl(24.6, 95%, 53.1%))',
-    position: 'relative',
-    overflow: 'hidden',
-    width: '300px',
-    flex: '1 1 300px',
-    maxWidth: '400px',
-    minHeight: '500px',
-    display: 'flex',
-    flexDirection: 'column',
-    zIndex: '1'
+    backgroundColor: "var(--ifm-card-background-color, white)",
+    borderRadius: "8px",
+    boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+    padding: "24px",
+    border: "1px solid var(--ifm-color-primary, hsl(24.6, 95%, 53.1%))",
+    position: "relative",
+    overflow: "hidden",
+    width: "300px",
+    flex: "1 1 300px",
+    maxWidth: "400px",
+    minHeight: "500px",
+    display: "flex",
+    flexDirection: "column",
+    zIndex: "1"
   },
   freeTag: {
-    position: 'absolute',
-    top: '0',
-    right: '0',
-    backgroundColor: 'var(--ifm-color-emphasis-200, #e5e7eb)',
-    padding: '4px 12px',
-    fontSize: '12px',
-    fontWeight: '600'
+    position: "absolute",
+    top: "0",
+    right: "0",
+    backgroundColor: "var(--ifm-color-emphasis-200, #e5e7eb)",
+    padding: "4px 12px",
+    fontSize: "12px",
+    fontWeight: "600"
   },
   popularTag: {
-    position: 'absolute',
-    top: '0',
-    right: '0',
-    backgroundColor: 'var(--ifm-color-primary, hsl(24.6, 95%, 53.1%))',
-    color: 'var(--ifm-color-white, white)',
-    padding: '4px 12px',
-    fontSize: '12px',
-    fontWeight: '600'
+    position: "absolute",
+    top: "0",
+    right: "0",
+    backgroundColor: "var(--ifm-color-primary, hsl(24.6, 95%, 53.1%))",
+    color: "var(--ifm-color-white, white)",
+    padding: "4px 12px",
+    fontSize: "12px",
+    fontWeight: "600"
   },
   cardTitle: {
-    fontSize: '20px',
-    fontWeight: 'bold',
-    marginBottom: '16px',
+    fontSize: "20px",
+    fontWeight: "bold",
+    marginBottom: "16px"
     // color: 'var(--ifm-heading-color, #111827)'
   },
   featureList: {
-    listStyleType: 'none',
-    padding: '0',
-    marginBottom: '24px',
-    flex: '1'
+    listStyleType: "none",
+    padding: "0",
+    marginBottom: "24px",
+    flex: "1"
   },
   featureItem: {
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: '8px',
-    fontSize: '14px'
+    display: "flex",
+    alignItems: "center",
+    marginBottom: "8px",
+    fontSize: "14px"
   },
   checkIcon: {
-    width: '16px',
-    height: '16px',
-    marginRight: '8px',
-    color: '#10b981'
+    width: "16px",
+    height: "16px",
+    marginRight: "8px",
+    color: "#10b981"
   },
   buttonSecondary: {
-    width: '100%',
-    padding: '8px 16px',
-    backgroundColor: 'var(--ifm-color-emphasis-200, #e5e7eb)',
-    color: 'var(--ifm-color-emphasis-900, #111827)',
-    border: 'none',
-    borderRadius: '6px',
-    fontWeight: '500',
-    cursor: 'pointer',
-    transition: 'background-color 0.2s',
-    fontSize: '14px',
-    marginTop: 'auto'
+    width: "100%",
+    padding: "8px 16px",
+    backgroundColor: "var(--ifm-color-emphasis-200, #e5e7eb)",
+    color: "var(--ifm-color-emphasis-900, #111827)",
+    border: "none",
+    borderRadius: "6px",
+    fontWeight: "500",
+    cursor: "pointer",
+    transition: "background-color 0.2s",
+    fontSize: "14px",
+    marginTop: "auto"
   },
   buttonPrimary: {
-    width: '100%',
-    padding: '8px 16px',
-    backgroundColor: 'var(--ifm-color-primary, hsl(24.6, 95%, 53.1%))',
-    color: 'var(--ifm-color-white, white)',
-    border: 'none',
-    borderRadius: '6px',
-    fontWeight: '500',
-    cursor: 'pointer',
-    transition: 'background-color 0.2s',
-    fontSize: '14px',
-    marginTop: 'auto'
+    width: "100%",
+    padding: "8px 16px",
+    backgroundColor: "var(--ifm-color-primary, hsl(24.6, 95%, 53.1%))",
+    color: "var(--ifm-color-white, white)",
+    border: "none",
+    borderRadius: "6px",
+    fontWeight: "500",
+    cursor: "pointer",
+    transition: "background-color 0.2s",
+    fontSize: "14px",
+    marginTop: "auto"
   },
   counterContainer: {
-    marginBottom: '16px'
+    marginBottom: "16px"
   },
   counterLabel: {
-    display: 'block',
-    marginBottom: '8px',
-    fontWeight: '500',
-    fontSize: '14px'
+    display: "block",
+    marginBottom: "8px",
+    fontWeight: "500",
+    fontSize: "14px"
   },
   counterControls: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between'
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between"
   },
-counterButton: {
-    width: '32px',
-    height: '32px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'var(--ifm-color-emphasis-200, #f3f4f6)',
-    border: 'none',
-    borderRadius: '6px',
-    cursor: 'pointer'
+  counterButton: {
+    width: "32px",
+    height: "32px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "var(--ifm-color-emphasis-200, #f3f4f6)",
+    border: "none",
+    borderRadius: "6px",
+    cursor: "pointer"
   },
   counterInput: {
-    width: '48px',
-    height: '32px',
-    margin: '0 8px',
-    textAlign: 'center',
-    border: '1px solid #d1d5db',
-    borderRadius: '6px'
+    width: "48px",
+    height: "32px",
+    margin: "0 8px",
+    textAlign: "center",
+    border: "1px solid #d1d5db",
+    borderRadius: "6px"
   },
   priceDisplay: {
-    fontSize: '24px',
-    fontWeight: 'bold',
-    marginBottom: '16px',
+    fontSize: "24px",
+    fontWeight: "bold",
+    marginBottom: "16px"
     // color: 'var(--ifm-heading-color, #111827)'
   },
   pricePeriod: {
-    fontSize: '14px',
-    fontWeight: 'normal',
-    color: 'var(--ifm-color-emphasis-600, #6b7280)',
-    marginLeft: '4px'
+    fontSize: "14px",
+    fontWeight: "normal",
+    color: "var(--ifm-color-emphasis-600, #6b7280)",
+    marginLeft: "4px"
   },
   priceBreakdown: {
-    fontSize: '14px',
-    color: 'var(--ifm-color-emphasis-600, #6b7280)',
-    marginBottom: '16px'
+    fontSize: "14px",
+    color: "var(--ifm-color-emphasis-600, #6b7280)",
+    marginBottom: "16px"
   },
   customPricing: {
-    fontSize: '20px',
-    fontWeight: 'bold',
-    marginBottom: '16px',
+    fontSize: "20px",
+    fontWeight: "bold",
+    marginBottom: "16px"
     // color: 'var(--ifm-heading-color, #111827)'
+  },
+  textMuted: {
+    color: "var(--ifm-color-emphasis-600, #6b7280)",
+    fontSize: "14px",
+    marginBottom: "16px"
   }
 };
-
 
 export default PricingComponent;
