@@ -26,6 +26,8 @@ When you create or edit an API key, you can select the permissions that the API 
 
 OpenAPI documentation is served via Swagger UI. You can access the documentation at `https://api.example.com/v1/docs`.
 
+<img src={require("./img/swagger.png").default} alt="Preview"/>
+
 ## Configure Integration API
 
 The below example shows how to expose the Integration API. It will be accessible at `https://api.example.com/v1`.
