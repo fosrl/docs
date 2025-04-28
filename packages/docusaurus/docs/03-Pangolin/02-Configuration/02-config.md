@@ -76,6 +76,7 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
   - The length of time in hours that a session for each resource will last after logging in.
   - Default: `720`
 - `secret`: string
+  - Env: SERVER_SECRET
   - A 32-byte base64 encoded string used to encrypt data in the database.
   - Generate one with: `openssl rand -base64 32`
   - Example: "N6KkZsm9WdK7ZXvVFEqyNgLw2iPeLX7hUpRy8WiWzVA="
