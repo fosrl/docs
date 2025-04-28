@@ -8,7 +8,13 @@ The Integration API requires a paid license.
 
 ## Generate API Keys
 
-You can generate as many API keys as you need. There are two types of API keys:
+You can generate as many API keys as you need. 
+
+```
+fm779dfwyhc237x.6gubrijowftfj6cykx77qbsdfkhfregplam74ent
+```
+
+There are two types of API keys:
 
 ### Root API Keys
 
@@ -21,6 +27,8 @@ Organization API keys can be created by organization admins from the Organizatio
 ## Fine-Grained Permissions
 
 When you create or edit an API key, you can select the permissions that the API key will have. This allows you to create API keys with only the permissions that you need.
+
+<img src={require("./img/permissions.png").default} alt="Preview"/>
 
 ## Swagger Docs
 
