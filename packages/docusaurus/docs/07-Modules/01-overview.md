@@ -9,7 +9,7 @@ For a complete list of available plugins, please refer to the [Plugin Catalog](h
 
 ### Crowdsec Bouncer
 
-When installing Crowdsec via the Pangolin installer, the Crowdsec Traefik Bouncer will be automatically installed and configured by default. The configuration can be customized to meet your specific requirements. For detailed guidance, refer to the [documentation](https://docs.fossorial.io/Modules/crowdsec).
+When installing Crowdsec via the Pangolin installer, the Crowdsec Traefik Bouncer will be automatically installed and configured by default. The configuration can be customized to meet your specific requirements.
 
 The CrowdSec Bouncer plugin for Traefik integrates CrowdSec’s security engine to block malicious traffic in real time. It runs as middleware within a Traefik container and enforces decisions based on CrowdSec’s threat intelligence. This helps protect services from bots, attackers, and abusive IPs dynamically.
 
