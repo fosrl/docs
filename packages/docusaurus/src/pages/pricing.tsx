@@ -348,7 +348,7 @@ const PricingComponent = () => {
           <h4>How often will I be billed?</h4>
 
           <p style={styles.textMuted}>
-            The Professional plan is billed monthly.
+            The Professional License is billed monthly.
           </p>
 
           <h4>What if I need more sites?</h4>
@@ -392,9 +392,23 @@ const PricingComponent = () => {
             to our support portal where you can interact with us.
           </p>
 
+          <h4>What is the difference between this and the Supporter Program?</h4>
+          <p style={styles.textMuted}>
+            The Supporter Program is a way to support the project and remove the
+            support marks. It is a one time donation. No features are unlocked.
+          </p>
+          <p style={styles.textMuted}>
+            The Professional plan is a paid license that allows you to use the
+            software in a commercial environment that unlocks features and
+            provides support. It is a monthly subscription.
+          </p>
+
           <p style={styles.textMuted}>--</p>
 
-          <p style={styles.textMuted}>By purchasing any license key you agree to abide by the <a href="/license.html">Fossorial Commercial License and Terms</a></p>
+          <p style={styles.textMuted}>
+            By purchasing any license key you agree to abide by the{" "}
+            <a href="/license.html">Fossorial Commercial License and Terms</a>
+          </p>
         </div>
       </div>
     </Layout>

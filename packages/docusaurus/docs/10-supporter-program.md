@@ -59,3 +59,12 @@ You can only obtain a supporter key once. While GitHub allows you to donate mult
 ## Can I get a refund?
 
 GitHub Sponsors DOES NOT allow us to refund donations. Please make sure that you are comfortable supporting the project before you purchase a tier.
+
+## How is this different than the Professional License?
+
+The Supporter Program is a way to support the project and remove the
+support marks. It is a one time donation. No features are unlocked.
+
+The Professional plan is a paid license that allows you to use the
+software in a commercial environment that unlocks features and
+provides support. It is a monthly subscription.
