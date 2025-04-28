@@ -1,4 +1,4 @@
-# Auto Provision (Professional)
+# Auto Provision
 
 :::note
 

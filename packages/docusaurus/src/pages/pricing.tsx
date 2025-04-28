@@ -94,6 +94,9 @@ const PricingComponent = () => {
               <a href="/supporter-program">Check out the Supporter Program</a>
             </li>
           </ul>
+
+          <div style={styles.customPricing}>Free</div>
+
           <button
             style={styles.buttonSecondary}
             onClick={() =>
@@ -135,7 +138,7 @@ const PricingComponent = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              Ticketed support
+              Ticket based support
             </li>
             <li style={styles.featureItem}>
               <svg
@@ -149,7 +152,7 @@ const PricingComponent = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              Auto Provision IDP Users
+              Auto provision IdP users
             </li>
             <li style={styles.featureItem}>
               <svg
@@ -163,7 +166,7 @@ const PricingComponent = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              Robust integration APIs for automation
+              Robust integration API for automation
             </li>
             <li style={styles.featureItem}>
               <svg
@@ -177,7 +180,21 @@ const PricingComponent = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              Fossorial Commercial License
+              Future licensed feature access
+            </li>
+            <li style={styles.featureItem}>
+              <svg
+                style={styles.checkIcon}
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <a href="/license.html">Fossorial Commercial License</a>
             </li>
           </ul>
 
@@ -249,7 +266,7 @@ const PricingComponent = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              Tailored Agreements
+              Tailored agreements
             </li>
             <li style={styles.featureItem}>
               <svg
@@ -263,7 +280,7 @@ const PricingComponent = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              Dedicated Support (Meetings & Calls)
+              Dedicated support (meetings & calls)
             </li>
             <li style={styles.featureItem}>
               <svg
@@ -277,7 +294,7 @@ const PricingComponent = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              Custom Features
+              Custom features
             </li>
             <li style={styles.featureItem}>
               <svg
@@ -291,7 +308,7 @@ const PricingComponent = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              Multi-region & HA Deployments
+              Multi-region & HA deployments
             </li>
             <li style={styles.featureItem}>
               <svg
@@ -305,7 +322,7 @@ const PricingComponent = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              Custom Branding (white-labeling)
+              Custom branding (white-labeling)
             </li>
             <li style={styles.featureItem}>
               <svg
@@ -319,12 +336,12 @@ const PricingComponent = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              Deployment References & Assistance
+              Deployment references & assistance
             </li>
           </ul>
 
           <div style={styles.customPricing}>
-            Custom pricing <span style={styles.pricePeriod}>(1k+/month)</span>
+            Custom pricing <span style={styles.pricePeriod}>($1k+/month)</span>
           </div>
 
           <a
@@ -336,7 +353,7 @@ const PricingComponent = () => {
               textAlign: "center"
             }}
           >
-            Schedule a Meet with Us
+            Schedule a Meeting with Us
           </a>
         </div>
       </div>
@@ -391,8 +408,14 @@ const PricingComponent = () => {
             Within 48 hours of your purchase you should receive an email invite
             to our support portal where you can interact with us.
           </p>
+          <p style={styles.textMuted}>
+            You can then create support tickets in the{" "}
+            <a href="https://support.fossorial.io/">support portal</a>.
+          </p>
 
-          <h4>What is the difference between this and the Supporter Program?</h4>
+          <h4>
+            What is the difference between this and the Supporter Program?
+          </h4>
           <p style={styles.textMuted}>
             The Supporter Program is a way to support the project and remove the
             support marks. It is a one time donation. No features are unlocked.
@@ -419,93 +442,91 @@ const PricingComponent = () => {
 const styles = {
   container: {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "column" as const,
     alignItems: "center",
     padding: "24px",
     backgroundColor: "var(--ifm-background-color)",
     minHeight: "100vh",
-    fontFamily: "system-ui, -apple-system, sans-serif"
+    fontFamily: "var(--ifm-font-family-base)"
   },
   heading: {
     fontSize: "30px",
     fontWeight: "bold",
     marginBottom: "48px",
-    color: "#111827"
+    color: "var(--ifm-font-color-base)"
   },
   pricingContainer: {
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "row" as const,
     justifyContent: "center",
     gap: "24px",
     width: "100%",
     padding: "24px",
-    flexWrap: "wrap"
+    flexWrap: "wrap" as const
   },
   card: {
-    backgroundColor: "var(--ifm-card-background-color, white)",
+    backgroundColor: "var(--ifm-background-color)",
     borderRadius: "8px",
-    boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1)",
+    boxShadow: "var(--ifm-global-shadow-lw)",
     padding: "24px",
-    border: "1px solid var(--ifm-color-emphasis-300, #e5e7eb)",
-    position: "relative",
-    overflow: "hidden",
+    border: "1px solid var(--ifm-color-emphasis-300)",
+    position: "relative" as const,
+    overflow: "hidden" as const,
     width: "300px",
     flex: "1 1 300px",
     maxWidth: "400px",
     minHeight: "500px",
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column" as const
   },
-  // card that spans the entire width of the container with the same styles as the other cards and spacing on the sides
   cardLarge: {
-    backgroundColor: "var(--ifm-card-background-color, white)",
+    backgroundColor: "var(--ifm-background-color)",
     borderRadius: "8px",
-    boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1)",
+    boxShadow: "var(--ifm-global-shadow-lw)",
     padding: "24px",
-    border: "1px solid var(--ifm-color-emphasis-300, #e5e7eb)",
-    position: "relative",
-    overflow: "hidden",
+    border: "1px solid var(--ifm-color-emphasis-300)",
+    position: "relative" as const,
+    overflow: "hidden" as const,
     width: "100%",
     flex: "1 1 100%",
     maxWidth: "1250px",
     minHeight: "500px",
     display: "flex",
-    flexDirection: "column",
-    // margin: "0 24px",
+    flexDirection: "column" as const,
     marginBottom: "24px",
     zIndex: "1"
   },
   highlightedCard: {
-    backgroundColor: "var(--ifm-card-background-color, white)",
+    backgroundColor: "var(--ifm-background-color)",
     borderRadius: "8px",
-    boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+    boxShadow: "var(--ifm-global-shadow-lw)",
     padding: "24px",
-    border: "1px solid var(--ifm-color-primary, hsl(24.6, 95%, 53.1%))",
-    position: "relative",
-    overflow: "hidden",
+    border: "1px solid var(--ifm-color-primary)",
+    position: "relative" as const,
+    overflow: "hidden" as const,
     width: "300px",
     flex: "1 1 300px",
     maxWidth: "400px",
     minHeight: "500px",
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "column" as const,
     zIndex: "1"
   },
   freeTag: {
-    position: "absolute",
+    position: "absolute" as const,
     top: "0",
     right: "0",
-    backgroundColor: "var(--ifm-color-emphasis-200, #e5e7eb)",
+    backgroundColor: "var(--ifm-color-emphasis-200)",
     padding: "4px 12px",
     fontSize: "12px",
     fontWeight: "600"
   },
   popularTag: {
-    position: "absolute",
+    position: "absolute" as const,
     top: "0",
     right: "0",
-    backgroundColor: "var(--ifm-color-primary, hsl(24.6, 95%, 53.1%))",
-    color: "var(--ifm-color-white, white)",
+    backgroundColor: "var(--ifm-color-primary)",
+    color: "var(--ifm-color-white)",
     padding: "4px 12px",
     fontSize: "12px",
     fontWeight: "600"
@@ -513,8 +534,8 @@ const styles = {
   cardTitle: {
     fontSize: "20px",
     fontWeight: "bold",
-    marginBottom: "16px"
-    // color: 'var(--ifm-heading-color, #111827)'
+    marginBottom: "16px",
+    color: "var(--ifm-font-color-base)"
   },
   featureList: {
     listStyleType: "none",
@@ -526,19 +547,20 @@ const styles = {
     display: "flex",
     alignItems: "center",
     marginBottom: "8px",
-    fontSize: "14px"
+    fontSize: "14px",
+    color: "var(--ifm-font-color-base)"
   },
   checkIcon: {
     width: "16px",
     height: "16px",
     marginRight: "8px",
-    color: "#10b981"
+    color: "var(--ifm-color-primary)"
   },
   buttonSecondary: {
     width: "100%",
     padding: "8px 16px",
-    backgroundColor: "var(--ifm-color-emphasis-200, #e5e7eb)",
-    color: "var(--ifm-color-emphasis-900, #111827)",
+    backgroundColor: "var(--ifm-color-emphasis-200)",
+    color: "var(--ifm-font-color-base)",
     border: "none",
     borderRadius: "6px",
     fontWeight: "500",
@@ -550,8 +572,8 @@ const styles = {
   buttonPrimary: {
     width: "100%",
     padding: "8px 16px",
-    backgroundColor: "var(--ifm-color-primary, hsl(24.6, 95%, 53.1%))",
-    color: "var(--ifm-color-white, white)",
+    backgroundColor: "var(--ifm-color-primary)",
+    color: "var(--ifm-color-white)",
     border: "none",
     borderRadius: "6px",
     fontWeight: "500",
@@ -567,7 +589,8 @@ const styles = {
     display: "block",
     marginBottom: "8px",
     fontWeight: "500",
-    fontSize: "14px"
+    fontSize: "14px",
+    color: "var(--ifm-font-color-base)"
   },
   counterControls: {
     display: "flex",
@@ -580,7 +603,7 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "var(--ifm-color-emphasis-200, #f3f4f6)",
+    backgroundColor: "var(--ifm-color-emphasis-200)",
     border: "none",
     borderRadius: "6px",
     cursor: "pointer"
@@ -589,35 +612,37 @@ const styles = {
     width: "48px",
     height: "32px",
     margin: "0 8px",
-    textAlign: "center",
-    border: "1px solid #d1d5db",
-    borderRadius: "6px"
+    textAlign: "center" as const,
+    border: "1px solid var(--ifm-color-emphasis-300)",
+    borderRadius: "6px",
+    backgroundColor: "var(--ifm-background-color)",
+    color: "var(--ifm-font-color-base)"
   },
   priceDisplay: {
     fontSize: "24px",
     fontWeight: "bold",
-    marginBottom: "16px"
-    // color: 'var(--ifm-heading-color, #111827)'
+    marginBottom: "16px",
+    color: "var(--ifm-font-color-base)"
   },
   pricePeriod: {
     fontSize: "14px",
     fontWeight: "normal",
-    color: "var(--ifm-color-emphasis-600, #6b7280)",
+    color: "var(--ifm-color-emphasis-600)",
     marginLeft: "4px"
   },
   priceBreakdown: {
     fontSize: "14px",
-    color: "var(--ifm-color-emphasis-600, #6b7280)",
+    color: "var(--ifm-color-emphasis-600)",
     marginBottom: "16px"
   },
   customPricing: {
     fontSize: "20px",
     fontWeight: "bold",
-    marginBottom: "16px"
-    // color: 'var(--ifm-heading-color, #111827)'
+    marginBottom: "16px",
+    color: "var(--ifm-font-color-base)"
   },
   textMuted: {
-    color: "var(--ifm-color-emphasis-600, #6b7280)",
+    color: "var(--ifm-color-emphasis-600)",
     fontSize: "14px",
     marginBottom: "16px"
   }

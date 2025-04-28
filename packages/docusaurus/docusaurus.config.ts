@@ -50,17 +50,17 @@ const config: Config = {
         blog: {
           showReadingTime: true,
           feedOptions: {
-            type: ['rss', 'atom'],
-            xslt: true,
+            type: ["rss", "atom"],
+            xslt: true
           },
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-        //   editUrl:
-        //     'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          //   editUrl:
+          //     'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
           // Useful options to enforce blogging best practices
-          onInlineTags: 'warn',
-          onInlineAuthors: 'warn',
-          onUntruncatedBlogPosts: 'warn',
+          onInlineTags: "warn",
+          onInlineAuthors: "warn",
+          onUntruncatedBlogPosts: "warn"
         },
         theme: {
           customCss: "./src/css/custom.css"
@@ -102,9 +102,9 @@ const config: Config = {
           type: "docSidebar",
           sidebarId: "tutorialSidebar",
           position: "left",
-          label: "Docs",
+          label: "Docs"
         },
-        {to: '/pricing', label: 'Pricing', position: 'left'},
+        { to: "/pricing", label: "Pricing", position: "left" },
         {
           href: "https://fossorial.io",
           label: "fossorial.io",
@@ -123,9 +123,9 @@ const config: Config = {
         },
         {
           href: "https://support.fossorial.io",
-          label: "Support Portal (Professional License)",
+          label: "Support Portal",
           position: "left"
-        },
+        }
       ]
     },
     // footer: {
@@ -198,18 +198,20 @@ const config: Config = {
         docsPluginId: "classic", // configured for preset-classic
         config: {
           petstore: {
+            hideSendButton: true,
             specPath: "./openapi.yml",
             outputDir: "docs/03-Pangolin/07-API/02-Routes",
             sidebarOptions: {
               groupPathsBy: "tag",
               categoryLinkSource: "tag",
+              sidebarCollapsible: true
             }
           } satisfies OpenApiPlugin.Options
         }
       }
     ]
   ],
-    themes: ["docusaurus-theme-openapi-docs"], // export theme components
+  themes: ["docusaurus-theme-openapi-docs"] // export theme components
 };
 
 export default config;

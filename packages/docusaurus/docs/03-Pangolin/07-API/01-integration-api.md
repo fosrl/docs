@@ -1,4 +1,4 @@
-# Integration API (Professional)
+# Integration API
 
 :::note
 
@@ -21,6 +21,10 @@ Organization API keys can be created by organization admins from the Organizatio
 ## Fine-Grained Permissions
 
 When you create or edit an API key, you can select the permissions that the API key will have. This allows you to create API keys with only the permissions that you need.
+
+## Swagger Docs
+
+OpenAPI documentation is served via Swagger UI. You can access the documentation at `https://api.example.com/v1/docs`.
 
 ## Configure Integration API
 
@@ -69,7 +73,3 @@ http:
         servers:
           - url: "http://pangolin:3003" # Integration API
 ```
-
-## Swagger Docs
-
-OpenAPI documentation is served via Swagger UI. You can access the documentation at `https://api.example.com/v1/docs`.
