@@ -13,7 +13,7 @@ We know it’s not the most exciting feature, but it helps us keep Pangolin heal
 We are using GitHub sponsors. In order to support and obtain your key:
 
 1. Purchase EITHER the "$25 one time" or "$95 one time" tier on GitHub
-2. Go to https://supporters.dev.fossorial.io and log in with your GitHub account
+2. Go to https://supporters.fossorial.io and log in with your GitHub account
 3. Copy the supporter key
 4. Go to your Pangolin instance and click the supporter button
 5. Enter the supporter key
