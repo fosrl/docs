@@ -77,9 +77,8 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
   - Default: `720`
 - `secret`: string
   - Env: SERVER_SECRET
-  - A 32-byte base64 encoded string used to encrypt data in the database.
-  - Generate one with: `openssl rand -base64 32`
-  - Example: "N6KkZsm9WdK7ZXvVFEqyNgLw2iPeLX7hUpRy8WiWzVA="
+  - A secret string used for encrypting sensitive data. Must be at least 8 characters long.
+  - Example: "d28@a2b.2HFTe2bMtZHGneNYgQFKT2X4vm4HuXUXBcq6aVyNZjdGt6Dx-_A@9b3y"
 
 ### `domains`
 
@@ -217,7 +216,7 @@ server:
     id: "P-Access-Token-Id"
     token: "P-Access-Token"
   resource_session_request_param: "p_session_request"
-  secret: "" # 32-byte base64 encoded string; generate with: openssl rand -base64 32
+  secret: "d28@a2b.2HFTe2bMtZHGneNYgQFKT2X4vm4HuXUXBcq6aVyNZjdGt6Dx-_A@9b3y"
 
 traefik:
   cert_resolver: "letsencrypt"
