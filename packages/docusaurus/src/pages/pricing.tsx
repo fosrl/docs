@@ -225,6 +225,10 @@ const PricingComponent = () => {
           <div style={styles.priceBreakdown}>
             Base price $125 + ${siteCount} x $5 per site
           </div>
+          <div style={styles.priceBreakdown}>
+            Bulk pricing available.{" "}
+            <a href="mailto:numbat@fossorial.io">Contact us</a>
+          </div>
 
           <button
             onClick={() =>
