@@ -11,6 +11,8 @@ For example, you may have users defined in Authentik, and you want these users t
 - OAuth2/OIDC
   - This can be used to connect to any external identity provider that supports the OpenID Connect protocol such as Authentik, Keycloak, Okta, etc.
 
+_We are working on adding support for more identity providers in the future. If you have a specific identity provider in mind, please let us know!_
+
 ### How to Add an Identity Provider
 
 1. Select the "Identity Providers" tab in the Server Admin UI.
@@ -20,4 +22,4 @@ For example, you may have users defined in Authentik, and you want these users t
 
 ### Auto Provisioning
 
-See [Auto Provision](./02-auto-provision.md) for more information on how to automatically provision users in Pangolin when they log in using an external identity provider.
+See [Auto Provision](./02-auto-provision.md) for more information on how to automatically provision users and assign orgs and roles in Pangolin when they log in using an external identity provider.

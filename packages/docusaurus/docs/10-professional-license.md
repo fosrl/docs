@@ -1,51 +1,61 @@
 # Professional License
 
-## What is this? 
+:::tip
 
-The Professional license is for Businesses and individuals that require access to licensed components within Pangolin. 
+If you have already purchased a Supporter Key and wish to also purchase a Professional License please reach out to us at [numbat@fossorial.io](mailto:numbat@fossorial.io). We can provide you with a discount code for the first month of the Professional license free!
 
-Current features that are available with the Professional license:
+:::
 
-- OIDC IDP automatic user importing
-- Stable public API with access control
+The Professional license is for businesses and individuals that want to use Pangolin in a commercial environment and require access to licensed components and extra support.
 
-Pangolin will always be free and open source but some features geared more to businesses will be covered under a different license than the AGPL in order to allow us to grow Pangolin.
+Pangolin will always be free and open source but some features geared more to businesses will be covered under a different license than the AGPL3 in order to allow us to grow Pangolin.
+
+We will continue to develop and maintain both "sides" of Pangolin. The free and open source version will always be available and we will continue to add features to it. We will also continue to develop the Professional version and add features to it to make the value worth the cost.
+
+For more information about pricing and what is included in the Professional license, please see the [pricing page](/pricing).
 
 ## How does this work?
 
-License keys are like upgrades to your Pangolin instance. There are two types of license keys: the HOST key and SITE keys. 
+License keys are like upgrades to your Pangolin instance. There are two types of license keys:
 
-### The HOST Key
+- The Host key ("Professional License")
+- Additional Site addon keys ("Additional Sites")
 
-Every Pangolin instance needs a HOST key. This will unlock all of the Professional features for that instance. All of your features will be available as long as you have a HOST key. 
+Licensing is managed from the Licensing section of the Server Admin panel in Pangolin.
 
-When purchasing the host key you can optionally choose to include a base number of sites licensed for your instance. This should be a conservative guess about how many sites you need.
+Purchases are managed through [Lemon Squeezy](https://app.lemonsqueezy.com/).
 
-To purchase a host key you will first want to navigate to our [pricing page](/pricing). 
+### The Host Key (Professional License)
 
-### The Site Upgrade Keys
+Every Pangolin instance needs its own host key. This will unlock all of the Professional features for that instance.
 
-Once your instance is licensed you can optionally load in more sites. To do so follow the link to choose an amount of sites to upgrade to from within your Pangolin license page and complete the purchase. Load this new key into your instance an you should instantly have the limit increased.
+When purchasing the host key you can optionally choose to include a base number of sites licensed for your instance. This should be a conservative guess about how many sites you need to start with. You can always add more sites later via the site upgrade keys.
+
+To purchase a host key you will first want to navigate to our [pricing page](/pricing).
+
+### The Site Addon Keys (Additional Sites)
+
+Once your instance is licensed you can increase the amount of licensed sites to the instance by purchasing addon keys. To do so follow the link to choose an amount of sites to add from within your Pangolin license page and complete the purchase. Load this new key into your instance and you should instantly have the limit increased.
+
+Licensee is responsible for ensuring that the number of sites does not exceed the number of sites purchased. If you need to increase the number of sites, you can purchase additional site keys at any time. You may also decrease the number of sites by canceling the additional site keys.
 
 ## FAQ
-
-:::note
-
-If you have already purchased a supporter key and wish to also purchase a professional license please reach out to us at numbat@fossorial.io. We can provide you with a discount code for the first month of the professional license FREE!
-
-:::
 
 #### How often will I be billed?
 
 The Professional License is billed monthly.
 
+If need/prefer to be billed quarterly or annually, please contact us.
+
 #### How do I manage all of my keys?
 
-You can log into [Lemon Squeezy](https://app.lemonsqueezy.com/my-orders/) with the same email that your purchased your keys with. From here you can deactivate an instance or manage subscriptions.
+You can log into [Lemon Squeezy](https://app.lemonsqueezy.com/my-orders/) with the same email that your purchased your keys. From here you can deactivate an instance or manage subscriptions.
 
 #### Can I reuse the license keys?
 
-No, the license keys are tied to the instance they were purchased for. If you need to move your instance to a new server, please log into Lemon Squeezy, deactivate the key, and then re-activate it on the new server.
+No, you register a key with a host instance. The license is then tied to that instance until otherwise deactivated.
+
+If you need to move your instance to a new server, please log into Lemon Squeezy, deactivate the key, and then re-activate it on the new server.
 
 #### There is an issue with my order!
 
@@ -59,14 +69,18 @@ You can then create support tickets in the [support portal](https://support.foss
 
 #### What is the difference between this and the Supporter Program?
 
-The Supporter Program is a way to support the project and remove the support marks. It is a one time donation. No features are unlocked.
+The Supporter Program is a way to support the project and remove the supporter marks. It is for individuals that want to support the project but do not need the extra features or support. It is a one time donation. No features are unlocked.
 
 The Professional plan is a paid license that allows you to use the software in a commercial environment that unlocks features and provides support. It is a monthly subscription.
 
-#### What happens if I run out of sites? 
+#### What happens if I run out of sites?
 
-You will be warned if you go over your site limit before you create a site. If you do there will be a banner displayed in the Pangolin application and login pages stating you have gone over your limit but no functionality of the application will be lost.
+A persistent banner will be displayed in across the application pages stating the instance has gone over the licensed limit.
+
+This is considered a violation of the license agreement and may result in the license being revoked if not resolved within a reasonable time frame.
+
+The licensee would need to purchase additional site keys to remove the banner and be compliant with the license agreement.
 
 # TOS / License
 
-By purchasing any license key you agree to abide by the [Fossorial Commercial License and Terms](https://www.google.com/search?q=/license.html).
+By purchasing any license key you agree to abide by the [Fossorial Commercial License - Professional Edition Subscription Terms](https://www.google.com/search?q=/license.html).
