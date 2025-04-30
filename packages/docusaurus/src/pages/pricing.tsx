@@ -430,6 +430,15 @@ const PricingComponent = () => {
             provides support. It is a monthly subscription.
           </p>
 
+          <h4>What happens if I run out of sites?</h4>
+
+          <p style={styles.textMuted}>
+            You will be warned if you go over your site limit before you create
+            a site. If you do there will be a banner displayed in the Pangolin
+            application and login pages stating you have gone over your limit
+            but no functionality of the application will be lost.
+          </p>
+
           <p style={styles.textMuted}>--</p>
 
           <p style={styles.textMuted}>

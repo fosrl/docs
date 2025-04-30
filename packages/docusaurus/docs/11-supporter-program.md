@@ -8,6 +8,12 @@ If you’d like to support the project, you can purchase a supporter key to remo
 
 We know it’s not the most exciting feature, but it helps us keep Pangolin healthy and moving forward.
 
+:::note
+
+If you have already purchased a supporter key and wish to also purchase a professional license please reach out to us at numbat@fossorial.io. We can provide you with a discount code for the first month of the professional license FREE!
+
+:::
+
 ## How does this work?
 
 We are using GitHub sponsors. In order to support and obtain your key:
