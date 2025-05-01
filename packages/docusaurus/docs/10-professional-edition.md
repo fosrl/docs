@@ -85,4 +85,4 @@ The licensee would need to purchase additional site keys to remove the banner an
 
 # TOS / License
 
-By purchasing any Professional Edition license key you agree to abide by the [Fossorial Commercial License - Professional Edition Subscription Terms](https://docs.fossorial.io/license.html).
+By purchasing any Professional Edition license key you agree to abide by the [Fossorial Commercial License - Professional Edition Subscription Terms](https://fossorial.io/license.html).

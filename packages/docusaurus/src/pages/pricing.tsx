@@ -194,7 +194,7 @@ const PricingComponent = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              <a href="/license.html">Fossorial Commercial License</a>
+              <a href="https://fossorial.io/license.html">Fossorial Commercial License</a>
             </li>
           </ul>
 
@@ -444,7 +444,7 @@ const PricingComponent = () => {
           <p style={styles.textMuted}>
             By purchasing any Professional Edition license key you agree to
             abide by the{" "}
-            <a href="/license.html">
+            <a href="https://fossorial.io/license.html">
               Fossorial Commercial License - Professional Edition Subscription
               Terms
             </a>
