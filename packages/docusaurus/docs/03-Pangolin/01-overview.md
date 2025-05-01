@@ -2,7 +2,7 @@
 
 Pangolin is a self-hosted tunneled reverse proxy server with identity and access control, designed to securely expose private resources on distributed networks. Acting as a central hub, it connects isolated networks — even those behind restrictive firewalls — through encrypted tunnels, enabling easy access to remote services without opening ports.
 
-<img src={require("./img/sites.png").default} alt="Sites"/>
+<img src={require("./img/hero.png").default} alt="Sites"/>
 
 _Sites page of Pangolin dashboard (dark mode) showing multiple tunnels connected to the central server._
 
@@ -29,6 +29,7 @@ _Sites page of Pangolin dashboard (dark mode) showing multiple tunnels connected
   - **Temporary, self-destructing share links.**
   - Resource specific pin codes.
   - Resource specific passwords.
+- OIDC Support for IDPs like Authentik
 
 ### Simple Dashboard UI
 
@@ -76,6 +77,9 @@ You can [buy a cheap domain at Namecheap](https://namecheap.pxf.io/c/6099916/386
 
 **Use Case Example - Bypassing Port Restrictions in Home Lab**:  
  Imagine private sites where the ISP restricts port forwarding. By connecting these sites to Pangolin via WireGuard, you can securely expose HTTP and HTTPS resources on the private network without any networking complexity.
+
+**Use Case Example - Deploying Services For Your Business**
+ You can use Pangolin as an easy way to expose your business applications to your users behind a safe authentication portal you can integrate into your IDP solution. Expose resources on prem and on the cloud.
 
 **Use Case Example - IoT Networks**:  
  IoT networks are often fragmented and difficult to manage. By deploying Pangolin on a central server, you can connect all your IoT sites via Newt or another WireGuard client. This creates a simple, secure, and centralized way to access IoT resources without the need for intricate networking setups.
