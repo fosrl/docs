@@ -232,7 +232,7 @@ const PricingComponent = () => {
 
           <button
             onClick={() =>
-              (window.location.href = `https://payment.fossorial.io/buy/958562da-a87c-4dc8-abba-a3fbfcc1eb7d?quantity=${siteCount}`)
+              (window.location.href = `https://payment.fossorial.io/buy/dab98d3d-9976-49b1-9e55-1580059d833f?quantity=${siteCount}`)
             }
             style={styles.buttonPrimary}
           >
