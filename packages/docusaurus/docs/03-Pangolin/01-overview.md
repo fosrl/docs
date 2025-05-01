@@ -4,7 +4,7 @@ Pangolin is a self-hosted tunneled reverse proxy server with identity and access
 
 <img src={require("./img/hero.png").default} alt="Sites"/>
 
-_Sites page of Pangolin dashboard (dark mode) showing multiple tunnels connected to the central server._
+_Resources page of Pangolin dashboard (dark mode) showing multiple resources available to connect._
 
 ## Key Features
 
@@ -19,17 +19,18 @@ _Sites page of Pangolin dashboard (dark mode) showing multiple tunnels connected
 
 ### Identity & Access Management
 
-- Centralized authentication system using platform SSO. **Users will only have to manage one login.**
-- **Define access control rules for IPs, IP ranges, and URL paths per resource.**
-- TOTP with backup codes for two-factor authentication.
-- Create organizations, each with multiple sites, users, and roles.
-- **Role-based access control** to manage resource access permissions.
-- Additional authentication options include:
-  - Email whitelisting with **one-time passcodes.**
-  - **Temporary, self-destructing share links.**
-  - Resource specific pin codes.
-  - Resource specific passwords.
-- OIDC Support for IDPs like Authentik
+-   Centralized authentication system using platform SSO. **Users will only have to manage one login.**
+-   **Define access control rules for IPs, IP ranges, and URL paths per resource.**
+-   TOTP with backup codes for two-factor authentication.
+-   Create organizations, each with multiple sites, users, and roles.
+-   **Role-based access control** to manage resource access permissions.
+-   Additional authentication options include:
+    -   Email whitelisting with **one-time passcodes.**
+    -   **Temporary, self-destructing share links.**
+    -   Resource specific pin codes.
+    -   Resource specific passwords.
+- OIDC Support for IdPs like Authentik, Keycloak, Okta, and others.
+    -   Auto-provision users and roles from your IdP.
 
 ### Simple Dashboard UI
 
@@ -84,8 +85,6 @@ You can [buy a cheap domain at Namecheap](https://namecheap.pxf.io/c/6099916/386
 **Use Case Example - IoT Networks**:  
  IoT networks are often fragmented and difficult to manage. By deploying Pangolin on a central server, you can connect all your IoT sites via Newt or another WireGuard client. This creates a simple, secure, and centralized way to access IoT resources without the need for intricate networking setups.
 
-<img src={require("./img/resources.png").default} alt="Resources"/>
-
 _Resources page of Pangolin dashboard (dark mode) showing HTTPS and TCP resources with access control rules._
 
 ## Similar Projects and Inspirations
@@ -93,7 +92,7 @@ _Resources page of Pangolin dashboard (dark mode) showing HTTPS and TCP resource
 **Cloudflare Tunnels**:  
  A similar approach to proxying private resources securely, but Pangolin is a self-hosted alternative, giving you full control over your infrastructure.
 
-**Authentik and Authelia**:  
+**Authelia**:  
  These projects inspired Pangolin’s centralized authentication system for proxies, enabling robust user and role management.
 
 ## Project Development / Roadmap
