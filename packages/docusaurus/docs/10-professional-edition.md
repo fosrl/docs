@@ -37,7 +37,9 @@ To purchase a host key you will first want to navigate to our [pricing page](/pr
 
 Once your instance is licensed you can increase the amount of licensed sites to the instance by purchasing addon keys. To do so follow the link to choose an amount of sites to add from within your Pangolin license page and complete the purchase. Load this new key into your instance and you should instantly have the limit increased.
 
-Licensee is responsible for ensuring that the number of sites does not exceed the number of sites purchased. If you need to increase the number of sites, you can purchase additional site keys at any time. You may also decrease the number of sites by canceling the additional site keys.
+Licensee is responsible for ensuring that the number of sites used by the host does not exceed the number of sites purchased. If you need to increase the number of sites, you can purchase additional site keys at any time. You may also decrease the number of sites by canceling the additional site keys.
+
+<img src={require("./img/license.png").default} alt="Tiers"/>
 
 ## FAQ
 
@@ -83,4 +85,4 @@ The licensee would need to purchase additional site keys to remove the banner an
 
 # TOS / License
 
-By purchasing any Professional Edition license key you agree to abide by the [Fossorial Commercial License - Professional Edition Subscription Terms](https://www.google.com/search?q=/license.html).
+By purchasing any Professional Edition license key you agree to abide by the [Fossorial Commercial License - Professional Edition Subscription Terms](https://docs.fossorial.io/license.html).
