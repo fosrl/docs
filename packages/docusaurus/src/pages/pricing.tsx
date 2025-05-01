@@ -364,12 +364,12 @@ const PricingComponent = () => {
 
       <div style={styles.pricingContainer}>
         <div style={styles.cardLarge}>
-          <h1 style={styles.cardTitle}>Professional License FAQ</h1>
+          <h1 style={styles.cardTitle}>Professional Edition FAQ</h1>
 
           <h4>How often will I be billed?</h4>
 
           <p style={styles.textMuted}>
-            The Professional License is billed monthly.
+            The Professional Edition license subscription is billed monthly.
           </p>
 
           <h4>What if I need more sites?</h4>
@@ -439,11 +439,15 @@ const PricingComponent = () => {
             but no functionality of the application will be lost.
           </p>
 
-          <p style={styles.textMuted}>--</p>
+          <h4>TOS / License</h4>
 
           <p style={styles.textMuted}>
-            By purchasing any license key you agree to abide by the{" "}
-            <a href="/license.html">Fossorial Commercial License and Terms</a>
+            By purchasing any Professional Edition license key you agree to
+            abide by the{" "}
+            <a href="/license.html">
+              Fossorial Commercial License - Professional Edition Subscription
+              Terms
+            </a>
           </p>
         </div>
       </div>

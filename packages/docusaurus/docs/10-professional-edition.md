@@ -1,31 +1,31 @@
-# Professional License
+# Professional Edition
 
 :::tip
 
-If you have already purchased a Supporter Key and wish to also purchase a Professional License please reach out to us at [numbat@fossorial.io](mailto:numbat@fossorial.io). We can provide you with a discount code for the first month of the Professional license free!
+If you have already purchased a Supporter Key and wish to also purchase a Professional Edition license please reach out to us at [numbat@fossorial.io](mailto:numbat@fossorial.io). We can provide you with a discount code for a free first month of the Professional Edition subscription!
 
 :::
 
-The Professional license is for businesses and individuals that want to use Pangolin in a commercial environment and require access to licensed components and extra support.
+The Professional Edition is for businesses and individuals that want to use Pangolin in a commercial environment and require access to licensed components and extra support.
 
 Pangolin will always be free and open source but some features geared more to businesses will be covered under a different license than the AGPL3 in order to allow us to grow Pangolin.
 
 We will continue to develop and maintain both "sides" of Pangolin. The free and open source version will always be available and we will continue to add features to it. We will also continue to develop the Professional version and add features to it to make the value worth the cost.
 
-For more information about pricing and what is included in the Professional license, please see the [pricing page](/pricing).
+For more information about pricing and what is included in the Professional Edition, please see the [pricing page](/pricing).
 
 ## How does this work?
 
 License keys are like upgrades to your Pangolin instance. There are two types of license keys:
 
-- The Host key ("Professional License")
-- Additional Site addon keys ("Additional Sites")
+- The host key
+- Additional site addon keys
 
 Licensing is managed from the Licensing section of the Server Admin panel in Pangolin.
 
 Purchases are managed through [Lemon Squeezy](https://app.lemonsqueezy.com/).
 
-### The Host Key (Professional License)
+### The Host Key
 
 Every Pangolin instance needs its own host key. This will unlock all of the Professional features for that instance.
 
@@ -33,7 +33,7 @@ When purchasing the host key you can optionally choose to include a base number 
 
 To purchase a host key you will first want to navigate to our [pricing page](/pricing).
 
-### The Site Addon Keys (Additional Sites)
+### The Site Addon Keys
 
 Once your instance is licensed you can increase the amount of licensed sites to the instance by purchasing addon keys. To do so follow the link to choose an amount of sites to add from within your Pangolin license page and complete the purchase. Load this new key into your instance and you should instantly have the limit increased.
 
@@ -43,7 +43,7 @@ Licensee is responsible for ensuring that the number of sites does not exceed th
 
 #### How often will I be billed?
 
-The Professional License is billed monthly.
+The Professional Edition license subscription is billed monthly.
 
 If need/prefer to be billed quarterly or annually, please contact us.
 
@@ -83,4 +83,4 @@ The licensee would need to purchase additional site keys to remove the banner an
 
 # TOS / License
 
-By purchasing any license key you agree to abide by the [Fossorial Commercial License - Professional Edition Subscription Terms](https://www.google.com/search?q=/license.html).
+By purchasing any Professional Edition license key you agree to abide by the [Fossorial Commercial License - Professional Edition Subscription Terms](https://www.google.com/search?q=/license.html).
