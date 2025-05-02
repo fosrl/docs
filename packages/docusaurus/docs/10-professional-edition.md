@@ -6,6 +6,12 @@ If you have already purchased a Supporter Key and wish to also purchase a Profes
 
 :::
 
+:::note
+
+There is no restrictions on sites for the open source version of Pangolin.
+
+:::
+
 The Professional Edition is for businesses and individuals that want to use Pangolin in a commercial environment and require access to licensed components and extra support.
 
 Pangolin will always be free and open source but some features geared more to businesses will be covered under a different license than the AGPL3 in order to allow us to grow Pangolin.
