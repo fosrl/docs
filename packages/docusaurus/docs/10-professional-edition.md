@@ -2,7 +2,7 @@
 
 :::tip
 
-If you have already purchased a Supporter Key and wish to also purchase a Professional Edition license please reach out to us at [numbat@fossorial.io](mailto:numbat@fossorial.io). We can provide you with a discount code for a free first month of the Professional Edition subscription!
+If you have already purchased a Supporter Key and wish to also purchase a Professional Edition license please check your supporter portal for a 75% discount code!
 
 :::
 
@@ -12,11 +12,9 @@ There is no restrictions on sites for the open source version of Pangolin.
 
 :::
 
-The Professional Edition is for businesses and individuals that want to use Pangolin in a commercial environment and require access to licensed components and extra support.
+The Professional Edition is for businesses that want to use Pangolin in a commercial environment and require access to licensed components and extra support.
 
 Pangolin will always be free and open source but some features geared more to businesses will be covered under a different license than the AGPL3 in order to allow us to grow Pangolin.
-
-We will continue to develop and maintain both "sides" of Pangolin. The free and open source version will always be available and we will continue to add features to it. We will also continue to develop the Professional version and add features to it to make the value worth the cost.
 
 For more information about pricing and what is included in the Professional Edition, please see the [pricing page](/pricing).
 
