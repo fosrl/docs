@@ -1,8 +1,19 @@
 import { useState } from "react";
 import Layout from "@theme/Layout";
 
+type Discount = {
+  code: string;
+  percentage: number;
+  message: string;
+};
+
 const PricingComponent = () => {
   const [siteCount, setSiteCount] = useState(3);
+  const [discount, setDiscount] = useState<Discount | null>({
+    code: "A2MJEYMW",
+    percentage: 25,
+    message: "Launch discount! 25% off first 12 months."
+  });
 
   const handleSiteCountChange = (e) => {
     const value = parseInt(e.target.value);
@@ -23,8 +34,24 @@ const PricingComponent = () => {
     }
   };
 
-  const calculatePrice = () => {
-    return 125 + siteCount * 5;
+  const calculateBasePrice = () => {
+    return 125;
+  };
+
+  const calculateSitePrice = () => {
+    return siteCount * 5;
+  };
+
+  const calculateTotalPrice = () => {
+    const basePrice = calculateBasePrice();
+    const sitePrice = calculateSitePrice();
+    const total = basePrice + sitePrice;
+
+    if (discount) {
+      return total * (1 - discount.percentage / 100);
+    }
+
+    return total;
   };
 
   return (
@@ -233,14 +260,45 @@ const PricingComponent = () => {
             </div>
           </div>
 
+          {discount && (
+            <div
+              style={{
+                ...styles.priceBreakdown,
+                color: "var(--ifm-color-primary)"
+              }}
+            >
+              {discount.message}
+            </div>
+          )}
+
           <div style={styles.priceDisplay}>
-            ${calculatePrice()}
+            {discount && (
+              <span
+                style={{
+                  textDecoration: "line-through",
+                  color: "var(--ifm-color-emphasis-600)",
+                  marginRight: "8px"
+                }}
+              >
+                ${calculateBasePrice() + calculateSitePrice()}
+              </span>
+            )}
+            ${calculateTotalPrice()}
             <span style={styles.pricePeriod}>/month</span>
           </div>
 
           <div style={styles.priceBreakdown}>
-            Base price $125 + ${siteCount} x $5 per site
+            {discount ? (
+              <>
+                Original price $
+                {(calculateBasePrice() + calculateSitePrice()).toFixed(2)}{" "}
+                discounted by {discount.percentage}%
+              </>
+            ) : (
+              <>Base price $125 + ${siteCount} x $5 per site</>
+            )}
           </div>
+
           <div style={styles.priceBreakdown}>
             Bulk pricing available.{" "}
             <a href="mailto:numbat@fossorial.io">Contact us</a>
@@ -248,7 +306,7 @@ const PricingComponent = () => {
 
           <button
             onClick={() =>
-              (window.location.href = `https://payment.fossorial.io/buy/dab98d3d-9976-49b1-9e55-1580059d833f?quantity=${siteCount}`)
+              (window.location.href = `https://payment.fossorial.io/buy/dab98d3d-9976-49b1-9e55-1580059d833f?quantity=${siteCount}${discount ? `&checkout[discount_code]=${discount.code}` : ""}`)
             }
             style={styles.buttonPrimary}
           >
