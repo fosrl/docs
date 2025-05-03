@@ -1,8 +1,19 @@
 import { useState } from "react";
 import Layout from "@theme/Layout";
 
+type Discount = {
+  code: string;
+  percentage: number;
+  message: string;
+};
+
 const PricingComponent = () => {
   const [siteCount, setSiteCount] = useState(3);
+  const [discount, setDiscount] = useState<Discount | null>({
+    code: "A2MJEYMW",
+    percentage: 25,
+    message: "Launch discount! 25% off first 12 months."
+  });
 
   const handleSiteCountChange = (e) => {
     const value = parseInt(e.target.value);
@@ -23,8 +34,24 @@ const PricingComponent = () => {
     }
   };
 
-  const calculatePrice = () => {
-    return 125 + siteCount * 5;
+  const calculateBasePrice = () => {
+    return 125;
+  };
+
+  const calculateSitePrice = () => {
+    return siteCount * 5;
+  };
+
+  const calculateTotalPrice = () => {
+    const basePrice = calculateBasePrice();
+    const sitePrice = calculateSitePrice();
+    const total = basePrice + sitePrice;
+
+    if (discount) {
+      return total * (1 - discount.percentage / 100);
+    }
+
+    return total;
   };
 
   return (
@@ -50,6 +77,20 @@ const PricingComponent = () => {
                 />
               </svg>
               Perfect for individuals and small teams
+            </li>
+            <li style={styles.featureItem}>
+              <svg
+                style={styles.checkIcon}
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              Unlimited Sites - No Restrictions
             </li>
             <li style={styles.featureItem}>
               <svg
@@ -194,7 +235,9 @@ const PricingComponent = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              <a href="/license.html">Fossorial Commercial License</a>
+              <a href="https://fossorial.io/license.html">
+                Fossorial Commercial License
+              </a>
             </li>
           </ul>
 
@@ -217,18 +260,53 @@ const PricingComponent = () => {
             </div>
           </div>
 
+          {discount && (
+            <div
+              style={{
+                ...styles.priceBreakdown,
+                color: "var(--ifm-color-primary)"
+              }}
+            >
+              {discount.message}
+            </div>
+          )}
+
           <div style={styles.priceDisplay}>
-            ${calculatePrice()}
+            {discount && (
+              <span
+                style={{
+                  textDecoration: "line-through",
+                  color: "var(--ifm-color-emphasis-600)",
+                  marginRight: "8px"
+                }}
+              >
+                ${calculateBasePrice() + calculateSitePrice()}
+              </span>
+            )}
+            ${calculateTotalPrice()}
             <span style={styles.pricePeriod}>/month</span>
           </div>
 
           <div style={styles.priceBreakdown}>
-            Base price $125 + ${siteCount} x $5 per site
+            {discount ? (
+              <>
+                Original price $
+                {(calculateBasePrice() + calculateSitePrice()).toFixed(2)}{" "}
+                discounted by {discount.percentage}%
+              </>
+            ) : (
+              <>Base price $125 + ${siteCount} x $5 per site</>
+            )}
+          </div>
+
+          <div style={styles.priceBreakdown}>
+            Bulk pricing available.{" "}
+            <a href="mailto:numbat@fossorial.io">Contact us</a>
           </div>
 
           <button
             onClick={() =>
-              (window.location.href = `https://payment.fossorial.io/buy/958562da-a87c-4dc8-abba-a3fbfcc1eb7d?quantity=${siteCount}`)
+              (window.location.href = `https://payment.fossorial.io/buy/dab98d3d-9976-49b1-9e55-1580059d833f?quantity=${siteCount}${discount ? `&checkout[discount_code]=${discount.code}` : ""}`)
             }
             style={styles.buttonPrimary}
           >
@@ -360,12 +438,14 @@ const PricingComponent = () => {
 
       <div style={styles.pricingContainer}>
         <div style={styles.cardLarge}>
-          <h1 style={styles.cardTitle}>Professional License FAQ</h1>
+          <h1 style={styles.cardTitle}>Professional Edition FAQ</h1>
+
+          <p style={styles.textMuted}><a href="https://github.com/orgs/fosrl/discussions/650">Take a look at our post about clarifying our monetization path.</a></p>
 
           <h4>How often will I be billed?</h4>
 
           <p style={styles.textMuted}>
-            The Professional License is billed monthly.
+            The Professional Edition license subscription is billed monthly.
           </p>
 
           <h4>What if I need more sites?</h4>
@@ -426,11 +506,24 @@ const PricingComponent = () => {
             provides support. It is a monthly subscription.
           </p>
 
-          <p style={styles.textMuted}>--</p>
+          <h4>What happens if I run out of sites?</h4>
 
           <p style={styles.textMuted}>
-            By purchasing any license key you agree to abide by the{" "}
-            <a href="/license.html">Fossorial Commercial License and Terms</a>
+            You will be warned if you go over your site limit before you create
+            a site. If you do there will be a banner displayed in the Pangolin
+            application and login pages stating you have gone over your limit
+            but no functionality of the application will be lost.
+          </p>
+
+          <h4>TOS / License</h4>
+
+          <p style={styles.textMuted}>
+            By purchasing any Professional Edition license key you agree to
+            abide by the{" "}
+            <a href="https://fossorial.io/license.html">
+              Fossorial Commercial License - Professional Edition Subscription
+              Terms
+            </a>
           </p>
         </div>
       </div>

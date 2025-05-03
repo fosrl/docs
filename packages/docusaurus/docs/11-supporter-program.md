@@ -1,5 +1,15 @@
 # Supporter Program
 
+:::note
+
+There is no restrictions on sites for the open source version of Pangolin.
+
+The Supporter Program does not provide access to Professional Edition features.
+
+Take a look at our post about clarifying our monetization path: https://github.com/orgs/fosrl/discussions/650
+
+:::
+
 ## What is this?
 
 Pangolin will always be free and open source, but maintaining the project takes a lot of time and resources. To help support ongoing development — including bug fixes, [new features](https://github.com/orgs/fosrl/projects/1/views/1), and community support — we’ve added a way for users to directly contribute. **We will not use this to paywall features.**
@@ -8,12 +18,18 @@ If you’d like to support the project, you can purchase a supporter key to remo
 
 We know it’s not the most exciting feature, but it helps us keep Pangolin healthy and moving forward.
 
+:::note
+
+If you have already purchased a Supporter Key and wish to also purchase a Professional Edition license please check your supporter portal for a 75% discount code!
+
+:::
+
 ## How does this work?
 
 We are using GitHub sponsors. In order to support and obtain your key:
 
 1. Purchase EITHER the "$25 one time" or "$95 one time" tier on GitHub
-2. Go to https://supporters.dev.fossorial.io and log in with your GitHub account
+2. Go to https://supporters.fossorial.io and log in with your GitHub account
 3. Copy the supporter key
 4. Go to your Pangolin instance and click the supporter button
 5. Enter the supporter key
@@ -60,7 +76,7 @@ You can only obtain a supporter key once. While GitHub allows you to donate mult
 
 GitHub Sponsors DOES NOT allow us to refund donations. Please make sure that you are comfortable supporting the project before you purchase a tier.
 
-## How is this different than the Professional License?
+## How is this different than the Professional Edition?
 
 The Supporter Program is a way to support the project and remove the
 support marks. It is a one time donation. No features are unlocked.
