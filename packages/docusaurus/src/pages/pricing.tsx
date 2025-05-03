@@ -440,6 +440,8 @@ const PricingComponent = () => {
         <div style={styles.cardLarge}>
           <h1 style={styles.cardTitle}>Professional Edition FAQ</h1>
 
+          <p style={styles.textMuted}><a href="https://github.com/orgs/fosrl/discussions/650">Take a look at our post about clarifying our monetization path.</a></p>
+
           <h4>How often will I be billed?</h4>
 
           <p style={styles.textMuted}>

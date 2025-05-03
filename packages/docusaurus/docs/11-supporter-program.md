@@ -4,11 +4,9 @@
 
 There is no restrictions on sites for the open source version of Pangolin.
 
-:::
-
-:::note
-
 The Supporter Program does not provide access to Professional Edition features.
+
+Take a look at our post about clarifying our monetization path: https://github.com/orgs/fosrl/discussions/650
 
 :::
 
@@ -22,7 +20,7 @@ We know it’s not the most exciting feature, but it helps us keep Pangolin heal
 
 :::note
 
-If you have already purchased a supporter key and wish to also purchase a professional license please reach out to us at numbat@fossorial.io. We can provide you with a discount code for the first month of the professional license FREE!
+If you have already purchased a Supporter Key and wish to also purchase a Professional Edition license please check your supporter portal for a 75% discount code!
 
 :::
 

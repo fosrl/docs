@@ -1,14 +1,12 @@
 # Professional Edition
 
-:::tip
+:::note
 
 If you have already purchased a Supporter Key and wish to also purchase a Professional Edition license please check your supporter portal for a 75% discount code!
 
-:::
-
-:::note
-
 There is no restrictions on sites for the open source version of Pangolin.
+
+Take a look at our post about clarifying our monetization path: https://github.com/orgs/fosrl/discussions/650
 
 :::
 
