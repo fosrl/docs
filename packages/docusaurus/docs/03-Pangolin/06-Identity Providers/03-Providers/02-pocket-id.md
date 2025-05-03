@@ -19,7 +19,8 @@ DO NOT secure the Pocket ID resource with Pangolin SSO, otherwise it will not wo
 In Pocket ID, create a new OIDC Client.
 
 - Set the name to something memorable (eg. Pangolin)
-- Set "Callback URLs" to `https://<your-pangolin-domain>/auth/idp/1/oidc/callback`
+- Set "Callback URLs" to `https://<your-pangolin-domain>/auth/idp/<idp-id>/oidc/callback`
+  - This URL is displayed in the IdP settings after you create the IdP in Pangolin.
 - All other values can be kept as default
 
 After you have created the OIDC Client, take note of the following fields from the top of the page (click "Show more details" to see all of them):
@@ -30,6 +31,7 @@ After you have created the OIDC Client, take note of the following fields from t
 - Token URL
 
 ## 3. Configure an Identity Provider in Pangolin
+
 In Pangolin, go to `Identity Providers` and click "Add Identity Provider":
 
 - Set the name to something memorable (eg. Pocket ID)
@@ -38,11 +40,17 @@ In Pangolin, go to `Identity Providers` and click "Add Identity Provider":
 
 When you're done, click "Create Identity Provider"
 
-## 4. Ready to test!
+## 4. Ready to Test!
 
 The configuration is now complete. If you've configured a user (see below), try logging in!
 
-## Note fo User configuration in Pangolin
+## User Configuration in Pangolin
+
+:::note
+
+The Username has to be the exact same as in Pocket ID, otherwise the login will not work
+
+:::
 
 To create a user in an Organization, Set the following:
 
@@ -51,9 +59,3 @@ To create a user in an Organization, Set the following:
 - "Role": Whatever role you want to give the user
 
 The other fields are optional
-
-:::danger
-
-The Username has to be the exact same as in Pocket ID, otherwise the login will not work
-
-:::
