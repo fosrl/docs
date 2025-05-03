@@ -1,5 +1,11 @@
 # Metrics
 
+:::note
+
+This is a community guide and is not officially supported. If you have any issues, please reach out to the [author](https://github.com/Lokowitz).
+
+:::
+
 This is a basic example of collecting metrics from Traefik and CrowdSec using Prometheus and visualizing them with Grafana dashboards.
 
 :::warning

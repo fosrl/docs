@@ -1,5 +1,11 @@
 # Overview
 
+:::note
+
+These are community written guides and are not officially supported. If you have any issues, please reach out to the authors or the community on [Discord](https://discord.gg/HCJR8Xhme4) or [Github discussions](https://github.com/orgs/fosrl/discussions).
+
+:::
+
 The modular design of this system enables the extension of its functionality through the integration of existing Traefik plugins, such as Crowdsec and Geoblock.
 Additionally, Prometheus can collect metrics from both CrowdSec and Traefik, which can then be visualized in Grafana to monitor security events, request statistics, and traffic patterns in real time.
 
