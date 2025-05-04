@@ -48,7 +48,7 @@ When you're done, click "Create Identity Provider"
 
 Now copy the Redirect URL displayed in the "General Settings" section
 
-## 4. Complete the setup in your Google Project
+## 4. Complete the Setup in your Google Project
 
 Lastly, you need to edit your OAuth Client in your Google project. Add the URL you copied to the "Authorized Callback URIs", then hit "Save"
 
