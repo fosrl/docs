@@ -14,7 +14,7 @@ You need to configure an application in Zitadel:
     3. For `Authentication Method` choose `Code`
     4. Leave `Redirect URIs` blank for now
     5. When you click create, you'll be shown the `ClientSecret` and `ClientId`. Make sure to save these somewhere secure - you won't be able to see the Client Secret again.
-2. Click `Token settings` and check the `User Info inside ID Token` box and hit `Save`
+2. Click `Token settings` then change `Auth Token Type` to `JWT` and check the `User Info inside ID Token` box finally hit `Save`
 3. Open `URLs` and make note of:
     - `Authorization Endpoint`
     - `Token Endpoint`
