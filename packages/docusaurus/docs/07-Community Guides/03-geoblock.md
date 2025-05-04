@@ -1,5 +1,11 @@
 # GeoBlock
 
+:::note
+
+This is a community guide and is not officially supported. If you have any issues, please reach out to the [author](https://github.com/Lokowitz).
+
+:::
+
 GeoBlock is a Traefik middleware that uses IP-based geolocation to allow or block traffic from specific countries. It helps enhance security and access control by restricting unwanted or potentially harmful connections based on geographic regions.
 
 ## Installation
