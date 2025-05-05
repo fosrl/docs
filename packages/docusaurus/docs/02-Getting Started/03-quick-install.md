@@ -15,7 +15,7 @@ import WgetQuickInstaller from "@site/src/components/WgetQuickInstaller";
 
 ## Using a VPS
 
-If you need a VPS to run Pangolin, [RackNerd](https://my.racknerd.com/aff.php?aff=13788) is a great option, and often has generous promotions. More options can be found in our VPS guide.
+If you need a VPS to run Pangolin, [RackNerd](https://my.racknerd.com/aff.php?aff=13788) is a great option, and often has generous promotions. More options can be found in our [VPS guide](./01-choosing-a-vps.md).
 
 A good option is [**1 vCPU, 1GB RAM less than $1 a month**](https://my.racknerd.com/aff.php?aff=13788&pid=903).
 
