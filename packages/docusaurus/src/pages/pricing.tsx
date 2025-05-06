@@ -295,7 +295,7 @@ const PricingComponent = () => {
                 discounted by {discount.percentage}%
               </>
             ) : (
-              <>Base price $125 + ${siteCount} x $5 per site</>
+              <>Base price $125 + {siteCount} x $5 per site</>
             )}
           </div>
 

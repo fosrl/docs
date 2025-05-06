@@ -1,5 +1,11 @@
 # Overview
 
+:::note
+
+These are community written guides and are not officially supported. If you have any issues, please reach out to the authors or the community on [Discord](https://discord.gg/HCJR8Xhme4) or [Github discussions](https://github.com/orgs/fosrl/discussions).
+
+:::
+
 The modular design of this system enables the extension of its functionality through the integration of existing Traefik plugins, such as Crowdsec and Geoblock.
 Additionally, Prometheus can collect metrics from both CrowdSec and Traefik, which can then be visualized in Grafana to monitor security events, request statistics, and traffic patterns in real time.
 
@@ -9,7 +15,7 @@ For a complete list of available plugins, please refer to the [Plugin Catalog](h
 
 ### Crowdsec Bouncer
 
-When installing Crowdsec via the Pangolin installer, the Crowdsec Traefik Bouncer will be automatically installed and configured by default. The configuration can be customized to meet your specific requirements. For detailed guidance, refer to the [documentation](https://docs.fossorial.io/Modules/crowdsec).
+When installing Crowdsec via the Pangolin installer, the Crowdsec Traefik Bouncer will be automatically installed and configured by default. The configuration can be customized to meet your specific requirements.
 
 The CrowdSec Bouncer plugin for Traefik integrates CrowdSec’s security engine to block malicious traffic in real time. It runs as middleware within a Traefik container and enforces decisions based on CrowdSec’s threat intelligence. This helps protect services from bots, attackers, and abusive IPs dynamically.
 
