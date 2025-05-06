@@ -7,11 +7,7 @@ Before you can start, you'll need to create or edit a **Project** in [Google Dev
 ### 1.1 Setting up your Project
 [Create a new Project](https://console.cloud.google.com/projectcreate), or use an [existing Project](https://console.developers.google.com/) you've already created in the Google Developers Console. Setting the organization isn't required, unless you intend to use SSO for [more than 100 users](https://support.google.com/cloud/answer/13464323) externally (not via Google Workspace).
 
-<!-- ![The image is a demonstration of the Google Developers Console's New Project screen. There are three fields: Project name, Billing account, and Location. Optionally, the Project ID can be modified. All of them are required to continue.](image-1.png) -->
-
 Once created, or you've opened an existing Project, you may be on the project dashboard, where you will need to open the sidebar. If you are on the welcome page, continue by selecting [OAuth consent screen](https://console.cloud.google.com/auth/overview) in **APIs and services**.
-
-<!-- ![The image is a demonstration of the Google Developers Console's Project dashboard. The sidebar is opened, and the option "APIs and services" is being shown.](image.png) -->
 
 You should see that Google Auth Platform is not configured. Press **Get started** and fill in the relevant information, such as your **App name** and **User support email**. These will be visible when the user is authenticating.
 
