@@ -172,7 +172,7 @@ To use a custom captcha page, follow these steps:
 wget https://raw.githubusercontent.com/maxlerebourg/crowdsec-bouncer-traefik-plugin/refs/heads/main/captcha.html
 ```
 
-2. Update the `/config/traefik/dynamic_config.yml` file with the following configuration, replacing `<SERVICE>` with your captcha provider (e.g. hCaptcha, reCaptcha, Turnstile), and `<KEY>` with the appropriate site and secret keys:
+2. Update the `/config/traefik/dynamic_config.yml` file with the following configuration, replacing `<SERVICE>` with your captcha provider (MUST BE either `hcaptcha`, `recaptcha`, or `turnstile`), and `<KEY>` with the appropriate site and secret keys:
 
 ```yaml
 http:
