@@ -148,7 +148,7 @@ To display a custom ban page to attackers, follow these steps:
 1. Place a `ban.html` page in the `/config/traefik` directory. If you prefer not to create your own, you can download the official example:
 
 ```bash
-wget https://github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin/blob/main/ban.html
+wget https://raw.githubusercontent.com/maxlerebourg/crowdsec-bouncer-traefik-plugin/refs/heads/main/ban.html
 ```
 
 2. Update the `/config/traefik/dynamic_config.yml` file to include the following:
@@ -169,10 +169,10 @@ To use a custom captcha page, follow these steps:
 1. Place a `captcha.html` page in the `/config/traefik` directory. If you don't want to create your own, you can download the official example:
 
 ```bash
-wget https://github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin/blob/main/captcha.html
+wget https://raw.githubusercontent.com/maxlerebourg/crowdsec-bouncer-traefik-plugin/refs/heads/main/captcha.html
 ```
 
-2. Update the `/config/traefik/dynamic_config.yml` file with the following configuration, replacing `<SERVICE>` with your captcha provider (e.g. hCaptcha, reCaptcha, Turnstile), and `<KEY>` with the appropriate site and secret keys:
+2. Update the `/config/traefik/dynamic_config.yml` file with the following configuration, replacing `<SERVICE>` with your captcha provider (MUST BE either `hcaptcha`, `recaptcha`, or `turnstile`), and `<KEY>` with the appropriate site and secret keys:
 
 ```yaml
 http:
