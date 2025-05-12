@@ -6,8 +6,6 @@ There is no restrictions on sites for the open source version of Pangolin.
 
 The Supporter Program does not provide access to Professional Edition features.
 
-Take a look at our post about clarifying our monetization path: https://github.com/orgs/fosrl/discussions/650
-
 :::
 
 ## What is this?
