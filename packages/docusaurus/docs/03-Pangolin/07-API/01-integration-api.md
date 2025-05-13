@@ -1,10 +1,6 @@
 # Integration API
 
-:::note
-
-The Integration API requires a paid license.
-
-:::
+The integration API is a stable and documented way to interact with and script Pangolin. It is a REST API that has support for all different operations you can do with the UI. It has easy scoped permissions so you can create keys with specific jobs.
 
 ## Generate API Keys
 

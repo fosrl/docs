@@ -60,8 +60,8 @@ const PricingComponent = () => {
 
       <div style={styles.pricingContainer}>
         {/* Open Source Plan */}
-        <div style={styles.card}>
-          <div style={styles.freeTag}>FREE</div>
+        <div style={styles.highlightedCard}>
+          <div style={styles.popularTag}>EVERYONE</div>
           <h2 style={styles.cardTitle}>Open Source</h2>
           <ul style={styles.featureList}>
             <li style={styles.featureItem}>
@@ -139,7 +139,7 @@ const PricingComponent = () => {
           <div style={styles.customPricing}>Free</div>
 
           <button
-            style={styles.buttonSecondary}
+            style={styles.buttonPrimary}
             onClick={() =>
               (window.location.href = "/Getting%20Started/quick-install")
             }
@@ -149,8 +149,8 @@ const PricingComponent = () => {
         </div>
 
         {/* Professional Plan */}
-        <div style={styles.highlightedCard}>
-          <div style={styles.popularTag}>MOST BUSINESSES</div>
+        <div style={styles.card}>
+          <div style={styles.freeTag}>FOR BUSINESSES</div>
           <h2 style={styles.cardTitle}>Professional</h2>
           <ul style={styles.featureList}>
             <li style={styles.featureItem}>
@@ -266,7 +266,7 @@ const PricingComponent = () => {
             onClick={() =>
               (window.location.href = `https://payment.fossorial.io/buy/dab98d3d-9976-49b1-9e55-1580059d833f?quantity=${siteCount}${discount ? `&checkout[discount_code]=${discount.code}` : ""}`)
             }
-            style={styles.buttonPrimary}
+            style={styles.buttonSecondary}
           >
             Subscribe Now
           </button>
@@ -377,7 +377,7 @@ const PricingComponent = () => {
           </ul>
 
           <div style={styles.customPricing}>
-            Custom pricing <span style={styles.pricePeriod}>($1k+/month)</span>
+            Custom pricing
           </div>
 
           <a
@@ -397,6 +397,29 @@ const PricingComponent = () => {
       <div style={styles.pricingContainer}>
         <div style={styles.cardLarge}>
           <h1 style={styles.cardTitle}>Professional Edition FAQ</h1>
+
+          <h4>Where do I create support tickets?</h4>
+          <p style={styles.textMuted}>
+            Within 48 hours of your purchase you should receive an email invite
+            to our support portal where you can interact with us.
+          </p>
+          <p style={styles.textMuted}>
+            You can then create support tickets in the{" "}
+            <a href="https://support.fossorial.io/">support portal</a>.
+          </p>
+
+          <h4>
+            What is the difference between this and the Supporter Program?
+          </h4>
+          <p style={styles.textMuted}>
+            The Supporter Program is a way to support the project and remove the
+            support marks. It is a one time donation.
+          </p>
+          <p style={styles.textMuted}>
+            The Professional plan is a paid license that changes how you can use the
+            software in a commercial environment and
+            provides support. It is a monthly subscription.
+          </p>
 
           <h4>How often will I be billed?</h4>
 
@@ -437,29 +460,6 @@ const PricingComponent = () => {
           <p style={styles.textMuted}>
             Please <a href="mailto:numbat@fossorial.io">email us</a> immediately
             with any issues.
-          </p>
-
-          <h4>Where do I create support tickets?</h4>
-          <p style={styles.textMuted}>
-            Within 48 hours of your purchase you should receive an email invite
-            to our support portal where you can interact with us.
-          </p>
-          <p style={styles.textMuted}>
-            You can then create support tickets in the{" "}
-            <a href="https://support.fossorial.io/">support portal</a>.
-          </p>
-
-          <h4>
-            What is the difference between this and the Supporter Program?
-          </h4>
-          <p style={styles.textMuted}>
-            The Supporter Program is a way to support the project and remove the
-            support marks. It is a one time donation. No features are unlocked.
-          </p>
-          <p style={styles.textMuted}>
-            The Professional plan is a paid license that allows you to use the
-            software in a commercial environment that unlocks features and
-            provides support. It is a monthly subscription.
           </p>
 
           <h4>What happens if I run out of sites?</h4>

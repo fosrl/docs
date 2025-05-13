@@ -1,13 +1,5 @@
 # Supporter Program
 
-:::note
-
-There is no restrictions on sites for the open source version of Pangolin.
-
-The Supporter Program does not provide access to Professional Edition features.
-
-:::
-
 ## What is this?
 
 Pangolin will always be free and open source, but maintaining the project takes a lot of time and resources. To help support ongoing development — including bug fixes, [new features](https://github.com/orgs/fosrl/projects/1/views/1), and community support — we’ve added a way for users to directly contribute. **We will not use this to paywall features.**
@@ -18,7 +10,9 @@ We know it’s not the most exciting feature, but it helps us keep Pangolin heal
 
 :::note
 
-If you have already purchased a Supporter Key and wish to also purchase a Professional Edition license please check your supporter portal for a 75% discount code!
+If you have already purchased a Supporter Key and wish to also purchase a Professional Edition license as a business please check your supporter portal for a 75% discount code!
+
+There is no restrictions on sites for the open source version of Pangolin.
 
 :::
 
