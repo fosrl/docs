@@ -23,7 +23,7 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
 
 ### `server`
 
-- `external_port`: int (optional)
+- `integration_port`: int (optional)
   - The port the integration API will listen on.
 - `external_port`: int
   - The port the front-end API will listen on.
@@ -188,6 +188,8 @@ At least one domain must be configured.
   - Whether to allow users to create raw TCP/UDP resources. If set to `false`, users will only be able to create http/https resources.
 - `allow_base_domain_resources` (optional): boolean
   - Whether to allow users to create resources on the base domain. If set to `false`, users will only be able to create resources on subdomains.
+- `enable_integration_api` (optional): boolean
+  - Whether to enable and start the integration API.
 
 ## Example Configuration File
 

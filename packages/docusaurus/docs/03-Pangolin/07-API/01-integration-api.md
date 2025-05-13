@@ -32,6 +32,18 @@ OpenAPI documentation is served via Swagger UI. You can access the documentation
 
 <img src={require("./img/swagger.png").default} alt="Preview"/>
 
+## Enable Integration API
+
+Update the Pangolin config file:
+
+```yaml
+server:
+  integration_port: 3003
+
+flags:
+  enable_integration_api: true
+```
+
 ## Configure Integration API
 
 The below example shows how to expose the Integration API. It will be accessible at `https://api.example.com/v1`.
