@@ -61,7 +61,7 @@ const PricingComponent = () => {
       <div style={styles.pricingContainer}>
         {/* Open Source Plan */}
         <div style={styles.highlightedCard}>
-          <div style={styles.popularTag}>FREE</div>
+          <div style={styles.popularTag}>EVERYONE</div>
           <h2 style={styles.cardTitle}>Open Source</h2>
           <ul style={styles.featureList}>
             <li style={styles.featureItem}>
@@ -396,6 +396,29 @@ const PricingComponent = () => {
       <div style={styles.pricingContainer}>
         <div style={styles.cardLarge}>
           <h1 style={styles.cardTitle}>Professional Edition FAQ</h1>
+
+          <h4>Where do I create support tickets?</h4>
+          <p style={styles.textMuted}>
+            Within 48 hours of your purchase you should receive an email invite
+            to our support portal where you can interact with us.
+          </p>
+          <p style={styles.textMuted}>
+            You can then create support tickets in the{" "}
+            <a href="https://support.fossorial.io/">support portal</a>.
+          </p>
+
+          <h4>
+            What is the difference between this and the Supporter Program?
+          </h4>
+          <p style={styles.textMuted}>
+            The Supporter Program is a way to support the project and remove the
+            support marks. It is a one time donation.
+          </p>
+          <p style={styles.textMuted}>
+            The Professional plan is a paid license that changes how you can use
+            the software in a commercial environment and provides support. It is
+            a monthly subscription.
+          </p>
 
           <h4>How often will I be billed?</h4>
 
