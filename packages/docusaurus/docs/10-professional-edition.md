@@ -8,7 +8,7 @@ There is no restrictions on sites for the open source version of Pangolin.
 
 :::
 
-The Professional Edition is for businesses that want to use Pangolin in a commercial environment and extra support.
+The Professional Edition is for businesses that want to use Pangolin in a commercial environment and extra support. **There is feature parity between the community and professional versions of Pangolin!**
 
 For more information about pricing and what is included in the Professional Edition, please see the [pricing page](/pricing).
 
