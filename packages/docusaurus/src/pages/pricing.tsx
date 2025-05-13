@@ -60,8 +60,8 @@ const PricingComponent = () => {
 
       <div style={styles.pricingContainer}>
         {/* Open Source Plan */}
-        <div style={styles.card}>
-          <div style={styles.freeTag}>FREE</div>
+        <div style={styles.highlightedCard}>
+          <div style={styles.popularTag}>FREE</div>
           <h2 style={styles.cardTitle}>Open Source</h2>
           <ul style={styles.featureList}>
             <li style={styles.featureItem}>
@@ -76,21 +76,7 @@ const PricingComponent = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              Perfect for individuals and small teams
-            </li>
-            <li style={styles.featureItem}>
-              <svg
-                style={styles.checkIcon}
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              Unlimited Sites - No Restrictions
+              Perfect for individuals and home-labs
             </li>
             <li style={styles.featureItem}>
               <svg
@@ -132,6 +118,20 @@ const PricingComponent = () => {
                   clipRule="evenodd"
                 />
               </svg>
+              Unlimited sites
+            </li>
+            <li style={styles.featureItem}>
+              <svg
+                style={styles.checkIcon}
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clipRule="evenodd"
+                />
+              </svg>
               <a href="/supporter-program">Check out the Supporter Program</a>
             </li>
           </ul>
@@ -139,7 +139,7 @@ const PricingComponent = () => {
           <div style={styles.customPricing}>Free</div>
 
           <button
-            style={styles.buttonSecondary}
+            style={styles.buttonPrimary}
             onClick={() =>
               (window.location.href = "/Getting%20Started/quick-install")
             }
@@ -149,8 +149,8 @@ const PricingComponent = () => {
         </div>
 
         {/* Professional Plan */}
-        <div style={styles.highlightedCard}>
-          <div style={styles.popularTag}>MOST BUSINESSES</div>
+        <div style={styles.card}>
+          <div style={styles.freeTag}>FOR BUSINESSES</div>
           <h2 style={styles.cardTitle}>Professional</h2>
           <ul style={styles.featureList}>
             <li style={styles.featureItem}>
@@ -266,14 +266,15 @@ const PricingComponent = () => {
             onClick={() =>
               (window.location.href = `https://payment.fossorial.io/buy/dab98d3d-9976-49b1-9e55-1580059d833f?quantity=${siteCount}${discount ? `&checkout[discount_code]=${discount.code}` : ""}`)
             }
-            style={styles.buttonPrimary}
+            style={styles.buttonSecondary}
           >
-            Subscribe Now
+            Buy Now
           </button>
         </div>
 
         {/* Enterprise Plan */}
         <div style={styles.card}>
+          <div style={styles.freeTag}>CUSTOM</div>
           <h2 style={styles.cardTitle}>Enterprise</h2>
           <ul style={styles.featureList}>
             <li style={styles.featureItem}>
@@ -288,21 +289,7 @@ const PricingComponent = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              All Professional Features
-            </li>
-            <li style={styles.featureItem}>
-              <svg
-                style={styles.checkIcon}
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              Tailored agreements
+              All Open Source features
             </li>
             <li style={styles.featureItem}>
               <svg
@@ -330,21 +317,7 @@ const PricingComponent = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              Custom features
-            </li>
-            <li style={styles.featureItem}>
-              <svg
-                style={styles.checkIcon}
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              Multi-region & HA deployments
+              Tailored agreements
             </li>
             <li style={styles.featureItem}>
               <svg
@@ -372,13 +345,39 @@ const PricingComponent = () => {
                   clipRule="evenodd"
                 />
               </svg>
+              Multi-region & HA deployments
+            </li>
+            <li style={styles.featureItem}>
+              <svg
+                style={styles.checkIcon}
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              Custom features & integrations
+            </li>
+            <li style={styles.featureItem}>
+              <svg
+                style={styles.checkIcon}
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clipRule="evenodd"
+                />
+              </svg>
               Deployment references & assistance
             </li>
           </ul>
 
-          <div style={styles.customPricing}>
-            Custom pricing <span style={styles.pricePeriod}>($1k+/month)</span>
-          </div>
+          <div style={styles.customPricing}>Custom pricing</div>
 
           <a
             href="mailto:numbat@fossorial.io"
@@ -407,7 +406,7 @@ const PricingComponent = () => {
           <h4>What if I need more sites?</h4>
           <p style={styles.textMuted}>
             When you purchase the license above you are provided with a key to
-            unlock the features and a BASE number of sites for your instance.
+            and a BASE number of sites for your instance.
           </p>
           <p style={styles.textMuted}>
             You can buy more sites at any time from within your Pangolin
@@ -454,12 +453,12 @@ const PricingComponent = () => {
           </h4>
           <p style={styles.textMuted}>
             The Supporter Program is a way to support the project and remove the
-            support marks. It is a one time donation. No features are unlocked.
+            support marks. It is a one time donation.
           </p>
           <p style={styles.textMuted}>
             The Professional plan is a paid license that allows you to use the
-            software in a commercial environment that unlocks features and
-            provides support. It is a monthly subscription.
+            software in a commercial environment that and provides support. It
+            is a monthly subscription.
           </p>
 
           <h4>What happens if I run out of sites?</h4>

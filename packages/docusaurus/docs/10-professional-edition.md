@@ -1,13 +1,5 @@
 # Professional Edition
 
-:::note
-
-If you have already purchased a Supporter Key and wish to also purchase a Professional Edition license please check your supporter portal for a 75% discount code!
-
-There is no restrictions on sites for the open source version of Pangolin.
-
-:::
-
 The Professional Edition is for businesses that want to use Pangolin in a commercial environment and extra support.
 
 For more information about pricing and what is included in the Professional Edition, please see the [pricing page](/pricing).
@@ -25,7 +17,7 @@ Purchases are managed through [Lemon Squeezy](https://app.lemonsqueezy.com/).
 
 ### The Host Key
 
-Every Pangolin instance needs its own host key. This will unlock all of the Professional features for that instance.
+Every Pangolin instance needs its own host key.
 
 When purchasing the host key you can optionally choose to include a base number of sites licensed for your instance. This should be a conservative guess about how many sites you need to start with. You can always add more sites later via the site upgrade keys.
 
@@ -69,9 +61,9 @@ You can then create support tickets in the [support portal](https://support.foss
 
 #### What is the difference between this and the Supporter Program?
 
-The Supporter Program is a way to support the project and remove the supporter marks. It is for individuals that want to support the project but do not need the extra features or support. It is a one time donation. No features are unlocked.
+The Supporter Program is a way to support the project and remove the supporter marks. It is for individuals that want to support the project but do not need the support. It is a one time donation.
 
-The Professional plan is a paid license that allows you to use the software in a commercial environment that unlocks features and provides support. It is a monthly subscription.
+The Professional plan is a paid license that allows you to use the software in a commercial environment that allows for internal use and provides support. It is a monthly subscription.
 
 #### What happens if I run out of sites?
 
