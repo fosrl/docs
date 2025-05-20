@@ -197,7 +197,7 @@ This is just an example and is not meant to be used as is. It is not complete. Y
 
 ```yaml
 app:
-  dashboard_url: "https://example.com"
+  dashboard_url: "https://pangolin.example.com"
   log_level: "info"
   save_logs: false
 
@@ -227,7 +227,7 @@ traefik:
 
 gerbil:
   start_port: 51820
-  base_endpoint: "example.com"
+  base_endpoint: "pangolin.example.com"
   use_subdomain: false
   block_size: 24
   site_block_size: 30
