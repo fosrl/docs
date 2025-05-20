@@ -62,12 +62,12 @@ The following environment variables are passed to the `Newt` container:
 
 ## Exposing Home Assistant through addon
 1. Connect addon to your Pangolin by completing environment variables and starting the addon
-2. In Pangolin create new HTTPS resource for your new Tunnel with subdomain
+2. In Pangolin create new HTTP resource for your new Tunnel with subdomain
 3. Within the created Resource add new Target Configuration
 
 | Method | IP / Hostname | Port |
 | --- | ----------- | --- |
-| HTTPS | 127.0.0.1 | 8123 |
+| HTTP | 127.0.0.1 | 8123 |
 
 4. In Home Assistant's `configuration.yaml` add these two sections:
 ```yaml
