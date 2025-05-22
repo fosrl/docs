@@ -59,7 +59,7 @@ certificatesResolvers:
 
 ```yaml
 next-router:
-  rule: "Host(`example.com`) && !PathPrefix(`/api/v1`)"
+  rule: "Host(`pangolin.example.com`) && !PathPrefix(`/api/v1`)"
   service: next-service
   entryPoints:
     - websecure
@@ -93,7 +93,7 @@ certificatesResolvers:
 
 ```yaml
 next-router:
-  rule: "Host(`example.com`) && !PathPrefix(`/api/v1`)"
+  rule: "Host(`pangolin.example.com`) && !PathPrefix(`/api/v1`)"
   service: next-service
   entryPoints:
     - websecure
@@ -113,7 +113,7 @@ next-router:
 
 ```yaml
 traefik:
-  image: traefik:v3.3.3
+  image: traefik:v3.4.0
   container_name: traefik
   restart: unless-stopped
   network_mode: service:gerbil
