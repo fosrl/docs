@@ -80,7 +80,9 @@ homeassistant:
     - "https://<subdomain>.example.com" # <-- Replace with URL of created resource in Pangolin
 ```
 :::note
-Please see [http](https://www.home-assistant.io/integrations/http/) documentation and [allowlist_external_urls](https://www.home-assistant.io/integrations/homeassistant/#external_url) on Home Assistant site
+Please see [http](https://www.home-assistant.io/integrations/http/) documentation and [allowlist_external_urls](https://www.home-assistant.io/integrations/homeassistant/#external_url) on Home Assistant site.
+
+**In your pangolin dashboard do not use any authentication for your home-assistant domain as this gives an issue with the mobile companion apps. Keep Platform SSO off**
 :::
 5. Restart Home Assistant and your new Pangolin Proxy should be alive
 
