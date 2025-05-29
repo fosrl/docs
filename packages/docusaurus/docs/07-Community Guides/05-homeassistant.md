@@ -94,8 +94,8 @@ trusted_proxies:
 - Local IP of your NEWT instance
 - VPS IP
 ```
-You also need to set up `Resource rules` in the pangolin dashboard. See rule overview here:
-https://github.com/fosrl/docs/blob/1e754b66c09447a6e6d68e08fb3c9d31646f7d9d/packages/docusaurus/docs/03-Pangolin/05-bypass-rules.md
+
+You also need to set up `Resource rules` in the pangolin dashboard. [See rule overview here](../03-Pangolin/05-bypass-rules.md).
 
 Many thanks to steuerlexi for finding this out!
 
