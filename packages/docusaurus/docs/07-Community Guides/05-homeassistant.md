@@ -79,8 +79,31 @@ homeassistant:
   allowlist_external_urls:
     - "https://<subdomain>.example.com" # <-- Replace with URL of created resource in Pangolin
 ```
+
+4.5: If you wan't to use SSO Authentication in Pangolin you need to set up the `configuration.yaml` like this:
+```
+http:
+cors_allowed_origins:
+- https://google.com
+- https://www.home-assistant.io
+ip_ban_enabled: true
+login_attempts_threshold: 2
+use_x_forwarded_for: true
+trusted_proxies:
+- 127.0.0.1
+- Local IP of your NEWT instance
+- VPS IP
+```
+
+You also need to set up `Resource rules` in the pangolin dashboard. [See rule overview here](../03-Pangolin/05-bypass-rules.md).
+
+Many thanks to steuerlexi for finding this out!
+
+https://github.com/fosrl/pangolin/issues/757#issuecomment-2903774897
+
 :::note
-Please see [http](https://www.home-assistant.io/integrations/http/) documentation and [allowlist_external_urls](https://www.home-assistant.io/integrations/homeassistant/#external_url) on Home Assistant site
+Please see [http](https://www.home-assistant.io/integrations/http/) documentation and [allowlist_external_urls](https://www.home-assistant.io/integrations/homeassistant/#external_url) on Home Assistant site.
+
 :::
 5. Restart Home Assistant and your new Pangolin Proxy should be alive
 
