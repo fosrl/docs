@@ -17,7 +17,6 @@ updates:
         dependency-type: "development"
         update-types:
           - "major"
-          groups:
       prod-patch-updates:
         dependency-type: "production"
         update-types:
