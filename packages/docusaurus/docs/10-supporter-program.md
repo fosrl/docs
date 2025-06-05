@@ -8,14 +8,6 @@ If you’d like to support the project, you can purchase a supporter key to remo
 
 We know it’s not the most exciting feature, but it helps us keep Pangolin healthy and moving forward.
 
-:::note
-
-If you have already purchased a Supporter Key and wish to also purchase a Professional Edition license as a business please check your supporter portal for a 75% discount code!
-
-There is no restrictions on sites for the open source version of Pangolin.
-
-:::
-
 ## How does this work?
 
 We are using GitHub sponsors. In order to support and obtain your key:
@@ -67,11 +59,3 @@ You can only obtain a supporter key once. While GitHub allows you to donate mult
 ## Can I get a refund?
 
 GitHub Sponsors DOES NOT allow us to refund donations. Please make sure that you are comfortable supporting the project before you purchase a tier.
-
-## How is this different than the Professional Edition?
-
-The Supporter Program is a way to support the project and remove the
-support marks. It is a one time donation.
-
-The Professional plan is a paid license that allows you to use the
-software in a commercial environment that allows for internal use and provides support.

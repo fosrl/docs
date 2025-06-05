@@ -148,7 +148,7 @@ const PricingComponent = () => {
           </button>
         </div>
 
-        {/* Professional Plan */}
+        {/* Professional Plan
         <div style={styles.card}>
           <div style={styles.freeTag}>FOR BUSINESSES</div>
           <h2 style={styles.cardTitle}>Professional</h2>
@@ -270,7 +270,7 @@ const PricingComponent = () => {
           >
             Buy Now
           </button>
-        </div>
+        </div> */}
 
         {/* Enterprise Plan */}
         <div style={styles.card}>
@@ -375,6 +375,22 @@ const PricingComponent = () => {
               </svg>
               Deployment references & assistance
             </li>
+            <li style={styles.featureItem}>
+              <svg
+                style={styles.checkIcon}
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <a href="https://fossorial.io/license.html">
+                Fossorial Commercial License
+              </a>
+            </li>
           </ul>
 
           <div style={styles.customPricing}>Custom pricing</div>
@@ -392,7 +408,7 @@ const PricingComponent = () => {
           </a>
         </div>
       </div>
-
+{/* 
       <div style={styles.pricingContainer}>
         <div style={styles.cardLarge}>
           <h1 style={styles.cardTitle}>Professional Edition FAQ</h1>
@@ -504,7 +520,7 @@ const PricingComponent = () => {
             </a>
           </p>
         </div>
-      </div>
+      </div> */}
     </Layout>
   );
 };
