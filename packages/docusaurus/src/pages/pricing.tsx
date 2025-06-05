@@ -387,9 +387,7 @@ const PricingComponent = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              <a href="https://fossorial.io/license.html">
-                Fossorial Commercial License
-              </a>
+              Fossorial Commercial License
             </li>
           </ul>
 
@@ -408,6 +406,7 @@ const PricingComponent = () => {
           </a>
         </div>
       </div>
+
 {/* 
       <div style={styles.pricingContainer}>
         <div style={styles.cardLarge}>
