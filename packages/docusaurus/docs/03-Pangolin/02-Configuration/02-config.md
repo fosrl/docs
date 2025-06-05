@@ -80,6 +80,13 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
   - A secret string used for encrypting sensitive data. Must be at least 8 characters long.
   - Example: "d28@a2b.2HFTe2bMtZHGneNYgQFKT2X4vm4HuXUXBcq6aVyNZjdGt6Dx-_A@9b3y"
 
+### `postgres` (optional)
+
+PostgreSQL is optional. See [PostgeSQL docs](../08-Database/02-postgres.md) for how to set up PostgreSQL with Pangolin.
+
+- `connection_string`: string
+  - Example: `postgresql://<user>:<password>@<host>:<port>/<database>`
+
 ### `domains`
 
 [How do I get a domain?](../../02-Getting%20Started/02-dns-networking.md)
