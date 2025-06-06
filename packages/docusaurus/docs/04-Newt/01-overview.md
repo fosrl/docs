@@ -31,7 +31,7 @@ When Newt receives WireGuard control messages, it will use the information encod
 - `log-level` (optional): The log level to use. Default: INFO
 - `updown` (optional): A script to be called when targets are added or removed.
 - `tls-client-cert` (optional): Client certificate (p12 or pfx) for mTLS. See [mTLS](#mtls)
-- `docker-socket` (optional): Override the Docker socket integration
+- `docker-socket` (optional): Set the Docker socket to use the container discovery integration
 
 - Example:
 
@@ -76,8 +76,7 @@ Newt can integrate with the Docker socket to provide remote inspection of Docker
 
 **Configuration:**
 
-- By default, Newt will look for the Docker socket at `/var/run/docker.sock`.
-- You can specify a custom socket path using the `--docker-socket` CLI argument or by setting the `DOCKER_SOCKET` environment variable.
+You can specify the Docker socket path using the `--docker-socket` CLI argument or by setting the `DOCKER_SOCKET` environment variable. On most linux systems the socket is `/var/run/docker.sock`
 
 If the Docker socket is not available or accessible, Newt will gracefully disable Docker integration and continue normal operation.
 
