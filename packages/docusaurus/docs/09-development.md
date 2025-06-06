@@ -69,11 +69,11 @@ Make sure you have a `config/` directory at the root with a `config.yml` inside.
 3. Generate the database schema and push it
 
 ```
-npm run db:generate
+npm run db:sqlite:generate
 ```
 
 ```
-npm run db:push
+npm run db:sqlite:push
 ```
 
 4. Start the dev server
