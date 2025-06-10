@@ -140,6 +140,16 @@ div[class^="announcementBarContent"] a:hover {
   text-decoration: underline;
 }
 
+.announcementBar_ncOr {
+  background-color: #F2F2F2 !important;
+}
+
+html[data-theme="dark"] .announcementBar_ncOr {
+  background-color: #474748 !important;
+  color: #FFFFFF !important;
+}
+
+
 .navbar .navbar__items {
   flex: auto;
 }
