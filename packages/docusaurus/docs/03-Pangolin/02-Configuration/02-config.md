@@ -66,9 +66,11 @@ Pangolin is configured using a `config.yml` file. The file is expected to be mou
   - `credentials`: boolean (optional)
     - Whether to allow credentials.
     - Default: true
-- `trust_proxy`: boolean (optional)
+- `trust_proxy`: integer (optional)
   - Whether to trust the proxy headers (e.g., `X-Forwarded-For`) for determining the client IP address.
-  - Default: `true`
+  - The value is the number of proxies to trust. 
+  - Generally, `1` is sufficient if you are running behind a single reverse proxy like Traefik.
+  - Default: `1`
 - `dashboard_session_length_hours`: int (optional)
   - The length of time in hours that the dashboard session will last after logging in.
   - Default: `720`
