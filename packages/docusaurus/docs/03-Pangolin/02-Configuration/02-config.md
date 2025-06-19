@@ -161,8 +161,8 @@ At least one domain must be configured.
   - Example: `no-reply@example.com`
   - The address to send emails from. This can be any email address. Most often this will be the same as the `smtp_user`.
 - `smtp_tls_reject_unauthorized` (optional): boolean
-  - Do not fail if the server certificate cannot be verified.
-  - Default: `false`
+  - Fail if the server certificate cannot be verified.
+  - Default: `true`
 
 ### `users`
 
