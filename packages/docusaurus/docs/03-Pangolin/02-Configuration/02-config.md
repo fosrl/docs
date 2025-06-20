@@ -164,24 +164,6 @@ At least one domain must be configured.
   - Fail if the server certificate cannot be verified.
   - Default: `true`
 
-### `users`
-
-- `server_admin`: object
-  - The server admin who can always create new organizations. This user will always be created on startup.
-  - `email`: string
-    - Env: USERS_SERVERADMIN_EMAIL
-    - The email address of the server admin.
-  - `password`: string
-    - Env: USERS_SERVERADMIN_PASSWORD
-    - The password of the server admin.
-    - This password will always overwrite the password in the database on startup. This is useful for resetting the password.
-    - The password must meet the following requirements:
-      - At least 8 characters
-      - At least one uppercase letter
-      - At least one lowercase letter
-      - At least one digit
-      - At least one special character
-
 ### `flags` (optional)
 
 - `require_email_verification` (optional): boolean
@@ -214,19 +196,11 @@ domains:
   domain1:
     base_domain: "example.com"
     cert_resolver: "letsencrypt"
-    prefer_wildcard_cert: false
 
 server:
   external_port: 3000
   internal_port: 3001
   next_port: 3002
-  internal_hostname: "pangolin"
-  session_cookie_name: "p_session_token"
-  resource_access_token_param: "p_token"
-  resource_access_token_headers:
-    id: "P-Access-Token-Id"
-    token: "P-Access-Token"
-  resource_session_request_param: "p_session_request"
   secret: "d28@a2b.2HFTe2bMtZHGneNYgQFKT2X4vm4HuXUXBcq6aVyNZjdGt6Dx-_A@9b3y"
 
 traefik:
@@ -237,15 +211,6 @@ traefik:
 gerbil:
   start_port: 51820
   base_endpoint: "pangolin.example.com"
-  use_subdomain: false
-  block_size: 24
-  site_block_size: 30
-  subnet_group: 100.89.137.0/20
-
-rate_limits:
-  global:
-    window_minutes: 1
-    max_requests: 100
 
 email:
   smtp_host: "host.hoster.net"
@@ -253,11 +218,6 @@ email:
   smtp_user: "no-reply@example.com"
   smtp_pass: "aaaaaaaaaaaaaaaaaa"
   no_reply: "no-reply@example.com"
-
-users:
-  server_admin:
-    email: "admin@example.com"
-    password: "Password123!"
 
 flags:
   require_email_verification: true

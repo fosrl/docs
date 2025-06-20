@@ -52,26 +52,14 @@ The installer will prompt you for the following basic information. For example:
 3. **Let's Encrypt Email**: Provide an email address for SSL certificate registration with Lets Encrypt. This should be an email you have access to.
 4. **Tunneling** You can choose not to install Gerbil for tunneling support - in this config it will just be a normal reverse proxy. See [how to use without tunneling](/03-Pangolin/03-without-tunneling.md).
 
-### 3. Admin User Setup
-
-You'll need to configure the admin user. This is the first user in the system. You will log in initially with this user.
-
-1. **Admin Email**: Defaults to `admin@yourdomain.com` but can be customized
-2. **Admin Password**: Must meet these requirements:
-   - At least 8 characters
-   - At least one uppercase letter
-   - At least one lowercase letter
-   - At least one digit
-   - At least one special character
-
-### 4. Security Settings
+### 3. Security Settings
 
 It will ask you to configure some basic security options. For example:
 
 1. **Signup Without Invite**: Choose whether to disable user registration without invites (defaults to disabled). This removes the "Sign Up" button on the login form and is recommended for private deployments.
 2. **Organization Creation**: Decide if users can create their own organizations (defaults to enabled)
 
-### 5. Email Configuration
+### 4. Email Configuration
 
 Decide whether to enable email functionality. This allows Pangolin to send transactional emails like OTP or email verification requests.
 
@@ -83,7 +71,7 @@ If enabled, you'll need to provide:
 - SMTP password
 - No-reply email address. This is the sender email address that Pangolin will email from. Many times this should be the same as the username.
 
-### 6. Docker Installation
+### 5. Docker Installation
 
 If Docker isn't already installed, the installer will:
 
@@ -99,7 +87,7 @@ Supported distributions:
 - RHEL
 - Amazon Linux
 
-### 7. Container Deployment
+### 6. Container Deployment
 
 After configuration, the installer will:
 
@@ -112,8 +100,9 @@ After configuration, the installer will:
 
 After successful installation:
 
-1. The system will be accessible at your configured domain
+1. Complete the initial admin user setup via the dashboard at `https://<your-domain>/auth/initial-setup`
 2. You can log in using the admin email and password you provided
+3. Create your first organization, site, and resources
 
 ## Notes
 
