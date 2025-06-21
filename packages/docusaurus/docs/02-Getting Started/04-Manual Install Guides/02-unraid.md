@@ -74,10 +74,6 @@ Set the network to the one you created earlier.
     ![graphic](./img/pangolin_config.png)
 </p>
 
-Server Admin Email and Password:
-
-The server admin email is mainly used to set up the first "Server Admin" account which you will use to log in for the first time. These values will override anything you set in the config file.
-
 Ports:
 
 Due to the way Pangolin was designed to work with docker compose and a config file, the way it handles ports is a little different as compared to other popular Unraid containers. For all host ports:
@@ -101,10 +97,11 @@ Pangolin will not start without a config file. If you have not created the confi
 
 #### 5. Log in to the dashboard
 
-Log in with the admin email and password you set earlier. Follow the setup steps.
+After successful installation:
 
-- Create your first Organization
-- Create your first "Local" site for local reverse proxying
+1. Complete the initial admin user setup via the dashboard at `https://<your-domain>/auth/initial-setup`
+2. You can log in using the admin email and password you provided
+3. Create your first "Local" site for local reverse proxying
 
 ### Install and Setup Traefik
 
