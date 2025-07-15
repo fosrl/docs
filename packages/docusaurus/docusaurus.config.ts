@@ -77,12 +77,6 @@ const config: Config = {
       disableSwitch: false,
       respectPrefersColorScheme: true
     },
-    announcementBar: {
-        id: "support_us",
-        content:
-            "🧡 We're working on a hosted version of Pangolin. <a href='https://forms.gle/YwwgeoQcQNyVp3Ss5'>Provide feedback, join mailing list, and get early access here</a>.",
-        isCloseable: true,
-    },
     algolia: {
       // The application ID provided by Algolia
       appId: "CVXQS7OHYA",
