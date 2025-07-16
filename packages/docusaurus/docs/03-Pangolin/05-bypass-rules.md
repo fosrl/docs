@@ -77,7 +77,7 @@ Path match rules allow URL patterns defined with plain text and wildcards (`*`) 
   Matches **segments** containing "admin" (e.g., `/my-admin-panel`).
 
 - `personal-*/*`  
-  Matches paths where the first segment starts with `blog-` and is followed by any segment (e.g., `/personal-blog/post`).
+  Matches paths where the first segment starts with `personal-` and is followed by any segment (e.g., `/personal-blog/post`).
 
 #### Segment-by-Segment Matching
 - **Normalization:**  
