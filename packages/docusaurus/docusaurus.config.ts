@@ -173,16 +173,24 @@ const config: Config = {
     }
   } satisfies Preset.ThemeConfig,
   plugins: [
+    // [
+    //   "@dipakparmar/docusaurus-plugin-umami",
+    //   /** @type {import('@dipakparmar/docusaurus-plugin-umami').Options} */
+    //   {
+    //     websiteID: "72bf8302-93b0-46a5-b5c1-7d7fe2de0f5d", // Required
+    //     analyticsDomain: "cloud.umami.is", // Required
+    //     scriptName: "umami",
+    //     dataAutoTrack: false, // Optional
+    //     dataDoNotTrack: false, // Optional
+    //     dataCache: true // Optional
+    //   }
+    // ],
     [
-      "@dipakparmar/docusaurus-plugin-umami",
-      /** @type {import('@dipakparmar/docusaurus-plugin-umami').Options} */
+      "posthog-docusaurus",
       {
-        websiteID: "d9a3a131-d2f4-4f8f-922b-80d668e96640", // Required
-        analyticsDomain: "umami.dev.fossorial.io", // Required
-        dataAutoTrack: false, // Optional
-        dataDoNotTrack: false, // Optional
-        dataCache: true, // Optional
-        dataDomains: "docs.fossorial.io" // comma separated list of domains, *Recommended*
+        apiKey: "phc_RIHQ7o2Y2hf8qms2nP62vpoJHEvsrw6TieflQGQO7yI",
+        appUrl: "https://digpangolin.com/relay-O7yI", // optional, defaults to "https://us.i.posthog.com"
+        enableInDevelopment: false // optional
       }
     ],
     [
