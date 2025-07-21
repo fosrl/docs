@@ -22,9 +22,6 @@ paths:
         - Site
       security:
         - Bearer Auth: []
-      summary: >-
-        Get a site by orgId and niceId. NiceId is a readable ID for the site and
-        unique on a per org basis.
       parameters:
         - schema:
             type: string
@@ -44,7 +41,6 @@ paths:
         - Site
       security:
         - Bearer Auth: []
-      summary: Get a site by siteId.
       parameters:
         - schema:
             type: number
@@ -58,7 +54,6 @@ paths:
         - Site
       security:
         - Bearer Auth: []
-      summary: Delete a site and all its associated data.
       parameters:
         - schema:
             type: string
@@ -72,7 +67,6 @@ paths:
         - Site
       security:
         - Bearer Auth: []
-      summary: Update a site.
       parameters:
         - schema:
             type: string
@@ -89,6 +83,8 @@ paths:
                   type: string
                   minLength: 1
                   maxLength: 255
+                dockerSocketEnabled:
+                  type: boolean
               additionalProperties: false
       responses: {}
   /org/{orgId}/site:
@@ -99,7 +95,6 @@ paths:
         - Organization
       security:
         - Bearer Auth: []
-      summary: Create a new site.
       parameters:
         - schema:
             type: string
@@ -149,7 +144,6 @@ paths:
         - Site
       security:
         - Bearer Auth: []
-      summary: List all sites in an organization
       parameters:
         - schema:
             type: string
@@ -179,9 +173,6 @@ paths:
         - Site
       security:
         - Bearer Auth: []
-      summary: >-
-        Return pre-requisite data for creating a site, such as the exit node,
-        subnet, Newt credentials, etc.
       parameters:
         - schema:
             type: string
@@ -196,7 +187,6 @@ paths:
         - Organization
       security:
         - Bearer Auth: []
-      summary: Get an organization
       parameters:
         - schema:
             type: string
@@ -210,7 +200,6 @@ paths:
         - Organization
       security:
         - Bearer Auth: []
-      summary: Delete an organization
       parameters:
         - schema:
             type: string
@@ -224,7 +213,6 @@ paths:
         - Organization
       security:
         - Bearer Auth: []
-      summary: Update an organization
       parameters:
         - schema:
             type: string
@@ -251,7 +239,6 @@ paths:
         - Role
       security:
         - Bearer Auth: []
-      summary: Set roles for a resource. This will replace all existing roles.
       parameters:
         - schema:
             type: string
@@ -281,7 +268,6 @@ paths:
         - Role
       security:
         - Bearer Auth: []
-      summary: List all roles for a resource.
       parameters:
         - schema:
             type: string
@@ -297,7 +283,6 @@ paths:
         - Role
       security:
         - Bearer Auth: []
-      summary: Create a role.
       parameters:
         - schema:
             type: string
@@ -327,7 +312,6 @@ paths:
         - Role
       security:
         - Bearer Auth: []
-      summary: Delete a role.
       parameters:
         - schema:
             type: string
@@ -346,6 +330,19 @@ paths:
                 - roleId
               additionalProperties: false
       responses: {}
+    get:
+      description: Get a role.
+      tags:
+        - Role
+      security:
+        - Bearer Auth: []
+      parameters:
+        - schema:
+            type: string
+          required: true
+          name: roleId
+          in: path
+      responses: {}
   /orgs/{orgId}/roles:
     get:
       description: List roles.
@@ -354,7 +351,6 @@ paths:
         - Role
       security:
         - Bearer Auth: []
-      summary: List roles.
       parameters:
         - schema:
             type: string
@@ -381,7 +377,6 @@ paths:
         - Organization
       security:
         - Bearer Auth: []
-      summary: Create a new organization
       requestBody:
         content:
           application/json:
@@ -402,29 +397,6 @@ paths:
                 - subnet
               additionalProperties: false
       responses: {}
-  /user/:userId/orgs:
-    get:
-      description: List all organizations for a user.
-      tags:
-        - Organization
-        - User
-      security:
-        - Bearer Auth: []
-      summary: List all organizations for a user.
-      parameters:
-        - schema:
-            type: string
-            default: '1000'
-          required: false
-          name: limit
-          in: query
-        - schema:
-            type: string
-            default: '0'
-          required: false
-          name: offset
-          in: query
-      responses: {}
   /orgs:
     get:
       description: List all organizations in the system.
@@ -432,7 +404,6 @@ paths:
         - Organization
       security:
         - Bearer Auth: []
-      summary: List all organizations in the system.
       parameters:
         - schema:
             type: string
@@ -454,7 +425,6 @@ paths:
         - Resource
       security:
         - Bearer Auth: []
-      summary: Get a resource.
       parameters:
         - schema:
             type: string
@@ -468,7 +438,6 @@ paths:
         - Resource
       security:
         - Bearer Auth: []
-      summary: Delete a resource.
       parameters:
         - schema:
             type: string
@@ -482,7 +451,6 @@ paths:
         - Resource
       security:
         - Bearer Auth: []
-      summary: Update a resource.
       parameters:
         - schema:
             type: string
@@ -493,47 +461,40 @@ paths:
         content:
           application/json:
             schema:
-              allOf:
-                - type: object
-                  properties:
-                    name:
-                      type: string
-                      minLength: 1
-                      maxLength: 255
-                    subdomain:
-                      type: string
-                      minLength: 1
-                      pattern: ^(?!:\/\/)([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9-_]+$
-                    ssl:
-                      type: boolean
-                    sso:
-                      type: boolean
-                    blockAccess:
-                      type: boolean
-                    emailWhitelistEnabled:
-                      type: boolean
-                    isBaseDomain:
-                      type: boolean
-                    applyRules:
-                      type: boolean
-                    domainId:
-                      type: string
-                    enabled:
-                      type: boolean
-                  additionalProperties: false
-                - type: object
-                  properties:
-                    name:
-                      type: string
-                      minLength: 1
-                      maxLength: 255
-                    proxyPort:
-                      type: integer
-                      minimum: 1
-                      maximum: 65535
-                    enabled:
-                      type: boolean
-                  additionalProperties: false
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                subdomain:
+                  type: string
+                  nullable: true
+                  minLength: 1
+                  pattern: ^(?!:\/\/)([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9-_]+$
+                ssl:
+                  type: boolean
+                sso:
+                  type: boolean
+                blockAccess:
+                  type: boolean
+                emailWhitelistEnabled:
+                  type: boolean
+                applyRules:
+                  type: boolean
+                domainId:
+                  type: string
+                enabled:
+                  type: boolean
+                stickySession:
+                  type: boolean
+                tlsServerName:
+                  type: string
+                  nullable: true
+                setHostHeader:
+                  type: string
+                  nullable: true
+              additionalProperties: false
       responses: {}
   /org/{orgId}/site/{siteId}/resource:
     put:
@@ -543,7 +504,6 @@ paths:
         - Resource
       security:
         - Bearer Auth: []
-      summary: Create a resource.
       parameters:
         - schema:
             type: string
@@ -559,55 +519,33 @@ paths:
         content:
           application/json:
             schema:
-              anyOf:
-                - type: object
-                  properties:
-                    name:
-                      type: string
-                      minLength: 1
-                      maxLength: 255
-                    subdomain:
-                      type: string
-                    isBaseDomain:
-                      type: boolean
-                    siteId:
-                      type: number
-                    http:
-                      type: boolean
-                    protocol:
-                      type: string
-                    domainId:
-                      type: string
-                  required:
-                    - name
-                    - siteId
-                    - http
-                    - protocol
-                    - domainId
-                  additionalProperties: false
-                - type: object
-                  properties:
-                    name:
-                      type: string
-                      minLength: 1
-                      maxLength: 255
-                    siteId:
-                      type: number
-                    http:
-                      type: boolean
-                    protocol:
-                      type: string
-                    proxyPort:
-                      type: integer
-                      minimum: 1
-                      maximum: 65535
-                  required:
-                    - name
-                    - siteId
-                    - http
-                    - protocol
-                    - proxyPort
-                  additionalProperties: false
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                subdomain:
+                  type: string
+                  nullable: true
+                siteId:
+                  type: number
+                http:
+                  type: boolean
+                protocol:
+                  type: string
+                  enum:
+                    - tcp
+                    - udp
+                domainId:
+                  type: string
+              required:
+                - name
+                - siteId
+                - http
+                - protocol
+                - domainId
+              additionalProperties: false
       responses: {}
   /site/{siteId}/resources:
     get:
@@ -617,7 +555,6 @@ paths:
         - Resource
       security:
         - Bearer Auth: []
-      summary: List resources for a site.
       parameters:
         - schema:
             type: number
@@ -645,7 +582,6 @@ paths:
         - Resource
       security:
         - Bearer Auth: []
-      summary: List resources for an organization.
       parameters:
         - schema:
             type: string
@@ -673,7 +609,6 @@ paths:
         - User
       security:
         - Bearer Auth: []
-      summary: Set users for a resource. This will replace all existing users.
       parameters:
         - schema:
             type: string
@@ -701,7 +636,6 @@ paths:
         - User
       security:
         - Bearer Auth: []
-      summary: List all users for a resource.
       parameters:
         - schema:
             type: string
@@ -718,9 +652,6 @@ paths:
         - Resource
       security:
         - Bearer Auth: []
-      summary: >-
-        Set the password for a resource. Setting the password to null will
-        remove it.
       parameters:
         - schema:
             type: string
@@ -751,9 +682,6 @@ paths:
         - Resource
       security:
         - Bearer Auth: []
-      summary: >-
-        Set the PIN code for a resource. Setting the PIN code to null will
-        remove it.
       parameters:
         - schema:
             type: string
@@ -785,9 +713,6 @@ paths:
         - Resource
       security:
         - Bearer Auth: []
-      summary: >-
-        Set email whitelist for a resource. This will replace all existing
-        emails.
       parameters:
         - schema:
             type: string
@@ -819,7 +744,6 @@ paths:
         - Resource
       security:
         - Bearer Auth: []
-      summary: Get the whitelist of emails for a specific resource.
       parameters:
         - schema:
             type: string
@@ -836,9 +760,6 @@ paths:
         - Resource
       security:
         - Bearer Auth: []
-      summary: >-
-        Transfer a resource to a different site. This will also transfer the
-        targets associated with the resource.
       parameters:
         - schema:
             type: string
@@ -867,7 +788,6 @@ paths:
         - Rule
       security:
         - Bearer Auth: []
-      summary: Create a resource rule.
       parameters:
         - schema:
             type: string
@@ -913,7 +833,6 @@ paths:
         - Rule
       security:
         - Bearer Auth: []
-      summary: Delete a resource rule.
       parameters:
         - schema:
             type: string
@@ -933,7 +852,6 @@ paths:
         - Rule
       security:
         - Bearer Auth: []
-      summary: Update a resource rule.
       parameters:
         - schema:
             type: string
@@ -981,7 +899,6 @@ paths:
         - Rule
       security:
         - Bearer Auth: []
-      summary: List rules for a resource.
       parameters:
         - schema:
             type: string
@@ -1008,7 +925,6 @@ paths:
         - Organization
       security:
         - Bearer Auth: []
-      summary: List all domains for a organization.
       parameters:
         - schema:
             type: string
@@ -1028,6 +944,41 @@ paths:
           name: offset
           in: query
       responses: {}
+  /domains/namepaces:
+    get:
+      description: List all domain namespaces in the system
+      tags:
+        - Domain
+      security:
+        - Bearer Auth: []
+      parameters:
+        - schema:
+            type: string
+            default: '1000'
+          required: false
+          name: limit
+          in: query
+        - schema:
+            type: string
+            default: '0'
+          required: false
+          name: offset
+          in: query
+      responses: {}
+  /domain/check-namespace-availability:
+    get:
+      description: Check if a domain namespace is available based on subdomain
+      tags:
+        - Domain
+      security:
+        - Bearer Auth: []
+      parameters:
+        - schema:
+            type: string
+          required: true
+          name: subdomain
+          in: query
+      responses: {}
   /target/{targetId}:
     get:
       description: Get a target.
@@ -1035,7 +986,6 @@ paths:
         - Target
       security:
         - Bearer Auth: []
-      summary: Get a target.
       parameters:
         - schema:
             type: string
@@ -1049,7 +999,6 @@ paths:
         - Target
       security:
         - Bearer Auth: []
-      summary: Delete a target.
       parameters:
         - schema:
             type: string
@@ -1063,7 +1012,6 @@ paths:
         - Target
       security:
         - Bearer Auth: []
-      summary: Update a target.
       parameters:
         - schema:
             type: string
@@ -1101,7 +1049,6 @@ paths:
         - Target
       security:
         - Bearer Auth: []
-      summary: Create a target for a resource.
       parameters:
         - schema:
             type: string
@@ -1139,7 +1086,6 @@ paths:
         - Target
       security:
         - Bearer Auth: []
-      summary: List targets for a resource.
       parameters:
         - schema:
             type: string
@@ -1167,7 +1113,6 @@ paths:
         - User
       security:
         - Bearer Auth: []
-      summary: Remove a user from an organization.
       parameters:
         - schema:
             type: string
@@ -1187,7 +1132,6 @@ paths:
         - User
       security:
         - Bearer Auth: []
-      summary: Get a user in an organization.
       parameters:
         - schema:
             type: string
@@ -1208,7 +1152,6 @@ paths:
         - User
       security:
         - Bearer Auth: []
-      summary: List users in an organization.
       parameters:
         - schema:
             type: string
@@ -1236,7 +1179,6 @@ paths:
         - User
       security:
         - Bearer Auth: []
-      summary: Add a role to a user.
       parameters:
         - schema:
             type: string
@@ -1256,7 +1198,6 @@ paths:
         - Organization
       security:
         - Bearer Auth: []
-      summary: Invite a user to join an organization.
       parameters:
         - schema:
             type: string
@@ -1289,6 +1230,21 @@ paths:
                 - validHours
               additionalProperties: false
       responses: {}
+  /user/{userId}:
+    get:
+      description: Get a user by ID.
+      tags:
+        - User
+      security:
+        - Bearer Auth: []
+      parameters:
+        - schema:
+            type: string
+            minLength: 1
+          required: true
+          name: userId
+          in: path
+      responses: {}
   /org/{orgId}/invitations:
     get:
       description: List invitations in an organization.
@@ -1297,7 +1253,6 @@ paths:
         - Invitation
       security:
         - Bearer Auth: []
-      summary: List invitations in an organization.
       parameters:
         - schema:
             type: string
@@ -1317,6 +1272,73 @@ paths:
           name: offset
           in: query
       responses: {}
+  /org/{orgId}/user:
+    put:
+      description: Create an organization user.
+      tags:
+        - User
+        - Organization
+      security:
+        - Bearer Auth: []
+      parameters:
+        - schema:
+            type: string
+            minLength: 1
+          required: true
+          name: orgId
+          in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                username:
+                  type: string
+                  minLength: 1
+                name:
+                  type: string
+                type:
+                  type: string
+                  enum:
+                    - internal
+                    - oidc
+                idpId:
+                  type: number
+                roleId:
+                  type: number
+              required:
+                - username
+                - roleId
+              additionalProperties: false
+      responses: {}
+  /user/{userId}/2fa:
+    post:
+      description: Update a user's 2FA status.
+      tags:
+        - User
+      security:
+        - Bearer Auth: []
+      parameters:
+        - schema:
+            type: string
+          required: true
+          name: userId
+          in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                twoFactorSetupRequested:
+                  type: boolean
+              required:
+                - twoFactorSetupRequested
+              additionalProperties: false
+      responses: {}
   /site/{siteId}/pick-client-defaults:
     get:
       description: Return pre-requisite data for creating a client.
@@ -1325,7 +1347,6 @@ paths:
         - Site
       security:
         - Bearer Auth: []
-      summary: Return pre-requisite data for creating a client.
       parameters:
         - schema:
             type: string
@@ -1341,7 +1362,6 @@ paths:
         - Organization
       security:
         - Bearer Auth: []
-      summary: Create a new client.
       parameters:
         - schema:
             type: string
@@ -1390,7 +1410,6 @@ paths:
         - Client
       security:
         - Bearer Auth: []
-      summary: Delete a client by its client ID.
       parameters:
         - schema:
             type: string
@@ -1404,7 +1423,6 @@ paths:
         - Client
       security:
         - Bearer Auth: []
-      summary: Update a client by its client ID.
       parameters:
         - schema:
             type: string
@@ -1435,7 +1453,6 @@ paths:
         - Organization
       security:
         - Bearer Auth: []
-      summary: List all clients for an organization.
       parameters:
         - schema:
             type: string
@@ -1463,7 +1480,6 @@ paths:
         - Organization
       security:
         - Bearer Auth: []
-      summary: Get a client by its client ID.
       parameters:
         - schema:
             type: string
@@ -1484,7 +1500,6 @@ paths:
         - Access Token
       security:
         - Bearer Auth: []
-      summary: Generate a new access token for a resource.
       parameters:
         - schema:
             type: string
@@ -1515,7 +1530,6 @@ paths:
         - Access Token
       security:
         - Bearer Auth: []
-      summary: List all access tokens in an organization.
       parameters:
         - schema:
             type: string
@@ -1543,7 +1557,6 @@ paths:
         - Access Token
       security:
         - Bearer Auth: []
-      summary: List all access tokens in an organization.
       parameters:
         - schema:
             type: number
@@ -1570,7 +1583,6 @@ paths:
         - Access Token
       security:
         - Bearer Auth: []
-      summary: Delete a access token.
       parameters:
         - schema:
             type: string
@@ -1585,7 +1597,6 @@ paths:
         - Identity Provider
       security:
         - Bearer Auth: []
-      summary: Create an OIDC IdP.
       requestBody:
         content:
           application/json:
@@ -1629,14 +1640,13 @@ paths:
                 - scopes
               additionalProperties: false
       responses: {}
-  /idp/:idpId/oidc:
+  /idp/{idpId}/oidc:
     post:
       description: Update an OIDC IdP.
       tags:
         - Identity Provider
       security:
         - Bearer Auth: []
-      summary: Update an OIDC IdP.
       parameters:
         - schema:
             type: number
@@ -1683,7 +1693,6 @@ paths:
         - Identity Provider
       security:
         - Bearer Auth: []
-      summary: Delete IDP.
       parameters:
         - schema:
             type: number
@@ -1698,7 +1707,6 @@ paths:
         - Identity Provider
       security:
         - Bearer Auth: []
-      summary: Get an IDP by its IDP ID.
       parameters:
         - schema:
             type: number
@@ -1714,7 +1722,6 @@ paths:
         - Identity Provider
       security:
         - Bearer Auth: []
-      summary: List all IDP in the system.
       parameters:
         - schema:
             type: string
@@ -1736,7 +1743,6 @@ paths:
         - Identity Provider
       security:
         - Bearer Auth: []
-      summary: Create an IDP policy for an existing IDP on an organization.
       parameters:
         - schema:
             type: number
@@ -1767,7 +1773,6 @@ paths:
         - Identity Provider
       security:
         - Bearer Auth: []
-      summary: Create an OIDC IdP for an organization.
       parameters:
         - schema:
             type: number
@@ -1787,7 +1792,6 @@ paths:
         - Identity Provider
       security:
         - Bearer Auth: []
-      summary: Update an IDP org policy.
       parameters:
         - schema:
             type: number
@@ -1819,7 +1823,6 @@ paths:
         - Identity Provider
       security:
         - Bearer Auth: []
-      summary: List all org policies on an IDP.
       parameters:
         - schema:
             type: number
@@ -1848,7 +1851,6 @@ paths:
         - API Key
       security:
         - Bearer Auth: []
-      summary: Delete an API key.
       parameters:
         - schema:
             type: string
@@ -1865,7 +1867,6 @@ paths:
         - API Key
       security:
         - Bearer Auth: []
-      summary: List all actions set for an API key.
       parameters:
         - schema:
             type: string
@@ -1893,7 +1894,6 @@ paths:
         - API Key
       security:
         - Bearer Auth: []
-      summary: Set actions for an API key. This will replace any existing actions.
       parameters:
         - schema:
             type: string
@@ -1924,7 +1924,6 @@ paths:
         - API Key
       security:
         - Bearer Auth: []
-      summary: List all API keys for an organization
       parameters:
         - schema:
             type: string
@@ -1952,7 +1951,6 @@ paths:
         - API Key
       security:
         - Bearer Auth: []
-      summary: Create a new API key scoped to the organization.
       parameters:
         - schema:
             type: string
@@ -1973,9 +1971,81 @@ paths:
               required:
                 - name
       responses: {}
+  /org/{orgId}/certificate/{domainId}/{domain}:
+    get:
+      description: Get a certificate by domain.
+      tags:
+        - Certificate
+      security:
+        - Bearer Auth: []
+      parameters:
+        - schema:
+            type: string
+          required: true
+          name: domainId
+          in: path
+        - schema:
+            type: string
+            minLength: 1
+            maxLength: 255
+          required: true
+          name: domain
+          in: path
+        - schema:
+            type: string
+          required: true
+          name: orgId
+          in: path
+      responses: {}
+  /certificate/{certId}:
+    post:
+      description: Restart a certificate by ID.
+      tags:
+        - Certificate
+      security:
+        - Bearer Auth: []
+      parameters:
+        - schema:
+            type: string
+          required: true
+          name: certId
+          in: path
+        - schema:
+            type: string
+          required: true
+          name: orgId
+          in: path
+      responses: {}
+  /org/{orgId}/billing/subscription:
+    get:
+      description: Get an organization
+      tags:
+        - Organization
+      security:
+        - Bearer Auth: []
+      parameters:
+        - schema:
+            type: string
+          required: true
+          name: orgId
+          in: path
+      responses: {}
+  /org/{orgId}/billing/usage:
+    get:
+      description: Get an organization's billing usage
+      tags:
+        - Organization
+      security:
+        - Bearer Auth: []
+      parameters:
+        - schema:
+            type: string
+          required: true
+          name: orgId
+          in: path
+      responses: {}
   /:
     get:
       description: Health check
-      operationId: healthCheck
       tags: []
       responses: {}
