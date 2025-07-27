@@ -159,6 +159,7 @@ At least one domain must be configured.
 - `smtp_user` (optional): string
   - The SMTP username for sending emails.
 - `smtp_pass` (optional): string
+  - Env: EMAIL_SMTP_PASS
   - The SMTP password for sending emails.
 - `smtp_secure` (optional): boolean
   - Whether to use a secure connection when sending emails. Use this if you're using port 465.
