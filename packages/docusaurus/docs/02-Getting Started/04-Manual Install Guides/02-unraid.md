@@ -216,6 +216,21 @@ WireGuard Port:
 
 The port you use for WireGuard must also match what you set the port to in the Pangolin config. By default we use a slightly different port than the standard WireGuard port to avoid conflicts with the built in WireGuard server in Unraid.
 
+:::warning
+
+You **must** use the default port of `51822` for WireGuard in the Gerbil container. Using any other port may cause connection issues that are difficult to debug.
+
+Make sure this is also reflected in your Pangolin `config.yml`:
+
+```yml
+gerbil:
+  start_port: 51822
+```
+
+See [this GitHub issue comment](https://github.com/fosrl/pangolin/issues/227#issuecomment-2781608815) for more details.
+
+:::
+
 HTTP and HTTPS Ports:
 
 You must open these ports because Traefik will be routed through Gerbil. These ports should match the ports you set in the Traefik config earlier. In the next step, we will set the network mode for Traefik which which will close the ports on the Traeffik side, and prevent conflicts. Before doing this, if you start the Traefik container at the same time as the Gerbil container with the same ports mapped to the host, you will get an error.
