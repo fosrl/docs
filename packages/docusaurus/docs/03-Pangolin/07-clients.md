@@ -21,7 +21,7 @@ What Pangolin clients are not (yet):
 
 You can install the [Olm](https://github.com/fosrl/olm) client on your computer and run it with the ID and secret values you generate in the dashboard. When it connects, it will create a virtual network adapter on your computer just like a traditional VPN.
 
-[Take a look at a quick video about clients](https://youtube.com/)
+[Take a look at a quick video about clients](https://youtu.be/jg8Bb05hlnI)
 
 ## Get started
 
