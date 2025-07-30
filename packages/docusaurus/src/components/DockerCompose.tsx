@@ -43,6 +43,7 @@ const DockerCompose: React.FC = () => {
       - SYS_MODULE
     ports:
       - 51820:51820/udp
+      - 21820:21820/udp
       - 443:443 # Port for traefik because of the network_mode
       - 80:80 # Port for traefik because of the network_mode
 

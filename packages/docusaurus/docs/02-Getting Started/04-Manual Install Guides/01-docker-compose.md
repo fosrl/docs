@@ -17,7 +17,7 @@ This guide will walk you through setting up the Docker Compose stack manually wi
 - A Linux system with root access and a public IP address
   - We recommend Ubuntu or Debian based systems
 - [A domain name pointed to your server's IP address](../02-dns-networking.md)
-- [TCP ports 80, 443, and UDP port 51820 exposed to your Linux instance.](../02-dns-networking.md)
+- [TCP ports 80 and 443 and UDP ports 51820 and 21820 exposed to your Linux instance.](../02-dns-networking.md)
   - **Note:** Docker’s NAT-based port publishing feature automatically exposes all `ports:` defined in `docker-compose` file on all network interfaces. This behavior can bypass your host firewall settings, potentially exposing services that you did not intend to make public. Please see [complete warning about exposing ports](/Getting%20Started/dns-networking#ports-to-expose).
 - An email address for Let's Encrypt certificate registration
 - (Optionally) a SMTP server

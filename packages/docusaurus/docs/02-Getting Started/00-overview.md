@@ -1,7 +1,5 @@
 # Overview
 
-<h3><a href='https://www.ycombinator.com/launches/O0B-pangolin-open-source-secure-gateway-to-private-networks' target="_blank"><img src='https://www.ycombinator.com/launches/O0B-pangolin-open-source-secure-gateway-to-private-networks/upvote_embed.svg' alt='Launch YC: Pangolin – Open-source secure gateway to private networks'/ ></a></h3>
-
 :::tip
 
 Want to install Pangolin? See our quick install guide [here](https://docs.fossorial.io/Getting%20Started/quick-install).

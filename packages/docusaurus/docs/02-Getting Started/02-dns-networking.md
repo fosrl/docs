@@ -79,6 +79,10 @@ The Pangolin web UI and SSL resources use this port to establish secure HTTPS co
 
 This is the default WireGuard port and is used for Newt and WireGuard clients to connect to Gerbil. If you change this in the configuration file, use the new port accordingly. This port is also essential and must be available on all network interfaces.
 
+### UDP 21820
+
+This is the default port for clients relaying through Gerbil to newt. This port is only required for [clients](../03-Pangolin/07-clients.md).
+
 ### Correctly exposed Pangolin's ports
 
 By default the config defaults to using the bellow settings that these ports are exposed on all interfaces:
@@ -88,7 +92,8 @@ gerbil:
   ports:
     - "80:80"        # TCP port for HTTP/SSL verification and non-SSL resources
     - "443:443"      # TCP port for HTTPS, necessary for the Pangolin web UI and SSL resources
-    - "51820:51820"  # UDP port for WireGuard, used by Newt and WireGuard clients
+    - "51820:51820/udp"  # UDP port for WireGuard, used by Newt and WireGuard clients
+    - "21820:21820/udp"
 ```
 
 Ensure that your host firewall settings allow incoming connections on these ports.

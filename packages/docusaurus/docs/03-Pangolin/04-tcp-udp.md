@@ -14,7 +14,7 @@ Pangolin supports raw TCP and UDP traffic because under the hood Newt can pass a
 
 ## Configuring Firewall
 
-This is highly OS and VPS dependent. Just in the same way you opened port 51820, 443, and 80, you need to open your desired port to your VPS so that Traefik can pass traffic out to the internet.
+This is highly OS and VPS dependent. Just in the same way you opened port 51820, 21820, 443, and 80, you need to open your desired port to your VPS so that Traefik can pass traffic out to the internet.
 
 ## Configuring Docker
 
@@ -30,6 +30,7 @@ If you are using the standard install with a Docker network you will need to exp
 gerbil:
   ports:
     - 51820:51820/udp # LEAVE ALONE: For Wireguard
+    - 21820:21820/udp # LEAVE ALONE: For clients
     - 443:443 # LEAVE ALONE: For HTTPS
     - 80:80 # LEAVE ALONE: For HTTP
 
