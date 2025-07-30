@@ -142,7 +142,3 @@ make local
 ## Licensing
 
 Olm is dual licensed under the AGPLv3 and the Fossorial Commercial license. For inquiries about commercial licensing, please contact us.
-
-## Contributions
-
-Please see [CONTRIBUTIONS](./CONTRIBUTING.md) in the repository for guidelines and best practices.
