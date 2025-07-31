@@ -90,6 +90,13 @@ This should help to:
 - Increase performance (speed/bandwidth)
 - Reduce VPS transit costs
 
+#### Gotchas
+
+Olm creates a native tun interface. This usually requires sudo / admin permissions. Some notes
+
+- On Windows: Olm will run as a service. You can use the commands described in the [readme](../06-Olm/01-overview.md) to manage it. You can use this to run it in the background if needed! 
+- LXC containers: need to be configured to allow tun access. See [Tailscale's guide](https://tailscale.com/kb/1130/lxc-unprivileged).
+
 ## Site Modalities
 
 Sites have two operating modalities:
