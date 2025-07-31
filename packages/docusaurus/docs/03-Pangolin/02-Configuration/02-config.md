@@ -189,6 +189,13 @@ At least one domain must be configured.
 - `enable_integration_api` (optional): boolean
   - Whether to enable and start the integration API.
 
+### `orgs` (optional)
+
+- `block_size` (optional): number
+  - How big of a CIDR block to generate as a optional default when you make an org. 
+- `subnet_group` (optional): string
+  - What CIDR range to use when generating an optional default CIDR for the org.
+
 ## Example Configuration File
 
 This is just an example and is not meant to be used as is. It is not complete. You should customize the configuration to your needs.
