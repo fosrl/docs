@@ -187,7 +187,7 @@ verify_installation() {
     
     if [ -f "$olm_path" ] && [ -x "$olm_path" ]; then
         print_status "Installation successful!"
-        print_status "olm version: $("$olm_path" --version 2>/dev/null || echo "unknown")"
+        # print_status "olm version: $("$olm_path" --version 2>/dev/null || echo "unknown")"
         return 0
     else
         print_error "Installation failed. Binary not found or not executable."
