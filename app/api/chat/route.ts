@@ -1,6 +1,8 @@
+import { after } from 'next/server';
 import {
   convertToModelMessages,
   createUIMessageStreamResponse,
+  generateId,
   stepCountIs,
   streamText,
   toUIMessageStream,
@@ -11,6 +13,7 @@ import { AIConfigError, getModel } from '@/lib/ai/model';
 import { getSystemPrompt } from '@/lib/ai/prompt';
 import { checkRateLimit, clientKey } from '@/lib/ai/rate-limit';
 import { tools } from '@/lib/ai/tools';
+import { parseId, recordAssistantMessage, recordUserMessage } from '@/lib/analytics/api';
 
 export const maxDuration = 120;
 
@@ -37,12 +40,30 @@ export async function POST(req: Request) {
     throw e;
   }
 
-  const body = (await req.json().catch(() => null)) as { messages?: ChatUIMessage[] } | null;
+  const body = (await req.json().catch(() => null)) as {
+    messages?: ChatUIMessage[];
+    threadId?: unknown;
+    visitorId?: unknown;
+  } | null;
   const messages = (body?.messages ?? []).slice(-MAX_MESSAGES);
   const tooLong = messages.some((m) =>
     m.parts.some((p) => p.type === 'text' && p.text.length > MAX_MESSAGE_CHARS),
   );
   if (messages.length === 0 || tooLong) return json(400, 'Invalid or too long message.');
+
+  // analytics: store the question now and the answer when the stream ends. Failures are
+  // logged and never affect the chat; `after` keeps the function alive for the writes.
+  const threadId = parseId(body?.threadId);
+  const visitorId = parseId(body?.visitorId);
+  const question = messages.at(-1);
+  const logError = (e: unknown) => console.error('[analytics] chat', e);
+  let saved: Promise<void> = Promise.resolve();
+  if (threadId && question?.role === 'user') {
+    saved = recordUserMessage(threadId, visitorId, question).catch(logError);
+    after(async () => {
+      await saved;
+    });
+  }
 
   const instructions: SystemModelMessage = {
     role: 'system',
@@ -74,6 +95,13 @@ export async function POST(req: Request) {
   return createUIMessageStreamResponse({
     stream: toUIMessageStream({
       stream: result.stream,
+      // gives the response a stable id so the client can vote on it
+      originalMessages: messages,
+      generateMessageId: generateId,
+      onEnd({ responseMessage }) {
+        if (!threadId) return;
+        saved = saved.then(() => recordAssistantMessage(threadId, responseMessage)).catch(logError);
+      },
       onError: () => 'The assistant hit an error. Please try again.',
     }),
   });

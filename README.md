@@ -14,6 +14,14 @@ Other scripts: `npm run build`, `npm start`, `npm run types:check`.
 
 The site works without an AI key. To enable the assistant, set one provider key in `.env.local` (`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, or `GOOGLE_GENERATIVE_AI_API_KEY`). See `.env.example` for model, OpenAI-compatible endpoint, and rate-limit options.
 
+## Analytics
+
+Readers can rate each page (👍/👎) and each AI answer. Every AI chat and every search-bar query (with its result count, so searches that found nothing stand out) is recorded so you can see what people look for.
+
+- Storage: the docs server forwards events to the Fossorial API (`/api/v1/docs-analytics`), which stores them in its Postgres and deletes anything older than 90 days. Set `FOSSORIAL_API_URL` and `FOSSORIAL_API_KEY` (the API's `API_KEY`) (see `.env.example`); without them nothing is stored and the site works as usual.
+- Viewing: `analytics-dashboard/` is a separate app that reads the API's database directly. See its README.
+- Readers are anonymous: votes carry a random id kept in the browser's localStorage, nothing else.
+
 ## Writing docs
 
 - Pages live in `content/docs/**/*.mdx`. The URL is the file path.

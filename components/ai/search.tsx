@@ -5,6 +5,7 @@ import {
   type ReactNode,
   type SyntheticEvent,
   use,
+  useCallback,
   useEffect,
   useEffectEvent,
   useMemo,
@@ -12,12 +13,24 @@ import {
   useState,
 } from 'react';
 import { flushSync } from 'react-dom';
-import { ArrowUp, FileText, Loader2, RefreshCw, SearchIcon, Sparkles, Square, X } from 'lucide-react';
+import {
+  ArrowUp,
+  FileText,
+  Loader2,
+  RefreshCw,
+  SearchIcon,
+  Sparkles,
+  Square,
+  ThumbsDown,
+  ThumbsUp,
+  X,
+} from 'lucide-react';
 import { cn } from '../../lib/cn';
 import { buttonVariants } from '../ui/button';
 import { useChat, type UseChatHelpers } from '@ai-sdk/react';
 import { DefaultChatTransport, type UIMessage } from 'ai';
 import { Markdown } from '../markdown';
+import { getVisitorId, randomId, sendFeedback, type Vote } from '../../lib/analytics/client';
 
 export type ChatUIMessage = UIMessage<
   never,
@@ -33,6 +46,10 @@ const Context = createContext<{
   open: boolean;
   setOpen: (open: boolean) => void;
   chat: UseChatHelpers<ChatUIMessage>;
+  /** empties the chat and starts a new analytics thread */
+  clear: () => void;
+  votes: Record<string, Vote>;
+  vote: (messageId: string, vote: Vote) => void;
 } | null>(null);
 
 export function AISearchPanelHeader({ className, ...props }: ComponentProps<'div'>) {
@@ -52,7 +69,7 @@ export function AISearchPanelHeader({ className, ...props }: ComponentProps<'div
           Ask Pangolin AI
         </p>
         <p className="text-xs text-fd-muted-foreground">
-          Answers are generated from the docs and can be wrong. Check the linked pages.
+          Answers are generated from the docs and can be wrong. Check the linked pages. Don't send any sensitive information.
         </p>
       </div>
 
@@ -75,7 +92,8 @@ export function AISearchPanelHeader({ className, ...props }: ComponentProps<'div
 }
 
 export function AISearchInputActions() {
-  const { messages, status, setMessages, regenerate } = useChatContext();
+  const { clear } = useAISearchContext();
+  const { messages, status, regenerate } = useChatContext();
   const isLoading = status === 'streaming';
 
   if (messages.length === 0) return null;
@@ -107,7 +125,7 @@ export function AISearchInputActions() {
             className: 'rounded-full',
           }),
         )}
-        onClick={() => setMessages([])}
+        onClick={clear}
       >
         Clear Chat
       </button>
@@ -323,7 +341,42 @@ function ToolActivity({ part }: { part: ToolPart }) {
   );
 }
 
-function Message({ message, ...props }: { message: ChatUIMessage } & ComponentProps<'div'>) {
+function MessageFeedback({ messageId }: { messageId: string }) {
+  const { votes, vote } = useAISearchContext();
+  const current = votes[messageId] ?? 0;
+
+  return (
+    <div className="flex items-center gap-0.5 mt-1 -ms-1.5 text-fd-muted-foreground">
+      {([1, -1] as const).map((value) => {
+        const Icon = value === 1 ? ThumbsUp : ThumbsDown;
+        const active = current === value;
+        return (
+          <button
+            key={value}
+            type="button"
+            aria-label={value === 1 ? 'Good response' : 'Bad response'}
+            aria-pressed={active}
+            className={cn(
+              buttonVariants({ variant: 'ghost', size: 'icon-xs' }),
+              'rounded-full [&_svg]:size-3.5',
+              active && 'text-fd-foreground',
+            )}
+            onClick={() => vote(messageId, active ? 0 : value)}
+          >
+            <Icon className={cn(active && 'fill-current')} />
+          </button>
+        );
+      })}
+      {current !== 0 && <span className="text-xs ms-1">Thanks for the feedback</span>}
+    </div>
+  );
+}
+
+function Message({
+  message,
+  complete = true,
+  ...props
+}: { message: ChatUIMessage; complete?: boolean } & ComponentProps<'div'>) {
   let markdown = '';
   const toolCalls: ToolPart[] = [];
 
@@ -359,21 +412,44 @@ function Message({ message, ...props }: { message: ChatUIMessage } & ComponentPr
       <div className="prose text-sm">
         <Markdown text={markdown} />
       </div>
+      {message.role === 'assistant' && complete && markdown.length > 0 && (
+        <MessageFeedback messageId={message.id} />
+      )}
     </div>
   );
 }
 
 export function AISearch({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
-  const chat = useChat<ChatUIMessage>({
-    id: 'search',
-    transport: new DefaultChatTransport({
-      api: '/api/chat',
-    }),
-  });
+  const [votes, setVotes] = useState<Record<string, Vote>>({});
+  // one analytics thread per conversation; "Clear Chat" starts a new one
+  const threadId = useRef<string>(null);
+  const [transport] = useState(
+    () =>
+      new DefaultChatTransport<ChatUIMessage>({
+        api: '/api/chat',
+        body: () => ({ threadId: (threadId.current ??= randomId()), visitorId: getVisitorId() }),
+      }),
+  );
+  const chat = useChat<ChatUIMessage>({ id: 'search', transport });
+
+  const { setMessages } = chat;
+  const clear = useCallback(() => {
+    setMessages([]);
+    setVotes({});
+    threadId.current = null;
+  }, [setMessages]);
+  const vote = useCallback((messageId: string, value: Vote) => {
+    setVotes((prev) => ({ ...prev, [messageId]: value }));
+    sendFeedback('message', { messageId, vote: value });
+  }, []);
 
   return (
-    <Context value={useMemo(() => ({ chat, open, setOpen }), [chat, open])}>{children}</Context>
+    <Context
+      value={useMemo(() => ({ chat, open, setOpen, clear, votes, vote }), [chat, open, clear, votes, vote])}
+    >
+      {children}
+    </Context>
   );
 }
 
@@ -463,8 +539,8 @@ export function AISearchPanel() {
         <div
           className={cn(
             'pg-ai-panel overflow-hidden z-30 bg-fd-card text-fd-card-foreground [--ai-chat-width:400px] 2xl:[--ai-chat-width:460px]',
-            'max-lg:fixed max-lg:inset-x-2 max-lg:inset-y-4 max-lg:border max-lg:rounded-2xl max-lg:shadow-xl',
-            'lg:sticky lg:top-(--fd-docs-row-2) lg:h-[calc(100dvh-var(--fd-docs-row-2))] lg:border-s lg:ms-auto lg:in-[#nd-notebook-layout]:[grid-area:2/5/4/6]',
+            'max-lg:fixed max-lg:inset-x-2 max-lg:inset-y-4 max-lg:rounded-2xl max-lg:shadow-xl',
+            'lg:sticky lg:top-(--fd-docs-row-2) lg:h-[calc(100dvh-var(--fd-docs-row-2))] lg:ms-auto lg:in-[#nd-notebook-layout]:[grid-area:2/5/4/6]',
             open
               ? 'animate-fd-dialog-in lg:animate-[ask-ai-open_200ms]'
               : 'animate-fd-dialog-out lg:animate-[ask-ai-close_200ms]',
@@ -524,8 +600,12 @@ export function AISearchPanelList({ className, style, ...props }: ComponentProps
         </div>
       ) : (
         <div className="flex flex-col px-3 gap-4">
-          {messages.map((item) => (
-            <Message key={item.id} message={item} />
+          {messages.map((item, i) => (
+            <Message
+              key={item.id}
+              message={item}
+              complete={i < messages.length - 1 || chat.status === 'ready' || chat.status === 'error'}
+            />
           ))}
           {chat.error && (
             <div className="p-2 bg-fd-secondary text-fd-secondary-foreground border rounded-lg">
