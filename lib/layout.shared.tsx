@@ -30,7 +30,7 @@ export function baseOptions(): BaseLayoutProps {
     },
     themeSwitch: { enabled: enableDarkMode },
     links: [
-      // pill buttons styled like the pangolin.net navbar (secondary + primary)
+      // same height and radius as the header search and Ask AI button
       {
         type: 'custom',
         on: 'nav',

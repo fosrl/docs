@@ -74,23 +74,6 @@ body {
   color: var(--color-fd-foreground);
 }
 
-/* pangolin.net button typeface */
-@font-face {
-  font-family: 'Die Grotesk B';
-  src: url('/fonts/die-grotesk-b-regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Die Grotesk B';
-  src: url('/fonts/die-grotesk-b-medium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
 /*
  * Hairlines like pangolin.net (0.5px, #bbb). Unlayered, so these win over the 1px
  * Tailwind border utilities used by Fumadocs; 2px accents (active tab) are untouched.
@@ -184,6 +167,18 @@ body {
   border-inline-end: 0.5px solid var(--color-fd-border);
 }
 
+/* AI chat panel: same 0.5px hairline as the sidebar */
+.pg-ai-panel {
+  border: 0.5px solid var(--color-fd-border);
+}
+
+@media (min-width: 1024px) {
+  .pg-ai-panel {
+    border-width: 0;
+    border-inline-start: 0.5px solid var(--color-fd-border);
+  }
+}
+
 /* separators = Mintlify top-level group headings */
 #nd-sidebar p[data-separator],
 #nd-sidebar [data-separator] {
@@ -255,44 +250,46 @@ body {
   color: #faf9f2;
 }
 
-/* header buttons: pangolin.net `btn` / `btnSecondary` + `btnSm` */
+/* header CTAs: same height, radius, and hairline as the search bar and Ask AI */
 .pg-btn {
-  display: inline-block;
-  border-radius: 9999px;
-  border: 0;
-  background-color: #202020;
-  color: #faf9f2;
-  font-family: 'Die Grotesk B', var(--font-sans);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.25rem;
+  padding: 0 0.85rem;
+  border: 0.5px solid transparent;
+  border-radius: 0.75rem;
+  background-color: var(--color-fd-primary);
+  color: var(--color-fd-primary-foreground);
   font-size: 0.875rem;
   font-weight: 500;
-  line-height: 1.4;
-  padding: 0.75rem 1.25rem;
+  line-height: 1;
   white-space: nowrap;
   text-decoration: none;
-  transition: transform 300ms;
+  transition:
+    background-color 150ms,
+    color 150ms,
+    border-color 150ms;
 }
 
 .pg-btn:hover {
-  transform: scale(1.025);
+  background-color: color-mix(in srgb, var(--color-fd-primary) 80%, transparent);
+}
+
+.pg-btn:focus-visible {
+  outline: 2px solid var(--color-fd-ring);
+  outline-offset: 2px;
 }
 
 .pg-btn-secondary {
-  border: 1px solid #bbbbbb;
-  background-color: #faf9f2;
-  color: #202020;
-  /* 1px border: keep the same outer size as the primary button */
-  padding: calc(0.75rem - 1px) calc(1.25rem - 1px);
+  border-color: var(--color-fd-border);
+  background-color: var(--color-fd-background);
+  color: var(--color-fd-foreground);
 }
 
-.dark .pg-btn {
-  background-color: #ecebe6;
-  color: #161614;
-}
-
-.dark .pg-btn-secondary {
-  border-color: #3a3934;
-  background-color: transparent;
-  color: #ecebe6;
+.pg-btn-secondary:hover {
+  background-color: var(--color-fd-accent);
+  color: var(--color-fd-accent-foreground);
 }
 
 /* "Ask AI" button to the right of the header search (Mintlify style) */
@@ -500,53 +497,44 @@ figure.shiki .line.highlighted {
   font-size: 0.875rem;
 }
 
-/* ---------- callouts: beige with a coloured bar on the left ---------- */
+/* ---------- callouts: sand wash tinted by type, hairline in the same colour ---------- */
 .pg-callout {
-  --pg-callout-bar: #525252;
+  --pg-callout-accent: #525252;
   position: relative;
   display: flex;
   gap: 0.75rem;
   margin-block: 1.25rem;
-  padding: 0.9rem 1rem 0.9rem 1.5rem;
+  padding: 0.9rem 1rem;
+  border: 0.5px solid color-mix(in srgb, var(--pg-callout-accent) 35%, var(--pg-code-bg));
   border-radius: 0.75rem;
-  background-color: var(--pg-code-bg);
+  background-color: color-mix(in srgb, var(--pg-callout-accent) 12%, var(--pg-code-bg));
   color: var(--color-fd-foreground);
   font-size: 0.9rem;
-  overflow: hidden;
-}
-
-.pg-callout::before {
-  content: '';
-  position: absolute;
-  inset-block: 0;
-  left: 0;
-  width: 8px;
-  background-color: var(--pg-callout-bar);
 }
 
 .pg-callout[data-type='note'] {
-  --pg-callout-bar: #2563eb;
+  --pg-callout-accent: #2563eb;
 }
 .pg-callout[data-type='info'] {
-  --pg-callout-bar: #525252;
+  --pg-callout-accent: #525252;
 }
 .pg-callout[data-type='tip'] {
-  --pg-callout-bar: #16a34a;
+  --pg-callout-accent: #16a34a;
 }
 .pg-callout[data-type='check'] {
-  --pg-callout-bar: #16a34a;
+  --pg-callout-accent: #16a34a;
 }
 .pg-callout[data-type='warning'] {
-  --pg-callout-bar: #ca8a04;
+  --pg-callout-accent: #ca8a04;
 }
 .pg-callout[data-type='danger'] {
-  --pg-callout-bar: #dc2626;
+  --pg-callout-accent: #dc2626;
 }
 
 .pg-callout-icon {
   flex-shrink: 0;
   margin-top: 0.15rem;
-  color: var(--pg-callout-bar);
+  color: var(--pg-callout-accent);
 }
 
 .pg-callout-icon svg {
@@ -998,13 +986,14 @@ details[open] > summary > .pg-accordion-chevron {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  height: 2.5rem;
-  padding: 0 0.75rem;
-  border-radius: 0.5rem;
-  border: 1px solid var(--color-fd-border);
-  background-color: #fff;
-  color: var(--color-fd-muted-foreground);
+  height: 2.25rem;
+  padding: 0 0.85rem;
+  border-radius: 0.75rem;
+  border: 0.5px solid var(--color-fd-border);
+  background-color: var(--color-fd-secondary);
+  color: var(--color-fd-foreground);
   font-size: 0.875rem;
+  font-weight: 500;
   line-height: 1;
   white-space: nowrap;
   text-decoration: none;
@@ -1015,9 +1004,10 @@ details[open] > summary > .pg-accordion-chevron {
 
 .pg-download:hover {
   background-color: var(--color-fd-accent);
-  color: var(--color-fd-foreground);
+  color: var(--color-fd-accent-foreground);
 }
 
-.dark .pg-download {
-  background-color: var(--color-fd-card);
+.pg-download:focus-visible {
+  outline: 2px solid var(--color-fd-ring);
+  outline-offset: 2px;
 }

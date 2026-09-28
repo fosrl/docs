@@ -16,6 +16,7 @@ import { AskAIAboutPage } from '@/components/ai/ask-page';
 import { SiteFooter } from '@/components/site-footer';
 import { AskBar } from '@/components/ai/ask-bar';
 import { pageJsonLd } from '@/lib/json-ld';
+import { PageFeedback } from '@/components/page-feedback';
 
 export default async function Page(props: PageProps<'/[[...slug]]'>) {
   const params = await props.params;
@@ -36,6 +37,7 @@ export default async function Page(props: PageProps<'/[[...slug]]'>) {
         footer={{
           children: (
             <>
+              <PageFeedback page={page.url} />
               <SiteFooter />
               <AskBar />
             </>

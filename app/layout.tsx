@@ -2,6 +2,7 @@ import { RootProvider } from 'fumadocs-ui/provider/next';
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import { Analytics } from '@/components/analytics';
+import { LoggedSearchDialog } from '@/components/search-dialog';
 import { appName, enableDarkMode, siteDescription, siteUrl } from '@/lib/shared';
 import './global.css';
 
@@ -29,6 +30,7 @@ export default function Layout({ children }: LayoutProps<'/'>) {
     <html lang="en" className={inter.variable} suppressHydrationWarning>
       <body className="flex flex-col min-h-screen">
         <RootProvider
+          search={{ SearchDialog: LoggedSearchDialog }}
           theme={
             enableDarkMode
               ? { defaultTheme: 'light' }

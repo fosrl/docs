@@ -1,0 +1,65 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+/*
+ * Same palette and token names as the docs site (`--color-fd-*`), so the markup reads the
+ * same in both apps. Dark mode follows the OS.
+ */
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --color-fd-background: #faf9f2;
+  --color-fd-foreground: #202020;
+  --color-fd-muted-foreground: #6b6a63;
+  --color-fd-popover: #faf9f2;
+  --color-fd-popover-foreground: #202020;
+  --color-fd-card: #f2f0e7;
+  --color-fd-border: #bbbbbb;
+  --color-fd-primary: #202020;
+  --color-fd-secondary: #f2f0e7;
+  --color-fd-accent: #e8e7e5;
+  --color-fd-ring: #bbbbbb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-fd-background: #161614;
+    --color-fd-foreground: #ecebe6;
+    --color-fd-muted-foreground: #a3a199;
+    --color-fd-popover: #1b1a18;
+    --color-fd-popover-foreground: #ecebe6;
+    --color-fd-card: #1f1e1b;
+    --color-fd-border: #2d2c28;
+    --color-fd-primary: #f36117;
+    --color-fd-secondary: #1f1e1b;
+    --color-fd-accent: #2d2c28;
+    --color-fd-ring: #55534c;
+    color-scheme: dark;
+  }
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--color-fd-border);
+  }
+  body {
+    background-color: var(--color-fd-background);
+    color: var(--color-fd-foreground);
+  }
+}
+
+/* chat answers: typography plugin, tinted to the palette */
+.prose {
+  --tw-prose-body: var(--color-fd-foreground);
+  --tw-prose-headings: var(--color-fd-foreground);
+  --tw-prose-links: var(--color-fd-foreground);
+  --tw-prose-bold: var(--color-fd-foreground);
+  --tw-prose-code: var(--color-fd-foreground);
+  --tw-prose-bullets: var(--color-fd-muted-foreground);
+  --tw-prose-counters: var(--color-fd-muted-foreground);
+  --tw-prose-pre-bg: var(--color-fd-background);
+  --tw-prose-pre-code: var(--color-fd-foreground);
+  --tw-prose-th-borders: var(--color-fd-border);
+  --tw-prose-td-borders: var(--color-fd-border);
+}
