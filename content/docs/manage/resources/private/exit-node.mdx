@@ -48,22 +48,38 @@ Exit nodes are opt-in for security reasons. Every client must explicitly opt in 
 
 ### Deploy the site
 
+Create a site in the dashboard and run it on the network you want your traffic to leave from. Traffic exits from that site's internet connection. See [Install Sites](/manage/sites/install-site). For redundancy or lower latency, deploy more than one site.
+
 ### Create the exit node resource
+
+1. Create a new private resource and set the mode to Exit Node.
+2. Select the sites to use as exit nodes. With several sites, clients pick the best one by latency.
+3. Choose the roles, users, and machine clients that can use the exit node.
+
+An exit node has no destination, since it always routes 0.0.0.0/0. All TCP and UDP ports and ICMP are allowed.
 
 ### Select the node in your client
 
-Each device enables the exit node on its own, and the steps depend on the device's operating system.
+Each device enables the exit node on its own, and the steps depend on the client.
 
-1. Open the Pangolin app on the Android device and go to the Exit Node section.
-2. Select the exit node you want. To keep direct access to your local network while routing through an exit node, turn on Allow LAN access.
-3. Check that the home screen shows the selected device in the Exit Node section. The section turns blue while an exit node is in use.
+#### MacOS, Windows, iOS, Android
+
+1. Open the Pangolin app and go to the exit node section.
+2. Select the exit node you want. 
+3. Check that the status shows active in the exit node section and when clicking on the sites they are marked for exit node use.
 4. To stop using an exit node, go to the Exit Node section and select None.
 
-The exit node option only appears when your Pangolin network has an exit node available.
+#### CLI
+
+Run this command and pick an exit node from the list:
+
+```bash
+pangolin select exit-node
+```
+
+If the client is running, the change applies immediately. If not, the choice is saved and applied on the next `pangolin up`. To turn it off, run the command again and choose None. To select an exit node without the prompt, pass its nice ID with `--exit-node`.
 
 To confirm routing works, look up your public IP address with an online tool. It should show the exit node's public address instead of your local device's.
-
-To turn routing off, select None in the Exit Node drop-down.
 
 ## Logging
 

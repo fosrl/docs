@@ -43,19 +43,23 @@ Subnet routers and exit nodes both route traffic, but they do different jobs. An
 
 ## Set up a subnet router
 
-How to set it up
+### Deploy the site
 
-### Prereq: Install the site
-
-Make sure you have a site created in the dashboard and deployed on the remote network. See [2]
+You need a site in the dashboard, running on the remote network. See [Install Sites](/manage/sites/install-site).
 
 ### Create resources
 
-Create CIDR resources or host resources with a IP destination. It is important to use a IP or CIDR here so that other devices on the subnet router network are able to setup routes to address the subnet router. 
+Create [CIDR](/manage/resources/private/cidr) resources, or [host](/manage/resources/private/host) resources with an IP destination. The destination must be an IP or CIDR so that other devices on the subnet router's network can set up routes that point at the router. Give the machine client from the next steps access to these resources.
 
 ### Install the Pangolin CLI
 
-The host must run Linux. When you run the CLI with `--subnet-router`, it enables forwarding and manages the nftables backend for you.
+The host must run Linux. Install the CLI with:
+
+```bash
+curl -fsSL https://static.pangolin.net/get-cli.sh | bash
+```
+
+When you run the CLI with `--subnet-router`, it enables forwarding and manages the nftables backend for you. See [Install Clients](/manage/clients/install-client#pangolin-cli-linux-macos-windows) for other install options.
 
 <Warning>
 
@@ -71,15 +75,54 @@ Restart Docker after changing this file. For background on running Docker on a r
 
 </Warning>
 
-### Login or create a machine client
+### Log in or create a machine client
+
+A machine client is the usual choice for a router, since it isn't tied to a user account. In the dashboard, go to Clients > Machines and create one. Copy its ID, secret, and endpoint. See [Credentials](/manage/clients/credentials).
+
+You can also log in as a user with `pangolin login` and run `pangolin up`, but a machine client is better suited to a long-running service.
 
 ### Connect the client as a subnet router
 
-### Setup routing on the network
+Start the client with the `--subnet-router` flag. It needs the CAP_NET_ADMIN capability, so run it as root:
 
-You will need to configure the routes on the default gateway of your network to send the desired resource CIDRs to the device running the Pangolin client. For example
+```bash
+sudo pangolin up client \
+--id {client_id} \
+--secret {client_secret} \
+--endpoint {endpoint_url} \
+--subnet-router \
+--attach
+```
 
-<write an example table showing a route pointing to a host for a 192.168.18.1/24 network>
+`--attach` keeps the client in the foreground. To keep it running across reboots, install it as a service instead. See [Run as a Service](/manage/clients/install-client#run-as-a-service).
+
+### Check the firewall and NAT rules
+
+Make sure no firewall rules on the host or the network block traffic from the resource ranges going up the tunnel. Connections from the LAN to those ranges must be able to reach the Pangolin client and leave through its tunnel interface.
+
+When the client starts with `--subnet-router`, it enables IPv4 forwarding on the host and adds NAT rules for traffic leaving through the tunnel. It also accepts forwarded traffic to and from the tunnel interface, so a default-deny forward policy elsewhere on the host doesn't drop it. To see the rules, run:
+
+```bash
+sudo nft list table ip olm_subnet_router
+```
+
+The client removes the rules when it disconnects, and turns forwarding back off only if it was the one that enabled it.
+
+### Set up routing on the network
+
+On the default gateway of the network, add a route that sends the resource CIDRs to the device running the Pangolin client. For example, with a LAN of 192.168.18.0/24, the client running on 192.168.18.10, and a resource CIDR of 10.1.0.0/16:
+
+| Where | Destination | Next hop |
+|-------|-------------|----------|
+| Default gateway of 192.168.18.0/24 | 10.1.0.0/16 | 192.168.18.10 |
+
+On a Linux gateway, that route looks like this:
+
+```bash
+sudo ip route add 10.1.0.0/16 via 192.168.18.10
+```
+
+Devices on the LAN can now reach the resource through the subnet router without running the Pangolin client.
 
 ## Logging
 
