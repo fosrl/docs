@@ -63,6 +63,7 @@
               "pages": [
                 "manage/resources/private/host",
                 "manage/resources/private/cidr",
+                "manage/resources/private/exit-node",
                 "manage/resources/private/private-http",
                 "manage/resources/private/ai-gateway",
                 "manage/resources/private/ssh",
@@ -85,6 +86,7 @@
             "manage/clients/configure-client",
             "manage/clients/client-logs",
             "manage/clients/update-client",
+            "manage/clients/subnet-router",
             "manage/clients/credentials",
             "manage/clients/fingerprinting",
             "manage/clients/archiving-blocking",

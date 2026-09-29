@@ -1,0 +1,75 @@
+---
+title: "Exit Node (route all traffic)"
+description: "Create private exit node resources to act as full"
+---
+
+Pangolin works as a split tunnel VPN by default. It carries traffic between sites and clients and leaves your public internet traffic alone, for example when you visit Google or Wikipedia. This suits most people, who want secure communication between sensitive devices such as company servers or home computers, without the extra encryption and latency on their regular internet connection.
+
+Sometimes you do want Pangolin to carry your public internet traffic, for instance when:
+
+- You're on untrusted coffee shop Wi-Fi.
+- You're abroad and need an online service, such as banking, that only works from your home country.
+
+To do this, make a site an exit node and point other devices at it using an exit node resource. Routing everything through an exit node uses the default routes (0.0.0.0/0, ::/0), the same way a typical VPN does.
+
+<Note>
+    Exit nodes and subnet routers both route traffic, but they do different
+    jobs. An exit node sends outbound internet traffic from your Pangolin
+    clients through sites, like a VPN server. Your traffic appears to originate
+    from the exit node's location, which helps with geo-restricted content or
+    privacy. A subnet router gives access to specific private subnets. Pangolin
+    clients can reach Pangolin resources in those subnets, and internet routing
+    is unchanged. For private networks such as office LANs or cloud VPCs, use a
+    subnet router.
+</Note>
+
+## Benefits
+
+- All traffic is secured, including traffic to internet sites and applications.
+- You can deploy exit nodes around the world to fit your scale and location needs.
+- Network connection logging shows traffic across the Pangolin network and supports analysis after a security incident.
+
+## Use cases
+
+- Traveling staff have all their internet traffic secured, whatever network they're on.
+- You can test applications from different locations by deploying exit nodes in several regions and choosing between them.
+- If regulations or compliance rules require your workforce to use a VPN, exit nodes can meet that requirement.
+
+## How it works
+
+With the exit node feature, you send all traffic through one or more sites on your Pangolin network. That device is the exit node. You can use exit nodes in several ways:
+
+- Route all non-Pangolin traffic through an exit node.
+- Use multiple exit nodes on the resource and clients will pick the best one automatically based on latency.
+
+Exit nodes are opt-in for security reasons. Every client must explicitly opt in to using an exit node by choosing the resource they want.
+
+## Set up a exit node
+
+### Deploy the site
+
+### Create the exit node resource
+
+### Select the node in your client
+
+Each device enables the exit node on its own, and the steps depend on the device's operating system.
+
+1. Open the Pangolin app on the Android device and go to the Exit Node section.
+2. Select the exit node you want. To keep direct access to your local network while routing through an exit node, turn on Allow LAN access.
+3. Check that the home screen shows the selected device in the Exit Node section. The section turns blue while an exit node is in use.
+4. To stop using an exit node, go to the Exit Node section and select None.
+
+The exit node option only appears when your Pangolin network has an exit node available.
+
+To confirm routing works, look up your public IP address with an online tool. It should show the exit node's public address instead of your local device's.
+
+To turn routing off, select None in the Exit Node drop-down.
+
+## Logging
+
+All exit node traffic appears in the network connection logs.
+
+<Tip>
+    Network connection logs are available on Enterprise Edition and Pangolin
+    Cloud.
+</Tip>

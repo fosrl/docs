@@ -1,0 +1,90 @@
+---
+title: "Subnet Router"
+description: ""
+---
+
+A subnet router lets devices that can't run the Pangolin client join your Pangolin network. It sits between the Pangolin network and a physical subnet, so you can reach legacy devices, whole networks, or services without installing Pangolin on each one. 
+
+<Note>
+    Subnet routing currently only works on Linux with the [Pangolin
+    CLI](/manage/clients/install-client#pangolin-cli-linux-macos-windows).
+</Note>
+
+Installing the Pangolin client on a device gives you end-to-end encryption and the best performance, so do that whenever you can. Often you can't. Printers usually can't run the client, and in a large AWS VPC or a legacy network that is being modernized step by step, touching every endpoint isn't realistic.
+
+In those cases a subnet router relays traffic between your Pangolin network and the regular subnet. It enforces your access control policies on that traffic, so non-Pangolin devices get connectivity without a gap in security.
+
+Devices behind a subnet router don't count toward your plan's client limit. Even so, a direct install remains the better option for performance, security, and simpler configuration.
+
+## Benefits
+
+- Connect legacy devices that can't run the Pangolin client.
+- Bring in entire networks, such as AWS VPCs, without installing Pangolin on each device.
+- Adopt Pangolin gradually by connecting existing network segments through subnet routers.
+- Keep access control in place, since subnet routers follow Pangolin's access control policies.
+
+## Use cases
+
+- Reach managed services such as Amazon RDS or Google Cloud SQL without exposing them to the public internet.
+- Connect cloud VPCs or other cloud network segments to your Pangolin network.
+- Let remote Pangolin users reach devices like printers or cameras that can't run the client.
+
+## How subnet routers work
+
+A subnet router links separate network environments under one access model. It works at the network layer to pass traffic between your Pangolin network and traditional subnet-based networks.
+
+In Pangolin, a subnet router is a client in your Pangolin network that acts as a gateway and advertises routes to a subnet. Other devices in that subnet can then connect to your Pangolin network without running the Pangolin client.
+
+A device that uses the subnet router as its gateway is said to be behind it. By default, subnet routers apply Source Network Address Translation (SNAT), so traffic from a device behind the router appears to come from the router rather than from the device.
+
+<Note>
+Subnet routers and exit nodes both route traffic, but they do different jobs. An exit node sends outbound internet traffic from your Pangolin clients through itself, like a VPN server. Your traffic appears to originate from the exit node's location, which helps with geo-restricted content or privacy. A subnet router gives access to specific private subnets. Pangolin clients can reach Pangolin resources in those subnets, and internet routing is unchanged. For private networks such as office LANs or cloud VPCs, use a subnet router.
+</Note>
+
+## Set up a subnet router
+
+How to set it up
+
+### Prereq: Install the site
+
+Make sure you have a site created in the dashboard and deployed on the remote network. See [2]
+
+### Create resources
+
+Create CIDR resources or host resources with a IP destination. It is important to use a IP or CIDR here so that other devices on the subnet router network are able to setup routes to address the subnet router. 
+
+### Install the Pangolin CLI
+
+The host must run Linux. When you run the CLI with `--subnet-router`, it enables forwarding and manages the nftables backend for you.
+
+<Warning>
+
+By default Docker adds its own forwarding rules to iptables, which can interfere with subnet routing if Docker is on the host. Let forwarded traffic through Docker's chain by setting this in `/etc/docker/daemon.json`:
+
+```json title="/etc/docker/daemon.json"
+{
+    "ip-forward-no-drop": true
+}
+```
+
+Restart Docker after changing this file. For background on running Docker on a router, see Docker's [packet filtering and firewalls guide](https://docs.docker.com/engine/network/packet-filtering-firewalls/#docker-on-a-router).
+
+</Warning>
+
+### Login or create a machine client
+
+### Connect the client as a subnet router
+
+### Setup routing on the network
+
+You will need to configure the routes on the default gateway of your network to send the desired resource CIDRs to the device running the Pangolin client. For example
+
+<write an example table showing a route pointing to a host for a 192.168.18.1/24 network>
+
+## Logging
+
+All subnet traffic will show up in the network connection logs but will originate from the source of the Pangolin client because of the SNAT.
+
+<Tip>
+Network connection logs are availble on Enterprise Edition and Pangolin Cloud.
+</Tip>

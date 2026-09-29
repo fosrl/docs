@@ -559,6 +559,20 @@ figure.shiki .line.highlighted {
   margin-bottom: 0;
 }
 
+/* The callout sits inside .not-prose, which disables typography's link/bold styles. */
+.pg-callout-body a {
+  color: var(--color-fd-primary);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.pg-callout-body a:hover {
+  opacity: 0.8;
+}
+.pg-callout-body strong {
+  font-weight: 600;
+}
+
 /* ---------- cards ---------- */
 .pg-card-group {
   display: grid;
