@@ -20,7 +20,7 @@ Some features in this documentation are marked with **(EE)**, which means they r
 A blueprint can contain up to four top-level sections:
 
 - **`public-resources`**: Internet-facing HTTP, TCP, UDP, SSH, RDP, or VNC resources
-- **`private-resources`**: Client-only access to hosts or CIDR ranges
+- **`private-resources`**: Client-only access to hosts, CIDR ranges, or an exit node
 - **`public-policies`**: Reusable authentication and access policy objects
 - **`sites`**: Site-level settings such as container label discovery
 
@@ -360,6 +360,7 @@ Private resources define what Pangolin clients can reach after they connect to y
 - Use **`mode: http`** to expose an internal HTTP endpoint to clients via a private domain
 - Use **`mode: ssh`** for SSH access workflows (including native auth-daemon mode)
 - Use **`mode: inference`** for a private [AI Gateway](/manage/ai/overview) resource reachable only by Pangolin clients, not the public internet
+- Use **`mode: exit-node`** to send all of a client's internet traffic out through the site network
 
 <Note>
 When applying a blueprint from a site (using `--blueprint-file` or container labels), `sites` is optional. If omitted, the resource is assigned to the site that applied the blueprint.
@@ -397,6 +398,27 @@ private-resources:
     roles:
       - Member
 ```
+
+### Exit Node Example
+
+Set `mode: exit-node` to turn a site into an exit node. Clients with access to the resource route all of their internet traffic through the site network, so it egresses from the site instead of the client's local connection.
+
+```yaml
+private-resources:
+  office-exit:
+    name: Office Exit Node
+    mode: exit-node
+    sites:
+      - office-site
+    roles:
+      - Developer
+    users:
+      - user@example.com
+```
+
+- `destination` is not needed. An exit node always routes the full range (`0.0.0.0/0`), and any `destination` you set is ignored.
+- All TCP and UDP ports and ICMP are always allowed. `tcp-ports`, `udp-ports`, and `disable-icmp` are ignored.
+- `gateway` is accepted as an equivalent value for `mode`.
 
 ## Resource Labels
 
@@ -1365,13 +1387,14 @@ private-resources:
       <ResponseField name="mode" type="string" required>
         Private resource type.
 
-        **Options**: `host`, `cidr`, `http`, `ssh`, `inference`
+        **Options**: `host`, `cidr`, `http`, `ssh`, `inference`, `exit-node`
 
         - `host`: A single host or IP. If `destination` is a domain, `alias` is required.
         - `cidr`: An entire IPv4 or IPv6 CIDR range.
         - `http`: An internal HTTP endpoint exposed to clients via `full-domain`.
         - `ssh`: SSH access resource. `destination` may be omitted only when `auth-daemon.mode` is `native` (or when `auth-daemon` is omitted).
         - `inference`: A private [AI Gateway](/manage/ai/overview) exposed to clients via `full-domain`, proxying to attached `ai-providers` instead of a `destination`.
+        - `exit-node`: Sends all of a client's internet traffic out through the site network. Does not take a `destination`; all ports and ICMP are always allowed. `gateway` is accepted as an alias.
 
         YAML: `mode: cidr`  
         Container label: `pangolin.private-resources.internal-net.mode=cidr`
@@ -1401,6 +1424,7 @@ private-resources:
         - `http`: a host or IP for the upstream HTTP endpoint
         - `ssh`: optional only for `auth-daemon.mode: native`; required otherwise
         - `inference`: not used; the resource proxies to `ai-providers` instead
+        - `exit-node`: not used; always routes `0.0.0.0/0`
 
         YAML: `destination: 10.0.0.0/24`  
         Container label: `pangolin.private-resources.internal-net.destination=10.0.0.0/24`
@@ -1671,7 +1695,7 @@ public-policies:
 4. When mode/protocol is `tcp` or `udp`, the resource must have `proxy-port`, targets must not include `method`, and `auth` is not allowed.
 5. `proxy-protocol` and `proxy-protocol-version` are only valid when mode/protocol is `tcp`.
 6. If `auth-daemon.mode` is `remote`, `auth-daemon.port` is required.
-7. In private resources, `destination` is required unless `mode: ssh` with native auth-daemon mode, or `mode: inference`.
+7. In private resources, `destination` is required unless `mode: ssh` with native auth-daemon mode, `mode: inference`, or `mode: exit-node`.
 8. `full-domain` values must be unique across public resources.
 9. `proxy-port` values must be unique per protocol within `public-resources`. TCP `3000` and UDP `3000` can coexist, but two TCP resources cannot both use `3000`.
 10. `alias` values must be unique across private resources in the blueprint.
@@ -1712,9 +1736,9 @@ Only TCP public resources can define proxy protocol behavior.
 
 Set `auth-daemon.port` whenever `auth-daemon.mode: remote` is used.
 
-### "destination is required unless mode is 'ssh' with auth-daemon mode 'native'"
+### "destination is required unless mode is 'ssh' with auth-daemon mode 'native', 'inference', or 'gateway'"
 
-For private SSH resources, `destination` can be omitted only for native auth-daemon mode.
+Private resources need a `destination` except for SSH resources using native auth-daemon mode, `inference` resources, and `exit-node` (`gateway`) resources.
 
 ### "Resource must either be targets-only or have both 'name' and 'protocol' fields"
 
