@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "next dev",
+    "dev": "next dev --port 4000",
     "start": "next start",
     "types:check": "next typegen && tsc --noEmit",
     "migrate": "python3 scripts/migrate-from-mintlify.py ../docs-v2"
