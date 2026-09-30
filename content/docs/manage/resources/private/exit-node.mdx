@@ -13,11 +13,13 @@ Sometimes you do want Pangolin to carry your public internet traffic, for instan
 To do this, make a site an exit node and point other devices at it using an exit node resource. Routing everything through an exit node uses the default routes (0.0.0.0/0, ::/0), the same way a typical VPN does.
 
 <Note>
-    Looking to reach a private network such as an office LAN or a cloud VPC
-    instead? Use a [subnet router](/manage/clients/subnet-router). It gives
-    Pangolin clients access to resources in specific private subnets and lets
-    devices that can't run the Pangolin client connect too. It doesn't change
-    how internet traffic is routed.
+    Subnet routers and exit nodes both route traffic, but they do different
+    jobs. A subnet router gives access to resources to devices not running the
+    Pangolin client on private subnets. Devices can reach Pangolin resources in
+    those subnets, and internet routing is unchanged. An exit node sends
+    outbound internet traffic from your Pangolin clients through sites, like a
+    VPN server. Your traffic appears to originate from the exit node's location,
+    which helps with geo-restricted content or privacy.
 </Note>
 
 ## Benefits
@@ -38,8 +40,6 @@ With the exit node feature, you send all traffic through one or more sites on yo
 
 - Route all non-Pangolin traffic through an exit node.
 - Use multiple exit nodes on the resource and clients will pick the best one automatically based on latency.
-
-Exit nodes are opt-in for security reasons. Every client must explicitly opt in to using an exit node by choosing the resource they want.
 
 ## Set up a exit node
 
@@ -62,7 +62,7 @@ Each device enables the exit node on its own, and the steps depend on the client
 #### MacOS, Windows, iOS, Android
 
 1. Open the Pangolin app and go to the exit node section.
-2. Select the exit node you want. 
+2. Select the exit node you want.
 3. Check that the status shows active in the exit node section and when clicking on the sites they are marked for exit node use.
 4. To stop using an exit node, go to the Exit Node section and select None.
 
@@ -77,6 +77,10 @@ pangolin select exit-node
 If the client is running, the change applies immediately. If not, the choice is saved and applied on the next `pangolin up`. To turn it off, run the command again and choose None. To select an exit node without the prompt, pass its nice ID with `--exit-node`.
 
 To confirm routing works, look up your public IP address with an online tool. It should show the exit node's public address instead of your local device's.
+
+## Other Resources When Connected
+
+When a client is connected using an exit node other Pangolin resources will still be accessible and resolvable - even on other sites not designated on the exit node resource. In this way Pangolin is still split tunneling these destinations. If you would like to disable this, set the [Exit Nodes Take Precedence Over Resources](/manage/clients/configure-client#exit-nodes-take-precedence-over-resources) setting on. By enabling this setting, you are configuring Pangolin to ignore other resources outside of the exit node - all traffic will flow to and through the exit node resource and DNS aliases and subnets on other resources will no longer function.
 
 ## Logging
 

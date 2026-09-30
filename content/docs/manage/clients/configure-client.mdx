@@ -2,6 +2,7 @@
 title: "Configure Clients"
 description: "Configure Olm for connecting to Pangolin clients"
 ---
+
 ## GUI Clients (Mac, Windows, Android, iOS/iPadOS)
 
 Each respective client has a preferences window with all currently available configuration parameters. In your desktop client, click the menu bar or system tray icon, select "More" in the menu, and click "Preferences". In the mobile apps, navigate to the "Settings" screen.
@@ -12,7 +13,7 @@ To troubleshoot connection or configuration issues, see [Client Logs](/manage/cl
 
 The following preferences control how your client handles DNS resolution and network routing. Understanding these settings helps you configure Pangolin to work best with your network setup.
 
-#### Enable Aliases (Override DNS)
+### Enable Aliases (Override DNS)
 
 When enabled, the client uses custom DNS servers to resolve internal resources and aliases. This overrides your system's default DNS settings. Queries that cannot be resolved as a Pangolin resource will be forwarded to your configured Upstream DNS Server.
 
@@ -20,7 +21,7 @@ When enabled, the client uses custom DNS servers to resolve internal resources a
 
 **How it works**: The client loops back to itself to resolve the alias. This is why you may see your DNS server as an unfamiliar address (often like `100.90.128.x`) when this is enabled. When a request doesn't resolve to a Pangolin resource and is bound for another website (like `google.com`), it falls back to your configured upstream DNS server.
 
-#### DNS Over Tunnel
+### DNS Over Tunnel
 
 When enabled, DNS queries are routed through the tunnel for remote resolution. To ensure queries are tunneled correctly, you must define the DNS server as a Pangolin resource and enter its address as an Upstream DNS Server.
 
@@ -31,20 +32,22 @@ When enabled, DNS queries are routed through the tunnel for remote resolution. T
 This requires aliases "override DNS" to be enabled as well. This is because the client must take control of your DNS settings to route queries through the tunnel to your private DNS server.
 
 <Warning>
-You cannot use an alias name for your DNS server. It must be the IP address of the resource. This is because it's pointing to the DNS server, so the DNS server can't resolve itself.
+    You cannot use an alias name for your DNS server. It must be the IP address
+    of the resource. This is because it's pointing to the DNS server, so the DNS
+    server can't resolve itself.
 </Warning>
 
-#### Primary Upstream DNS
+### Primary Upstream DNS
 
 This is the DNS server used to resolve queries that are not bound to a Pangolin alias when Override DNS or DNS Over Tunnel is enabled.
 
 When left blank, **System DNS** is used. This pulls the existing configured system DNS settings and applies them to the tunnel. If Tunnel DNS is enabled and System DNS is used, requests will likely fail if the DNS server is not accessible over the tunnel.
 
-#### Secondary Upstream DNS
+### Secondary Upstream DNS
 
 This is a fallback DNS server used to resolve queries that are not bound to a Pangolin alias when the primary server is unavailable. Ordering and priority of the server is not guaranteed, but it provides redundancy for DNS resolution. When left blank, **System DNS** is used, same as Primary Upstream DNS.
 
-#### Match Domains
+### Match Domains
 
 By default, when match domains are not set, all DNS queries are sent to the configured upstream DNS server. Match domains let you whitelist which domains should be sent to the upstream DNS server. When match domains are set, only matching queries go to upstream DNS; all other requests use the system's DNS servers.
 
@@ -52,12 +55,19 @@ By default, when match domains are not set, all DNS queries are sent to the conf
 
 **How it works**: With no match domains configured, every query is forwarded to your Upstream DNS Server. With match domains set, only queries that match the list are forwarded upstream; the rest use the system's default DNS servers.
 
-#### MTU
+### Exit Nodes Take Precedence Over Resources
+
+By default this is disabled. When a client is connected using an exit node other Pangolin resources will still be accessible and resolvable - even on other sites not designated on the exit node resource. In this way Pangolin is still split tunneling these destinations. By enabling this setting, you are configuring Pangolin to ignore other resources outside of the exit node - all traffic will flow to and through the exit node resource and DNS aliases and subnets on other resources will no longer function.
+
+### MTU
 
 You can set the maximum transmission unit (MTU) for the client’s internal WireGuard interface. This value is client-wide: every site the client connects to must use the same MTU on the site side, or you can see fragmentation, failed handshakes, or unstable tunnels. See the **mtu** option on [Configure Sites](/manage/sites/configure-site) and set the same value on each of those sites.
 
 <Warning>
-Changing MTU is advanced and not recommended for most users. Only change it when you have a specific, well-understood reason (for example, a constrained network path or a requirement from your infrastructure team). If you do change it, you must update every connected site to the identical value.
+    Changing MTU is advanced and not recommended for most users. Only change it
+    when you have a specific, well-understood reason (for example, a constrained
+    network path or a requirement from your infrastructure team). If you do
+    change it, you must update every connected site to the identical value.
 </Warning>
 
 ## Windows Client (Advanced)
@@ -117,6 +127,10 @@ Most keys in the `Config` object below can be set in either file. If the same ke
       When true, prioritizes local routes over remote ones by adding an arbitrary metric to the WireGuard routes. This is useful when you want to ensure that local network traffic (for example, to a printer or NAS) is not routed through the Pangolin tunnel.
     </ResponseField>
 
+    <ResponseField name="exitNodeTakesPrecedence" type="boolean">
+      When true, matches the **Exit Nodes Take Precedence Over Resources** preference. While connected through an exit node, routes for other resources are not added and their aliases are not resolved, so all traffic flows through the exit node. If omitted, the default is `false`.
+    </ResponseField>
+
     <ResponseField name="autoUpdateChecksEnabled" type="boolean">
       **Global only.** When true, periodically check for updates in the background. When false, automatic checks are off; users can still use **Check for Updates** unless that button is also disabled. If omitted, the default is `true`. Enabling checks surfaces the update UI when a new version exists (tray “Pangolin Update Available” and the update prompt). Intended for org admins / MDM so config is the source of truth.
     </ResponseField>
@@ -132,13 +146,16 @@ Most keys in the `Config` object below can be set in either file. If the same ke
     <ResponseField name="logLevel" type="string">
       **Global only.** Controls client log verbosity. Supported values include `debug` and `info`. If omitted, the default is `info`.
     </ResponseField>
+
   </Expandable>
 </ResponseField>
 
 As a system administrator, you can script placing `pangolin.json` in `%ProgramData%\Pangolin\` to set global defaults, and/or in each user's `%LOCALAPPDATA%\Pangolin\` folder for per-user overrides and targeted rollout behavior.
 
 <Tip>
- For enterprise customers, contact us if you need a custom MSI installer with baked-in configuration; we can maintain custom installers as an add-on to your enterprise license.
+    For enterprise customers, contact us if you need a custom MSI installer with
+    baked-in configuration; we can maintain custom installers as an add-on to
+    your enterprise license.
 </Tip>
 
 ## Mac Client (Advanced)
@@ -169,6 +186,10 @@ On Mac, the Pangolin GUI reads configuration from `~/Library/Application Support
       Optional whitelist of domains sent to the configured upstream DNS server. When unset, all queries go to upstream DNS. When set, only matching queries use your Upstream DNS Server; all other requests use the system's DNS servers. Supports wildcards such as `*.proxy.internal`.
     </ResponseField>
 
+    <ResponseField name="exitNodeTakesPrecedence" type="boolean">
+      When true, matches the **Exit Nodes Take Precedence Over Resources** preference. While connected through an exit node, routes for other resources are not added and their aliases are not resolved, so all traffic flows through the exit node. If omitted, the default is `false`.
+    </ResponseField>
+
     <ResponseField name="tunnelMTU" type="integer">
       MTU for the internal WireGuard interface. Changing this is advanced and not recommended unless you have a clear reason; if you set a non-default value, configure the same MTU on every site this client connects to. See [Configure Sites](/manage/sites/configure-site).
     </ResponseField>
@@ -184,6 +205,7 @@ On Mac, the Pangolin GUI reads configuration from `~/Library/Application Support
     <ResponseField name="updateCheckIntervalSeconds" type="integer">
       How often automatic checks run, in seconds. Values below `3600` (1 hour) are clamped to `3600`. Only matters when `autoUpdateChecksEnabled` is true. If omitted, the default is `86400` (24 hours).
     </ResponseField>
+
   </Expandable>
 </ResponseField>
 
@@ -199,19 +221,84 @@ To ensure Pangolin functions correctly in the background on Android devices, it'
 6. From the options menu, choose **Unrestricted**.
 
 <Frame caption="Android Battery Optimization Settings">
-	<img src="/images/android_battery.png" alt="Android Battery Optimization Settings"   style={{width: "250px", height: "auto"}} />
+    <img
+        src="/images/android_battery.png"
+        alt="Android Battery Optimization Settings"
+        style={{ width: "250px", height: "auto" }}
+    />
 </Frame>
 
 ## Pangolin CLI
 
 Refer to the [documentation in the official repository](https://github.com/fosrl/cli/blob/main/docs/pangolin.md) for the available commands, default values, and more.
 
+### Config File
+
+The Pangolin CLI stores persistent settings in `~/.config/pangolin/config.json` on every platform. When the CLI is run with `sudo`, it uses the home directory of the user who invoked `sudo`, so the same file applies with and without it. Run `pangolin config path` to print the exact location.
+
+<ResponseField name="Config" type="object">
+  JSON configuration for the Pangolin CLI stored in `config.json`.
+
+  <Expandable title="Config">
+    <ResponseField name="log_level" type="string">
+      Controls CLI log verbosity. Supported values are `debug` and `info`. If omitted, the default is `info`.
+    </ResponseField>
+
+    <ResponseField name="log_file" type="string">
+      Path of the client log file. If omitted, the default is `~/.config/pangolin/logs/client.log`. This key can only be changed by editing the file; it is not available through `pangolin config set`.
+    </ResponseField>
+
+    <ResponseField name="disable_update_check" type="boolean">
+      When true, the CLI does not check for new versions. If omitted, the default is `false`, except in builds distributed through a package manager, where it is `true`.
+    </ResponseField>
+
+    <ResponseField name="disable_companion_mode" type="boolean">
+      When true, the CLI uses its own standalone authentication instead of companion mode, where login, accounts, organizations, and exit node selection are managed by the Pangolin desktop app. If omitted, the default is `false`.
+    </ResponseField>
+
+    <ResponseField name="companion_app_data_dirs" type="object">
+      Overrides where the CLI looks for the desktop app's data directory in companion mode. Accepts a `windows` and a `darwin` path. Most installations should leave this unset. This key can only be changed by editing the file.
+    </ResponseField>
+
+    <ResponseField name="session_cookie_name" type="string">
+      Overrides the cookie name used for the CLI's session token. Most deployments should leave this unset.
+    </ResponseField>
+
+    <ResponseField name="up.override_dns" type="boolean">
+      Default for `--override-dns`. When true, matches the **Enable Aliases (Override DNS)** preference and lets the client take over DNS resolution for Pangolin resources. If omitted, the default is `true`.
+    </ResponseField>
+
+    <ResponseField name="up.tunnel_dns" type="boolean">
+      Default for `--tunnel-dns`. When true, matches the **DNS Over Tunnel** preference and sends DNS queries through the Pangolin tunnel. If omitted, the default is `false`.
+    </ResponseField>
+
+    <ResponseField name="up.upstream_dns" type="array of strings">
+      Default for `--upstream-dns`. Upstream DNS servers used when override/tunnel DNS is enabled. With `pangolin config set`, pass a comma-separated list such as `10.0.0.53,10.0.0.54`.
+    </ResponseField>
+
+    <ResponseField name="up.match_domains_dns" type="array of strings">
+      Default for `--match-domains`. Optional whitelist of domains sent to the configured upstream DNS server. When unset, all queries go to upstream DNS. When set, only matching queries use your Upstream DNS Server; all other requests use the system's DNS servers. Supports wildcards such as `*.proxy.internal`. With `pangolin config set`, pass a comma-separated list.
+    </ResponseField>
+
+    <ResponseField name="up.prefer_local_routes" type="boolean">
+      Default for `--prefer-local-routes`. When true, prioritizes local routes over remote ones by adding an arbitrary metric to the WireGuard routes. This is useful when you want to ensure that local network traffic (for example, to a printer or NAS) is not routed through the Pangolin tunnel. If omitted, the default is `false`.
+    </ResponseField>
+
+    <ResponseField name="up.exit_node_takes_precedence" type="boolean">
+      Default for `--exit-node-takes-precedence`. When true, matches the **Exit Nodes Take Precedence Over Resources** preference. While connected through an exit node, routes for other resources are not added and their aliases are not resolved, so all traffic flows through the exit node. If omitted, the default is `false`.
+    </ResponseField>
+
+  </Expandable>
+</ResponseField>
+
 ## Olm (Advanced, Deprecated)
 
 <Accordion title="Olm CLI (advanced use only)">
 
 <Tip>
-We recommend using the Pangolin CLI for both user and machine clients if you're looking for a CLI interface. Olm is the underlying client for the Pangolin CLI.
+    We recommend using the Pangolin CLI for both user and machine clients if
+    you're looking for a CLI interface. Olm is the underlying client for the
+    Pangolin CLI.
 </Tip>
 
 Olm is a command-line client for connecting machine clients in Pangolin. You can configure it using command-line flags, environment variables, or a configuration file. Expand the section below to view all available configuration options.
@@ -223,13 +310,14 @@ Olm is a command-line client for connecting machine clients in Pangolin. You can
 <ResponseField name="id" type="string" required>
   Olm ID generated by Pangolin to identify the client.
 
-  **Example**: `31frd0uzbjvp721`
+**Example**: `31frd0uzbjvp721`
+
 </ResponseField>
 
 <ResponseField name="secret" type="string" required>
   A unique secret used to authenticate the client ID with the websocket.
 
-  **Example**: `h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6`
+**Example**: `h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6`
 
   <Warning>
   Keep this secret private and secure. It's used for authentication.
@@ -239,117 +327,137 @@ Olm is a command-line client for connecting machine clients in Pangolin. You can
 <ResponseField name="endpoint" type="string" required>
   The endpoint where the Pangolin server resides for websocket connections.
 
-  **Example**: `https://pangolin.example.com`
+**Example**: `https://pangolin.example.com`
+
 </ResponseField>
 
 <ResponseField name="org" type="string">
-  Organization ID to connect to.
+    Organization ID to connect to.
 </ResponseField>
 
 <ResponseField name="user-token" type="string">
-  User authentication token.
+    User authentication token.
 </ResponseField>
 
 <ResponseField name="mtu" type="integer">
   MTU for the internal WireGuard interface.
 
-  **Default**: `1280`
+**Default**: `1280`
+
 </ResponseField>
 
 <ResponseField name="dns" type="string">
   DNS server to use to resolve the endpoint.
 
-  **Default**: `8.8.8.8`
+**Default**: `8.8.8.8`
+
 </ResponseField>
 
 <ResponseField name="upstream-dns" type="string">
   Upstream DNS server(s), comma-separated.
 
-  **Default**: `8.8.8.8:53`
+**Default**: `8.8.8.8:53`
+
 </ResponseField>
 
 <ResponseField name="match-domains-dns" type="string">
   FQDN wildcard patterns (using `*` and `?` wildcards, comma-separated, e.g. `*.proxy.internal,*.host-0?.autoco.internal`) to check against local records/upstream DNS. Queries for domains that don't match any pattern are sent directly to the host's own system DNS servers instead of being resolved as Pangolin resources.
 
-  **Default**: (empty, matches every domain)
+**Default**: (empty, matches every domain)
+
 </ResponseField>
 
 <ResponseField name="log-level" type="string">
   The log level to use for Olm output.
 
-  **Options**: `DEBUG`, `INFO`, `WARN`, `ERROR`, `FATAL`
+**Options**: `DEBUG`, `INFO`, `WARN`, `ERROR`, `FATAL`
 
-  **Default**: `INFO`
+**Default**: `INFO`
+
 </ResponseField>
 
 <ResponseField name="ping-interval" type="string">
   Interval for pinging the server.
 
-  **Default**: `3s`
+**Default**: `3s`
+
 </ResponseField>
 
 <ResponseField name="ping-timeout" type="string">
   Timeout for each ping.
 
-  **Default**: `5s`
+**Default**: `5s`
+
 </ResponseField>
 
 <ResponseField name="interface" type="string">
   Name of the WireGuard interface.
 
-  **Default**: `olm`
+**Default**: `olm`
+
 </ResponseField>
 
 <ResponseField name="enable-api" type="boolean">
   Enable API server for receiving connection requests.
 
-  **Default**: `false`
+**Default**: `false`
+
 </ResponseField>
 
 <ResponseField name="http-addr" type="string">
   HTTP server address (e.g., ':9452'). When unset, the HTTP API is not started and the socket API (see `socket-path`) is used instead.
 
-  **Default**: (not set)
+**Default**: (not set)
+
 </ResponseField>
 
 <ResponseField name="socket-path" type="string">
   Unix socket path (or named pipe on Windows).
 
-  **Default**: `/var/run/olm.sock` (Linux/macOS) or `olm` (Windows)
+**Default**: `/var/run/olm.sock` (Linux/macOS) or `olm` (Windows)
+
 </ResponseField>
 
 <ResponseField name="disable-holepunch" type="boolean">
   Disable hole punching.
 
-  **Default**: `false`
+**Default**: `false`
+
 </ResponseField>
 
 <ResponseField name="override-dns" type="boolean">
 	When enabled, the client uses custom DNS servers to resolve internal resources and aliases. This overrides your system's default DNS settings. Queries that cannot be resolved as a Pangolin resource will be forwarded to your configured Upstream DNS Server.
 
-  **Default**: `true`
+**Default**: `true`
+
 </ResponseField>
 
 <ResponseField name="tunnel-dns" type="boolean">
 	When enabled, DNS queries are routed through the tunnel for remote resolution. To ensure queries are tunneled correctly, you must define the DNS server as a Pangolin resource and enter its address as an Upstream DNS Server.
 
-  **Default**: `false`
+**Default**: `false`
+
 </ResponseField>
 
 <ResponseField name="match-domains-dns" type="string">
-  Optional comma-separated whitelist of domains sent to the configured upstream DNS server. When unset, all queries go to upstream DNS. When set, only matching queries use your Upstream DNS Server; all other requests use the system's DNS servers. Supports wildcards such as `*.proxy.internal`.
+    Optional comma-separated whitelist of domains sent to the configured
+    upstream DNS server. When unset, all queries go to upstream DNS. When set,
+    only matching queries use your Upstream DNS Server; all other requests use
+    the system's DNS servers. Supports wildcards such as `*.proxy.internal`.
 </ResponseField>
 
 <ResponseField name="disable-relay" type="boolean">
   Disable relay connections.
 
-  **Default**: `false`
+**Default**: `false`
+
 </ResponseField>
 
 <ResponseField name="prefer-local-routes" type="boolean">
   When true, prioritizes local routes over remote ones by adding an arbitrary metric to the WireGuard routes. This is useful when you want to ensure that local network traffic (for example, to a printer or NAS) is not routed through the Pangolin tunnel.
 
-  **Default**: `false`
+**Default**: `false`
+
 </ResponseField>
 
 ### Environment Variables
@@ -357,141 +465,160 @@ Olm is a command-line client for connecting machine clients in Pangolin. You can
 All CLI arguments can be set using environment variables as an alternative to command line flags. Environment variables are particularly useful when running Olm in containerized environments.
 
 <Note>
-When both environment variables and CLI arguments are provided, CLI arguments take precedence.
+    When both environment variables and CLI arguments are provided, CLI
+    arguments take precedence.
 </Note>
 
 <ResponseField name="PANGOLIN_ENDPOINT" type="string">
-  Endpoint of your Pangolin server (equivalent to `--endpoint`)
+    Endpoint of your Pangolin server (equivalent to `--endpoint`)
 </ResponseField>
 
 <ResponseField name="OLM_ID" type="string">
-  Olm ID generated by Pangolin (equivalent to `--id`)
+    Olm ID generated by Pangolin (equivalent to `--id`)
 </ResponseField>
 
 <ResponseField name="OLM_SECRET" type="string">
-  Olm secret for authentication (equivalent to `--secret`)
+    Olm secret for authentication (equivalent to `--secret`)
 </ResponseField>
 
 <ResponseField name="ORG" type="string">
-  Organization ID to connect to (equivalent to `--org`)
+    Organization ID to connect to (equivalent to `--org`)
 </ResponseField>
 
 <ResponseField name="USER_TOKEN" type="string">
-  User authentication token (equivalent to `--user-token`)
+    User authentication token (equivalent to `--user-token`)
 </ResponseField>
 
 <ResponseField name="MTU" type="integer">
   MTU for the internal WireGuard interface (equivalent to `--mtu`)
 
-  **Default**: `1280`
+**Default**: `1280`
+
 </ResponseField>
 
 <ResponseField name="DNS" type="string">
   DNS server to use to resolve the endpoint (equivalent to `--dns`)
 
-  **Default**: `8.8.8.8`
+**Default**: `8.8.8.8`
+
 </ResponseField>
 
 <ResponseField name="UPSTREAM_DNS" type="string">
   Upstream DNS server(s), comma-separated (equivalent to `--upstream-dns`)
 
-  **Default**: `8.8.8.8:53`
+**Default**: `8.8.8.8:53`
+
 </ResponseField>
 
 <ResponseField name="MATCH_DOMAINS_DNS" type="string">
   FQDN wildcard patterns, comma-separated (equivalent to `--match-domains-dns`)
 
-  **Default**: (empty, matches every domain)
+**Default**: (empty, matches every domain)
+
 </ResponseField>
 
 <ResponseField name="LOG_LEVEL" type="string">
   Log level (equivalent to `--log-level`)
 
-  **Default**: `INFO`
+**Default**: `INFO`
+
 </ResponseField>
 
 <ResponseField name="PING_INTERVAL" type="string">
   Interval for pinging the server (equivalent to `--ping-interval`)
 
-  **Default**: `3s`
+**Default**: `3s`
+
 </ResponseField>
 
 <ResponseField name="PING_TIMEOUT" type="string">
   Timeout for each ping (equivalent to `--ping-timeout`)
 
-  **Default**: `5s`
+**Default**: `5s`
+
 </ResponseField>
 
 <ResponseField name="INTERFACE" type="string">
   Name of the WireGuard interface (equivalent to `--interface`)
 
-  **Default**: `olm`
+**Default**: `olm`
+
 </ResponseField>
 
 <ResponseField name="ENABLE_API" type="boolean">
   Enable API server for receiving connection requests (equivalent to `--enable-api`)
 
-  Set to "true" to enable
+Set to "true" to enable
 
-  **Default**: `false`
+**Default**: `false`
+
 </ResponseField>
 
 <ResponseField name="HTTP_ADDR" type="string">
   HTTP server address (equivalent to `--http-addr`)
 
-  **Default**: (not set)
+**Default**: (not set)
+
 </ResponseField>
 
 <ResponseField name="SOCKET_PATH" type="string">
   Unix socket path or Windows named pipe (equivalent to `--socket-path`)
 
-  **Default**: `/var/run/olm.sock` (Linux/macOS) or `olm` (Windows)
+**Default**: `/var/run/olm.sock` (Linux/macOS) or `olm` (Windows)
+
 </ResponseField>
 
 <ResponseField name="DISABLE_HOLEPUNCH" type="boolean">
   Disable hole punching (equivalent to `--disable-holepunch`)
 
-  Set to "true" to disable
+Set to "true" to disable
 
-  **Default**: `false`
+**Default**: `false`
+
 </ResponseField>
 
 <ResponseField name="OVERRIDE_DNS" type="boolean">
   Override system DNS settings (equivalent to `--override-dns`)
 
-  Set to "true" to enable
+Set to "true" to enable
 
-  **Default**: `true`
+**Default**: `true`
+
 </ResponseField>
 
 <ResponseField name="TUNNEL_DNS" type="boolean">
   Route DNS queries through the tunnel (equivalent to `--tunnel-dns`)
 
-  Set to "true" to enable
+Set to "true" to enable
 
-  **Default**: `false`
+**Default**: `false`
+
 </ResponseField>
 
 <ResponseField name="MATCH_DOMAINS_DNS" type="string">
-  Optional whitelist of domains sent to the configured upstream DNS server (equivalent to `--match_domains_dns`). When unset, all queries go to upstream DNS.
+    Optional whitelist of domains sent to the configured upstream DNS server
+    (equivalent to `--match_domains_dns`). When unset, all queries go to
+    upstream DNS.
 </ResponseField>
 
 <ResponseField name="PREFER_LOCAL_ROUTES" type="boolean">
   When true, prioritizes local routes over remote ones by adding an arbitrary metric to the WireGuard routes. This is useful when you want to ensure that local network traffic (for example, to a printer or NAS) is not routed through the Pangolin tunnel.
 
-  **Default**: `false`
+**Default**: `false`
+
 </ResponseField>
 
 <ResponseField name="DISABLE_RELAY" type="boolean">
   Disable relay connections (equivalent to `--disable-relay`)
 
-  Set to "true" to disable
+Set to "true" to disable
 
-  **Default**: `false`
+**Default**: `false`
+
 </ResponseField>
 
 <ResponseField name="CONFIG_FILE" type="string">
-  Set to the location of a JSON file to load secret values
+    Set to the location of a JSON file to load secret values
 </ResponseField>
 
 ### Loading secrets from files
