@@ -1,0 +1,173 @@
+---
+title: "Windows"
+description: "Install, configure, and update the Pangolin client for Windows"
+---
+
+## Install
+
+- [Pangolin for Windows Installer](https://pangolin.net/downloads/windows) - This is the official page to download the latest installer file for Windows.
+- [All Versions](https://github.com/fosrl/windows/releases) - The releases section of this repository contains release notes and download artifacts for the latest version and all older versions.
+
+### Installation Steps
+
+1. **Download and install the Pangolin client**
+
+   Download and install the Pangolin client using the official .msi installer from the download button above.
+
+2. **Launch Pangolin**
+
+   Open Pangolin from the Start menu or the shortcut on your Desktop.
+
+3. **Log in with your Pangolin account**
+
+   Log in on your Pangolin Cloud account or your self-hosted Pangolin instance.
+
+   - Click the Pangolin icon in the task bar's system tray and select Log in.
+
+## Companion Mode
+
+Companion mode lets [Pangolin CLI](/manage/clients/platforms/cli) use this app's login and tunnel. Sign in and connect here, then run CLI commands as that same account. You do not run `pangolin login` again.
+
+Companion mode is available on Windows only. It requires Pangolin for Windows 0.11.0 or later, and it is on by default once the CLI is installed.
+
+1. Log in with the Windows client and connect.
+2. Install Pangolin CLI if it is not already installed. From the Pangolin menu bar, choose **Install Pangolin CLI**, or follow the [CLI install steps](/manage/clients/platforms/cli).
+3. Run CLI commands in a terminal. For example, open SSH to a [private SSH resource](/manage/resources/private/ssh):
+
+```bash
+pangolin ssh username@alias
+```
+
+The CLI follows the account, organization, and exit node selected in the desktop app. Change those in the app. While companion mode is on, `pangolin login`, `pangolin logout`, and `pangolin select` for account, organization, or exit node are blocked.
+
+The desktop app has to be open and logged in. If it is not, the CLI asks you to start Pangolin and log in.
+
+Commands to check status or turn companion mode off are on the [CLI companion mode section](/manage/clients/platforms/cli#companion-mode).
+
+## Configure
+
+<Note>
+DNS, MTU, and other preferences shared across clients are on [Platforms](/manage/clients/platforms#shared-preferences).
+</Note>
+
+### Start at Login
+
+When enabled, Pangolin starts when you sign in to Windows.
+
+### Connect at Start
+
+When enabled, the tunnel connects whenever Pangolin starts. This also opens Pangolin at sign-in.
+
+### Config File
+
+On Windows, the Pangolin GUI reads configuration from two `pangolin.json` files:
+
+- User config: `%LOCALAPPDATA%\Pangolin\pangolin.json` (for example, `C:\Users\USER\AppData\Local\Pangolin\pangolin.json`)
+- Global config: `%ProgramData%\Pangolin\pangolin.json`
+
+Most keys in the `Config` object below can be set in either file. If the same key exists in both places, the user config value overrides the global value. This lets administrators define global defaults while still allowing per-user overrides when needed. Keys marked **Global only** must be set in `%ProgramData%\Pangolin\pangolin.json`; restart the Pangolin manager/UI after changing them.
+
+<ResponseField name="Config" type="object">
+  JSON configuration for the Windows Pangolin client stored in `pangolin.json`.
+
+  <Expandable title="Config">
+    <ResponseField name="dnsOverride" type="boolean">
+      When true, matches the [Enable Aliases (Override DNS)](/manage/clients/platforms#enable-aliases-override-dns) preference and lets the client take over DNS resolution for Pangolin resources.
+    </ResponseField>
+
+    <ResponseField name="dnsTunnel" type="boolean">
+      When true, matches the [DNS Over Tunnel](/manage/clients/platforms#dns-over-tunnel) preference and sends DNS queries through the Pangolin tunnel.
+    </ResponseField>
+
+    <ResponseField name="primaryDNS" type="string">
+      Primary upstream DNS server used when override/tunnel DNS is enabled.
+    </ResponseField>
+
+    <ResponseField name="secondaryDNS" type="string">
+      Optional secondary upstream DNS server used as a fallback when the primary is unavailable.
+    </ResponseField>
+
+    <ResponseField name="dnsMatchDomains" type="array of strings">
+      Optional whitelist of domains sent to the configured upstream DNS server. When unset, all queries go to upstream DNS. When set, only matching queries use your Upstream DNS Server; all other requests use the system's DNS servers. Supports wildcards such as `*.proxy.internal`.
+    </ResponseField>
+
+    <ResponseField name="defaultServerURL" type="string">
+      When set, skips the deployment option screen during login; all login flows start directly with this server URL.
+    </ResponseField>
+
+    <ResponseField name="authPath" type="string">
+      Optional path appended to the server URL for authentication, for example `/auth/org/my-org` to always send users to a specific organization or branded login page. Most deployments should leave this unset.
+    </ResponseField>
+
+    <ResponseField name="userSettingsDisabled" type="boolean">
+      When true, hides and disables the settings form in the GUI so users cannot change these values themselves.
+    </ResponseField>
+
+    <ResponseField name="openStatusTabOnConnect" type="boolean">
+      When true, opens the Status tab immediately after clicking Connect so users can watch connection feedback while the tunnel is starting.
+    </ResponseField>
+
+    <ResponseField name="mtu" type="integer">
+      MTU for the internal WireGuard interface. Changing this is advanced and not recommended unless you have a clear reason; if you set a non-default value, configure the same MTU on every site this client connects to—see [Configure Sites](/manage/sites/configure-site).
+    </ResponseField>
+
+    <ResponseField name="preferLocalRoutes" type="boolean">
+      When true, prioritizes local routes over remote ones by adding an arbitrary metric to the WireGuard routes. This is useful when you want to ensure that local network traffic (for example, to a printer or NAS) is not routed through the Pangolin tunnel.
+    </ResponseField>
+
+    <ResponseField name="exitNodeTakesPrecedence" type="boolean">
+      When true, matches the [Exit Nodes Take Precedence Over Resources](/manage/clients/platforms#exit-nodes-take-precedence-over-resources) preference. While connected through an exit node, routes for other resources are not added and their aliases are not resolved, so all traffic flows through the exit node. If omitted, the default is `false`.
+    </ResponseField>
+
+    <ResponseField name="openUIAtLogin" type="boolean">
+      When true, matches the **Start at Login** preference and starts Pangolin when you sign in to Windows. If omitted, the default is `false`.
+    </ResponseField>
+
+    <ResponseField name="autoConnectAtLogin" type="boolean">
+      When true, matches the **Connect at Start** preference. The tunnel connects whenever Pangolin starts, and Pangolin also opens at sign-in, regardless of `openUIAtLogin`. If omitted, the default is `false`.
+    </ResponseField>
+
+    <ResponseField name="autoUpdateChecksEnabled" type="boolean">
+      **Global only.** When true, periodically check for updates in the background. When false, automatic checks are off; users can still use **Check for Updates** unless that button is also disabled. If omitted, the default is `true`. Enabling checks surfaces the update UI when a new version exists (tray “Pangolin Update Available” and the update prompt). Intended for org admins / MDM so config is the source of truth.
+    </ResponseField>
+
+    <ResponseField name="updateCheckIntervalSeconds" type="integer">
+      **Global only.** How often automatic checks run, in seconds. Values below `3600` (1 hour) are clamped to `3600`. Only matters when `autoUpdateChecksEnabled` is true. If omitted, the default is `86400` (24 hours). The client applies a small amount of jitter around this interval.
+    </ResponseField>
+
+    <ResponseField name="checkForUpdatesButtonEnabled" type="boolean">
+      **Global only.** When true, show **Check for Updates** in the system tray More menu. When false, hide that menu item. If omitted, the default is `true`. Manual checks always perform a live network lookup when the button is used. This is independent of `autoUpdateChecksEnabled`.
+    </ResponseField>
+
+    <ResponseField name="logLevel" type="string">
+      **Global only.** Controls client log verbosity. Supported values include `debug` and `info`. If omitted, the default is `info`.
+    </ResponseField>
+
+    <ResponseField name="sessionCookieName" type="string">
+      Overrides the cookie name the session token is sent and read under. Most deployments should leave this unset.
+    </ResponseField>
+
+  </Expandable>
+</ResponseField>
+
+As a system administrator, you can script placing `pangolin.json` in `%ProgramData%\Pangolin\` to set global defaults, and/or in each user's `%LOCALAPPDATA%\Pangolin\` folder for per-user overrides and targeted rollout behavior.
+
+<Tip>
+    For enterprise customers, contact us if you need a custom MSI installer with
+    baked-in configuration; we can maintain custom installers as an add-on to
+    your enterprise license.
+</Tip>
+
+## Update
+
+### Automatic Updates
+
+The Windows client periodically checks for updates in the background. When an update is available, it requests permission to update. You can also check for updates from the system tray menu, or by restarting the application.
+
+Once you accept the update, the client downloads the latest version and replaces itself.
+
+### Manual Updates
+
+Find the latest version in the [GitHub releases](https://github.com/fosrl/windows/releases).
+
+You can download the latest installer and run it again to install the latest version. Visit [https://pangolin.net/downloads](https://pangolin.net/downloads) for the official installer.

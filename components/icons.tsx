@@ -189,6 +189,10 @@ const icons: Record<string, IconComponent> = {
   slack: SlackIcon,
   linkedin: LinkedInIcon,
   youtube: YouTubeIcon,
+  windows: WindowsIcon,
+  apple: AppleIcon,
+  android: AndroidIcon,
+  linux: LinuxIcon,
 };
 
 export function Icon({ name, ...props }: { name?: string } & SVGProps<SVGSVGElement>) {

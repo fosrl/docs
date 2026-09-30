@@ -7,7 +7,7 @@ A subnet router lets devices that can't run the Pangolin client access Pangolin 
 
 <Note>
     Subnet routing currently only works on Linux with the [Pangolin
-    CLI](/manage/clients/install-client#pangolin-cli-linux-macos-windows).
+    CLI](/manage/clients/platforms/cli).
 </Note>
 
 Installing the Pangolin client on a device gives you end-to-end encryption and the best performance, so do that whenever you can. Often you can't. Printers usually can't run the client, and in a large AWS VPC or a legacy network that is being modernized step by step, touching every endpoint isn't realistic.
@@ -59,7 +59,7 @@ The host must run Linux. Install the CLI with:
 curl -fsSL https://static.pangolin.net/get-cli.sh | bash
 ```
 
-When you run the CLI with `--subnet-router`, it enables forwarding and manages the nftables backend for you. See [Install Clients](/manage/clients/install-client#pangolin-cli-linux-macos-windows) for other install options.
+When you run the CLI with `--subnet-router`, it enables forwarding and manages the nftables backend for you. See [Pangolin CLI](/manage/clients/platforms/cli) for other install options.
 
 <Warning>
 
@@ -77,7 +77,7 @@ Restart Docker after changing this file. For background on running Docker on a r
 
 ### Log in or create a machine client
 
-A machine client is the usual choice for a router, since it isn't tied to a user account. In the dashboard, go to Clients > Machines and create one. Copy its ID, secret, and endpoint. See [Credentials](/manage/clients/credentials).
+A machine client is the usual choice for a router, since it isn't tied to a user account. In the dashboard, go to Clients > Machines and create one. Copy its ID, secret, and endpoint. See [Machine Client Credentials](/manage/clients/credentials).
 
 You can also log in as a user with `pangolin login` and run `pangolin up`, but a machine client is better suited to a long-running service.
 
@@ -94,7 +94,7 @@ sudo pangolin up client \
 --attach
 ```
 
-`--attach` keeps the client in the foreground. To keep it running across reboots, install it as a service instead. See [Run as a Service](/manage/clients/install-client#run-as-a-service).
+`--attach` keeps the client in the foreground. To keep it running across reboots, install it as a service instead. See [Run as a Service](/manage/clients/platforms/cli#run-as-a-service).
 
 ### Check the firewall and NAT rules
 

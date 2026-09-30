@@ -17,10 +17,10 @@ This is useful when a workload running in your cluster (a batch job, an internal
 
 ## Prerequisites
 
-- A machine client created in Pangolin, with its `Client ID` and `Client Secret`. See [Install Clients](/manage/clients/install-client).
+- A machine client created in Pangolin, with its `Client ID` and `Client Secret`. See [Pangolin CLI](/manage/clients/platforms/cli#machine-clients).
 - A Kubernetes cluster where you can grant the `NET_ADMIN` capability and access to `/dev/net/tun`.
 
-## Step 1: Create a Secret for client credentials
+## Step 1: Create a Secret for machine client credentials
 
 ```bash
 kubectl create secret generic pangolin-client \
@@ -77,7 +77,7 @@ spec:
 Setting `restartPolicy: Always` on the container makes it a [native sidecar](https://kubernetes.io/docs/concepts/workloads/pods/sidecar-containers/) on Kubernetes 1.29+. It starts before the main container and Kubernetes keeps it running for the life of the Pod. On older clusters, omit `restartPolicy` and the container runs as a regular container instead — the tunnel still comes up, but startup ordering isn't guaranteed.
 </Note>
 
-The `pangolin-cli` image runs `pangolin up --attach` by default, which launches the client as a machine client using the `CLIENT_ID`/`CLIENT_SECRET` from the Secret and keeps it in the foreground so the container stays alive. See [Install Clients](/manage/clients/install-client#pangolin-cli-linux-macos-windows) for the full list of environment variables and flags.
+The `pangolin-cli` image runs `pangolin up --attach` by default, which launches the client as a machine client using the `CLIENT_ID`/`CLIENT_SECRET` from the Secret and keeps it in the foreground so the container stays alive. See [Pangolin CLI](/manage/clients/platforms/cli#docker-pangolin-cli) for the environment variables and flags.
 
 ## Step 3: Apply and verify
 
@@ -114,13 +114,13 @@ Each Pod running the sidecar connects as the same machine client. If you scale a
 ## Next steps
 
 <CardGroup cols={2}>
-	<Card title="Install Clients" href="/manage/clients/install-client" icon="download">
-		Review Pangolin CLI and Olm installation options, including Docker.
+	<Card title="Pangolin CLI" href="/manage/clients/platforms/cli" icon="terminal">
+		Install, configure, and run the CLI, including Docker.
 	</Card>
-	<Card title="Configure Clients" href="/manage/clients/configure-client" icon="sliders">
-		Review client configuration options.
+	<Card title="Platforms" href="/manage/clients/platforms" icon="sliders">
+		Shared client preferences for DNS and routing.
 	</Card>
-	<Card title="Credentials" href="/manage/clients/credentials" icon="key">
-		Manage machine client credentials.
+	<Card title="Machine Client Credentials" href="/manage/clients/credentials" icon="key">
+		Rotate and regenerate the ID and secret used by a machine client.
 	</Card>
 </CardGroup>

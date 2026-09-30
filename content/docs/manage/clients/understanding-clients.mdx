@@ -6,7 +6,7 @@ A client is a way to access resources on sites remotely and privately via a virt
 
 By default a client does not have access to any hosts on the local network of the site. Admins must explicitly define resources on the site and give specific users and roles access to the resources.
 
-Users must log in and connect from a Pangolin client available on [Windows, Mac, Linux, iOS/iPadOS, and Android](/manage/clients/install-client). Machines (automated systems and servers) connect with an ID and secret.
+Users must log in and connect from a Pangolin client available on [Windows, Mac, Linux, iOS/iPadOS, and Android](/manage/clients/platforms). They sign in with their user credentials through a web login flow. Machines (automated systems and servers) connect with [machine client credentials](/manage/clients/credentials): an ID, secret, and endpoint.
 
 ## Client Types
 
@@ -15,20 +15,20 @@ There are two types of clients: user devices and machines.
 <CardGroup cols={2}>
 <Card title="User Devices">
   - Associated with a user in your Pangolin organization
-  - Requires login to connect (password, 2fa, etc)
+  - Logs in with user credentials through a web login flow (password, 2FA, or an identity provider)
   - Available for download on Mac, Windows, and Linux
 </Card>
 
 <Card title="Machines">
   - Represent a server or automated system instead of a user
-  - Connect with an ID and secret
+  - Connect with machine client credentials (ID and secret)
   - Available in CLI form with Pangolin CLI
 </Card>
 </CardGroup>
 
 ### User Devices
 
-A user may download a client for their specific system. Before they can connect, they must select a Pangolin server to authenticate to using their provided Pangolin account. Users can log in as a Pangolin user or with your attached external identity provider.
+A user may download a client for their specific system. Before they can connect, they select a Pangolin server and log in with their user credentials through the web login flow. Users can log in as a Pangolin user or with your attached external identity provider.
 
 Examples include:
 
@@ -48,7 +48,7 @@ Examples include:
 
 Though you may connect a server via a user account using a CLI client, we recommend you specifically use a machine client.
 
-Machine clients authenticate with an ID and secret string. These credentials are passed via arguments into one of the supported Pangolin CLI clients. They can be revoked and rotated.
+Machine clients authenticate with [machine client credentials](/manage/clients/credentials): an ID and secret. These are passed as arguments to the Pangolin CLI. They can be revoked and rotated. User devices never use these credentials.
 
 ## Client Modalities
 

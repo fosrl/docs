@@ -1,0 +1,143 @@
+---
+title: "Mac"
+description: "Install, configure, and update the Pangolin client for Mac"
+---
+
+## Install
+
+- [Pangolin for macOS Installer](https://pangolin.net/downloads/mac) - This is the official page to download the latest installer file for macOS.
+- [All Versions](https://github.com/fosrl/apple/releases) - The releases section of this repository contains release notes and download artifacts for the latest version and all older versions.
+
+### Installation Steps
+
+1. **Download and install the Pangolin client**
+
+   Download and install the Pangolin client using the official .dmg installer from the download button above.
+
+   - Open the downloaded .dmg file
+   - Drag and drop Pangolin.app into your Applications folder
+
+2. **Launch Pangolin**
+
+   Open Pangolin from your Applications folder.
+
+3. **Install the VPN configuration**
+
+   Follow the Pangolin onboarding flow, which will guide you to install the Pangolin VPN configuration.
+
+   - Select Open System Settings on startup when it asks to install a network extension.
+   - In System Settings, under General > Login Items & Extension > By Category > Network Extensions, ensure that Pangolin.app is toggled on.
+   - Select Allow when Pangolin asks to add a VPN configuration.
+
+4. **Log in with your Pangolin account**
+
+   Log in on your Pangolin Cloud account or your self-hosted Pangolin instance.
+
+   - Click the Pangolin icon in the menu bar and select Log in.
+
+## Configure
+
+<Note>
+DNS, MTU, and other preferences shared across clients are on [Platforms](/manage/clients/platforms#shared-preferences).
+</Note>
+
+### Start at Login
+
+When enabled, Pangolin opens automatically when you log in to your Mac.
+
+### Connect Automatically On
+
+Choose when Pangolin may connect automatically. **Connect** enables on-demand for that interface; **Disconnect** disables it.
+
+**Ethernet** connects automatically while the Mac is on Ethernet.
+
+**Wi-Fi** connects automatically while the Mac is on Wi-Fi. You can limit which networks that applies to:
+
+- **Any Wi-Fi Network** connects on every Wi-Fi network.
+- **Only these Wi-Fi Networks** connects only on the networks you list.
+- **Except these Wi-Fi Networks** connects on every network except the ones you list.
+
+### Config File
+
+On Mac, the Pangolin GUI reads configuration from `~/Library/Application Support/Pangolin/pangolin.json`. Restart Pangolin after editing for changes to apply.
+
+<ResponseField name="Config" type="object">
+  JSON configuration for the Mac Pangolin client stored in `pangolin.json`.
+
+  <Expandable title="Config">
+    <ResponseField name="dnsOverrideEnabled" type="boolean">
+      When true, matches the [Enable Aliases (Override DNS)](/manage/clients/platforms#enable-aliases-override-dns) preference and lets the client take over DNS resolution for Pangolin resources.
+    </ResponseField>
+
+    <ResponseField name="dnsTunnelEnabled" type="boolean">
+      When true, matches the [DNS Over Tunnel](/manage/clients/platforms#dns-over-tunnel) preference and sends DNS queries through the Pangolin tunnel.
+    </ResponseField>
+
+    <ResponseField name="primaryDNSServer" type="string">
+      Primary upstream DNS server used when override/tunnel DNS is enabled.
+    </ResponseField>
+
+    <ResponseField name="secondaryDNSServer" type="string">
+      Optional secondary upstream DNS server used as a fallback when the primary is unavailable.
+    </ResponseField>
+
+    <ResponseField name="dnsMatchDomains" type="array of strings">
+      Optional whitelist of domains sent to the configured upstream DNS server. When unset, all queries go to upstream DNS. When set, only matching queries use your Upstream DNS Server; all other requests use the system's DNS servers. Supports wildcards such as `*.proxy.internal`.
+    </ResponseField>
+
+    <ResponseField name="exitNodeTakesPrecedence" type="boolean">
+      When true, matches the [Exit Nodes Take Precedence Over Resources](/manage/clients/platforms#exit-nodes-take-precedence-over-resources) preference. While connected through an exit node, routes for other resources are not added and their aliases are not resolved, so all traffic flows through the exit node. If omitted, the default is `false`.
+    </ResponseField>
+
+    <ResponseField name="tunnelMTU" type="integer">
+      MTU for the internal WireGuard interface. Changing this is advanced and not recommended unless you have a clear reason; if you set a non-default value, configure the same MTU on every site this client connects to. See [Configure Sites](/manage/sites/configure-site).
+    </ResponseField>
+
+    <ResponseField name="onDemandWiFiEnabled" type="boolean">
+      When true, matches the **Wi-Fi** option under **Connect Automatically On** and connects on demand whenever the Mac is on Wi-Fi. Use `onDemandSSIDOption` and `onDemandSSIDs` to limit this to specific networks. If omitted, the default is `false`.
+    </ResponseField>
+
+    <ResponseField name="onDemandNonWiFiEnabled" type="boolean">
+      When true, matches the **Ethernet** option under **Connect Automatically On** and connects on demand whenever the Mac is on Ethernet. If omitted, the default is `false`.
+    </ResponseField>
+
+    <ResponseField name="onDemandSSIDOption" type="string">
+      Which Wi-Fi networks on-demand applies to when `onDemandWiFiEnabled` is true. Supported values are `any` (**Any Wi-Fi Network**), `only` (**Only these Wi-Fi Networks**, the names in `onDemandSSIDs`), and `except` (**Except these Wi-Fi Networks**). If omitted, or if `onDemandSSIDs` is empty, the default is `any`.
+    </ResponseField>
+
+    <ResponseField name="onDemandSSIDs" type="array of strings">
+      Wi-Fi network names (SSIDs) used by the `only` and `except` modes of `onDemandSSIDOption`.
+    </ResponseField>
+
+    <ResponseField name="autoUpdateChecksEnabled" type="boolean">
+      When true, periodically check for updates in the background. When false, automatic checks are off; users can still use **Check for Updates**. If omitted, the client default applies (may prompt the user on second launch). Enabling checks without `autoDownloadUpdatesEnabled` still surfaces the update UI when a new version exists. Intended for admin / MDM provisioning so config stays the source of truth over user toggles.
+    </ResponseField>
+
+    <ResponseField name="autoDownloadUpdatesEnabled" type="boolean">
+      When true, download updates silently when found and stage install for quit/relaunch. When false, show the normal update dialog instead of silent download. Silent download does not replace the running app mid-session; the update installs on quit (and relaunches), so long-running menu bar sessions may keep a staged update until quit. If omitted, the default is `false`.
+    </ResponseField>
+
+    <ResponseField name="updateCheckIntervalSeconds" type="integer">
+      How often automatic checks run, in seconds. Values below `3600` (1 hour) are clamped to `3600`. Only matters when `autoUpdateChecksEnabled` is true. If omitted, the default is `86400` (24 hours).
+    </ResponseField>
+
+    <ResponseField name="sessionCookieName" type="string">
+      Overrides the cookie name the session token is sent and read under. Most deployments should leave this unset.
+    </ResponseField>
+
+  </Expandable>
+</ResponseField>
+
+## Update
+
+### Automatic Updates
+
+The Mac client periodically checks for updates in the background. When an update is available, it requests permission to update. You can also check for updates from the menu bar, or by restarting the application.
+
+Once you accept the update, the client downloads the latest version and replaces itself.
+
+### Manual Updates
+
+Find the latest version in the [GitHub releases](https://github.com/fosrl/apple/releases).
+
+You can download the latest installer and run it again to install the latest version. Visit [https://pangolin.net/downloads](https://pangolin.net/downloads) for the official installer.

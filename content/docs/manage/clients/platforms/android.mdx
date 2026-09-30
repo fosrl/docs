@@ -1,0 +1,66 @@
+---
+title: "Android"
+description: "Install, configure, and update the Pangolin app for Android"
+---
+
+## Install
+
+- [Pangolin on Google Play](https://play.google.com/store/apps/details?id=net.pangolin.Pangolin) - This is the official page to download the latest Pangolin app for Android devices.
+- [All Versions](https://github.com/fosrl/android/releases) - The releases section of this repository contains release notes and download artifacts for the latest version and all older versions.
+
+### Installation Steps
+
+1. **Download and install the Pangolin app**
+
+   Download and install the Pangolin app from the Google Play Store using the link above.
+
+2. **Launch Pangolin**
+
+   Open the Pangolin app from your app drawer or home screen.
+
+3. **Log in with your Pangolin account**
+
+   Log in on your Pangolin Cloud account or your self-hosted Pangolin instance. 
+
+4. **Connect to Pangolin**
+
+   Tap the Connect button to establish a VPN connection. On the first connection, you may be prompted to allow the VPN connection.
+
+## Configure
+
+<Note>
+DNS, MTU, and other preferences shared across clients are on [Platforms](/manage/clients/platforms#shared-preferences).
+</Note>
+
+### Show Persistent VPN Notification
+
+When enabled, Pangolin keeps a status notification while connected. A temporary notification may still appear when connecting or recovering. Android's own VPN indicators are unaffected.
+
+Leaving this on makes it less likely that Android will stop the connection while the app is in the background.
+
+### Enable Log Collection
+
+When enabled, tunnel logs are saved to a file that can be downloaded for troubleshooting. See [Client Logs](/manage/clients/client-logs).
+
+### Battery Optimization
+
+To ensure Pangolin functions correctly in the background on Android devices, it's recommended to disable battery optimization for the app. This prevents the operating system from restricting its background activities, which could lead to disconnections.
+
+1. Open the **Settings** app on your Android device.
+2. Navigate to **Apps & notifications** (or simply **Apps** on some devices).
+3. Find and select the Pangolin app from the list of installed apps.
+4. Tap on **App battery usage**.
+5. Select **Allow background usage** and enable if disabled.
+6. From the options menu, choose **Unrestricted**.
+
+<Frame caption="Android Battery Optimization Settings">
+    <img
+        src="/images/android_battery.png"
+        alt="Android Battery Optimization Settings"
+        style={{ width: "250px", height: "auto" }}
+    />
+</Frame>
+
+## Update
+
+Updates are delivered through the Google Play Store. Release notes and older builds are in the [GitHub releases](https://github.com/fosrl/android/releases).

@@ -1,0 +1,570 @@
+---
+title: "Olm (Deprecated)"
+description: "Deprecated command-line client for machine connections"
+---
+
+<Tip>
+    We recommend using the Pangolin CLI for both user and machine clients if
+    you're looking for a CLI interface. Olm is the underlying client for the
+    Pangolin CLI.
+</Tip>
+
+Olm is a command-line client for connecting machine clients in Pangolin. You can configure it using command-line flags, environment variables, or a configuration file.
+
+## Install
+
+### Binary Installation (Linux)
+
+#### Quick Install (Recommended)
+
+Use this command to automatically install Olm. It detects your system architecture automatically and always pulls the latest version, adding Olm to your PATH:
+
+```bash
+curl -fsSL https://static.pangolin.net/get-olm.sh | bash
+```
+
+#### Windows
+
+If you would like to use Olm on Windows, wintun.dll is required. Please use latest installer from [GitHub releases](https://github.com/fosrl/olm/releases/latest).
+
+#### Manual Download
+
+Binaries for Linux, macOS, and Windows are available in the [GitHub releases](https://github.com/fosrl/olm/releases) for ARM and AMD64 (x86_64) architectures.
+
+Download and install manually:
+
+```bash
+wget -O olm "https://github.com/fosrl/olm/releases/download/{version}/olm_{architecture}" && chmod +x ./olm
+```
+
+<Note>
+Replace `{version}` with the desired version and `{architecture}` with your architecture. Check the [release notes](https://github.com/fosrl/olm/releases) for the latest information.
+</Note>
+
+### Running Olm
+
+Run Olm with the configuration from Pangolin:
+
+```bash
+olm \
+--id 31frd0uzbjvp721 \
+--secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6 \
+--endpoint https://example.com
+```
+
+### Systemd Service
+
+Create a basic systemd service:
+
+```ini title="/etc/systemd/system/olm.service"
+[Unit]
+Description=Olm
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/olm --id 31frd0uzbjvp721 --secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6 --endpoint https://example.com
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
+```
+
+<Warning>
+Make sure to move the binary to `/usr/local/bin/olm` before creating the service!
+</Warning>
+
+### Docker
+
+You can also run it with Docker compose. For example, a service in your `docker-compose.yml` might look like this using environment vars (recommended):
+
+```yaml
+services:
+    olm:
+        image: fosrl/olm
+        container_name: olm
+        restart: unless-stopped
+        network_mode: host
+        cap_add:
+            - NET_ADMIN
+        devices:
+            - /dev/net/tun:/dev/net/tun
+        environment:
+            - PANGOLIN_ENDPOINT=https://example.com
+            - OLM_ID=31frd0uzbjvp721
+            - OLM_SECRET=h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6
+```
+
+You can also pass the CLI args to the container:
+
+```yaml
+services:
+    olm:
+        image: fosrl/olm
+        container_name: olm
+        restart: unless-stopped
+        network_mode: host
+        cap_add:
+            - NET_ADMIN
+        devices:
+            - /dev/net/tun:/dev/net/tun
+        command:
+            - --id 31frd0uzbjvp721
+            - --secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6
+            - --endpoint https://example.com
+```
+
+**Docker Configuration Notes:**
+
+- `network_mode: host` brings the olm network interface to the host system, allowing the WireGuard tunnel to function properly
+- `cap_add: - NET_ADMIN` is required to grant the container permission to manage network interfaces
+- `devices: - /dev/net/tun:/dev/net/tun` is required to give the container access to the TUN device for creating WireGuard interfaces
+
+### Windows Service
+
+On Windows, olm has to be installed and run as a Windows service. When running it with the cli args, it will attempt to install and run the service to function like a cli tool. 
+
+Minimum Windows version: Windows 10
+
+#### Service Management Commands
+
+```
+# Install the service
+olm.exe install
+
+# Start the service
+olm.exe start
+
+# Stop the service
+olm.exe stop
+
+# Check service status
+olm.exe status
+
+# Remove the service
+olm.exe remove
+
+# Run in debug mode (console output) with our without id & secret
+olm.exe debug
+
+# Show help
+olm.exe help
+```
+
+Note running the service requires credentials in `%PROGRAMDATA%\olm\olm-client\config.json`.
+
+#### Service Configuration
+
+When running as a service, Olm will read configuration from environment variables or you can modify the service to include command-line arguments:
+
+1. Install the service: `olm.exe install`
+2. Set the credentials in `%PROGRAMDATA%\olm\olm-client\config.json`. Hint: if you run olm once with --id and --secret this file will be populated!
+3. Start the service: `olm.exe start`
+
+#### Service Logs
+
+When running as a service, logs are written to:
+
+-   Windows Event Log (Application log, source: "OlmWireguardService")
+-   Log files in: `%PROGRAMDATA%\olm\logs\olm.log`
+
+You can view the Windows Event Log using Event Viewer or PowerShell:
+
+```powershell
+Get-EventLog -LogName Application -Source "OlmWireguardService" -Newest 10
+```
+
+### Gotchas
+
+Olm creates a native tun interface. This usually requires sudo / admin permissions. Some notes:
+
+- **Windows**: Olm will run as a service. You can use the [service management commands](#service-management-commands) to manage it and run it in the background.
+- **LXC containers**: Need to be configured to allow tun access. On Proxmox see below.
+- **Linux**: May require root privileges or specific capabilities to create tun interfaces.
+- **macOS**: May require additional permissions for network interface creation.
+
+#### LXC Proxmox
+
+1. Create your LXC container.
+2. Go to the Resources tab of the container.
+3. Select Add. Then select Device Passthrough.
+4. On the Add Device prompt, enter dev/net/tun in the Device Path field and select Add.
+5. If the container is running, shut it down and start it up again.
+
+Once /dev/net/tun is available, the olm can run within the LXC.
+
+## Configure
+
+<Note>
+DNS, MTU, and other preferences shared across clients are on [Platforms](/manage/clients/platforms#shared-preferences).
+</Note>
+
+### Flags
+
+<ResponseField name="id" type="string" required>
+  Olm ID generated by Pangolin to identify the client.
+
+**Example**: `31frd0uzbjvp721`
+
+</ResponseField>
+
+<ResponseField name="secret" type="string" required>
+  A unique secret used to authenticate the client ID with the websocket.
+
+**Example**: `h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6`
+
+  <Warning>
+  Keep this secret private and secure. It's used for authentication.
+  </Warning>
+</ResponseField>
+
+<ResponseField name="endpoint" type="string" required>
+  The endpoint where the Pangolin server resides for websocket connections.
+
+**Example**: `https://pangolin.example.com`
+
+</ResponseField>
+
+<ResponseField name="org" type="string">
+    Organization ID to connect to.
+</ResponseField>
+
+<ResponseField name="user-token" type="string">
+    User authentication token.
+</ResponseField>
+
+<ResponseField name="mtu" type="integer">
+  MTU for the internal WireGuard interface.
+
+**Default**: `1280`
+
+</ResponseField>
+
+<ResponseField name="dns" type="string">
+  DNS server to use to resolve the endpoint.
+
+**Default**: `8.8.8.8`
+
+</ResponseField>
+
+<ResponseField name="upstream-dns" type="string">
+  Upstream DNS server(s), comma-separated.
+
+**Default**: `8.8.8.8:53`
+
+</ResponseField>
+
+<ResponseField name="match-domains-dns" type="string">
+  FQDN wildcard patterns (using `*` and `?` wildcards, comma-separated, e.g. `*.proxy.internal,*.host-0?.autoco.internal`) to check against local records/upstream DNS. Queries for domains that don't match any pattern are sent directly to the host's own system DNS servers instead of being resolved as Pangolin resources.
+
+**Default**: (empty, matches every domain)
+
+</ResponseField>
+
+<ResponseField name="log-level" type="string">
+  The log level to use for Olm output.
+
+**Options**: `DEBUG`, `INFO`, `WARN`, `ERROR`, `FATAL`
+
+**Default**: `INFO`
+
+</ResponseField>
+
+<ResponseField name="ping-interval" type="string">
+  Interval for pinging the server.
+
+**Default**: `3s`
+
+</ResponseField>
+
+<ResponseField name="ping-timeout" type="string">
+  Timeout for each ping.
+
+**Default**: `5s`
+
+</ResponseField>
+
+<ResponseField name="interface" type="string">
+  Name of the WireGuard interface.
+
+**Default**: `olm`
+
+</ResponseField>
+
+<ResponseField name="enable-api" type="boolean">
+  Enable API server for receiving connection requests.
+
+**Default**: `false`
+
+</ResponseField>
+
+<ResponseField name="http-addr" type="string">
+  HTTP server address (e.g., ':9452'). When unset, the HTTP API is not started and the socket API (see `socket-path`) is used instead.
+
+**Default**: (not set)
+
+</ResponseField>
+
+<ResponseField name="socket-path" type="string">
+  Unix socket path (or named pipe on Windows).
+
+**Default**: `/var/run/olm.sock` (Linux/macOS) or `olm` (Windows)
+
+</ResponseField>
+
+<ResponseField name="disable-holepunch" type="boolean">
+  Disable hole punching.
+
+**Default**: `false`
+
+</ResponseField>
+
+<ResponseField name="override-dns" type="boolean">
+	When enabled, the client uses custom DNS servers to resolve internal resources and aliases. This overrides your system's default DNS settings. Queries that cannot be resolved as a Pangolin resource will be forwarded to your configured Upstream DNS Server.
+
+**Default**: `true`
+
+</ResponseField>
+
+<ResponseField name="tunnel-dns" type="boolean">
+	When enabled, DNS queries are routed through the tunnel for remote resolution. To ensure queries are tunneled correctly, you must define the DNS server as a Pangolin resource and enter its address as an Upstream DNS Server.
+
+**Default**: `false`
+
+</ResponseField>
+
+<ResponseField name="match-domains-dns" type="string">
+    Optional comma-separated whitelist of domains sent to the configured
+    upstream DNS server. When unset, all queries go to upstream DNS. When set,
+    only matching queries use your Upstream DNS Server; all other requests use
+    the system's DNS servers. Supports wildcards such as `*.proxy.internal`.
+</ResponseField>
+
+<ResponseField name="disable-relay" type="boolean">
+  Disable relay connections.
+
+**Default**: `false`
+
+</ResponseField>
+
+<ResponseField name="prefer-local-routes" type="boolean">
+  When true, prioritizes local routes over remote ones by adding an arbitrary metric to the WireGuard routes. This is useful when you want to ensure that local network traffic (for example, to a printer or NAS) is not routed through the Pangolin tunnel.
+
+**Default**: `false`
+
+</ResponseField>
+
+### Environment Variables
+
+All CLI arguments can be set using environment variables as an alternative to command line flags. Environment variables are particularly useful when running Olm in containerized environments.
+
+<Note>
+    When both environment variables and CLI arguments are provided, CLI
+    arguments take precedence.
+</Note>
+
+<ResponseField name="PANGOLIN_ENDPOINT" type="string">
+    Endpoint of your Pangolin server (equivalent to `--endpoint`)
+</ResponseField>
+
+<ResponseField name="OLM_ID" type="string">
+    Olm ID generated by Pangolin (equivalent to `--id`)
+</ResponseField>
+
+<ResponseField name="OLM_SECRET" type="string">
+    Olm secret for authentication (equivalent to `--secret`)
+</ResponseField>
+
+<ResponseField name="ORG" type="string">
+    Organization ID to connect to (equivalent to `--org`)
+</ResponseField>
+
+<ResponseField name="USER_TOKEN" type="string">
+    User authentication token (equivalent to `--user-token`)
+</ResponseField>
+
+<ResponseField name="MTU" type="integer">
+  MTU for the internal WireGuard interface (equivalent to `--mtu`)
+
+**Default**: `1280`
+
+</ResponseField>
+
+<ResponseField name="DNS" type="string">
+  DNS server to use to resolve the endpoint (equivalent to `--dns`)
+
+**Default**: `8.8.8.8`
+
+</ResponseField>
+
+<ResponseField name="UPSTREAM_DNS" type="string">
+  Upstream DNS server(s), comma-separated (equivalent to `--upstream-dns`)
+
+**Default**: `8.8.8.8:53`
+
+</ResponseField>
+
+<ResponseField name="MATCH_DOMAINS_DNS" type="string">
+  FQDN wildcard patterns, comma-separated (equivalent to `--match-domains-dns`)
+
+**Default**: (empty, matches every domain)
+
+</ResponseField>
+
+<ResponseField name="LOG_LEVEL" type="string">
+  Log level (equivalent to `--log-level`)
+
+**Default**: `INFO`
+
+</ResponseField>
+
+<ResponseField name="PING_INTERVAL" type="string">
+  Interval for pinging the server (equivalent to `--ping-interval`)
+
+**Default**: `3s`
+
+</ResponseField>
+
+<ResponseField name="PING_TIMEOUT" type="string">
+  Timeout for each ping (equivalent to `--ping-timeout`)
+
+**Default**: `5s`
+
+</ResponseField>
+
+<ResponseField name="INTERFACE" type="string">
+  Name of the WireGuard interface (equivalent to `--interface`)
+
+**Default**: `olm`
+
+</ResponseField>
+
+<ResponseField name="ENABLE_API" type="boolean">
+  Enable API server for receiving connection requests (equivalent to `--enable-api`)
+
+Set to "true" to enable
+
+**Default**: `false`
+
+</ResponseField>
+
+<ResponseField name="HTTP_ADDR" type="string">
+  HTTP server address (equivalent to `--http-addr`)
+
+**Default**: (not set)
+
+</ResponseField>
+
+<ResponseField name="SOCKET_PATH" type="string">
+  Unix socket path or Windows named pipe (equivalent to `--socket-path`)
+
+**Default**: `/var/run/olm.sock` (Linux/macOS) or `olm` (Windows)
+
+</ResponseField>
+
+<ResponseField name="DISABLE_HOLEPUNCH" type="boolean">
+  Disable hole punching (equivalent to `--disable-holepunch`)
+
+Set to "true" to disable
+
+**Default**: `false`
+
+</ResponseField>
+
+<ResponseField name="OVERRIDE_DNS" type="boolean">
+  Override system DNS settings (equivalent to `--override-dns`)
+
+Set to "true" to enable
+
+**Default**: `true`
+
+</ResponseField>
+
+<ResponseField name="TUNNEL_DNS" type="boolean">
+  Route DNS queries through the tunnel (equivalent to `--tunnel-dns`)
+
+Set to "true" to enable
+
+**Default**: `false`
+
+</ResponseField>
+
+<ResponseField name="MATCH_DOMAINS_DNS" type="string">
+    Optional whitelist of domains sent to the configured upstream DNS server
+    (equivalent to `--match_domains_dns`). When unset, all queries go to
+    upstream DNS.
+</ResponseField>
+
+<ResponseField name="PREFER_LOCAL_ROUTES" type="boolean">
+  When true, prioritizes local routes over remote ones by adding an arbitrary metric to the WireGuard routes. This is useful when you want to ensure that local network traffic (for example, to a printer or NAS) is not routed through the Pangolin tunnel.
+
+**Default**: `false`
+
+</ResponseField>
+
+<ResponseField name="DISABLE_RELAY" type="boolean">
+  Disable relay connections (equivalent to `--disable-relay`)
+
+Set to "true" to disable
+
+**Default**: `false`
+
+</ResponseField>
+
+<ResponseField name="CONFIG_FILE" type="string">
+    Set to the location of a JSON file to load secret values
+</ResponseField>
+
+### Config File
+
+You can use `CONFIG_FILE` to define a location of a config file to store the credentials between runs.
+
+```
+$ cat ~/.config/olm-client/config.json
+{
+  "id": "spmzu8rbpzj1qq6",
+  "secret": "f6v61mjutwme2kkydbw3fjo227zl60a2tsf5psw9r25hgae3",
+  "endpoint": "https://app.pangolin.net",
+  "org": "",
+  "userToken": "",
+  "mtu": 1280,
+  "dns": "8.8.8.8",
+  "upstreamDNS": ["8.8.8.8:53"],
+  "matchDomainsDNS": [],
+  "interface": "olm",
+  "logLevel": "INFO",
+  "enableApi": false,
+  "httpAddr": "",
+  "socketPath": "/var/run/olm.sock",
+  "pingInterval": "3s",
+  "pingTimeout": "5s",
+  "disableHolepunch": false,
+  "overrideDNS": true,
+  "tunnelDNS": false,
+  "disableRelay": false,
+  "tlsClientCert": "",
+  "preferLocalRoutes": false
+}
+```
+
+This file is also written to when olm first starts up. So you do not need to run every time with --id and secret if you have run it once!
+
+Default locations:
+
+- **macOS**: `~/Library/Application Support/olm-client/config.json`
+- **Windows**: `%PROGRAMDATA%\olm\olm-client\config.json`
+- **Linux/Others**: `~/.config/olm-client/config.json`
+
+### API
+
+Olm can be started with a HTTP or socket API to configure and manage it. See the [API documentation](https://github.com/fosrl/olm/blob/main/API.md) for more details.
+
+## Update
+
+Re-run the install script to pull the latest version:
+
+```bash
+curl -fsSL https://static.pangolin.net/get-olm.sh | bash
+```
+
+On Windows, download the latest installer from the [GitHub releases](https://github.com/fosrl/olm/releases/latest). You can also download a binary for your system from the [GitHub releases](https://github.com/fosrl/olm/releases) and replace the existing binary.

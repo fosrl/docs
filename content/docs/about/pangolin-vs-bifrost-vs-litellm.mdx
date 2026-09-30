@@ -25,7 +25,7 @@ That is the justification in Pangolin terms: an identity-aware gateway, not only
 
 **[Bifrost](https://www.getmaxim.ai/bifrost)** is a dedicated LLM gateway focused on complex routing rules, failover, and performance. For example, you can use it to route requests to different models based on the user's location or the request's content. You can also run it downstream of Pangolin as a [Custom provider](/manage/ai/providers/custom/bifrost) when Pangolin should authenticate callers and Bifrost should pick models.
 
-**Pangolin** provides the same gateway job as a [protocol-aware resource](/about/how-pangolin-works#ai-gateway). Providers, model lists, [virtual API keys](/manage/ai/virtual-api-keys) on public resources, budgets, and session logs are all there. Identity comes from Pangolin users, roles, and (for private AI gateway resources) the [desktop client](/manage/clients/install-client). Site and client tunnels are how you reach self-hosted models and how you keep provider keys off laptops.
+**Pangolin** provides the same gateway job as a [protocol-aware resource](/about/how-pangolin-works#ai-gateway). Providers, model lists, [virtual API keys](/manage/ai/virtual-api-keys) on public resources, budgets, and session logs are all there. Identity comes from Pangolin users, roles, and (for private AI gateway resources) the [desktop client](/manage/clients/platforms). Site and client tunnels are how you reach self-hosted models and how you keep provider keys off laptops.
 
 ## Identity-Aware Gateway
 
@@ -33,7 +33,7 @@ Access follows the resource. You grant [users and roles](/manage/access-control/
 
 On a [public AI Gateway](/manage/resources/public/ai-gateway), coding agents send a [virtual API key](/manage/ai/virtual-api-keys). Pangolin identity keys identify the user; you grant the user or role, not the key.
 
-On a [private AI Gateway](/manage/resources/private/ai-gateway), the [Pangolin client](/manage/clients/install-client) running on the end user's device already authenticated that user. Coding agents on that device call over the tunnel fully privately. Pangolin attributes the request to the connected identity. That eliminates provider API keys on the laptop: the upstream key never leaves the provider.
+On a [private AI Gateway](/manage/resources/private/ai-gateway), the [Pangolin client](/manage/clients/platforms) running on the end user's device already authenticated that user. Coding agents on that device call over the tunnel fully privately. Pangolin attributes the request to the connected identity. That eliminates provider API keys on the laptop: the upstream key never leaves the provider.
 
 ## Virtual API Keys
 

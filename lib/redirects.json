@@ -83,5 +83,50 @@
     "source": "/self-host/purchase-license-key",
     "destination": "/self-host/enterprise-edition/purchase-license-key",
     "permanent": true
+  },
+  {
+    "source": "/manage/clients/install-client",
+    "destination": "/manage/clients/platforms",
+    "permanent": true
+  },
+  {
+    "source": "/manage/clients/update-client",
+    "destination": "/manage/clients/platforms",
+    "permanent": true
+  },
+  {
+    "source": "/manage/clients/configure-client",
+    "destination": "/manage/clients/platforms",
+    "permanent": true
+  },
+  {
+    "source": "/manage/clients/configure-client/windows",
+    "destination": "/manage/clients/platforms/windows",
+    "permanent": true
+  },
+  {
+    "source": "/manage/clients/configure-client/mac",
+    "destination": "/manage/clients/platforms/mac",
+    "permanent": true
+  },
+  {
+    "source": "/manage/clients/configure-client/ios",
+    "destination": "/manage/clients/platforms/ios",
+    "permanent": true
+  },
+  {
+    "source": "/manage/clients/configure-client/android",
+    "destination": "/manage/clients/platforms/android",
+    "permanent": true
+  },
+  {
+    "source": "/manage/clients/configure-client/cli",
+    "destination": "/manage/clients/platforms/cli",
+    "permanent": true
+  },
+  {
+    "source": "/manage/clients/configure-client/olm",
+    "destination": "/manage/clients/platforms/olm",
+    "permanent": true
   }
 ]

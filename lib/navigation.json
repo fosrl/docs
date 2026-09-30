@@ -82,10 +82,19 @@
           "pages": [
             "manage/clients/understanding-clients",
             "manage/clients/nat-traversal",
-            "manage/clients/install-client",
-            "manage/clients/configure-client",
+            {
+              "group": "Platforms",
+              "index": "manage/clients/platforms",
+              "pages": [
+                "manage/clients/platforms/windows",
+                "manage/clients/platforms/mac",
+                "manage/clients/platforms/ios",
+                "manage/clients/platforms/android",
+                "manage/clients/platforms/cli",
+                "manage/clients/platforms/olm"
+              ]
+            },
             "manage/clients/client-logs",
-            "manage/clients/update-client",
             "manage/clients/subnet-router",
             "manage/clients/credentials",
             "manage/clients/fingerprinting",
@@ -329,8 +338,8 @@
         },
         {
           "group": "Enterprise Edition",
+          "index": "self-host/enterprise-edition",
           "pages": [
-            "self-host/enterprise-edition",
             "self-host/enterprise-edition/personal-use",
             "self-host/enterprise-edition/commercial-use",
             "self-host/enterprise-edition/features",
