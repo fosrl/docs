@@ -1,0 +1,86 @@
+---
+title: "Activate a License"
+description: "Switch to the Enterprise Edition image and activate a license key"
+---
+
+Use these steps after you have a license key from [personal use](/self-host/enterprise-edition/personal-use) or [commercial use](/self-host/enterprise-edition/commercial-use). A new install and an existing Community Edition server follow the same path.
+
+If you install with the [quick installer](/self-host/quick-install), it asks whether you want Enterprise Edition and writes the image for you. You still add the license key once the stack is up.
+
+<Steps>
+<Step title="Get a license key">
+  [Apply for a free license](/self-host/enterprise-edition/personal-use) or [purchase a commercial license](/self-host/enterprise-edition/purchase-license-key), depending on your organization's revenue.
+</Step>
+
+<Step title="Use the Enterprise image">
+  In Docker Compose, the default SQLite image is:
+
+  ```yaml
+  services:
+    pangolin:
+      image: fosrl/pangolin:ee-latest  # Enterprise Edition (SQLite)
+      # ... rest of configuration
+  ```
+
+  If you run PostgreSQL, use the Enterprise PostgreSQL image instead:
+
+  ```yaml
+  services:
+    pangolin:
+      image: fosrl/pangolin:ee-postgresql-latest  # Enterprise Edition (PostgreSQL)
+      # ... rest of configuration
+  ```
+
+  <Warning>
+  The Enterprise tags are `ee-latest` for SQLite and `ee-postgresql-latest` for PostgreSQL. They are different images from Community Edition (`fosrl/pangolin:latest` and `fosrl/pangolin:postgresql-latest`).
+  </Warning>
+</Step>
+
+<Step title="Restart the stack">
+  ```bash
+  sudo docker compose down && sudo docker compose up -d
+  ```
+</Step>
+
+<Step title="Activate your license key">
+  Log in with server admin credentials, open the Server Admin panel, and go to the License section at `/admin/license`. Enter the key exactly as you received it. That binds the key to this server's [host ID](#host-id).
+</Step>
+
+<Step title="Verify activation">
+  Confirm the host shows as licensed. If it shows **Unlicensed** while the key itself is valid, check [License limits](/self-host/enterprise-edition/limits).
+</Step>
+</Steps>
+
+## Host ID
+
+Activating a key binds it to this server. The License page shows the host ID that binding uses, and a key can only be active on one host at a time.
+
+If you rebuild the server, it often comes back with a new host ID. The key is still bound to the old one, so it will not register again until you clear that binding. In your [Pangolin account](https://app.pangolin.net), open the license table, click the three dots on that license, and reset the associated server. Then activate the key on the new host.
+
+## Troubleshooting
+
+<AccordionGroup>
+<Accordion title="Admin panel still shows Community Edition">
+  You're likely running the Community Edition Docker image. Confirm your `docker-compose.yml` uses an Enterprise tag: `fosrl/pangolin:ee-latest` for SQLite, or `fosrl/pangolin:ee-postgresql-latest` if you run PostgreSQL. You can pin a version the same way, for example `fosrl/pangolin:ee-1.14.1` or `fosrl/pangolin:ee-postgresql-1.14.1`. Restart the stack after changing the image:
+
+  ```bash
+  sudo docker compose down && sudo docker compose up -d
+  ```
+
+  Check container logs if the issue persists:
+
+  ```bash
+  sudo docker compose logs pangolin
+  ```
+</Accordion>
+
+<Accordion title="No License section in the admin panel">
+  The License section only appears when the Enterprise Edition image is running. Switch to the `ee` image and restart the stack. See the accordion above.
+</Accordion>
+
+<Accordion title="Enterprise settings are missing after activation">
+  Some features require a valid activated license and additional configuration. Branding and certain identity provider settings need a [`privateConfig.yml`](/self-host/advanced/private-config-file) file mounted in your container. Verify the host license is valid, then check the docs for the feature you are enabling.
+
+  If the key is valid and the host still shows **Unlicensed**, you are over a [user or site limit](/self-host/enterprise-edition/limits).
+</Accordion>
+</AccordionGroup>

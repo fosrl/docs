@@ -1,0 +1,103 @@
+---
+title: "Enterprise Edition FAQ"
+description: "Common questions about Enterprise Edition licensing, editions, and limits"
+---
+
+<AccordionGroup>
+<Accordion title="What features does Enterprise Edition include?">
+  See [Features](/self-host/enterprise-edition/features). The Self-Hosted table on the pricing page is the list of what each plan includes.
+</Accordion>
+
+<Accordion title="What are Paid Features?">
+  Paid Features are the capabilities unlocked by Enterprise Edition with a valid license key. Who pays depends on revenue: [personal use](/self-host/enterprise-edition/personal-use) is free under the threshold, and [commercial use](/self-host/enterprise-edition/commercial-use) is paid above it. The feature list is on the [features page](/self-host/enterprise-edition/features).
+</Accordion>
+
+<Accordion title="Can I use Enterprise Edition for personal projects?">
+  Yes. Individuals and small organizations under the $100,000 USD revenue threshold can use Enterprise Edition for personal projects at no cost. [Apply for a free license](/self-host/enterprise-edition/personal-use).
+</Accordion>
+
+<Accordion title="Why would a business pay for self-hosted Enterprise Edition?">
+  Paid tiers raise limits and unlock the capabilities listed in the [feature comparison](/self-host/enterprise-edition/features). [Commercial use](/self-host/enterprise-edition/commercial-use) covers how to buy a Starter, Scale, or custom license.
+</Accordion>
+
+<Accordion title="Is self-hosted Enterprise Edition the same as Pangolin Cloud?">
+  Self-hosted Enterprise Edition runs on your own infrastructure with a license key on the `ee` Docker image. [Pangolin Cloud](https://app.pangolin.net/auth/signup) is a managed hosting option with its own tab on the [pricing page](https://pangolin.net/pricing#Self-Hosted). Both offer advanced features. The deployment model is different.
+</Accordion>
+
+<Accordion title="Is Enterprise Edition opt-in?">
+  Yes. You can keep using Community Edition. Enterprise Edition means switching to the `ee` Docker image and activating a license key. See [Activate a license](/self-host/enterprise-edition/activate).
+</Accordion>
+
+<Accordion title="Can I switch between editions?">
+  Switching is a container swap. Update the Docker image in your `docker-compose.yml` and restart the stack.
+
+  - To Enterprise: `fosrl/pangolin:ee-latest` (or a pinned `ee-<version>` tag), then activate your license key at `/admin/license`
+  - To Community: `fosrl/pangolin:latest` (or a pinned community tag)
+
+  Community and Enterprise Edition share the same database schema, so there is no data migration. Enterprise-only features are disabled on the Community image.
+
+  <Tip>
+  Back up your database and configuration before switching editions.
+  </Tip>
+</Accordion>
+
+<Accordion title="Can I downgrade from Enterprise to Community Edition?">
+  Yes. Change the Docker image from `fosrl/pangolin:ee-latest` to `fosrl/pangolin:latest` (or the matching community version tag), then restart:
+
+  ```bash
+  sudo docker compose down && sudo docker compose up -d
+  ```
+
+  The database schema is the same, so existing data stays. Enterprise-only features are disabled on the Community image.
+
+  <Tip>
+  Back up your database and configuration before switching.
+  </Tip>
+</Accordion>
+
+<Accordion title="What happens if my license expires?">
+  Enterprise features are disabled. Renew the license to turn them back on. This is separate from going over a [user or site limit](/self-host/enterprise-edition/limits), which can show the same red banner while the key itself is still valid.
+</Accordion>
+
+<Accordion title="The banner says my license is invalid, but the key shows as valid. What does that mean?">
+  The red banner reads:
+
+  > Invalid or expired license keys detected. Follow license terms to continue using all features.
+
+  If the key row is valid and the host shows **Unlicensed**, the usual cause is too many registered users or too many sites. Read [License limits](/self-host/enterprise-edition/limits) before you clear or re-register the key. Re-registering does not fix a capacity violation.
+</Accordion>
+
+<Accordion title="Do machine clients count toward the user limit?">
+  No. Machine clients that authenticate with an ID and secret, and are not tied to a user account, do not count. Devices attached to a person do not count separately either. The registered account does. Details are on [License limits](/self-host/enterprise-edition/limits).
+</Accordion>
+
+<Accordion title="Do archived or blocked users count?">
+  Yes, until you delete the account. Archiving or blocking a device leaves the account in place, and that account still counts.
+</Accordion>
+
+<Accordion title="Does a user in more than one organization count once?">
+  Once. The limit is accounts on the server, not memberships.
+</Accordion>
+
+<Accordion title="How many license keys do I need?">
+  One key per Pangolin server. A server is one database. You cannot share a single key across multiple servers.
+
+  You can put more than one key on the same server. Capacity adds together. See [License limits](/self-host/enterprise-edition/limits).
+</Accordion>
+
+<Accordion title="Can I get a trial license?">
+  Businesses that need a paid license can request a free limited trial from [sales@pangolin.net](mailto:sales@pangolin.net). Include your organization details and which features you want to evaluate.
+</Accordion>
+
+<Accordion title="What if I'm unsure about my license type?">
+  Email [sales@pangolin.net](mailto:sales@pangolin.net) with your organization details.
+</Accordion>
+
+<Accordion title="Are there special terms for educational institutions, non-profits, or government organizations?">
+  No. Educational institutions, non-profits, and government organizations follow the same license terms as everyone else and are not considered personal use. There are no separate exceptions. We do offer discounted pricing for some non-profits and government organizations.
+
+  <Info>
+  If you have questions about how your organization's revenue is calculated, contact [sales@pangolin.net](mailto:sales@pangolin.net).
+  </Info>
+</Accordion>
+</AccordionGroup>

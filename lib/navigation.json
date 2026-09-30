@@ -327,7 +327,19 @@
             "self-host/community-guides/geolite2automation"
           ]
         },
-        "self-host/enterprise-edition"
+        {
+          "group": "Enterprise Edition",
+          "pages": [
+            "self-host/enterprise-edition",
+            "self-host/enterprise-edition/personal-use",
+            "self-host/enterprise-edition/commercial-use",
+            "self-host/enterprise-edition/features",
+            "self-host/enterprise-edition/limits",
+            "self-host/enterprise-edition/activate",
+            "self-host/enterprise-edition/purchase-license-key",
+            "self-host/enterprise-edition/faq"
+          ]
+        }
       ]
     },
     {

@@ -78,5 +78,10 @@
     "source": "/manage/ai/openclaw",
     "destination": "/manage/ai/configure-ai-clients/openclaw",
     "permanent": false
+  },
+  {
+    "source": "/self-host/purchase-license-key",
+    "destination": "/self-host/enterprise-edition/purchase-license-key",
+    "permanent": true
   }
 ]

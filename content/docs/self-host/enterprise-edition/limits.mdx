@@ -1,0 +1,49 @@
+---
+title: "License Limits"
+description: "How Enterprise Edition counts users and sites, and what happens when you go over"
+---
+
+A self-hosted Enterprise license has two capacity numbers: **users** and **sites**. The quantities are on your license key. Published tier ceilings are on the [Self-Hosted pricing page](https://pangolin.net/pricing#Self-Hosted). This page explains how those numbers are counted.
+
+The host license is invalid when registered users **exceed** the user quantity, or sites **exceed** the site quantity. Matching the limit exactly is allowed.
+
+## How users are counted
+
+Every registered account counts, whether or not that person has ever connected a device or is online right now.
+
+The count is one row per account on the server, across every organization. A person who belongs to more than one organization counts **once**. Server admin accounts count, because they are accounts on the server.
+
+Accounts that have never registered a device or logged in still count. Archiving or blocking a device does not remove the account.
+
+### What does not count as a user
+
+- **Machine clients** authenticate with an ID and secret and are not tied to a user account. They do not count.
+- **Person clients** (devices) do not count on their own. The account they belong to is what counts, even if that account has several devices.
+- **Concurrent sessions** are not checked against the license.
+
+## How sites are counted
+
+Every site on the server counts, across every organization.
+
+## Where to see the numbers
+
+- **Server Admin**, **Users** (`/admin/users`): the flattened account list for the whole server, not per organization.
+- **Server Admin**, **License** (`/admin/license`): usage against the key, shown as used users out of the licensed maximum, and the same for sites.
+
+## More than one key on the same server
+
+Each Pangolin server (one database) needs its own license. You cannot share one key across servers.
+
+You can activate more than one key on the **same** server. User quantities add together, and site quantities add together. The host uses the highest tier among the valid keys.
+
+A personal-use key does not add capacity when a paid key is also active on that server. The personal key is ignored for the totals.
+
+## When you are over the limit
+
+The key itself can still say valid. The host shows **Unlicensed**, and a red banner sits along the bottom of the dashboard:
+
+> Invalid or expired license keys detected. Follow license terms to continue using all features.
+
+Enterprise features that need a valid license stay unavailable until you are back within the quantities on the key, and a license left over the limit can be revoked.
+
+Delete accounts or sites until you are at or under the licensed quantity, or add capacity with a higher tier or another key on the same server. See [Commercial use](/self-host/enterprise-edition/commercial-use).
