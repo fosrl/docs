@@ -84,7 +84,7 @@ The access model stays the same while the protocol changes.
   <img src="/images/public-resources.png" alt="Manage Public Resources page in the Pangolin dashboard"/>
 </Frame>
 
-[Private resources](/manage/resources/understanding-resources#private-resource-types) require a [Pangolin client](/manage/clients/install-client) connection and stay off the public internet. They are for VPN-like, fully private access to resources on your remote network.
+[Private resources](/manage/resources/understanding-resources#private-resource-types) require a [Pangolin client](/manage/clients/platforms) connection and stay off the public internet. They are for VPN-like, fully private access to resources on your remote network.
 
 <Frame caption="Private resources in the dashboard: hosts, HTTP, SSH, and CIDR ranges with destinations and aliases.">
   <img src="/images/private-resources.png" alt="Manage Private Resources page in the Pangolin dashboard"/>
@@ -138,13 +138,13 @@ Roles group people for RBAC. You assign roles on each resource, so access follow
 
 Clients are software components installed on user devices or machines. They let users and automated systems connect directly to sites to access [private resources](/manage/resources/understanding-resources#private-resource-types) through a secure tunnel. Clients also enforce access control and security at the edge.
 
-Users authenticate through the client using their [accounts](/manage/access-control/create-user). [Machines](/manage/clients/credentials) connect with credentials. Once connected, users can reach all resources their account has access to. The client handles [routing](/manage/clients/nat-traversal) decisions and establishes encrypted tunnels to the appropriate [sites](/manage/sites/understanding-sites).
+Users authenticate through the client with their [user credentials](/manage/access-control/create-user) in a web login flow. [Machines](/manage/clients/credentials) connect with machine client credentials. Once connected, users can reach all resources their account has access to. The client handles [routing](/manage/clients/nat-traversal) decisions and establishes encrypted tunnels to the appropriate [sites](/manage/sites/understanding-sites).
 
 <Frame caption="User devices in the dashboard, with identity provider, connection status, and client version.">
   <img src="/images/user-devices.png" alt="User Devices page in the Pangolin dashboard"/>
 </Frame>
 
-Clients are available on [all major platforms](/manage/clients/install-client). They work transparently with applications, so no application configuration is required.
+Clients are available on [all major platforms](/manage/clients/platforms). They work transparently with applications, so no application configuration is required.
 
 <Card title="Download Pangolin clients" icon="download" href="https://pangolin.net/downloads" arrow="true">
   Get the client for Mac, Windows, Linux, iOS, and Android.
@@ -170,7 +170,7 @@ Access is identity-based. You grant users and roles on the resource the same way
   <img src="/images/ai/expanded-session-logs.png" alt="AI Gateway session logs in the Pangolin dashboard"/>
 </Frame>
 
-A [private AI Gateway](/manage/resources/private/ai-gateway) uses the [Pangolin client](/manage/clients/install-client) the same way every other private resource does. The client running on the end user's device already authenticated that user. Coding agents on that device call the resource over the tunnel, and Pangolin attributes the request to the connected identity. That eliminates provider API keys on the laptop: the upstream key stays on the [provider](/manage/ai/providers/overview).
+A [private AI Gateway](/manage/resources/private/ai-gateway) uses the [Pangolin client](/manage/clients/platforms) the same way every other private resource does. The client running on the end user's device already authenticated that user. Coding agents on that device call the resource over the tunnel, and Pangolin attributes the request to the connected identity. That eliminates provider API keys on the laptop: the upstream key stays on the [provider](/manage/ai/providers/overview).
 
 <Card title="Read more about AI Gateway" icon="sparkles" href="/manage/ai/overview">
   Set up providers, resources, and identity-based access for coding agents and AI clients.

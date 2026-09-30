@@ -12,6 +12,8 @@ type NavItem = string | NavGroup;
 interface NavGroup {
   group: string;
   icon?: string;
+  /** When set, the folder label links to this page (usually the folder index). */
+  index?: string;
   pages: NavItem[];
 }
 
@@ -51,11 +53,13 @@ function buildItems(items: NavItem[], idPrefix: string): PageTree.Node[] {
     }
 
     const id = `${idPrefix}/${item.group}`;
+    const index = item.index ? pageNode(item.index) : null;
     out.push({
       $id: id,
       type: 'folder',
       name: item.group,
       icon: item.icon ? <Icon name={item.icon} /> : undefined,
+      index: index ?? undefined,
       children: buildItems(item.pages, id),
     });
   }
@@ -84,7 +88,10 @@ export function getOrderedPagePaths(): string[] {
   function walk(items: NavItem[]) {
     for (const item of items) {
       if (typeof item === 'string') seen.add(item);
-      else walk(item.pages);
+      else {
+        if (item.index) seen.add(item.index);
+        walk(item.pages);
+      }
     }
   }
   walk(navigation.groups as NavGroup[]);

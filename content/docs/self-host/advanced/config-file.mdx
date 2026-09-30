@@ -38,12 +38,6 @@ server:
         allowed_headers: ["X-CSRF-Token", "Content-Type"]
         credentials: false
 
-# Optional organization network settings (defaults shown):
-# orgs:
-#     block_size: 24
-#     subnet_group: "100.90.128.0/20"
-#     utility_subnet_group: "100.96.128.0/20"
-
 flags:
     require_email_verification: false
     disable_signup_without_invite: true
@@ -303,6 +297,40 @@ This section contains the complete reference for all configuration options in `c
       <Tip>
         Use `1` if running behind a single reverse proxy like Traefik.
       </Tip>
+    </ResponseField>
+
+    <ResponseField name="trust_ips" type="array of strings">
+      IP ranges, in CIDR format, of the upstream proxies or load balancers that Badger trusts to supply the real client IP.
+
+      **Example**: `["10.0.0.0/8", "172.16.0.0/12"]`
+
+      **Default**: `[]`
+
+      <Note>
+        By default Badger trusts Cloudflare's IP ranges and reads the client IP from the `CF-Connecting-IP` header. Setting one or more ranges here replaces the Cloudflare ranges, so only the ranges you list are trusted. Use this when a proxy other than Cloudflare sits in front of Pangolin.
+      </Note>
+
+      <Warning>
+        Only list addresses of proxies you control. Any request arriving from a trusted range can set the client IP that Pangolin uses for rules and logging.
+      </Warning>
+    </ResponseField>
+
+    <ResponseField name="custom_ip_header" type="string">
+      Name of the HTTP header Badger reads the real client IP from when a request arrives from a trusted IP range.
+
+      **Example**: `X-Real-Ip`
+
+      **Default**: `""` (uses `CF-Connecting-IP`)
+
+      <Note>
+        The header is only honored for requests from a trusted source: the ranges in `trust_ips`, or Cloudflare's ranges when `trust_ips` is empty. The header value is used as-is, so choose a header your proxy sets to a single IP address. If the header is missing, Badger falls back to `CF-Connecting-IP` and then to the connection's remote address.
+      </Note>
+
+      ```yaml
+      server:
+          trust_ips: ["10.0.0.0/8"]
+          custom_ip_header: "X-Real-Ip"
+      ```
     </ResponseField>
 
     <ResponseField name="enable_ai_gateway_client_ip_header" type="boolean">

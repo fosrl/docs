@@ -63,6 +63,7 @@
               "pages": [
                 "manage/resources/private/host",
                 "manage/resources/private/cidr",
+                "manage/resources/private/exit-node",
                 "manage/resources/private/private-http",
                 "manage/resources/private/ai-gateway",
                 "manage/resources/private/ssh",
@@ -81,10 +82,20 @@
           "pages": [
             "manage/clients/understanding-clients",
             "manage/clients/nat-traversal",
-            "manage/clients/install-client",
-            "manage/clients/configure-client",
+            {
+              "group": "Platforms",
+              "index": "manage/clients/platforms",
+              "pages": [
+                "manage/clients/platforms/windows",
+                "manage/clients/platforms/mac",
+                "manage/clients/platforms/ios",
+                "manage/clients/platforms/android",
+                "manage/clients/platforms/cli",
+                "manage/clients/platforms/olm"
+              ]
+            },
             "manage/clients/client-logs",
-            "manage/clients/update-client",
+            "manage/clients/subnet-router",
             "manage/clients/credentials",
             "manage/clients/fingerprinting",
             "manage/clients/archiving-blocking",
@@ -325,7 +336,19 @@
             "self-host/community-guides/geolite2automation"
           ]
         },
-        "self-host/enterprise-edition"
+        {
+          "group": "Enterprise Edition",
+          "index": "self-host/enterprise-edition",
+          "pages": [
+            "self-host/enterprise-edition/personal-use",
+            "self-host/enterprise-edition/commercial-use",
+            "self-host/enterprise-edition/features",
+            "self-host/enterprise-edition/limits",
+            "self-host/enterprise-edition/activate",
+            "self-host/enterprise-edition/purchase-license-key",
+            "self-host/enterprise-edition/faq"
+          ]
+        }
       ]
     },
     {

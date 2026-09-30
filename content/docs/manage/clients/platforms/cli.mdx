@@ -1,0 +1,331 @@
+---
+title: "Pangolin CLI"
+description: "Install, configure, and update Pangolin CLI on Linux, macOS, and Windows"
+---
+
+Pangolin CLI is the recommended way to run a client using a command line interface on Mac and Linux.
+
+Pangolin CLI can run on Windows, but the CLI VPN functionality is not supported. With [companion mode](#companion-mode), connect in the Windows app and use the CLI for commands such as SSH, on the same account, without a second login.
+
+Pangolin CLI supports running as a user device with authentication or a machine client.
+
+The CLI stores its own defaults in a config file.
+
+Refer to the [documentation in the official repository](https://github.com/fosrl/cli/blob/main/docs/pangolin.md) for the available commands, default values, and more.
+
+## Install
+
+Use this command to automatically install Pangolin CLI. It detects your system architecture automatically and always pulls the latest version, adding `pangolin` to your PATH:
+
+```bash
+curl -fsSL https://static.pangolin.net/get-cli.sh | bash
+```
+
+On Windows, [download the latest installer](https://github.com/fosrl/cli/releases/latest/download/pangolin-cli_windows_installer.msi), or choose to install the CLI from menu bar of the desktop app by choosing the "Install Pangolin CLI" option.
+
+Binaries for all platforms are available in the [GitHub releases](https://github.com/fosrl/cli/releases) for ARM and AMD64 (x86_64) architectures.
+
+### Installation Steps
+
+1. **Download and install the Pangolin client**
+
+   Install Pangolin using the installation script:
+
+   ```bash
+   curl -fsSL https://static.pangolin.net/get-cli.sh | bash
+   ```
+
+2. **Log in with your Pangolin account**
+
+   Log in on your Pangolin Cloud account or your self-hosted Pangolin instance:
+
+   ```bash
+   pangolin login
+   ```
+
+3. **Start Pangolin**
+
+   When logged in as a Pangolin user, connect by running:
+
+   ```bash
+   pangolin up
+   ```
+
+   To launch a machine client without logging in, use your client credentials:
+
+   ```bash
+   pangolin up --id {client_id} --secret {client_secret} --endpoint {endpoint_url} --attach
+   ```
+
+   <Tip>
+   The `--attach` flag runs the client in the foreground instead of spawning it as a background process.
+   </Tip>
+
+### Machine Clients
+
+Machine clients don't require a login and are built for machines like services to be able to connect to private resources. Like sites, they have an ID and a secret.
+
+#### Run as a Service
+
+The CLI can install and manage a service on your host machine for you. This supports Windows services, MacOS's launchd, and Linux's systemd to create a persistent site connection from that host. 
+
+```bash
+sudo pangolin service install client \
+--id 31frd0uzbjvp721 \
+--secret h51mmlknrvrwv8s4r1i210azhumt6isgbpyavxodibx1k2d6 \
+--endpoint https://app.pangolin.net
+```
+
+Check the service status:
+
+```bash
+sudo pangolin service status client
+```
+
+And to get the logs: 
+
+```bash
+sudo pangolin service logs client
+```
+
+#### Systemd Service (Pangolin CLI)
+
+Create a basic systemd service for Pangolin CLI:
+
+```ini title="/etc/systemd/system/pangolin-cli.service"
+[Unit]
+Description=Pangolin CLI
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/pangolin up --id {client_id} --secret {client_secret} --endpoint {endpoint_url} --attach
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
+```
+
+<Warning>
+Make sure to move the binary to `/usr/local/bin/pangolin` before creating the service. Replace `{client_id}`, `{client_secret}`, and `{endpoint_url}` with your machine client credentials and endpoint.
+</Warning>
+
+#### Docker (Pangolin CLI)
+
+You can run Pangolin CLI with Docker Compose. For example, a service in your `docker-compose.yml` might look like this using environment variables (recommended):
+
+```yaml
+services:
+  pangolin-cli:
+    image: fosrl/pangolin-cli:latest
+    container_name: pangolin-cli
+    restart: unless-stopped
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      - PANGOLIN_ENDPOINT=https://app.pangolin.net
+      - CLIENT_ID=5n52gnzfgl3tdox
+      - CLIENT_SECRET=wyael1dhftekp0ii2ni0ym6xczwjnwmucy2vr6u9kgkp8tw9
+```
+
+You can also pass the CLI args to the container:
+
+```yaml
+services:
+  pangolin-cli:
+    image: fosrl/pangolin-cli:latest
+    container_name: pangolin-cli
+    restart: unless-stopped
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    command:
+      - up
+      - --id
+      - "5n52gnzfgl3tdox"
+      - --secret
+      - "wyael1dhftekp0ii2ni0ym6xczwjnwmucy2vr6u9kgkp8tw9"
+      - --endpoint
+      - https://app.pangolin.net
+      - --attach
+```
+
+**Docker Configuration Notes:**
+
+- `network_mode: host` brings the Pangolin CLI network interface to the host system, allowing the WireGuard tunnel to function properly
+- `cap_add: - NET_ADMIN` is required to grant the container permission to manage network interfaces
+- `devices: - /dev/net/tun:/dev/net/tun` is required to give the container access to the TUN device for creating WireGuard interfaces
+
+<Note>
+Deploying in Kubernetes? See [Kubernetes Deployment](/manage/clients/kubernetes/deployment) for a basic guide, including how to run the client as a sidecar container.
+</Note>
+
+## Companion Mode
+
+Companion mode lets Pangolin CLI use the [Windows desktop app](/manage/clients/platforms/windows#companion-mode) for authentication and the tunnel. Log in and connect in the desktop app, then run CLI commands as that same account. You do not run `pangolin login` separately.
+
+Companion mode is available on Windows only, and it requires Pangolin for Windows 0.11.0 or later. On macOS and Linux the CLI keeps its own login, and `pangolin companion` is not available. On Windows, companion mode is on by default.
+
+### SSH through the desktop connection
+
+1. Log in and connect with the Windows client.
+2. SSH to a [private SSH resource](/manage/resources/private/ssh):
+
+```bash
+pangolin ssh username@alias
+```
+
+The CLI uses the desktop app's session and the tunnel that app already opened. `pangolin scp` works the same way.
+
+### Commands
+
+Enable companion mode. This takes effect on the next `pangolin` command:
+
+```bash
+pangolin companion enable
+```
+
+Turn it off and go back to a standalone CLI login:
+
+```bash
+pangolin companion disable
+```
+
+Check whether the desktop app session is ready:
+
+```bash
+pangolin companion status
+```
+
+When the desktop app is logged in, status looks like this:
+
+```text
+Companion mode: enabled
+Client: Pangolin Windows
+Ready: yes
+```
+
+If the desktop app is not logged in, status reports `Ready: no` and tells you to open Pangolin and log in.
+
+With companion mode off, status reports:
+
+```text
+Companion mode: disabled
+Auth source: standalone CLI
+```
+
+### What stays in the desktop app
+
+While companion mode is on, the CLI reads accounts, the active organization, and exit node selection from the desktop app. Change those in the app.
+
+These commands are blocked. The CLI tells you to use the desktop app, or to run `pangolin companion disable`:
+
+- `pangolin login`
+- `pangolin logout`
+- `pangolin select account`
+- `pangolin select org`
+- `pangolin select exit-node`
+
+Other commands, including `pangolin ssh` and `pangolin scp`, run with the desktop app's session. The desktop app has to be open and logged in. If it is not, the CLI asks you to start Pangolin for Windows 0.11.0 or later and log in.
+
+You can also set `disable_companion_mode` in the [CLI config file](#config-file). `true` matches `pangolin companion disable`.
+
+## Configure
+
+<Note>
+DNS, MTU, and other preferences shared across clients are on [Platforms](/manage/clients/platforms#shared-preferences).
+</Note>
+
+### Config File
+
+The Pangolin CLI stores persistent settings in `~/.config/pangolin/config.json` on every platform. When the CLI is run with `sudo`, it uses the home directory of the user who invoked `sudo`, so the same file applies with and without it. Run `pangolin config path` to print the exact location.
+
+<ResponseField name="Config" type="object">
+  JSON configuration for the Pangolin CLI stored in `config.json`.
+
+  <Expandable title="Config">
+    <ResponseField name="log_level" type="string">
+      Controls CLI log verbosity. Supported values are `debug` and `info`. If omitted, the default is `info`.
+    </ResponseField>
+
+    <ResponseField name="log_file" type="string">
+      Path of the client log file. If omitted, the default is `~/.config/pangolin/logs/client.log`. This key can only be changed by editing the file; it is not available through `pangolin config set`.
+    </ResponseField>
+
+    <ResponseField name="disable_update_check" type="boolean">
+      When true, the CLI does not check for new versions. If omitted, the default is `false`, except in builds distributed through a package manager, where it is `true`.
+    </ResponseField>
+
+    <ResponseField name="disable_companion_mode" type="boolean">
+      When true, the CLI uses its own standalone authentication instead of [companion mode](#companion-mode), where login, accounts, organizations, and exit node selection are managed by the Pangolin desktop app. If omitted, the default is `false`, so companion mode is on. This only applies on Windows.
+    </ResponseField>
+
+    <ResponseField name="companion_app_data_dirs" type="object">
+      Overrides where the CLI looks for the desktop app's data directory in companion mode. Accepts a `windows` and a `darwin` path. Most installations should leave this unset. This key can only be changed by editing the file.
+    </ResponseField>
+
+    <ResponseField name="session_cookie_name" type="string">
+      Overrides the cookie name used for the CLI's session token. Most deployments should leave this unset.
+    </ResponseField>
+
+    <ResponseField name="up.override_dns" type="boolean">
+      Default for `--override-dns`. When true, matches the [Enable Aliases (Override DNS)](/manage/clients/platforms#enable-aliases-override-dns) preference and lets the client take over DNS resolution for Pangolin resources. If omitted, the default is `true`.
+    </ResponseField>
+
+    <ResponseField name="up.tunnel_dns" type="boolean">
+      Default for `--tunnel-dns`. When true, matches the [DNS Over Tunnel](/manage/clients/platforms#dns-over-tunnel) preference and sends DNS queries through the Pangolin tunnel. If omitted, the default is `false`.
+    </ResponseField>
+
+    <ResponseField name="up.upstream_dns" type="array of strings">
+      Default for `--upstream-dns`. Upstream DNS servers used when override/tunnel DNS is enabled. With `pangolin config set`, pass a comma-separated list such as `10.0.0.53,10.0.0.54`.
+    </ResponseField>
+
+    <ResponseField name="up.match_domains_dns" type="array of strings">
+      Default for `--match-domains`. Optional whitelist of domains sent to the configured upstream DNS server. When unset, all queries go to upstream DNS. When set, only matching queries use your Upstream DNS Server; all other requests use the system's DNS servers. Supports wildcards such as `*.proxy.internal`. With `pangolin config set`, pass a comma-separated list.
+    </ResponseField>
+
+    <ResponseField name="up.prefer_local_routes" type="boolean">
+      Default for `--prefer-local-routes`. When true, prioritizes local routes over remote ones by adding an arbitrary metric to the WireGuard routes. This is useful when you want to ensure that local network traffic (for example, to a printer or NAS) is not routed through the Pangolin tunnel. If omitted, the default is `false`.
+    </ResponseField>
+
+    <ResponseField name="up.exit_node_takes_precedence" type="boolean">
+      Default for `--exit-node-takes-precedence`. When true, matches the [Exit Nodes Take Precedence Over Resources](/manage/clients/platforms#exit-nodes-take-precedence-over-resources) preference. While connected through an exit node, routes for other resources are not added and their aliases are not resolved, so all traffic flows through the exit node. If omitted, the default is `false`.
+    </ResponseField>
+
+  </Expandable>
+</ResponseField>
+
+## Update
+
+Find the latest version in the [GitHub releases](https://github.com/fosrl/cli/releases).
+
+### Automatic Updates
+
+If you already have Pangolin CLI installed, use the update command:
+
+```bash
+pangolin update
+```
+
+Or you can re-run the installation script:
+
+```bash
+curl -fsSL https://static.pangolin.net/get-cli.sh | bash
+```
+
+### Manual Updates
+
+Download the latest binary for your system from [GitHub releases](https://github.com/fosrl/cli/releases) and replace your existing binary.
+
+```bash
+wget -O pangolin "https://github.com/fosrl/cli/releases/download/{version}/pangolin-cli_{architecture}" && chmod +x ./pangolin
+```
+
+<Note>
+Replace `{version}` with the desired version and `{architecture}` with your architecture. Check the [release notes](https://github.com/fosrl/cli/releases) for the latest information.
+</Note>

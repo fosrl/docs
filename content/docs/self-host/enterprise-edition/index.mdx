@@ -1,0 +1,55 @@
+---
+title: "Enterprise Edition"
+description: "Licensing, plans, and how to get started with self-hosted Enterprise Edition"
+---
+
+When self-hosting Pangolin, you can run the **Community Edition** or the **Enterprise Edition**. Both editions provide the same core functionality. Enterprise Edition unlocks additional features with a license key on the `ee` Docker image.
+
+<Check>
+Enterprise Edition is **free** for personal use and organizations with **less than $100,000 USD** gross annual revenue. You still need a valid license key to activate it.
+</Check>
+
+<Warning>
+Organizations with **$100,000+ USD** gross annual revenue require a **paid commercial license** to use Enterprise Edition.
+</Warning>
+
+<CardGroup cols={2}>
+<Card title="Personal use" icon="user" href="/self-host/enterprise-edition/personal-use">
+  Free license for individuals and organizations under the revenue threshold.
+</Card>
+
+<Card title="Commercial use" icon="building" href="/self-host/enterprise-edition/commercial-use">
+  Paid licenses for organizations above the revenue threshold.
+</Card>
+
+<Card title="Features" icon="table-list" href="/self-host/enterprise-edition/features">
+  Compare what each plan includes on the pricing page.
+</Card>
+
+<Card title="License limits" icon="chart-bar" href="/self-host/enterprise-edition/limits">
+  How users and sites are counted, and what the red license banner means.
+</Card>
+
+<Card title="Activate a license" icon="key" href="/self-host/enterprise-edition/activate">
+  Switch to the Enterprise image and add your key.
+</Card>
+
+<Card title="Purchase a license" icon="credit-card" href="/self-host/enterprise-edition/purchase-license-key">
+  Buy a Starter or Scale key from the dashboard.
+</Card>
+</CardGroup>
+
+## Hiding Enterprise features on Community Edition
+
+On Community Edition, Enterprise-only capabilities may still appear in the dashboard but remain locked without the `ee` Docker image and a valid license key. To hide those UI elements entirely, set `disable_enterprise_features` under `flags` in your [`config.yml`](/self-host/advanced/config-file):
+
+```yaml
+flags:
+  disable_enterprise_features: true
+```
+
+When enabled, Enterprise-only features are hidden from the UI. Restart the stack after updating the configuration file.
+
+## Support and contact
+
+For licensing questions and quotes, email [sales@pangolin.net](mailto:sales@pangolin.net). Include your organization details and use case.
