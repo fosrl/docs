@@ -32,6 +32,23 @@ description: "Install, configure, and update the Pangolin app for Android"
 DNS, MTU, and other preferences shared across clients are on [Platforms](/manage/clients/platforms#shared-preferences).
 </Note>
 
+### Always-on VPN
+
+Always-on VPN keeps Pangolin connected and brings the tunnel back up if it drops. Connect once in the Pangolin app first so Android lists Pangolin under VPN, then turn it on in system settings:
+
+1. Open the **Settings** app.
+2. Go to **Network & internet**, then **VPN**. On some devices this is under **Connections** > **More connection settings** > **VPN**.
+3. Tap the settings icon next to **Pangolin**.
+4. Turn on **Always-on VPN**.
+
+<Frame caption="Android Always-on VPN Settings">
+    <img
+        src="/images/android_always_on.png"
+        alt="Always-on VPN turned on for Pangolin in Android settings"
+        style={{ width: "250px", height: "auto" }}
+    />
+</Frame>
+
 ### Show Persistent VPN Notification
 
 When enabled, Pangolin keeps a status notification while connected. A temporary notification may still appear when connecting or recovering. Android's own VPN indicators are unaffected.
