@@ -131,6 +131,14 @@ Most keys in the `Config` object below can be set in either file. If the same ke
       When true, matches the **Exit Nodes Take Precedence Over Resources** preference. While connected through an exit node, routes for other resources are not added and their aliases are not resolved, so all traffic flows through the exit node. If omitted, the default is `false`.
     </ResponseField>
 
+    <ResponseField name="openUIAtLogin" type="boolean">
+      When true, opens the Pangolin UI when the user signs in to Windows. If omitted, the default is `false`.
+    </ResponseField>
+
+    <ResponseField name="autoConnectAtLogin" type="boolean">
+      When true, the client connects automatically whenever the app starts. This also opens the Pangolin UI at sign-in, regardless of `openUIAtLogin`. If omitted, the default is `false`.
+    </ResponseField>
+
     <ResponseField name="autoUpdateChecksEnabled" type="boolean">
       **Global only.** When true, periodically check for updates in the background. When false, automatic checks are off; users can still use **Check for Updates** unless that button is also disabled. If omitted, the default is `true`. Enabling checks surfaces the update UI when a new version exists (tray “Pangolin Update Available” and the update prompt). Intended for org admins / MDM so config is the source of truth.
     </ResponseField>
@@ -145,6 +153,10 @@ Most keys in the `Config` object below can be set in either file. If the same ke
 
     <ResponseField name="logLevel" type="string">
       **Global only.** Controls client log verbosity. Supported values include `debug` and `info`. If omitted, the default is `info`.
+    </ResponseField>
+
+    <ResponseField name="sessionCookieName" type="string">
+      Overrides the cookie name the session token is sent and read under. Most deployments should leave this unset.
     </ResponseField>
 
   </Expandable>
@@ -194,6 +206,22 @@ On Mac, the Pangolin GUI reads configuration from `~/Library/Application Support
       MTU for the internal WireGuard interface. Changing this is advanced and not recommended unless you have a clear reason; if you set a non-default value, configure the same MTU on every site this client connects to. See [Configure Sites](/manage/sites/configure-site).
     </ResponseField>
 
+    <ResponseField name="onDemandWiFiEnabled" type="boolean">
+      When true, the client connects on demand whenever the Mac is on Wi-Fi. Use `onDemandSSIDOption` and `onDemandSSIDs` to limit this to specific networks. If omitted, the default is `false`.
+    </ResponseField>
+
+    <ResponseField name="onDemandNonWiFiEnabled" type="boolean">
+      When true, the client connects on demand whenever the Mac is on Ethernet. If omitted, the default is `false`.
+    </ResponseField>
+
+    <ResponseField name="onDemandSSIDOption" type="string">
+      Which Wi-Fi networks on-demand applies to when `onDemandWiFiEnabled` is true. Supported values are `any` (every Wi-Fi network), `only` (just the networks in `onDemandSSIDs`), and `except` (every network other than those in `onDemandSSIDs`). If omitted, or if `onDemandSSIDs` is empty, the default is `any`.
+    </ResponseField>
+
+    <ResponseField name="onDemandSSIDs" type="array of strings">
+      Wi-Fi network names (SSIDs) used by the `only` and `except` modes of `onDemandSSIDOption`.
+    </ResponseField>
+
     <ResponseField name="autoUpdateChecksEnabled" type="boolean">
       When true, periodically check for updates in the background. When false, automatic checks are off; users can still use **Check for Updates**. If omitted, the client default applies (may prompt the user on second launch). Enabling checks without `autoDownloadUpdatesEnabled` still surfaces the update UI when a new version exists. Intended for admin / MDM provisioning so config stays the source of truth over user toggles.
     </ResponseField>
@@ -204,6 +232,10 @@ On Mac, the Pangolin GUI reads configuration from `~/Library/Application Support
 
     <ResponseField name="updateCheckIntervalSeconds" type="integer">
       How often automatic checks run, in seconds. Values below `3600` (1 hour) are clamped to `3600`. Only matters when `autoUpdateChecksEnabled` is true. If omitted, the default is `86400` (24 hours).
+    </ResponseField>
+
+    <ResponseField name="sessionCookieName" type="string">
+      Overrides the cookie name the session token is sent and read under. Most deployments should leave this unset.
     </ResponseField>
 
   </Expandable>
