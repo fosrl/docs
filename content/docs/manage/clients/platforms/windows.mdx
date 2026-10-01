@@ -162,9 +162,11 @@ As a system administrator, you can script placing `pangolin.json` in `%ProgramDa
 
 ### Automatic Updates
 
-The Windows client periodically checks for updates in the background. When an update is available, it requests permission to update. You can also check for updates from the system tray menu, or by restarting the application.
+The Windows client checks for updates automatically in the background. When a new version is available, Pangolin shows a notification and adds **Pangolin Update Available…** to the system tray menu. Open the notification or that menu item to see a dialog asking whether to install the update now.
 
-Once you accept the update, the client downloads the latest version and replaces itself.
+**Install Update** downloads the new version and installs it. Pangolin restarts when the installation finishes, and the tunnel disconnects briefly while that happens. **Later** closes the dialog and leaves the current version in place.
+
+You can also check from the system tray: **More** > **Check for Updates…**.
 
 ### Manual Updates
 

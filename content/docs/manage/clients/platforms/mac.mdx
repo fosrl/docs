@@ -132,9 +132,11 @@ On Mac, the Pangolin GUI reads configuration from `~/Library/Application Support
 
 ### Automatic Updates
 
-The Mac client periodically checks for updates in the background. When an update is available, it requests permission to update. You can also check for updates from the menu bar, or by restarting the application.
+The Mac client checks for updates in the background. The second time you open Pangolin, it asks whether to keep checking automatically. You can also check from the menu bar: **More** > **Check for Updates…**.
 
-Once you accept the update, the client downloads the latest version and replaces itself.
+When an update is available, Pangolin shows a dialog and asks to install it. After you accept, it downloads the new version and installs it.
+
+Automatic installation can be turned on from that dialog, or by setting `autoDownloadUpdatesEnabled` to `true` in the [config file](#config-file). Pangolin then downloads the update in the background while you keep using the current version. The update installs the next time you quit Pangolin, and the app opens again on the new version. If Pangolin stays open for about a week with an update already downloaded, it asks you to install that update.
 
 ### Manual Updates
 
