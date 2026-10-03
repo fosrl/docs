@@ -708,7 +708,7 @@ public-resources:
         Container label: `pangolin.public-resources.web-app.mode=http`
       </ResponseField>
 
-      <ResponseField name="protocol" type="string">
+      <ResponseField name="protocol" type="string" deprecated>
         Deprecated resource type field. Use `mode` instead.
 
         **Options**: `http`, `tcp`, `udp`, `ssh`, `rdp`, `vnc`
@@ -1229,7 +1229,7 @@ public-resources:
             Container label: `pangolin.public-resources.web-app.targets[0].rewrite-path=/`
           </ResponseField>
 
-          <ResponseField name="rewritePath" type="string">
+          <ResponseField name="rewritePath" type="string" deprecated>
             Deprecated alias for `rewrite-path`.
           </ResponseField>
 
@@ -1285,7 +1285,7 @@ public-resources:
                 Check interval while the target is unhealthy.
               </ResponseField>
 
-              <ResponseField name="unhealthyInterval" type="integer">
+              <ResponseField name="unhealthyInterval" type="integer" deprecated>
                 Deprecated alias for `unhealthy-interval`.
               </ResponseField>
 
@@ -1316,7 +1316,7 @@ public-resources:
                 Whether redirects should be followed.
               </ResponseField>
 
-              <ResponseField name="followRedirects" type="boolean">
+              <ResponseField name="followRedirects" type="boolean" deprecated>
                 Deprecated alias for `follow-redirects`.
               </ResponseField>
 
