@@ -205,9 +205,9 @@ public-resources:
     full-domain: app.example.com
     host-header: app.internal
     tls-server-name: app.internal
-    headers:
-      - name: X-Env
-        value: production
+    response-headers:
+      - name: Access-Control-Allow-Origin
+        value: *
     rules:
       - action: allow
         match: country
@@ -458,7 +458,7 @@ Example YAML:
 ```yaml
 public-resources:
   my-app:
-    headers:
+    request-headers:
       - name: X-Env
         value: prod
 ```
@@ -467,8 +467,8 @@ Equivalent Compose labels:
 
 ```yaml
 labels:
-  - pangolin.public-resources.my-app.headers[0].name=X-Env
-  - pangolin.public-resources.my-app.headers[0].value=prod
+  - pangolin.public-resources.my-app.request-headers[0].name=X-Env
+  - pangolin.public-resources.my-app.request-headers[0].value=prod
 ```
 
 <Note>
@@ -512,8 +512,8 @@ services:
       - pangolin.public-resources.nginx.name=nginx
       - pangolin.public-resources.nginx.full-domain=nginx.fosrl.io
       - pangolin.public-resources.nginx.protocol=http
-      - pangolin.public-resources.nginx.headers[0].name=X-Example-Header
-      - pangolin.public-resources.nginx.headers[0].value=example-value
+      - pangolin.public-resources.nginx.request-headers[0].name=X-Example-Header
+      - pangolin.public-resources.nginx.request-headers[0].value=example-value
       - pangolin.public-resources.nginx.targets[0].method=http
       - pangolin.public-resources.nginx.targets[0].path=/path
       - pangolin.public-resources.nginx.targets[0].path-match=prefix
@@ -652,9 +652,12 @@ public-resources:
       - production
     host-header: internal.example.local
     tls-server-name: internal.example.local
-    headers:
+    request-headers:
       - name: X-Env
         value: prod
+    response-headers:
+      - name: Access-Control-Allow-Origin
+        value: *
     rules:
       - action: allow
         match: country
@@ -892,29 +895,58 @@ public-resources:
         Container label: `pangolin.public-resources.web-app.tls-server-name=internal.example.local`
       </ResponseField>
 
-      <ResponseField name="headers" type="array of objects">
+      <ResponseField name="request-headers" type="array of objects">
         Static headers added to proxied requests.
 
         Container labels for arrays must include an index (`[0]`, `[1]`, ...).
 
-        YAML: `headers: [{ name: X-Env, value: prod }]`  
-        Container label: `pangolin.public-resources.web-app.headers[0].name=X-Env`
+        YAML: `request-headers: [{ name: X-Env, value: prod }]`  
+        Container label: `pangolin.public-resources.web-app.request-headers[0].name=X-Env`
 
         <Expandable title="Header object">
           <ResponseField name="name" type="string" required>
             Header name.
 
             YAML: `name: X-Env`  
-            Container label: `pangolin.public-resources.web-app.headers[0].name=X-Env`
+            Container label: `pangolin.public-resources.web-app.request-headers[0].name=X-Env`
           </ResponseField>
 
           <ResponseField name="value" type="string" required>
             Header value.
 
             YAML: `value: prod`  
-            Container label: `pangolin.public-resources.web-app.headers[0].value=prod`
+            Container label: `pangolin.public-resources.web-app.request-headers[0].value=prod`
           </ResponseField>
         </Expandable>
+      </ResponseField>
+
+      <ResponseField name="response-headers" type="array of objects">
+        Static headers added to proxied responses.
+
+        Container labels for arrays must include an index (`[0]`, `[1]`, ...).
+
+        YAML: `response-headers: [{ name: Cache-Control, value: no-cache }]`  
+        Container label: `pangolin.public-resources.web-app.response-headers[0].name=Cache-Control`
+
+        <Expandable title="Header object">
+          <ResponseField name="name" type="string" required>
+            Header name.
+
+            YAML: `name: Cache-Control`  
+            Container label: `pangolin.public-resources.web-app.response-headers[0].name=Cache-Control`
+          </ResponseField>
+
+          <ResponseField name="value" type="string" required>
+            Header value.
+
+            YAML: `value: no-cache`  
+            Container label: `pangolin.public-resources.web-app.response-headers[0].value=no-cache`
+          </ResponseField>
+        </Expandable>
+      </ResponseField>
+
+      <ResponseField name="headers" type="array of objects" deprecated>
+        Deprecated alias for `request-headers`.
       </ResponseField>
 
       <ResponseField name="rules" type="array of objects">
