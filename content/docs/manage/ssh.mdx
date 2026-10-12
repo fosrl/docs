@@ -5,6 +5,30 @@ description: "SSH configuration, setup, and examples for public and private reso
 
 This page explains the configuration options shared by both resource types, gives a concrete example for every valid combination, and walks through host setup for **Standard SSH Server** automated provisioning.
 
+## Benefits
+
+- SSH servers are never exposed to the public internet. Users reach them through a [public resource](/manage/resources/public/ssh) in the browser or a [private resource](/manage/resources/private/ssh) over the Pangolin client.
+- Automated provisioning signs short-lived certificates from your organization's CA, so there are no long-lived keys on servers.
+- User accounts are created just in time from Pangolin identities, with sudo access and groups set per role.
+- Pangolin SSH mode works without an SSH server or OpenSSH configuration on the host.
+- Access follows your users and roles. Removing someone in Pangolin removes their path to every server.
+
+## Use Cases
+
+- Replace shared accounts and copied `authorized_keys` files with per-user access tied to SSO.
+- Give a team access to a fleet of servers behind a single bastion running a Pangolin Site.
+- Limit some roles to no sudo or a fixed set of sudo commands on production hosts.
+- Sign keys with `pangolin ssh sign` for tools that open their own SSH connections.
+
+## How SSH Access Works
+
+1. A user starts a session in the browser on a public resource, or with `pangolin ssh <alias>` on a private resource.
+2. Pangolin checks that the user has access to the resource.
+3. With manual authentication, the user signs in with credentials that already exist on the host. With automated provisioning, Pangolin makes sure an account exists for the user and authenticates them, using a short-lived signed certificate in Standard SSH Server mode.
+4. The session runs on the site host in Pangolin SSH mode, or is routed to an SSH server on the network in Standard SSH Server mode.
+
+See [How Certificates Work](#how-certificates-work) and [How Users and Access Are Managed](#how-users-and-access-are-managed) for details.
+
 ## Video Walkthrough
 
 <iframe

@@ -7,6 +7,21 @@ A private AI Gateway resource exposes an AI API only to devices connected with t
 
 This page covers how the **resource** works: reachability, access, and what you attach. Providers, model routing, the catalog, and client setup live in [AI Gateway](/manage/ai/overview).
 
+## Benefits
+
+- The gateway is never reachable from the public internet, only from connected clients with access.
+- There are no API keys to issue or leak. The client connection identifies the caller.
+- Provider API keys stay in Pangolin and never reach users' machines.
+- Calls are attributed to the connected user, so [usage analytics](/manage/ai/usage-analytics) and [session logs](/manage/ai/session-logs) show who made each one.
+- Self-hosted model servers on a site network can sit behind the same gateway as cloud providers.
+
+## Use Cases
+
+- Give employees Claude Code, Codex, or other coding agents through company provider accounts without handing out provider keys.
+- Keep AI access limited to managed devices that run the Pangolin client.
+- Serve a self-hosted model, such as one running on Ollama or vLLM, to your team without exposing it to the internet.
+- Give machine clients, such as CI jobs or internal agents, model access tied to their own identity.
+
 ## How It Works
 
 1. You create a private resource with type **AI Gateway** on a Pangolin Site and attach one or more org-level [providers](/manage/ai/providers/overview).

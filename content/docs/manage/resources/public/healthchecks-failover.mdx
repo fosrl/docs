@@ -5,6 +5,19 @@ description: "Monitor public resource targets and automatically remove unhealthy
 
 Health checks for public resources monitor each target and keep bad targets out of traffic automatically. When a target fails its check, Pangolin marks it unhealthy and removes it from load balancing. When it recovers and passes again, Pangolin adds it back.
 
+## Benefits
+
+- Traffic is only sent to targets that are responding, so users don't hit a broken backend.
+- Failover and recovery are automatic, with no manual changes to the resource.
+- Thresholds keep a brief blip from pulling a target out of rotation.
+- Health status feeds [alert rules](/manage/alerting/alert-rules) and the [maintenance page](/manage/resources/public/maintenance), so you can notify admins and users when something fails.
+
+## Use cases
+
+- Keep a web app online when one of several servers goes down or restarts.
+- Fail over between sites in different locations for disaster recovery.
+- Roll out an update one target at a time while the others keep serving traffic.
+
 ## How it works
 
 For every target on a public resource, Pangolin runs checks at your configured intervals and evaluates the result against your health criteria.

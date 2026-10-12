@@ -20,6 +20,25 @@ All approvals can also be managed from a central page as they stream in to allow
   <img src="/images/approvals_page.png" alt="Approvals page listing pending devices in the Pangolin dashboard" />
 </Frame>
 
+## Benefits
+
+- Stolen or phished credentials aren't enough to connect from an unknown device.
+- Admins see every new device before it can reach resources.
+- Approvals are set per role, so you can require them for some groups and not others.
+
+## Use Cases
+
+- Only allow company-issued laptops to connect, not personal devices.
+- Require approval for contractor roles while employees connect freely.
+- Catch an unexpected new device on a user's account before it reaches sensitive resources.
+
+## How Device Approvals Work
+
+1. A user in a role that requires approval connects a device for the first time.
+2. The device shows as Pending Approval and can't reach any organization resources.
+3. An admin approves or denies it from the device or the approvals page.
+4. Once approved, the device connects normally. Devices that were already approved aren't asked again.
+
 ## Enabling Device Approvals
 
 Device approvals are enabled on a per-role basis. To enable device approvals for a role, follow these steps:

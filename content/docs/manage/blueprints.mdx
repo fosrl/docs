@@ -5,11 +5,23 @@ description: "Define Pangolin resources and site settings declaratively with YAM
 
 Blueprints let you define Pangolin resources as code. Instead of configuring every site, target, and access rule manually in the dashboard, you describe the desired state in YAML or container labels and let Pangolin apply it consistently.
 
-Use blueprints when you want:
+## Benefits
 
-- Repeatable rollouts across many sites
-- Version control for infrastructure and access settings
-- A source of truth that can be reviewed, templated, and automated
+- Roll out the same resources and access settings across many sites without repeating dashboard work.
+- Keep infrastructure and access settings in version control, where changes can be reviewed and rolled back.
+- Template and automate configuration from CI, scripts, or provisioning tools.
+- Keep a resource's definition next to the container it exposes with container labels.
+
+## Use Cases
+
+- Stamp out an identical set of resources for every store, branch office, or customer site.
+- Manage Pangolin resources through pull requests in a GitOps workflow.
+- Define resources next to the Docker Compose services they expose, using container labels.
+- Bootstrap new sites with their resources during provisioning.
+
+## How Blueprints Work
+
+You describe the desired state in YAML or container labels and apply it through the dashboard, a site, the API, or the CLI. Pangolin matches each entry to an existing site, resource, or policy by its key and creates or updates it to match. A blueprint applied from a site file or container labels acts as an ongoing source of truth, while dashboard, API, and CLI applies are one-off. See [How YAML Blueprints Are Applied](#how-yaml-blueprints-are-applied).
 
 <Note type="info">
 Some features in this documentation are marked with **(EE)**, which means they require [Enterprise Edition](/self-host/enterprise-edition).

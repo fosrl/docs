@@ -5,6 +5,21 @@ description: "Connect to remote hosts over the Pangolin tunnel using the Pangoli
 
 Private SSH resources let users connect to remote hosts from their terminal over the Pangolin tunnel. Unlike [public SSH resources](/manage/resources/public/ssh), private SSH is **not** browser-rendered.
 
+## Benefits
+
+- SSH servers are never exposed to the public internet. Only connected clients with access can reach them.
+- With automated provisioning, users sign in with their Pangolin identity and get short-lived certificates, so there are no long-lived keys to distribute or rotate.
+- Accounts are created on the host just in time, with sudo and group permissions set by role.
+- Users keep a native terminal workflow, including their own shell, tools, and SSH options.
+- Removing a user's access in Pangolin cuts off their path to the host, whatever credentials they still hold.
+
+## Use Cases
+
+- Give engineers SSH access to production or staging servers based on their role.
+- Reach many servers behind one bastion, with an auth daemon provisioning users on each host.
+- Replace a shared jump host and hand-managed `authorized_keys` files.
+- Let on-call staff get into servers from anywhere without a separate VPN.
+
 ## How It Works
 
 1. The user connects with the Pangolin client (GUI or CLI).

@@ -4,6 +4,19 @@ description: "Use multiple sites on a private resource for resilient routing and
 ---
 When you configure a private resource, you can attach more than one site. Pangolin then chooses how to reach the resource’s destination through those sites, similar in spirit to running multiple connectors into the same network: traffic is steered toward whichever path is most suitable at the time.
 
+### Benefits
+
+- A single site or connector host going down doesn't cut users off from the resource.
+- Clients route through the best online site, weighing factors such as latency, so users never choose a site by hand.
+- Failover is automatic. You don't need to edit the resource or reconnect clients.
+- You can attach as many sites as you need to one resource.
+
+### Use Cases
+
+- Run two connectors into the same office LAN so access survives a server reboot or hardware failure.
+- Reach a cloud VPC through connectors in different availability zones.
+- Do maintenance or upgrades on one connector while users keep working through another.
+
 ### How Routing Works
 
 Pangolin evaluates the sites you selected and routes client traffic through the site that is most ideal from the client’s perspective. That decision weighs factors such as latency and whether the site is reachable. If a site becomes unavailable, clients begin using the next best online site without you having to reconfigure the resource.

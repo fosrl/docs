@@ -9,6 +9,31 @@ Only available in [Pangolin Cloud](https://app.pangolin.net/auth/signup) and [En
 
 Alert rules let you react to changes in Pangolin: you pick a source (what to watch), a trigger (which change matters), and one or more actions (what to do). For example, when a site moves from online to offline, email your admins and support; when a [health check](/manage/alerting/health-checks) or resource becomes unhealthy, call a webhook so a tool like Zapier can fan out the event.
 
+## Benefits
+
+- Find out about outages as they happen instead of from users.
+- Send alerts where your team already works: email, webhooks, or PagerDuty, Opsgenie, ServiceNow, and incident.io.
+- One rule can watch every site or resource, or only the ones you pick.
+- Health checks run from your sites, so alerts reflect what is reachable on the remote network.
+
+## Use cases
+
+- Page on-call when a production site goes offline.
+- Email a branch office's IT contact when their site connector drops.
+- Open an incident when a public resource's targets all become unhealthy.
+- Watch printers, cameras, or legacy servers with arbitrary health checks and alert when they stop responding.
+- Send events to a webhook to post in chat or trigger automation.
+
+## How alert rules work
+
+Each rule has three parts:
+
+1. A source: the sites, resources, or health checks to watch.
+2. A trigger: the state change that matters, such as going offline or becoming unhealthy.
+3. One or more actions: what Pangolin does when the trigger fires.
+
+When a watched entity changes state and matches the trigger, Pangolin runs every action on the rule.
+
 ## Where to create rules
 
 Create and manage rules from the Alert rules page under Alerting for your organization.
