@@ -7,6 +7,23 @@ HTTP and HTTPS public resources are the most common public resource type. They e
 
 Users open the resource URL in any web browser. No Pangolin client is required.
 
+## Benefits
+
+- Publish apps from behind NAT or a firewall without opening inbound ports or needing a public IP on the backend.
+- Every resource gets a valid TLS certificate that Pangolin issues and renews.
+- Unauthenticated visitors are stopped at Pangolin before any traffic reaches your app.
+- SSO, identity providers, and context rules like geo-blocking protect apps that have no login of their own.
+- Multiple targets across sites give load balancing, health checks, and automatic failover.
+- Users only need a browser, so contractors, customers, and personal devices can get access without installing anything.
+
+## Use Cases
+
+- Put self-hosted apps such as Grafana, Home Assistant, or an internal wiki behind SSO.
+- Publish a public website or API running on a home server or private network.
+- Share a staging site with a client using a PIN, passcode, or expiring link.
+- Restrict an admin panel to certain countries, IP ranges, or URL paths with access rules.
+- Load balance a web app across servers in different locations.
+
 ## How It Works
 
 1. You assign a FQDN on a domain managed in Pangolin.

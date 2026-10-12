@@ -7,6 +7,28 @@ A CIDR private resource exposes an entire IP range on your remote network to con
 
 CIDR resources are the usual choice for whole subnets or network segments instead of creating a separate host resource for every machine.
 
+## Benefits
+
+- One resource covers a whole subnet, so you don't have to create a resource for every machine.
+- Hosts added to the range later are reachable right away, with no change in Pangolin.
+- Access is still granted per user, role, or machine client, and port restrictions apply to the whole range.
+- Attaching several sites that reach the same range gives redundant paths with automatic failover.
+- CIDR resources are the building block for [subnet routers](/manage/clients/subnet-router), which give devices that can't run the client access to Pangolin resources.
+
+## Use Cases
+
+- Give IT or operations staff access to a full office or data center LAN.
+- Reach a cloud VPC, such as an AWS VPC or Azure VNet, through a site running inside it.
+- Manage a range of network equipment, IP cameras, or industrial devices on a dedicated subnet.
+- Let a team reach a lab or staging network where machines change often.
+- Restrict a range to a single protocol, such as HTTPS on port `443`, across every host in it.
+
+## How CIDR Resources Work
+
+When a user with access connects, the Pangolin client installs a route for the whole prefix. Any traffic to an address in that range goes over the encrypted tunnel to a site attached to the resource, and the site forwards it to the matching host on its network.
+
+The client only routes the prefixes a user has access to, so traffic to other addresses, including the public internet, stays on the device's normal network path. When a host resource and a CIDR resource overlap, the client prefers the more specific route.
+
 ## Destination
 
 A CIDR resource destination is an IP range in CIDR notation—for example `10.1.0.0/16`. Any address inside the range is covered for users who have been granted access.

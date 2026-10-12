@@ -9,6 +9,20 @@ SSH public resources render a full interactive terminal in the browser. Users vi
   <img src="/images/ssh-public.gif" alt="Interactive SSH terminal rendered in the Pangolin web dashboard" />
 </Frame>
 
+## Benefits
+
+- Users get a terminal from any browser, with no SSH client, keys, or Pangolin client on their device.
+- The host's SSH port is never exposed to the internet. Pangolin authentication happens before a session can start.
+- SSO, identity providers, and access rules like geo-blocking apply to shell access.
+- With automated provisioning, users are created on the host from their Pangolin identity, so there are no shared accounts or keys to manage.
+
+## Use Cases
+
+- Get emergency access to a server from a borrowed or locked-down computer.
+- Give contractors shell access to a single server without setting up a VPN or SSH keys for them.
+- Manage home lab or edge devices from a phone or tablet.
+- Let support staff reach customer appliances behind NAT through a site.
+
 ## Video Walkthrough
 
 <iframe

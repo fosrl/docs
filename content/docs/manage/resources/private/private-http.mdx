@@ -7,6 +7,28 @@ Private HTTP/HTTPS resources expose web applications over the Pangolin tunnel wi
 
 Once connected, users open the resource in a normal web browser at a URL like `https://my-app.internal.example.com`. The Pangolin client resolves the hostname privately, traffic travels over the peer-to-peer tunnel, and the site connector terminates TLS and runs a reverse proxy to the backend.
 
+## Benefits
+
+- Web apps get a real hostname on your domain and a valid TLS certificate, so browsers show no certificate warnings.
+- Users browse on the default port with a clean URL, with no port numbers or IP addresses to remember.
+- Nothing is reachable from the public internet. The hostname only resolves for connected clients with access.
+- Identity comes from the client connection, so users don't see an extra login page in front of the app.
+- Traffic travels peer-to-peer from the client to the site, and TLS terminates at the site, close to the app.
+
+## Use Cases
+
+- Publish internal tools such as wikis, Grafana, or admin panels only to employees on the Pangolin client.
+- Serve a self-hosted app over HTTPS when it only speaks plain HTTP on the local network.
+- Replace a public resource for sensitive apps that should never have a public login page.
+- Give contractors browser access to a staging site without exposing it to the internet.
+
+## How Private HTTP Resources Work
+
+1. You assign a hostname on a domain configured in Pangolin and set the destination host, port, and scheme.
+2. The Pangolin control plane provisions routing and pushes a certificate for that hostname to the site.
+3. A connected user with access opens the URL. The Pangolin client resolves the hostname privately and sends the request over the tunnel to the site.
+4. A reverse proxy on the site terminates TLS and proxies the request to the destination.
+
 For a deep dive into how private HTTPS reverse proxying works—including DNS hijacking, overlay addressing, certificate push, and the embedded edge proxy—see [Building a Peer-to-Peer Alternative to Cloudflare Tunnels](https://pangolin.net/news/building-a-peer-to-edge-peer-reverse-proxy).
 
 ## Hostname, DNS, and TLS

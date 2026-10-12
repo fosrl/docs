@@ -9,6 +9,28 @@ Because TCP and UDP resources are not protocol-aware, they do **not** enforce Pa
 
 For workloads that do not need a public proxy, prefer a [private host or CIDR resource](/manage/resources/understanding-resources#private-resource-types) so traffic stays on the zero-trust tunnel with full access control.
 
+## Benefits
+
+- Expose any TCP or UDP service, whatever the protocol, without opening ports on the backend network.
+- The backend stays behind NAT or a firewall. Only the Pangolin server needs a public port.
+- Players or users connect with their normal client software, with no Pangolin client to install.
+- Multiple targets across sites give round-robin routing and failover.
+- Proxy Protocol can pass the original client IP through to backends that support it.
+
+## Use Cases
+
+- Host a game server, such as Minecraft, from a home network.
+- Publish a VoIP, MQTT, or other non-HTTP service that clients reach by host and port.
+- Give public access to a service that has its own authentication and needs no extra layer from Pangolin.
+
+## How TCP and UDP Resources Work
+
+1. You map a port on the Pangolin server to the resource.
+2. A client connects to `<pangolin-server>:<port>`.
+3. Pangolin forwards the traffic as-is through the tunnel to a site, which delivers it to the target.
+
+Pangolin does not inspect or authenticate the traffic, so any security has to come from the service itself.
+
 ## Target Configuration
 
 TCP and UDP resources use **[targets](/manage/resources/public/targets)** like HTTP/HTTPS resources:

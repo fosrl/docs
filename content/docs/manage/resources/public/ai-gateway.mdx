@@ -7,6 +7,20 @@ An AI Gateway public resource is a protocol-aware reverse proxy on a fully quali
 
 This page covers how the **resource** works: reachability, authentication, and what you attach. Providers, keys, model routing, the catalog, and client setup live in [AI Gateway](/manage/ai/overview).
 
+## Benefits
+
+- Coding agents work from anywhere, with no Pangolin client on the device.
+- Provider API keys stay in Pangolin. Users get virtual API keys that you can revoke without rotating the provider key.
+- Identity keys follow user and role grants, so removing someone's access disables their key.
+- One URL can front several providers, with model routing, budgets, and usage analytics in one place.
+
+## Use Cases
+
+- Give a team Claude Code, Codex, or Gemini CLI on company provider accounts.
+- Issue manual keys to CI pipelines, scripts, or internal services that call a model API.
+- Track AI usage per user and key, and cap spend by role, key, or model with [budgets](/manage/ai/budgets).
+- Limit which models each team can use with [model routing](/manage/ai/providers/model-routing).
+
 ## How It Works
 
 1. You assign a FQDN on a domain managed in Pangolin and set the resource type to **AI Gateway**.

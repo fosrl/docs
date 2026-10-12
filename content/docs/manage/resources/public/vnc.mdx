@@ -5,6 +5,19 @@ description: "View and control a remote display through a VNC client rendered in
 
 VNC public resources render a full VNC client in the browser. Users visit a FQDN, complete Pangolin authentication, and get an interactive remote display session without installing a VNC viewer.
 
+## Benefits
+
+- Users get a remote display from any browser, with no VNC viewer or Pangolin client to install.
+- The VNC server is never exposed to the internet. Pangolin authentication happens before a session can start.
+- SSO, identity providers, and access rules protect VNC servers that often have weak or no passwords of their own.
+- Works with Linux desktops, macOS screen sharing, and embedded devices that expose a VNC server.
+
+## Use Cases
+
+- Remotely support a Linux or macOS desktop.
+- Reach the display of a kiosk, digital sign, or industrial HMI panel behind NAT.
+- Get console access to a virtual machine whose hypervisor exposes VNC.
+
 ## How It Works
 
 1. You assign a FQDN on a domain managed in Pangolin.

@@ -7,6 +7,28 @@ A host private resource exposes a single machine on your remote network to conne
 
 Host resources are the most common private resource type. They do not render in a browser—you use native applications (a database client, `curl`, an RDP client, etc.) against the destination address while the Pangolin client is connected.
 
+## Benefits
+
+- Nothing is exposed to the public internet. The host is only reachable by clients that are connected and granted access.
+- Access is scoped to a single machine, not the whole network behind the site, so users only reach what they need.
+- Any TCP or UDP protocol works, and you can narrow it to specific ports with port restrictions.
+- An alias gives users a stable, memorable name for the host without any external DNS records.
+- Attaching several sites gives the host redundant paths with automatic failover.
+
+## Use Cases
+
+- Connect to a database such as PostgreSQL or MySQL with your usual client, without opening its port to the internet.
+- Reach an internal API, admin panel, or dashboard from a laptop on any network.
+- Use a native RDP, SSH, or VNC client against a single server.
+- Reach a service that only listens on the site host's loopback interface, through an alias.
+- Give a machine client, such as a CI runner, access to one build server or artifact store.
+
+## How Host Resources Work
+
+When a user with access connects, the Pangolin client starts routing traffic for the host over the encrypted tunnel. That covers the destination address and, if the resource has one, its alias, which the client resolves through Pangolin. A site attached to the resource receives the traffic and sends it to the destination on its local network. Responses come back the same way.
+
+The site resolves the destination, so an FQDN only needs to resolve from the site's network, not from the user's device. Traffic to any other address stays on the user's normal network path, since the client only routes resources the user has access to.
+
 ## Destination
 
 Every host resource has a [destination](/manage/resources/private/destinations): a single IP address or fully qualified domain name (FQDN).

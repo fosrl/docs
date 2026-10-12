@@ -13,6 +13,23 @@ Resource policies let you define authentication and access rule settings once an
 Resource policies currently apply to **public resources** only. Support for private resources is coming soon.
 </Note>
 
+## Benefits
+
+- Define authentication and access rules once instead of repeating them on every resource.
+- A change to a policy applies to every linked resource at once, so resources don't drift apart.
+- Resources can still add their own users, roles, and rules on top of the shared baseline.
+- A consistent baseline makes it easier to see and review how your public resources are protected.
+
+## Use Cases
+
+- Require SSO and block the same set of countries on every app a team publishes.
+- Apply one IP allow list to all internal tools, then grant individual apps to extra roles.
+- Keep the same PIN or email OTP settings across a group of resources shared with a client.
+
+## How Resource Policies Work
+
+A public resource either has its own inline policy or links to a shared policy. When it links to one, it inherits every setting in that policy, and those settings show as read-only on the resource. Users, roles, and access rules you add on the resource combine with the shared policy rather than replacing it. See [Additive Policies](#additive-policies).
+
 ## What a Resource Policy Contains
 
 A resource policy holds the same settings you configure on a public resource's authentication and access tabs:
