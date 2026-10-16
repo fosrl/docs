@@ -36,26 +36,26 @@ export function baseOptions(): BaseLayoutProps {
         on: 'nav',
         children: (
           <div className="flex items-center gap-2">
-            <a href={links.login} className="pg-btn pg-btn-secondary">
-              Log in
+            <a href={links.pricing} className="pg-btn pg-btn-secondary">
+              Get pricing
             </a>
-            <a href={links.signup} className="pg-btn">
-              Start for free
+            <a href={links.bookDemo} className="pg-btn">
+              Book a demo
             </a>
           </div>
         ),
       },
       {
         type: 'main',
-        text: 'Log in',
-        url: links.login,
+        text: 'Get pricing',
+        url: links.pricing,
         external: true,
         on: 'menu',
       },
       {
         type: 'main',
-        text: 'Start for free',
-        url: links.signup,
+        text: 'Book a demo',
+        url: links.bookDemo,
         external: true,
         on: 'menu',
       },

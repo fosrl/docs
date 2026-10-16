@@ -37,6 +37,8 @@ export const links = {
   signup: 'https://app.pangolin.net/auth/signup',
   github: 'https://github.com/fosrl/pangolin',
   featureRequest: 'https://github.com/fosrl/pangolin/discussions',
+  bookDemo: 'https://click.fossorial.io/ep922',
+  pricing: 'https://pangolin.net/pricing',
 };
 
 /** top banner (text lives in `app/(docs)/layout.tsx`) */
