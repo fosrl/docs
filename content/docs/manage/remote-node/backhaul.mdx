@@ -239,6 +239,7 @@ sudo pangolin up site \
 --secret ts1v7480qqw01j7ba4uiw5y7l58skw7anpji2ndludhgzloh \
 --endpoint https://app.pangolin.net \
 --native-main
+--no-cloud # Used to prevent it from failing over to Pangolin nodes
 ```
 
 On Windows, set `nativeMain` in `C:\Users\<Username>\.config\pangolin\site.json` instead:
@@ -248,9 +249,14 @@ On Windows, set `nativeMain` in `C:\Users\<Username>\.config\pangolin\site.json`
 	"id": "34s48my8iba5wsl",
 	"secret": "ts1v7480qqw01j7ba4uiw5y7l58skw7anpji2ndludhgzloh",
 	"endpoint": "https://app.pangolin.net",
-	"nativeMain": true
+	"nativeMain": true,
+    "noCloud": true
 }
 ```
+
+<Tip>
+    Use the no-cloud option to prevent the site from failing over to a Pangolin node if the backhaul node goes down. If you want the site to fail over, leave it out.
+</Tip>
 
 <Warning>
 If you are using a Pangolin Site on Windows, `wintun.dll` is required to run in native mode. If not already provided by the installer, you can download from https://www.wintun.net/
