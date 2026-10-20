@@ -1209,6 +1209,57 @@ The catalog feeds Known Models pickers, wildcard discovery, provider selection, 
   </Expandable>
 </ResponseField>
 
+### Offline Checker
+
+The offline checker decides when sites, clients, and remote exit nodes are marked offline. It runs on a fixed interval and marks anything that has not checked in within its threshold as offline, which drives the online/offline status in the dashboard, [alert rules](/manage/alerting/alert-rules) such as `site_offline`, and [multi-site failover](/manage/resources/private/multi-site-routing).
+
+Configure it with the `offline_checker` block and its keys: `check_interval_ms`, `newt_threshold_ms`, `newt_wireguard_threshold_ms`, `olm_threshold_ms`, and `remote_exit_node_threshold_ms`. All values are in milliseconds. Raise a threshold if connectors on unreliable networks flap between online and offline; lower it to detect outages faster.
+
+```yaml title="config.yml"
+offline_checker:
+    check_interval_ms: 30000 # 30 seconds
+    newt_threshold_ms: 120000 # 2 minutes
+    newt_wireguard_threshold_ms: 480000 # 8 minutes
+    olm_threshold_ms: 120000 # 2 minutes
+    remote_exit_node_threshold_ms: 120000 # 2 minutes
+```
+
+<ResponseField name="offline_checker" type="object">
+  Offline checker interval and thresholds. Omit this block to use the defaults.
+
+  <Expandable title="Offline Checker">
+    <ResponseField name="check_interval_ms" type="integer">
+      `check_interval_ms`: how often the offline checkers run, in milliseconds. Must be a positive integer.
+
+      **Default**: `30000` (30 seconds)
+    </ResponseField>
+
+    <ResponseField name="newt_threshold_ms" type="integer">
+      `newt_threshold_ms`: how long a Newt site can go without a ping before it is marked offline, in milliseconds.
+
+      **Default**: `120000` (2 minutes)
+    </ResponseField>
+
+    <ResponseField name="newt_wireguard_threshold_ms" type="integer">
+      `newt_wireguard_threshold_ms`: how long a WireGuard site can go without a bandwidth update before it is marked offline, in milliseconds. WireGuard sites do not send pings, so they are judged by their last bandwidth report instead.
+
+      **Default**: `480000` (8 minutes)
+    </ResponseField>
+
+    <ResponseField name="olm_threshold_ms" type="integer">
+      `olm_threshold_ms`: how long an Olm client can go without a ping before it is marked offline, in milliseconds.
+
+      **Default**: `120000` (2 minutes)
+    </ResponseField>
+
+    <ResponseField name="remote_exit_node_threshold_ms" type="integer">
+      `remote_exit_node_threshold_ms`: how long a remote exit node can go without a ping before it is marked offline, in milliseconds.
+
+      **Default**: `120000` (2 minutes)
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
 ## Environment Variables
 
 Some configuration values can be set using environment variables for enhanced security:
