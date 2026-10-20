@@ -11,6 +11,7 @@ Blueprints let you define Pangolin resources as code. Instead of configuring eve
 - Keep infrastructure and access settings in version control, where changes can be reviewed and rolled back.
 - Template and automate configuration from CI, scripts, or provisioning tools.
 - Keep a resource's definition next to the container it exposes with container labels.
+- Export a resource you already built in the dashboard to YAML, then reuse or version that definition.
 
 ## Use Cases
 
@@ -18,6 +19,7 @@ Blueprints let you define Pangolin resources as code. Instead of configuring eve
 - Manage Pangolin resources through pull requests in a GitOps workflow.
 - Define resources next to the Docker Compose services they expose, using container labels.
 - Bootstrap new sites with their resources during provisioning.
+- Configure a resource in the UI first, then [export it as a blueprint](#exporting-resources) to start a YAML workflow.
 
 ## How Blueprints Work
 
@@ -31,8 +33,8 @@ Some features in this documentation are marked with **(EE)**, which means they r
 
 A blueprint can contain up to four top-level sections:
 
-- **`public-resources`**: Internet-facing HTTP, TCP, UDP, SSH, RDP, or VNC resources
-- **`private-resources`**: Client-only access to hosts, CIDR ranges, or an exit node
+- **`public-resources`**: Internet-facing HTTP, TCP, UDP, SSH, RDP, or VNC resources. `proxy-resources` is an accepted alias.
+- **`private-resources`**: Client-only access to hosts, CIDR ranges, or an exit node. `client-resources` is an accepted alias.
 - **`public-policies`**: Reusable authentication and access policy objects
 - **`sites`**: Site-level settings such as container label discovery
 
@@ -54,7 +56,7 @@ sites:
     ...
 ```
 
-Think of the resource key as your stable ID inside the blueprint. The fields under that key describe what Pangolin should create or maintain.
+Think of the resource key as your stable ID inside the blueprint. The fields under that key describe what Pangolin should create or maintain. Dashboard [exports](#exporting-resources) use the `proxy-resources` and `client-resources` aliases; both naming styles apply the same way.
 
 These keys are the same idea as the **Identifier** shown in the Pangolin app, called `niceId` in the API. Choose readable, stable keys such as `warehouse-west` or `web-app`; blueprints use them to match and update the same sites and resources on later applies. For more detail, see [What is an identifier?](/manage/common-api-routes#what-is-an-identifier).
 
@@ -151,6 +153,20 @@ Use container labels when the resource definition should live inside your Compos
 
 <Note>
 `--blueprint-file` on a site and container labels behave as an ongoing source of truth. Dashboard edits can be overwritten the next time the blueprint is applied. UI, API, and CLI applies are typically one-off operations.
+</Note>
+
+## Exporting Resources
+
+You can export a resource created in the dashboard to its YAML blueprint equivalent. Use this when you want to move an existing resource into version control, reuse it on another site, or start a blueprint from a working UI configuration.
+
+1. Open the **Public Resources** or **Private Resources** table.
+2. Click the three-dot menu (`⋯`) on the resource row.
+3. Select **Export as Blueprint**.
+
+A dialog shows the generated YAML. **Copy** it to the clipboard or **Download** it as `{identifier}.yaml`, then apply it with any method in [How YAML Blueprints Are Applied](#how-yaml-blueprints-are-applied).
+
+<Note>
+Passwords, PINs, and basic auth credentials are never written into the export. If the resource uses any of them, the YAML includes a `#` comment reminding you to set them again after you apply the blueprint. Shared [resource policies](/manage/resources/public/resource-policies) are referenced by identifier (`policy: <policy-id>`) rather than inlined.
 </Note>
 
 ## Quick Start YAML Example
@@ -336,7 +352,7 @@ public-resources:
 
 ### Authentication Example
 
-Authentication is configured inside `auth` and is supported only for HTTP resources.
+Authentication is configured inside `auth` and is supported only for HTTP resources. When you [export a resource](#exporting-resources) from the dashboard, passwords, PINs, and basic auth credentials are omitted for security; add them manually if you need them in the blueprint.
 
 ```yaml
 public-resources:
@@ -692,14 +708,14 @@ sites:
 
 <Expandable title="Top-level object reference">
   <ResponseField name="public-resources" type="object">
-    Public proxy resources keyed by resource ID.
+    Public proxy resources keyed by resource ID. `proxy-resources` is an accepted alias (used by [dashboard exports](#exporting-resources)).
 
     YAML: `public-resources: { web-app: { ... } }`  
     Container label: `pangolin.public-resources.web-app.name=Web App`
   </ResponseField>
 
   <ResponseField name="private-resources" type="object">
-    Private resources keyed by resource ID.
+    Private resources keyed by resource ID. `client-resources` is an accepted alias (used by [dashboard exports](#exporting-resources)).
 
     YAML: `private-resources: { internal-net: { ... } }`  
     Container label: `pangolin.private-resources.internal-net.mode=cidr`
