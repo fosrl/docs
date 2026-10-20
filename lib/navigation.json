@@ -160,6 +160,7 @@
           ]
         },
         "manage/domains",
+        "manage/redirects",
         {
           "group": "Organizations",
           "icon": "building",

@@ -1,0 +1,111 @@
+---
+title: "Redirects"
+icon: "repeat"
+description: "Forward requests from a path on your domains or resources to another URL"
+---
+
+Redirects forward matching HTTP requests to another URL. Use them to retire old hostnames, move paths on an existing resource, or send traffic from one origin to another.
+
+Manage redirects from your organization's **Settings → Redirects**.
+
+## Attach to a Domain or a Resource
+
+Every redirect attaches to exactly one of:
+
+| Attachment | Listen host | When to use it |
+| --- | --- | --- |
+| **Domain** | A hostname on one of your [domains](/manage/domains) (subdomain or the base domain) | You need a redirect on a hostname that is not (or not only) a public resource, for example retiring `old.example.com`. Also use this when the hostname matches a resource but you do not want the redirect tied to that resource's lifecycle |
+| **Resource** | The attached [public resource](/manage/resources/public/http-https)'s full hostname | You want some paths on an existing resource to redirect while other paths still hit that resource, and you are fine deleting the redirect when the resource is deleted |
+
+### Domain-attached redirects
+
+Choose **Domain** when you want to enter a subdomain or the base domain for one of the domains you have attached to your organization regardless of whether a resource is attached to it.
+
+- You pick a domain and an optional subdomain. The listen host is `subdomain.baseDomain`, or the bare base domain if subdomain is empty.
+- The redirect owns its own TLS setting. Pangolin provisions a certificate for that host. On self-hosted installs you can turn SSL off to match plain HTTP; on Pangolin Cloud, HTTPS is always on.
+- No public resource is required on that hostname.
+- You can use the same hostname as an existing resource (same domain and subdomain). The redirect is not linked to the resource, so deleting or disabling the resource leaves the redirect in place.
+- Deleting the domain deletes every redirect attached to it.
+
+### Resource-attached redirects
+
+Choose **Resource** when you want to use a resource's full hostname (including wildcards when the resource uses them).
+
+- The listen host is the resource's full domain (including wildcards when the resource uses them).
+- TLS follows the resource — there is no separate SSL toggle on the redirect.
+- Paths that do not match the redirect continue to the resource as usual.
+- Matching redirects are evaluated **before** resource authentication, so visitors are redirected without logging in even if the resource is protected.
+- If the resource is disabled or has no domain, the redirect is not active.
+- Deleting the resource deletes every redirect attached to it.
+
+## How Requests Are Matched
+
+A request matches a redirect when:
+
+1. The **Host** matches the listen host from the attachment (domain hostname or resource full domain).
+2. The **path** matches the redirect's path rule — or the redirect has no path rule, which matches every path on that host.
+
+Path match types:
+
+| Type | Behavior |
+| --- | --- |
+| **Exact** | Path must equal the match path |
+| **Prefix** | Path must start with the match path as a path segment (for example `/products` matches `/products/shoes`, not `/productsforsale`) |
+| **Regex** | Path must match the regular expression |
+
+Leave the match path empty to redirect every request on that host.
+
+When a redirect and a public resource share a host, the redirect is always considered first. Among redirects, higher **priority** wins.
+
+## Destination and Path Rewrite
+
+The **destination** is an origin only: scheme, host, and optional port — for example `https://example.com` or `https://example.com:8443`. Do not put a path, query string, or fragment in the destination field.
+
+The final redirect URL is:
+
+```
+destination origin + rewritten path + original query string
+```
+
+By default the request path is kept. Optionally set a **path rewrite**:
+
+| Rewrite type | Behavior |
+| --- | --- |
+| **Exact** | Replace the entire path |
+| **Prefix** | Replace the matched prefix and keep the remainder |
+| **Regex** | Replace using the match pattern; substitution supports capture groups (`$1`, `$2`, …) |
+| **Strip prefix** | Remove the matched prefix; optionally add a new prefix |
+
+### Capture groups
+
+When the rewrite type is **Regex**, parentheses in the **match path** (with match type **Regex**) define capture groups. Reference them in the rewrite path with `$1`, `$2`, and so on — the same substitution rules as JavaScript `String.replace`.
+
+Example: move `/blog/2020/post` to `/archive/post-2020`:
+
+| Field | Value |
+| --- | --- |
+| Path match type | Regex |
+| Match path | `^/blog/(\d+)/(.*)$` |
+| Rewrite type | Regex |
+| Rewrite path | `/archive/$2-$1` |
+
+With match type **Prefix** and rewrite type **Regex**, the remainder after the prefix is available as `$1` (for example match `/old` and rewrite `/new$1` turns `/old/x` into `/new/x`).
+
+Use **Same Domain as Source** when you only want to change the path and keep the visitor on the same host.
+
+The original query string is always preserved.
+
+## Permanent vs Temporary
+
+| Setting | Status code | Behavior |
+| --- | --- | --- |
+| Temporary (default) | **307** | Browsers and clients should not cache the redirect indefinitely |
+| Permanent | **308** | Browsers may cache the redirect; use when the move is lasting |
+
+Turn on **Permanent** only when you intend clients to remember the new location.
+
+## Priority
+
+Each redirect has a priority from 1 to 1000. Higher values are evaluated first.
+
+Redirects always sit above public resources on the same host, so a matching redirect wins over the resource even when priorities look similar in the UI. Use priority mainly to order multiple redirects against each other.
