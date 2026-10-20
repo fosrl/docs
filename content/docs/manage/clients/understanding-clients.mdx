@@ -6,7 +6,7 @@ A client is a way to access resources on sites remotely and privately via a virt
 
 By default a client does not have access to any hosts on the local network of the site. Admins must explicitly define resources on the site and give specific users and roles access to the resources.
 
-Users must log in and connect from a Pangolin client available on [Windows, Mac, Linux, iOS/iPadOS, and Android](/manage/clients/platforms). They sign in with their user credentials through a web login flow. Machines (automated systems and servers) connect with [machine client credentials](/manage/clients/credentials): an ID, secret, and endpoint.
+Users must log in and connect from a Pangolin client available on [Windows, Mac, Linux, iOS/iPadOS, and Android](/manage/clients/platforms). They sign in with their user credentials through a web login flow. Machines (automated systems and servers) connect with [machine client credentials](/manage/clients/machine-clients#credentials): an ID, secret, and endpoint.
 
 ## Client Types
 
@@ -19,9 +19,10 @@ There are two types of clients: user devices and machines.
   - Available for download on Mac, Windows, and Linux
 </Card>
 
-<Card title="Machines">
+<Card title="Machines" href="/manage/clients/machine-clients">
   - Represent a server or automated system instead of a user
   - Connect with machine client credentials (ID and secret)
+  - Can be assigned roles for private resource access
   - Available in CLI form with Pangolin CLI
 </Card>
 </CardGroup>
@@ -48,7 +49,7 @@ Examples include:
 
 Though you may connect a server via a user account using a CLI client, we recommend you specifically use a machine client.
 
-Machine clients authenticate with [machine client credentials](/manage/clients/credentials): an ID and secret. These are passed as arguments to the Pangolin CLI. They can be revoked and rotated. User devices never use these credentials.
+Machine clients authenticate with [machine client credentials](/manage/clients/machine-clients#credentials): an ID and secret. These are passed as arguments to the Pangolin CLI. They can be revoked and rotated. User devices never use these credentials. You can also assign [roles](/manage/clients/machine-clients#grant-access-to-private-resources) to a machine client so it inherits private-resource access from those roles.
 
 ## Client Modalities
 

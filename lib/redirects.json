@@ -128,5 +128,10 @@
     "source": "/manage/clients/configure-client/olm",
     "destination": "/manage/clients/platforms/olm",
     "permanent": true
+  },
+  {
+    "source": "/manage/clients/credentials",
+    "destination": "/manage/clients/machine-clients#credentials",
+    "permanent": true
   }
 ]

@@ -6,8 +6,8 @@ When a client connects into an organization they will NOT have access to any res
 
 Access can be granted in several ways:
 
-* **Roles:** Assign access to resources to specific roles. Any user with that role will gain access to the resource when they connect.
+* **Roles:** Assign access to resources to specific roles. Any user with that role, and any [machine client](/manage/clients/machine-clients) assigned that role, gains access to the resource when they connect.
 * **Users:** Assign access to resources to specific users. Only those users will gain access to the resource when they connect.
-* **Machines:** Assign access to resources to specific machines. Only those machine clients will gain access to the resource when they connect. Note that machines can not be put into roles.
+* **Machines:** Assign access to resources to specific machine clients. Only those machine clients will gain access to the resource when they connect. You can also put machine clients into roles so they inherit the same private-resource access as that role; see [Machine Clients](/manage/clients/machine-clients#grant-access-to-private-resources) and [Users and Roles](/manage/access-control/create-user#machine-clients-and-roles).
 
 When removing access to a resource, the client will automatically tear down the tunnel to that resource if there are no other resources accessible on that site.

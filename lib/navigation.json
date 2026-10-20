@@ -94,11 +94,11 @@
                 "manage/clients/platforms/olm"
               ]
             },
-            "manage/clients/client-logs",
-            "manage/clients/subnet-router",
-            "manage/clients/credentials",
+            "manage/clients/machine-clients",
             "manage/clients/fingerprinting",
             "manage/clients/archiving-blocking",
+            "manage/clients/client-logs",
+            "manage/clients/subnet-router",
             "manage/clients/firewalls",
             {
               "group": "Kubernetes",
