@@ -41,6 +41,14 @@ You can also pass access tokens via query params or headers to resources to enab
 
 First whitelist specific emails or wildcards, like `*@.example.com`. When users visit the resource, they will be prompted to enter an email. If the email they enter is on the whitelist, a temporary one time passcode will be sent to their email. Users can then enter this OTP to gain access to the resource.
 
+## Client Certificate (mTLS)
+
+Require clients to present a certificate signed by a CA you trust. mTLS is configured alongside the other methods above, but it runs first—during the TLS handshake, before PIN, SSO, email OTP, or any other auth. Clients without a valid certificate never reach the login page; the connection fails instead.
+
+The resource must use HTTP with SSL enabled. Upload trusted CA public certificates, then enable **Require client certificate**. Pangolin does not issue client certificates for you.
+
+[Read more about Client Certificate (mTLS)](/manage/access-control/mtls).
+
 ## Rules to Access or Deny
 
 Define ranked rules to either block or allow access from specific IPs, geolocation, URL paths, and more.

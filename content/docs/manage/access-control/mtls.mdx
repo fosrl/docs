@@ -1,0 +1,37 @@
+---
+title: "Client Certificate (mTLS)"
+description: "Require a trusted client certificate before any other public resource authentication"
+---
+
+Client certificate (mTLS) authentication requires browsers and API clients to present a certificate signed by a CA you trust. It is configured on public resources alongside PIN, passcode, email OTP, and other auth methods, but it is enforced earlier: during the TLS handshake, before those methods run.
+
+Pangolin does not issue or host client certificates. You bring your own CA and distribute client certificates to the devices or clients that should connect.
+
+<Info>
+This is separate from [Pangolin Site mTLS](/manage/sites/configure-site#mtls-authentication), which authenticates a Newt site to the control plane.
+</Info>
+
+## Requirements
+
+- The resource must be an **HTTPS** public resource with **SSL** enabled
+- At least one trusted **CA public certificate** must be uploaded before you can require client certificates
+
+## Configure mTLS
+
+On the resource (or a [resource policy](/manage/resources/public/resource-policies)):
+
+1. Open **Authentication** and enable **Client Certificate (mTLS)** under Other Methods.
+2. Upload one or more trusted CA certificates (PEM, `.pem`, `.crt`, or `.cer`). Bundles are supported. Upload public CA certificates only—never a private key.
+
+You can add up to 20 trusted CA certificates. Removing the last CA turns mTLS off automatically.
+
+## How It Behaves
+
+- When mTLS is required, clients without a valid certificate fail the TLS handshake. Browsers show a connection error, not the Pangolin login page.
+- There is no optional mode: if enabled, a valid client certificate is always required.
+- After the handshake succeeds, other configured auth methods still apply (SSO, PIN, passcode, email OTP, header auth, shareable links, and access rules).
+- Access rules cannot skip mTLS. Bypass-auth rules only skip later authentication stages.
+
+## Backend Certificate Details
+
+When a client connects successfully, Pangolin forwards verified certificate details to your backend in the `X-Forwarded-Tls-Client-Cert-Info` header (subject, issuer, serial number, validity, and SANs). This is separate from the identity headers documented in [Forwarded Headers](/manage/access-control/forwarded-headers).

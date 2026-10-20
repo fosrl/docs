@@ -185,6 +185,7 @@
             "manage/asnblocking",
             "manage/access-control/links",
             "manage/access-control/approvals",
+            "manage/access-control/mtls",
             "manage/access-control/forwarded-headers",
             "manage/access-control/login-page"
           ]

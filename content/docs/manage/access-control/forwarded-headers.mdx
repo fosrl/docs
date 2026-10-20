@@ -53,6 +53,10 @@ These authentication methods do not provide user identity information:
 </Card>
 </CardGroup>
 
+## Client Certificate (mTLS)
+
+When [mTLS](/manage/access-control/mtls) is enabled on a public resource, verified client certificate details are forwarded in `X-Forwarded-Tls-Client-Cert-Info` (subject, issuer, serial number, validity, and SANs). That header is independent of the `Remote-*` identity headers above and is available whenever the TLS handshake succeeds with a trusted client certificate.
+
 ## AI Gateway
 
 [AI Gateway](/manage/ai/overview) resources forward the same `Remote-User`, `Remote-Email`, `Remote-Name`, and `Remote-Role` headers to the upstream model API when Pangolin knows the user:
