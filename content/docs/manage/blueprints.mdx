@@ -217,9 +217,10 @@ public-resources:
     full-domain: app.example.com
     host-header: app.internal
     tls-server-name: app.internal
+    forward-identity-headers: true
     response-headers:
       - name: Access-Control-Allow-Origin
-        value: *
+        value: "*"
     rules:
       - action: allow
         match: country
@@ -282,6 +283,55 @@ public-resources:
 
 When a resource is targets-only, `name` and `mode` are not required.
 
+### Load Balancing Example
+
+When a resource has more than one target, `load-balancing-strategy` controls how requests are spread across them.
+
+```yaml
+public-resources:
+  app:
+    name: App
+    mode: http
+    full-domain: app.example.com
+    load-balancing-strategy: hrw
+    targets:
+      - site: site-a
+        hostname: app
+        port: 8080
+        method: http
+      - site: site-b
+        hostname: app
+        port: 8080
+        method: http
+```
+
+Strategy values:
+
+- **`wrr`** (default): Round robin. Requests rotate evenly across targets.
+- **`p2c`**: Power of two choices. Pangolin picks two random targets and sends the request to the one with fewer active connections.
+- **`hrw`**: Client IP hash. The same client IP is consistently routed to the same target.
+- **`leasttime`**: Least response time. Requests go to the target with the fastest response time and fewest active connections.
+
+### Identity Headers Example
+
+By default, Pangolin forwards the authenticated user's identity to the backend in the `Remote-User`, `Remote-Email`, `Remote-Name`, `Remote-Role`, and `Remote-User-Id` headers. Set `forward-identity-headers: false` to stop sending them, for example when the backend should not see user details. See [Forwarded Headers](/manage/access-control/forwarded-headers).
+
+```yaml
+public-resources:
+  app:
+    name: App
+    mode: http
+    full-domain: app.example.com
+    forward-identity-headers: false
+    auth:
+      sso-enabled: true
+    targets:
+      - site: my-site
+        hostname: app
+        port: 8080
+        method: http
+```
+
 ### Authentication Example
 
 Authentication is configured inside `auth` and is supported only for HTTP resources.
@@ -306,6 +356,42 @@ public-resources:
       whitelist-users:
         - admin@example.com
 ```
+
+### Mutual TLS (mTLS) **(EE)**
+
+Set `auth.mtls` to require clients to present a TLS client certificate signed by one of the trusted CAs you list. mTLS is only supported on `http` resources, and `ssl` must not be set to `false`.
+
+```yaml
+public-resources:
+  internal-api:
+    name: Internal API
+    mode: http
+    full-domain: api.example.com
+    auth:
+      mtls:
+        enabled: true
+        ca-certificates:
+          - |
+            -----BEGIN CERTIFICATE-----
+            MIIBszCCAVmgAwIBAgIU...
+            -----END CERTIFICATE-----
+    targets:
+      - site: my-site
+        hostname: api
+        port: 8080
+        method: http
+```
+
+- Each `ca-certificates` entry is a PEM-encoded CA certificate. An entry can also be a bundle of several certificates; Pangolin splits it and removes duplicates.
+- Only public CA certificates are accepted. An entry that contains a private key is rejected.
+- A resource can trust up to 20 CA certificates.
+- When `ca-certificates` is set, it replaces the full list of trusted CAs on each apply. When it is omitted, the existing CAs are left as they are.
+- `enabled: true` requires at least one entry in `ca-certificates`.
+- `mtls` can also be set on a [resource policy](#resource-policy-object-public-policies) so every resource using that policy shares the same trusted CAs.
+
+<Note>
+A top-level `mtls` key on the resource is still accepted for backward compatibility. Put it under `auth` in new blueprints.
+</Note>
 
 ### Maintenance Page **(EE)**
 
@@ -664,24 +750,36 @@ public-resources:
       - production
     host-header: internal.example.local
     tls-server-name: internal.example.local
+    forward-identity-headers: true
+    load-balancing-strategy: wrr
     request-headers:
       - name: X-Env
         value: prod
     response-headers:
       - name: Access-Control-Allow-Origin
-        value: *
+        value: "*"
     rules:
       - action: allow
         match: country
         value: US
       - action: deny
         match: region
-        value: 019
+        value: "019"
+      - action: deny
+        match: method
+        value: DELETE
     auth:
       pincode: 123456
       sso-enabled: true
       whitelist-users:
         - admin@example.com
+      mtls:
+        enabled: true
+        ca-certificates:
+          - |
+            -----BEGIN CERTIFICATE-----
+            ...
+            -----END CERTIFICATE-----
     maintenance:
       enabled: true
       type: automatic
@@ -698,6 +796,8 @@ public-resources:
           hostname: app
           port: 8080
           path: /health
+          healthy-threshold: 2
+          unhealthy-threshold: 3
 ```
 
 <Expandable title="Public resource reference">
@@ -907,6 +1007,30 @@ public-resources:
         Container label: `pangolin.public-resources.web-app.tls-server-name=internal.example.local`
       </ResponseField>
 
+      <ResponseField name="forward-identity-headers" type="boolean">
+        Forwards the authenticated user's identity to the backend in the `Remote-User`, `Remote-Email`, `Remote-Name`, `Remote-Role`, and `Remote-User-Id` headers. Set to `false` to stop sending them. See [Forwarded Headers](/manage/access-control/forwarded-headers).
+
+        **Default**: `true`
+
+        YAML: `forward-identity-headers: false`  
+        Container label: `pangolin.public-resources.web-app.forward-identity-headers=false`
+      </ResponseField>
+
+      <ResponseField name="load-balancing-strategy" type="string">
+        How requests are distributed across the resource's targets.
+
+        - `wrr`: Round robin. Requests rotate evenly across targets.
+        - `p2c`: Power of two choices. Pick two random targets and send the request to the one with fewer active connections.
+        - `hrw`: Client IP hash. The same client IP is consistently routed to the same target.
+        - `leasttime`: Least response time. Send requests to the target with the fastest response time and fewest active connections.
+
+        **Options**: `wrr`, `p2c`, `hrw`, `leasttime`  
+        **Default**: `wrr`
+
+        YAML: `load-balancing-strategy: hrw`  
+        Container label: `pangolin.public-resources.web-app.load-balancing-strategy=hrw`
+      </ResponseField>
+
       <ResponseField name="request-headers" type="array of objects">
         Static headers added to proxied requests.
 
@@ -961,6 +1085,14 @@ public-resources:
         Deprecated alias for `request-headers`.
       </ResponseField>
 
+      <ResponseField name="requestHeaders" type="array of objects" deprecated>
+        Deprecated alias for `request-headers`.
+      </ResponseField>
+
+      <ResponseField name="responseHeaders" type="array of objects" deprecated>
+        Deprecated alias for `response-headers`.
+      </ResponseField>
+
       <ResponseField name="rules" type="array of objects">
         Ordered access rules for public resources.
 
@@ -982,14 +1114,16 @@ public-resources:
           <ResponseField name="match" type="string" required>
             Match type for the rule.
 
-            **Options**: `cidr`, `path`, `ip`, `country`, `asn`, `region`
+            **Options**: `cidr`, `path`, `ip`, `country`, `country_is_not`, `asn`, `region`, `method`
+
+            `country_is_not` matches requests from any country except the one given. `method` matches the request's HTTP method.
 
             YAML: `match: country`  
             Container label: `pangolin.public-resources.web-app.rules[0].match=country`
           </ResponseField>
 
           <ResponseField name="value" type="string" required>
-            Value to compare against, such as an IP, CIDR, path, two letter country code, ASN, or region.
+            Value to compare against, such as an IP, CIDR, path, two letter country code, ASN, region, or a comma-separated list of HTTP methods (for example `POST,PUT`).
 
             YAML: `value: US`  
             Container label: `pangolin.public-resources.web-app.rules[0].value=US`
@@ -1142,7 +1276,36 @@ public-resources:
               </ResponseField>
             </Expandable>
           </ResponseField>
+
+          <ResponseField name="mtls" type="object">
+            Mutual TLS settings **(EE)**. Requires clients to present a certificate signed by one of the trusted CAs. Only allowed when `mode: http`, and `ssl` must not be `false`. See [Mutual TLS (mTLS)](#mutual-tls-mtls-ee).
+
+            YAML: `mtls: { enabled: true, ca-certificates: [...] }`  
+            Container label: `pangolin.public-resources.web-app.auth.mtls.enabled=true`
+
+            <Expandable title="mTLS object">
+              <ResponseField name="enabled" type="boolean">
+                Turns mTLS on for the resource. Requires at least one entry in `ca-certificates`.
+
+                YAML: `enabled: true`  
+                Container label: `pangolin.public-resources.web-app.auth.mtls.enabled=true`
+              </ResponseField>
+
+              <ResponseField name="ca-certificates" type="array of strings">
+                PEM-encoded CA certificates that client certificates must chain to. An entry may contain a bundle of several certificates. Up to 20 certificates in total. When set, replaces the resource's trusted CAs; when omitted, the existing CAs are kept.
+
+                Container labels for arrays must include an index (`[0]`, `[1]`, ...).
+
+                YAML: `ca-certificates: ["-----BEGIN CERTIFICATE-----\n..."]`  
+                Container label: `pangolin.public-resources.web-app.auth.mtls.ca-certificates[0]=-----BEGIN CERTIFICATE-----...`
+              </ResponseField>
+            </Expandable>
+          </ResponseField>
         </Expandable>
+      </ResponseField>
+
+      <ResponseField name="mtls" type="object" deprecated>
+        Deprecated. Use `auth.mtls` instead. Same shape as `auth.mtls`.
       </ResponseField>
 
       <ResponseField name="maintenance" type="object">
@@ -1370,6 +1533,20 @@ public-resources:
 
               <ResponseField name="status" type="integer">
                 Expected HTTP status code.
+              </ResponseField>
+
+              <ResponseField name="healthy-threshold" type="integer">
+                Number of consecutive successful checks before an unhealthy target is marked healthy again.
+
+                **Minimum**: `1`  
+                **Default**: `1`
+              </ResponseField>
+
+              <ResponseField name="unhealthy-threshold" type="integer">
+                Number of consecutive failed checks before a healthy target is marked unhealthy.
+
+                **Minimum**: `1`  
+                **Default**: `1`
               </ResponseField>
             </Expandable>
           </ResponseField>
@@ -1649,6 +1826,8 @@ public-policies:
         match: country
         value: US
         enabled: true
+    mtls:
+      enabled: false
 ```
 
 <Expandable title="Resource policy reference">
@@ -1725,6 +1904,20 @@ public-policies:
       <ResponseField name="rules" type="array of rule objects">
         Policy rule list using the same rule schema as public resource rules.
       </ResponseField>
+
+      <ResponseField name="mtls" type="object">
+        Mutual TLS settings **(EE)** shared by every resource that uses this policy. Same shape as `auth.mtls` on [public resources](#mutual-tls-mtls-ee).
+
+        <Expandable title="mTLS object">
+          <ResponseField name="enabled" type="boolean">
+            Turns mTLS on for the policy. Requires at least one entry in `ca-certificates`.
+          </ResponseField>
+
+          <ResponseField name="ca-certificates" type="array of strings">
+            PEM-encoded CA certificates that client certificates must chain to. Up to 20 certificates in total. When set, replaces the policy's trusted CAs; when omitted, the existing CAs are kept.
+          </ResponseField>
+        </Expandable>
+      </ResponseField>
     </Expandable>
   </ResponseField>
 </Expandable>
@@ -1745,6 +1938,7 @@ public-policies:
 10. `alias` values must be unique across private resources in the blueprint.
 11. `mode: inference` (public or private) requires `full-domain`, must not have `targets`, and is the only mode that may set `ai-providers`.
 12. `ai-budget` entries on a resource must each use a unique `unit`/`period` combination.
+13. When `auth.mtls.enabled` is `true`, the resource must use `mode: http`, must not set `ssl: false`, and must list at least one entry in `ca-certificates`. Policies with `mtls.enabled: true` also need at least one CA certificate.
 
 ### Common Validation Errors
 
@@ -1819,3 +2013,15 @@ Each entry in `ai-budget` must use a distinct `unit`/`period` pair, such as one 
 ### "'models' can only be set on a provider with access-mode 'select'"
 
 Set `models` only when the `ai-providers` entry uses `access-mode: select`. Entries using `access-mode: inherit` must leave `models` empty.
+
+### "mTLS is only supported when mode is 'http'"
+
+`auth.mtls` can only be enabled on HTTP public resources.
+
+### "mTLS requires 'ssl' to be enabled"
+
+Remove `ssl: false` from a resource that enables mTLS. Client certificates are checked during the TLS handshake.
+
+### "mTLS requires at least one entry in 'ca-certificates'"
+
+When `mtls.enabled` is `true` on a resource or policy, list at least one PEM-encoded CA certificate in `ca-certificates`.
