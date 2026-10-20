@@ -285,7 +285,7 @@ When a resource is targets-only, `name` and `mode` are not required.
 
 ### Load Balancing Example
 
-When a resource has more than one target, `load-balancing-strategy` controls how requests are spread across them.
+When an HTTP resource has more than one target, `load-balancing-strategy` controls how requests are spread across them. The same options are available on the resource **Proxy** tab. See [Load Balancing Strategy](/manage/resources/public/targets#load-balancing-strategy).
 
 ```yaml
 public-resources:
@@ -311,6 +311,8 @@ Strategy values:
 - **`p2c`**: Power of two choices. Pangolin picks two random targets and sends the request to the one with fewer active connections.
 - **`hrw`**: Client IP hash. The same client IP is consistently routed to the same target.
 - **`leasttime`**: Least response time. Requests go to the target with the fastest response time and fewest active connections.
+
+TCP/UDP (`mode: tcp` / `mode: udp`) resources ignore this field and always use round robin.
 
 ### Identity Headers Example
 
@@ -1017,7 +1019,7 @@ public-resources:
       </ResponseField>
 
       <ResponseField name="load-balancing-strategy" type="string">
-        How requests are distributed across the resource's targets.
+        How requests are distributed across the resource's targets. Applies to HTTP resources only; TCP/UDP always use round robin. See [Load Balancing Strategy](/manage/resources/public/targets#load-balancing-strategy).
 
         - `wrr`: Round robin. Requests rotate evenly across targets.
         - `p2c`: Power of two choices. Pick two random targets and send the request to the one with fewer active connections.

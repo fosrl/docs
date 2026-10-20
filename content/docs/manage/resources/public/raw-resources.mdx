@@ -14,7 +14,7 @@ For workloads that do not need a public proxy, prefer a [private host or CIDR re
 - Expose any TCP or UDP service, whatever the protocol, without opening ports on the backend network.
 - The backend stays behind NAT or a firewall. Only the Pangolin server needs a public port.
 - Players or users connect with their normal client software, with no Pangolin client to install.
-- Multiple targets across sites give round-robin routing and failover.
+- Multiple targets across sites give round-robin routing and failover. Unlike HTTP resources, TCP/UDP always use round robin (no strategy picker).
 - Proxy Protocol can pass the original client IP through to backends that support it.
 
 ## Use Cases
@@ -36,7 +36,7 @@ Pangolin does not inspect or authenticate the traffic, so any security has to co
 TCP and UDP resources use **[targets](/manage/resources/public/targets)** like HTTP/HTTPS resources:
 
 - Add one or more targets with an upstream address and port.
-- Assign targets to different sites for round-robin routing and failover.
+- Assign targets to different sites for round-robin routing and failover. Load balancing strategy options on the Proxy tab apply to HTTP resources only; see [Targets](/manage/resources/public/targets#load-balancing-strategy).
 
 ## Self-Hosted Setup
 

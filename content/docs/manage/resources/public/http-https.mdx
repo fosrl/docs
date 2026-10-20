@@ -37,8 +37,8 @@ Pangolin acts as a front-door barrier: unauthenticated visitors are redirected t
 HTTP/HTTPS resources use **[targets](/manage/resources/public/targets)** to define where traffic is sent on your remote network.
 
 - Add one or more targets, each with an upstream address and port.
-- Assign each target to a site. Targets on different sites enable [round-robin load balancing](/manage/resources/public/targets#multi-site-targets) and [automatic failover](/manage/resources/public/healthchecks-failover).
-- Optionally configure path-based routing, path rewriting, custom host headers, and other proxy settings.
+- Assign each target to a site. Targets on different sites enable [load balancing](/manage/resources/public/targets#load-balancing-strategy) and [automatic failover](/manage/resources/public/healthchecks-failover).
+- Optionally configure path-based routing, path rewriting, a load balancing strategy, sticky sessions, custom host headers, and other proxy settings.
 
 This multi-target model differs from SSH, RDP, and VNC public resources, which use site selection and a single host/port instead of discrete targets.
 

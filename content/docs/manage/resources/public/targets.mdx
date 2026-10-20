@@ -19,6 +19,27 @@ Targets function as destination endpoints for your resources:
 
 In the public resource **Proxy** tab, Pangolin also provides additional proxy settings for how requests are sent to the upstream target.
 
+### Load Balancing Strategy
+
+When an [HTTP / HTTPS](/manage/resources/public/http-https) resource has more than one eligible target in the same routing group, Pangolin spreads requests across those targets. Choose the strategy on the resource **Proxy** tab (or with `load-balancing-strategy` in a [blueprint](/manage/blueprints#load-balancing-example)).
+
+| Strategy | Behavior |
+| --- | --- |
+| Round Robin (default) | Rotate requests evenly across targets. |
+| Power of Two Choices | Pick two random targets and send the request to the one with fewer active connections. |
+| Client IP Hash | Hash the client IP so the same client is consistently routed to the same target. |
+| Least Response Time | Send requests to the target with the fastest response time and fewest active connections. |
+
+Notes:
+
+- Strategy applies per routing group. Targets that share the same path match and path rewrite settings are load balanced together using the resource's strategy.
+- Disabled targets, offline sites (when any peer site is online), and [unhealthy](/manage/resources/public/healthchecks-failover) targets are excluded from the pool.
+- [TCP / UDP](/manage/resources/public/raw-resources) resources always use round robin. The strategy setting is HTTP-only.
+
+### Sticky Sessions
+
+Enable **Sticky Sessions** on the **Proxy** tab when clients should stay on the same target after the first request. For HTTP/HTTPS, Pangolin sets a sticky cookie (`p_sticky`). Sticky sessions work alongside the load balancing strategy: the strategy picks the first target, then sticky keeps follow-up requests on that target while it remains available.
+
 ### Custom Host Header
 
 Use **Custom Host Header** when the upstream application expects a specific `Host` value instead of the public resource hostname.
@@ -52,14 +73,14 @@ Targets have sites associated with them. This provides significant benefits for 
 
 ### Site-Distributed Resources
 
-You can now configure targets across different sites for the same resource:
+You can configure targets across different sites for the same resource:
 
 <Card title="High Availability">
   Distribute your resources across multiple sites so that if one site goes down, traffic automatically continues to be served from other available sites.
 </Card>
 
 <Card title="Load Balancing">
-  Set up load balancing across sites to distribute traffic in a round-robin fashion between all available targets.
+  Spread traffic across targets on one or more sites using the resource [load balancing strategy](#load-balancing-strategy).
 </Card>
 
 ### Distributing Sites Load Across Servers
@@ -68,9 +89,9 @@ You can now configure targets across different sites for the same resource:
 This is an [Enterprise Edition](/self-host/enterprise-edition)-only feature.
 </Note>
 
-On highly available clustered Enterprise Pangolin servers - lik the cloud platform - different sites can connect to different nodes. If one of the nodes goes down, the site moves to another node. This has implications for site-based load balancing, because DNS must can only route a FQDN to one Pangolin server node at a time.
+On highly available clustered Enterprise Pangolin servers (like the cloud platform), different sites can connect to different nodes. If one of the nodes goes down, the site moves to another node. This has implications for site-based load balancing, because DNS can only route a FQDN to one Pangolin server node at a time.
 
-Load balancing between different targets only works when sites are connected to the same Pangolin node. In Pangolin instances with multiple remote nodes, ensure load balancing occurs on the same node.
+Load balancing between different targets only works when those sites are connected to the same Pangolin node. The strategy you choose still applies, but each node only sees targets for sites attached to it. In Pangolin instances with multiple remote nodes, pin the sites you want to load balance together to the same node.
 
 To ensure effective load balancing in multi-node environments:
 
@@ -121,7 +142,7 @@ Example: Path `^/api/users/[0-9]+$` with regex match matches `/api/users/123` bu
 
 ### Load Balancing with Path-Based Routing
 
-When multiple targets have the same path and match configuration, Pangolin will load balance between them using round-robin distribution.
+When multiple targets have the same path and match configuration, Pangolin load balances between them using the resource [load balancing strategy](#load-balancing-strategy) (default: round robin).
 
 **Example Scenario:**
 - Target 1: Path `/api`, Match `prefix`, Address `10.0.1.10:8080`
@@ -212,7 +233,7 @@ Pangolin automatically normalizes paths to ensure correct routing:
 
 ### Load Balancing with Path Rewriting
 
-All targets with identical path match and path rewrite configurations will be load balanced together.
+All targets with identical path match and path rewrite configurations are load balanced together using the resource [load balancing strategy](#load-balancing-strategy).
 
 **Example:**
 - Target 1: Match `/api` (prefix), Rewrite `/v2` (prefix), Address `10.0.1.10:8080`
