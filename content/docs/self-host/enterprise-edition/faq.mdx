@@ -64,11 +64,11 @@ description: "Common questions about Enterprise Edition licensing, editions, and
 
   > Invalid or expired license keys detected. Follow license terms to continue using all features.
 
-  If the key row is valid and the host shows **Unlicensed**, the usual cause is too many registered users or too many sites. Read [License limits](/self-host/enterprise-edition/limits) before you clear or re-register the key. Re-registering does not fix a capacity violation.
+  If the key row is valid and the host shows **Unlicensed**, the usual cause is too many registered users, sites, or machine clients. Read [License limits](/self-host/enterprise-edition/limits) before you clear or re-register the key. Re-registering does not fix a capacity violation.
 </Accordion>
 
 <Accordion title="Do machine clients count toward the user limit?">
-  No. Machine clients that authenticate with an ID and secret, and are not tied to a user account, do not count. Devices attached to a person do not count separately either. The registered account does. Details are on [License limits](/self-host/enterprise-edition/limits).
+  No. Machine clients that authenticate with an ID and secret are not tied to a user account, so they do not count toward the user quantity. They have their own machine client limit on the license (on published tiers it matches the site ceiling). Devices attached to a person do not count separately either; the registered account does. Details are on [License limits](/self-host/enterprise-edition/limits).
 </Accordion>
 
 <Accordion title="Do archived or blocked users count?">
