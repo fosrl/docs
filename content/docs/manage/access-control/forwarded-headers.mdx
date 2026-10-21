@@ -2,10 +2,10 @@
 title: "Forwarded Headers"
 description: "Learn how Pangolin forwards user identity information to your backend applications through HTTP headers"
 ---
-Pangolin can forward user identity information to your backend applications through custom HTTP headers. This allows your applications to receive user details directly from the request headers, enabling integration with Pangolin's authentication system. [AI Gateway](/manage/ai/overview) resources send the same headers to the upstream provider when the caller is a known user. See [Identity Headers](/manage/ai/providers/configuration#identity-headers).
+Pangolin can forward user identity information to your backend applications through custom HTTP headers. This allows your applications to receive user details directly from the request headers, enabling integration with Pangolin's authentication system. The same headers apply to [public HTTP/HTTPS resources](/manage/resources/public/http-https), [private HTTP/HTTPS resources](/manage/resources/private/private-http), and [AI Gateway](/manage/ai/overview) resources. For AI Gateway specifics, see [Identity Headers](/manage/ai/providers/configuration#identity-headers).
 
 <Info>
-Forwarded headers are only available when using authentication methods that provide user identity information.
+Forwarded headers are only sent when Pangolin knows who the caller is — for example an authenticated public-resource session, or a connected [Pangolin client](/manage/clients/platforms) on a private HTTP resource that maps to a user.
 </Info>
 
 ## Supported Headers
@@ -19,7 +19,9 @@ Pangolin forwards the following headers to your backend when user identity is av
 | `Remote-Name` | User's full name | `John Doe` |
 | `Remote-Role` | User's role or group membership | `admin` |
 
-## Authentication Methods
+## Public Resources
+
+On [public HTTP/HTTPS resources](/manage/resources/public/http-https), headers depend on the authentication method.
 
 ### Headers Available
 
@@ -52,6 +54,10 @@ These authentication methods do not provide user identity information:
   No user identity - only access control.
 </Card>
 </CardGroup>
+
+## Private HTTP
+
+On [private HTTP/HTTPS resources](/manage/resources/private/private-http), identity comes from the connected [Pangolin client](/manage/clients/platforms), not from a public login page. When that client maps to a user, Pangolin forwards the same `Remote-User`, `Remote-Email`, `Remote-Name`, and `Remote-Role` headers to the upstream app. Access still comes from [private resource grants](/manage/resources/private/authentication) (users, roles, and machines); the headers carry the identity once the client is already authorized.
 
 ## Client Certificate (mTLS)
 

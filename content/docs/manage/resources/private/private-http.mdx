@@ -50,3 +50,5 @@ You can approximate private browsing with a standard private resource by pairing
 A [public resource](/manage/resources/public/authentication) is reachable from the internet; Pangolin sits in front with authentication (for example platform SSO or other methods) so unauthenticated requests are blocked at the edge—the “bouncer” in front of a public site.
 
 Private HTTP does not use that public forward-auth model for reachability. The hostname does not grant access from the open internet at all. The user must connect with the Pangolin client first, like a VPN, before the domain resolves and the reverse proxy will serve the app. Instead of a login page at the edge, Pangolin uses the user's active client connection to determine their identity and enforces [private resource access rules](/manage/resources/private/authentication) (users, roles, machines) from that session. The network path is client-attached only.
+
+When the connected client maps to a user, Pangolin forwards that identity to the upstream app as `Remote-User`, `Remote-Email`, `Remote-Name`, and `Remote-Role` — the same [forwarded headers](/manage/access-control/forwarded-headers) public resources use.
