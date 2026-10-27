@@ -8,13 +8,63 @@ Client certificate (mTLS) authentication requires browsers and API clients to pr
 Pangolin does not issue or host client certificates. You bring your own CA and distribute client certificates to the devices or clients that should connect.
 
 <Info>
-This is separate from [Pangolin Site mTLS](/manage/sites/configure-site#mtls-authentication), which authenticates a Newt site to the control plane.
+    This is separate from [Pangolin Site
+    mTLS](/manage/sites/configure-site#mtls-authentication), which authenticates
+    a Newt site to the control plane.
 </Info>
+
+<iframe
+    className="w-full aspect-video rounded-xl"
+    src="https://www.youtube.com/embed/oI_zOUp9hhY?si=kJd84zx4swGhilWO"
+    title="YouTube video player"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen
+></iframe>
 
 ## Requirements
 
 - The resource must be an **HTTPS** public resource with **SSL** enabled
 - At least one trusted **CA public certificate** must be uploaded before you can require client certificates
+
+## Generate Certificates
+
+If you already run a PKI, use your existing CA and skip ahead to [Configure mTLS](#configure-mtls). Otherwise, the OpenSSL commands below create a small CA and one client certificate, which is enough to test the feature or protect a resource used by a handful of people.
+
+<Steps>
+<Step title="Create the CA">
+  This creates the CA private key (`ca.key`) and the CA certificate (`ca.crt`). Change the `CN` to something you will recognize later.
+
+  ```bash
+  openssl req -x509 -newkey rsa:4096 -days 365 -nodes \
+    -keyout ca.key -out ca.crt \
+    -subj "/CN=My-Local-CA"
+  ```
+
+  `ca.crt` is the file you upload to Pangolin. Keep `ca.key` somewhere safe and off the server, since anyone who has it can sign client certificates your resource will accept.
+</Step>
+<Step title="Create a client key and certificate signing request">
+  Each user or device should get its own key. The `CN` shows up as the subject in the certificate details forwarded to your backend, so a username or device name works well.
+
+  ```bash
+  openssl req -newkey rsa:2048 -nodes \
+    -keyout client.key -out client.csr \
+    -subj "/CN=my-client-user"
+  ```
+</Step>
+<Step title="Sign the client certificate with the CA">
+  ```bash
+  openssl x509 -req -in client.csr -CA ca.crt -CAkey ca.key -CAcreateserial \
+    -out client.crt -days 365
+  ```
+
+  You now have `client.crt` and `client.key`. Repeat the last two steps for each additional client, using a different file name and `CN` each time.
+</Step>
+</Steps>
+
+<Note>
+  You do not need to create a server certificate. Pangolin already serves the resource over HTTPS with its own certificate; the CA you create here is only used to verify clients.
+</Note>
 
 ## Configure mTLS
 
@@ -24,6 +74,44 @@ On the resource (or a [resource policy](/manage/resources/public/resource-polici
 2. Upload one or more trusted CA certificates (PEM, `.pem`, `.crt`, or `.cer`). Bundles are supported. Upload public CA certificates only—never a private key.
 
 You can add up to 20 trusted CA certificates. Removing the last CA turns mTLS off automatically.
+
+## Connect with a Client Certificate
+
+### Chrome
+
+Browsers import client certificates as a single PKCS#12 file that bundles the certificate and its private key. Create one from the files you generated earlier:
+
+```bash
+openssl pkcs12 -export \
+  -in client.crt \
+  -inkey client.key \
+  -out client.p12
+```
+
+OpenSSL asks for an export password. You will need it when importing the file, so pick something you can share with the person who will use the certificate.
+
+To import `client.p12` into Chrome:
+
+1. Go to `chrome://certificate-manager`, or open **Settings > Privacy and security > Security > Manage certificates**.
+2. Open **Your certificates**.
+3. On Linux and ChromeOS, click **Import**, select `client.p12`, and enter the export password. On Windows and macOS, Chrome uses the operating system's certificate store, so you can also double-click `client.p12` and follow the system prompts (the Certificate Import Wizard on Windows, Keychain Access on macOS).
+4. Fully quit and reopen Chrome.
+
+The next time you open the resource, Chrome asks which certificate to use. Pick the one you imported. If you choose the wrong one or dismiss the prompt, Chrome remembers that choice until it restarts.
+
+<Tip>
+  If macOS refuses the file with a password or MAC verification error, re-export it with `openssl pkcs12 -export -legacy ...`. OpenSSL 3 uses newer encryption by default, which some versions of Keychain cannot read.
+</Tip>
+
+### curl
+
+Command-line clients can use the PEM files directly:
+
+```bash
+curl --cert client.crt --key client.key https://app.example.com
+```
+
+If the resource also uses [header authentication](/manage/resources/public/authentication), add the credentials with `-u username:password`. Other auth methods still apply after the TLS handshake, as described below.
 
 ## How It Behaves
 
