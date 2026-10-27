@@ -8,14 +8,23 @@ Redirects forward matching HTTP requests to another URL. Use them to retire old 
 
 Manage redirects from your organization's **Settings → Redirects**.
 
+<iframe
+    className="w-full aspect-video rounded-xl"
+    src="https://www.youtube.com/embed/s2BU0-9QC0g?si=ssP5f_FNqP_xGJux"
+    title="YouTube video player"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen
+></iframe>
+
 ## Attach to a Domain or a Resource
 
 Every redirect attaches to exactly one of:
 
-| Attachment | Listen host | When to use it |
-| --- | --- | --- |
-| **Domain** | A hostname on one of your [domains](/manage/domains) (subdomain or the base domain) | You need a redirect on a hostname that is not (or not only) a public resource, for example retiring `old.example.com`. Also use this when the hostname matches a resource but you do not want the redirect tied to that resource's lifecycle |
-| **Resource** | The attached [public resource](/manage/resources/public/http-https)'s full hostname | You want some paths on an existing resource to redirect while other paths still hit that resource, and you are fine deleting the redirect when the resource is deleted |
+| Attachment   | Listen host                                                                         | When to use it                                                                                                                                                                                                                               |
+| ------------ | ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Domain**   | A hostname on one of your [domains](/manage/domains) (subdomain or the base domain) | You need a redirect on a hostname that is not (or not only) a public resource, for example retiring `old.example.com`. Also use this when the hostname matches a resource but you do not want the redirect tied to that resource's lifecycle |
+| **Resource** | The attached [public resource](/manage/resources/public/http-https)'s full hostname | You want some paths on an existing resource to redirect while other paths still hit that resource, and you are fine deleting the redirect when the resource is deleted                                                                       |
 
 ### Domain-attached redirects
 
@@ -47,11 +56,11 @@ A request matches a redirect when:
 
 Path match types:
 
-| Type | Behavior |
-| --- | --- |
-| **Exact** | Path must equal the match path |
+| Type       | Behavior                                                                                                                          |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| **Exact**  | Path must equal the match path                                                                                                    |
 | **Prefix** | Path must start with the match path as a path segment (for example `/products` matches `/products/shoes`, not `/productsforsale`) |
-| **Regex** | Path must match the regular expression |
+| **Regex**  | Path must match the regular expression                                                                                            |
 
 Leave the match path empty to redirect every request on that host.
 
@@ -69,12 +78,12 @@ destination origin + rewritten path + original query string
 
 By default the request path is kept. Optionally set a **path rewrite**:
 
-| Rewrite type | Behavior |
-| --- | --- |
-| **Exact** | Replace the entire path |
-| **Prefix** | Replace the matched prefix and keep the remainder |
-| **Regex** | Replace using the match pattern; substitution supports capture groups (`$1`, `$2`, …) |
-| **Strip prefix** | Remove the matched prefix; optionally add a new prefix |
+| Rewrite type     | Behavior                                                                              |
+| ---------------- | ------------------------------------------------------------------------------------- |
+| **Exact**        | Replace the entire path                                                               |
+| **Prefix**       | Replace the matched prefix and keep the remainder                                     |
+| **Regex**        | Replace using the match pattern; substitution supports capture groups (`$1`, `$2`, …) |
+| **Strip prefix** | Remove the matched prefix; optionally add a new prefix                                |
 
 ### Capture groups
 
@@ -82,12 +91,12 @@ When the rewrite type is **Regex**, parentheses in the **match path** (with matc
 
 Example: move `/blog/2020/post` to `/archive/post-2020`:
 
-| Field | Value |
-| --- | --- |
-| Path match type | Regex |
-| Match path | `^/blog/(\d+)/(.*)$` |
-| Rewrite type | Regex |
-| Rewrite path | `/archive/$2-$1` |
+| Field           | Value                |
+| --------------- | -------------------- |
+| Path match type | Regex                |
+| Match path      | `^/blog/(\d+)/(.*)$` |
+| Rewrite type    | Regex                |
+| Rewrite path    | `/archive/$2-$1`     |
 
 With match type **Prefix** and rewrite type **Regex**, the remainder after the prefix is available as `$1` (for example match `/old` and rewrite `/new$1` turns `/old/x` into `/new/x`).
 
@@ -97,10 +106,10 @@ The original query string is always preserved.
 
 ## Permanent vs Temporary
 
-| Setting | Status code | Behavior |
-| --- | --- | --- |
-| Temporary (default) | **307** | Browsers and clients should not cache the redirect indefinitely |
-| Permanent | **308** | Browsers may cache the redirect; use when the move is lasting |
+| Setting             | Status code | Behavior                                                        |
+| ------------------- | ----------- | --------------------------------------------------------------- |
+| Temporary (default) | **307**     | Browsers and clients should not cache the redirect indefinitely |
+| Permanent           | **308**     | Browsers may cache the redirect; use when the move is lasting   |
 
 Turn on **Permanent** only when you intend clients to remember the new location.
 
