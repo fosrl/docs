@@ -3,60 +3,50 @@ title: "Domains"
 icon: "globe"
 description: "Learn how to configure domains for your Pangolin resources and understand the different domain types available"
 ---
+
 Domains allow you to access your Pangolin resources through custom URLs. Pangolin supports different domain types depending on your deployment model and requirements. You can also attach [redirects](/manage/redirects) to a domain hostname to forward matching requests to another URL.
 
-## Getting Started
-
-In Pangolin Cloud, a domain is not required. You can use our provided domain endings like `.hostlocal.app` or `.tunneled.to` for your resources on any of the paid plans.
+<Tip>
+    In Pangolin Cloud, a domain is not required. You can use our provided domain
+    endings like `.hostlocal.app` or `.tunneled.to` for your resources on any of
+    the paid plans.
+</Tip>
 
 ## Domain Types
 
-| Type | DNS Record | Coverage | Availability |
-| --- | --- | --- | --- |
-| **Wildcard** | A / AAAA | Base domain and all subdomains (e.g. `example.com`, `app.example.com`) | Self-Hosted |
-| **Domain Delegation** | NS | Base domain and all subdomains, managed entirely by Pangolin | Cloud |
-| **Single Domain** | CNAME | Only the exact hostname provided (no subdomains) | Cloud |
+| Type                  | DNS Record | Coverage                                                               | Availability               |
+| --------------------- | ---------- | ---------------------------------------------------------------------- | -------------------------- |
+| **Wildcard**          | A / AAAA   | Base domain and all subdomains (e.g. `example.com`, `app.example.com`) | Self-Hosted                |
+| **Domain Delegation** | NS         | Base domain and all subdomains, managed entirely by Pangolin           | Cloud or Enterprise w/ DNS |
+| **Single Domain**     | CNAME      | Only the exact hostname provided (no subdomains)                       | Cloud or Enterprise w/ DNS |
 
-<Tip>Wildcard (A record) domains are the most common setup for Self-Hosted, since you already control the server's DNS and just point it at your VPS IP.</Tip>
+<Note>
+    Wildcard (A record) domains are the most common setup for Self-Hosted, since
+    you already control the server's DNS and just point it at your VPS IP.
+</Note>
 
 ## Delegating a Domain to Pangolin Cloud
 
-Domain delegation and single-domain (CNAME) setups exist because, unlike self-hosting, Pangolin Cloud doesn't run on a server whose IP you control — your traffic is routed and terminated on Pangolin's infrastructure instead. For Pangolin to issue certificates and route traffic for your domain, it needs to be able to create and update DNS records on your behalf.
+Domain delegation and single-domain (CNAME) setups exist because Pangolin Cloud and Enterprise clustered mode doesn't run on a server whose single IP you control - your traffic is routed and terminated on various nodes. For Pangolin to issue certificates and route traffic for your domain, it needs to be able to create and update DNS records on your behalf.
 
 - **Self-Hosted**: You point A/AAAA records at your own VPS's IP address. DNS stays with your existing provider; Pangolin never needs access to it.
 - **Cloud**: There's no single static IP that's "yours" to point at, and Pangolin needs to create records (for certificate validation, routing, and new resources) without you manually updating DNS every time. Delegation and CNAME setups solve this by giving Pangolin either full control over the zone (NS delegation) or a single record it can manage (CNAME).
 
-Domain delegation is the more powerful option since new subdomains work automatically, but it comes with a real tradeoff: **it hands over the nameservers for the whole domain (or subdomain), not just the records Pangolin needs.**
+Domain delegation is the more powerful option since new subdomains work automatically. It also lets you manage the entire DNS zone through Pangolin, including creating and updating records as needed.
 
 ## Setting It Up
 
 ### Self-Hosted (Wildcard / A Records)
 
-<Steps>
-<Step title="Point DNS at your server">
-  In your DNS provider, add an A record (or AAAA for IPv6) for the wildcard and, optionally, the root domain, pointing to your VPS's public IP:
+Refer to the [DNS & Networking Section](/self-host/dns-and-networking).
 
-  ```dns
-  Type: A
-  Name: *.example.com
-  Value: 192.0.2.1
+### Cloud & Enterprise (NS Delegation or CNAME)
 
-  Type: A
-  Name: example.com
-  Value: 192.0.2.1
-  ```
-</Step>
-<Step title="Wait for propagation">
-  DNS changes can take anywhere from a few minutes to 48 hours to propagate.
-</Step>
-<Step title="Add the domain in Pangolin">
-  Configure the domain in `config/config.yml` or through the Pangolin dashboard so Traefik can request certificates for it.
-</Step>
-</Steps>
+    **Changing nameservers hands over the whole zone, not individual records.** If you point the nameservers for your root domain (e.g. `example.com`) at Pangolin, Pangolin becomes authoritative for **every** record on that domain - including MX/email, TXT/SPF, and any other subdomains you weren't intending to move. Once delegated, you manage DNS for that zone through Pangolin, not your old provider.
 
-More detail on ports, firewalls, and networking for self-hosted setups is in the [DNS & Networking Section](/self-host/dns-and-networking).
-
-### Cloud & Enterprise (Delegation or CNAME)
+    <Warning>
+        Some registrars like Cloudflare included only let you delegate NS records at subdomains, and **don't allow you to add NS records on the root zone** at all or still include their nameservers on the root. In this case if you need to use NS delegation, delegate a subdomain of the domain or use CNAME records.
+    </Warning>
 
 <Steps>
 <Step title="Add the domain in the Pangolin dashboard">
@@ -76,6 +66,7 @@ More detail on ports, firewalls, and networking for self-hosted setups is in the
     ```
 
     This is done at your registrar or in your current DNS provider's nameserver settings, not as a normal DNS record.
+
   </Tab>
   <Tab title="Single Domain (CNAME)">
     Add a CNAME for the hostname and for its ACME challenge, pointing to the values Pangolin gives you:
@@ -84,11 +75,13 @@ More detail on ports, firewalls, and networking for self-hosted setups is in the
     Type: CNAME
     Name: test.example.com
     Value: 0nbn5rpcq4wthq6.cname.pangolin.net
-
+    ```
+    ```dns
     Type: CNAME
     Name: _acme-challenge.test.example.com
     Value: _acme-challenge.0nbn5rpcq4wthq6.cname.pangolin.net
     ```
+
   </Tab>
   </Tabs>
 </Step>
@@ -97,26 +90,17 @@ More detail on ports, firewalls, and networking for self-hosted setups is in the
 </Step>
 </Steps>
 
-<Warning>
-**Changing nameservers hands over the whole zone, not individual records.** If you point the nameservers for your root domain (e.g. `example.com`) at Pangolin, Pangolin becomes authoritative for **every** record on that domain — including MX/email, TXT/SPF, and any other subdomains you weren't intending to move. Once delegated, you manage DNS for that zone through Pangolin, not your old provider.
-
-Some registrars — Cloudflare included - only let you delegate NS records at the root, and **don't allow you to add other records once Cloudflare is no longer authoritative** for that zone (since it's no longer serving the zone at all). Practically, this means:
-
-- Delegating `*.example.com` moves the entire domain, including email and any other services, to Pangolin's nameservers.
-- Delegating a subdomain instead (e.g. `*.apps.example.com`) avoids this - the root domain and its other records stay with your existing provider untouched.
-- If you must delegate the root and still need other records (MX, TXT, etc.) that your old provider managed use a subdomain delegation / CNAME setup instead and maintain these records in the root provider.
-</Warning>
-
 ## Serving DNS Records
 
 <Note>
-Only available on Pangolin Cloud and Pangolin Enterprise when running with the DNS server or in clustered mode.
+    Only available on Pangolin Cloud and Pangolin Enterprise when running with
+    the DNS server or in clustered mode.
 </Note>
 
 Pangolin can serve arbitrary DNS records on a NS delegated domain. Currently, Pangolin supports serving A, AAAA, CNAME, MX, TXT, SRV, and NS records. Records will not be served until a domain has been verified.
 
-To create a DNS record on a NS delegated domain, navigate to the domain settings in the Pangolin dashboard and add the desired record type (A, AAAA, CNAME, MX, TXT, SRV, or NS) with the appropriate name and value.
+To create a DNS record on a NS delegated domain, navigate to the domain settings in the Pangolin dashboard and add the desired record type with the appropriate name and value.
 
 <Frame caption="Custom DNS Records in the Pangolin dashboard">
-<img src="/images/custom-dns-records.png" alt="Custom DNS Records"/>
+    <img src="/images/custom-dns-records.png" alt="Custom DNS Records" />
 </Frame>
