@@ -38,6 +38,9 @@ This section assumes you're creating a **Pangolin Site**. For all Site endpoints
 |-------|------|----------|-------------|
 | `name` | string | Yes | Display name for the site |
 | `type` | string | Yes | Use `"newt"` |
+| `niceId` | string | No | Identifier for the site. Must be unique in the org. Generated if omitted. |
+
+If you omit them, Pangolin generates the Newt credentials (`newtId` and `secret`) and the site's address. Only the create response includes the secret, so save it then.
 
 **Example Response**
 ```json
@@ -48,7 +51,7 @@ This section assumes you're creating a **Pangolin Site**. For all Site endpoints
     "name": "My Site",
     "type": "newt",
     "online": false,
-    "address": "100.90.128.0",
+    "address": "100.90.128.0/24",
     "newtId": "se897rmyjvamy5q",
     "secret": "ystsahnvqetgx1fhn2udylq0zqgv611zbfp6ya3jvfrprn7q"
   },
@@ -65,7 +68,7 @@ Use this when you want to generate some template values and control the site cre
 
 **GET** `/org/{orgId}/pick-site-defaults`
 
-Returns values you pass into the create-site endpoint.
+Returns values you pass into the create-site endpoint. The response also includes exit node fields (`exitNodeId`, `subnet`, `endpoint`, etc.). Newt sites don't use them because Newt picks its exit node when it connects.
 
 **Path**
 - `orgId` (string) — organization ID
@@ -96,10 +99,11 @@ Returns values you pass into the create-site endpoint.
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
 | `name` | string | Yes | Display name for the site |
-| `address` | string | Yes | From pick-site-defaults `clientAddress` |
 | `type` | string | Yes | Use `"newt"` |
-| `newtId` | string | Yes | From pick-site-defaults `newtId` |
-| `secret` | string | Yes | From pick-site-defaults `newtSecret` |
+| `address` | string | No | From pick-site-defaults `clientAddress`. Must be an IP inside the org subnet that no other site or client uses. |
+| `newtId` | string | No | From pick-site-defaults `newtId` |
+| `secret` | string | No | From pick-site-defaults `newtSecret` |
+| `niceId` | string | No | Identifier for the site. Must be unique in the org. |
 
 **Example Response**
 ```json
@@ -110,7 +114,7 @@ Returns values you pass into the create-site endpoint.
     "name": "My Site",
     "type": "newt",
     "online": false,
-    "address": "100.90.128.0/24"
+    "address": "100.90.128.0/24",
     "newtId": "se897rmyjvamy5q",
     "secret": "ystsahnvqetgx1fhn2udylq0zqgv611zbfp6ya3jvfrprn7q"
   },
@@ -130,7 +134,7 @@ You need a **domain ID** before creating a resource. List your org's domains, th
   Call the list-domains endpoint to get available domains and their `domainId` values.
 </Step>
 <Step title="Create the resource">
-  Call the create-resource endpoint with `http: true` and the `domainId` from step 1.
+  Call the create-resource endpoint with `mode: "http"` and the `domainId` from step 1.
 </Step>
 <Step title="Add targets to the resource">
   Call the create-target endpoint for each backend (site + ip:port) that should serve traffic for the resource.
@@ -194,10 +198,13 @@ Returns all domains for the organization. Use `domainId` from a domain when crea
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
 | `name` | string | Yes | Display name for the resource (1–255 chars) |
-| `http` | boolean | Yes | Use `true` for public HTTP resource |
+| `mode` | string | Yes | Use `"http"` for a public HTTP resource |
 | `domainId` | string | Yes | From list-domains |
-| `protocol` | string | Yes | `"tcp"` |
 | `subdomain` | string \| null | No | See below. |
+
+<Note>
+Older integrations sent `http: true` and `protocol: "tcp"` instead of `mode`. The API still accepts those fields, but they're deprecated. Use `mode` instead.
+</Note>
 
 **Subdomain and domain types**
 
@@ -217,10 +224,9 @@ The `subdomain` value is combined with the base domain from `domainId` to form t
 ```json
 {
   "name": "My Resource",
-  "http": true,
+  "mode": "http",
   "subdomain": "my-subdomain",
-  "domainId": "pg3i1k4lhibhl3i",
-  "protocol": "tcp"
+  "domainId": "pg3i1k4lhibhl3i"
 }
 ```
 
@@ -249,7 +255,7 @@ The `subdomain` value is combined with the base domain from `domainId` to form t
 Add a target (backend) to a resource. Use the numeric `resourceId` from the create-resource response. The target is the site and address (ip + port) that will receive traffic for the resource. For all target endpoints, see [Resource Target API (Swagger)](https://api.pangolin.net/v1/docs/#/Resource%20Target).
 
 **Path**
-- `resourceId` (number) — From create-resource response (e.g. `9943`)
+- `resourceId` (number) — From create-resource response (e.g. `9942`)
 
 **Body**
 | Field | Type | Required | Description |
@@ -257,7 +263,7 @@ Add a target (backend) to a resource. Use the numeric `resourceId` from the crea
 | `siteId` | number | Yes | Site that hosts the backend (from create-site or list sites) |
 | `ip` | string | Yes | Backend IP or hostname |
 | `port` | number | Yes | Backend port |
-| `method` | string | Yes | e.g. `"http"` for HTTP resources |
+| `method` | string | Yes (HTTP) | Scheme Pangolin uses to reach the backend: `"http"`, `"https"`, or `"h2c"`. HTTP resources need it; Pangolin skips HTTP targets that have no method. |
 
 **Example request**
 ```json
@@ -265,7 +271,7 @@ Add a target (backend) to a resource. Use the numeric `resourceId` from the crea
   "ip": "localhost",
   "port": 8080,
   "method": "http",
-  "siteId": 5165
+  "siteId": 8723
 }
 ```
 
@@ -302,16 +308,21 @@ You need an existing site. For more endpoints, see [Private Resource API (Swagge
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
 | `name` | string | Yes | Display name (1–255 chars) |
-| `siteId` | number | Yes | Site that hosts the resource (from create-site or list sites) |
-| `mode` | string | Yes | `"host"` \| `"cidr"` |
-| `destination` | string | Yes | For `host`: IP or hostname (e.g. `localhost`). For `cidr`: CIDR (e.g. `10.0.0.0/24`). |
-| `alias` | string | For host+domain | Alias hostname (e.g. `private-resource.internal`). Required when `destination` is a domain; optional for IP. Must be unique in the org. |
-| `tcpPortRangeString` | string | Yes | See below. |
-| `udpPortRangeString` | string | Yes | See below. |
+| `siteIds` | number[] | Yes | Sites that can reach the resource (from create-site or list sites) |
+| `mode` | string | Yes | `"host"` \| `"cidr"`. This guide covers these two; see Swagger for `http`, `ssh`, `inference`, and `gateway`. |
+| `destination` | string | Yes | For `host`: IPv4 address or hostname (e.g. `localhost`). For `cidr`: CIDR (e.g. `10.0.0.0/24`). |
+| `alias` | string | For host+domain | Alias as a fully qualified domain name (e.g. `private-resource.internal`). Wildcards are allowed (e.g. `*.example.internal`). Required when `destination` is a hostname; optional for an IP. Must be unique in the org. |
+| `roleIds` | number[] | Yes | Role IDs that can access. Pass `[]` for none. |
+| `userIds` | string[] | Yes | User IDs that can access. Pass `[]` for none. |
+| `clientIds` | number[] | Yes | Machine client IDs that can access. Pass `[]` for none. |
+| `tcpPortRangeString` | string | No | See below. Default `"*"`. |
+| `udpPortRangeString` | string | No | See below. Default `"*"`. |
 | `disableIcmp` | boolean | No | Default `false` |
-| `authDaemonMode` | string | No | `"site"` \| `"remote"` |
-| `roleIds` | number[] | No | Role IDs that can access (default `[]`) |
-| `userIds` | string[] | No | User IDs that can access (default `[]`) |
+| `niceId` | string | No | Identifier for the resource. Generated if omitted. |
+
+<Note>
+The older `siteId` (single number) field still works and is merged into `siteIds`, but it's deprecated.
+</Note>
 
 **TCP/UDP port range strings:** Control which ports are allowed for the private resource.
 
@@ -321,22 +332,22 @@ You need an existing site. For more endpoints, see [Private Resource API (Swagge
 
 Use `tcpPortRangeString` and `udpPortRangeString` independently (e.g. TCP all, UDP none, or vice versa).
 
-If you omit `roleIds`/`userIds`, the org admin role is granted access by default. Add IDs to restrict access.
+The org Admin role always gets access. The roles, users, and clients you list get access in addition to it.
 
 **Example request**
 ```json
 {
   "name": "My Private Resource",
-  "siteId": 8723,
+  "siteIds": [8723],
   "mode": "host",
   "destination": "localhost",
   "alias": "private-resource.internal",
   "tcpPortRangeString": "*",
   "udpPortRangeString": "",
   "disableIcmp": false,
-  "authDaemonMode": "site",
   "roleIds": [],
-  "userIds": []
+  "userIds": [],
+  "clientIds": []
 }
 ```
 
@@ -345,7 +356,7 @@ If you omit `roleIds`/`userIds`, the org admin role is granted access by default
 {
   "data": {
     "siteResourceId": 1165,
-    "siteId": 8723,
+    "networkId": 412,
     "niceId": "unsung-round-tailed-ground-squirrel",
     "name": "My Private Resource",
     "mode": "host",
@@ -353,9 +364,7 @@ If you omit `roleIds`/`userIds`, the org admin role is granted access by default
     "alias": "private-resource.internal",
     "tcpPortRangeString": "*",
     "udpPortRangeString": "",
-    "disableIcmp": false,
-    "authDaemonPort": 22123,
-    "authDaemonMode": "site"
+    "disableIcmp": false
   },
   "success": true,
   "error": false,
@@ -370,9 +379,9 @@ You can grant access to a **public resource** or a **private resource** by addin
 
 ### Get role and user IDs
 
-**GET** `/org/{orgId}/roles` — Returns roles in the org. Use `roleId` (number) when adding a role to a resource. Query: `limit`, `offset` (optional).
+**GET** `/org/{orgId}/roles` returns `data.roles`, the roles in the org. Use a role's `roleId` (number) when adding it to a resource. Optional query parameters: `page` (default `1`), `pageSize` (default `20`), and `query` (filter by name).
 
-**GET** `/org/{orgId}/users` — Returns users in the org. Use `id` (string) as `userId` when adding a user to a resource. Query: `limit`, `offset` (optional).
+**GET** `/org/{orgId}/users` returns `data.users`, the users in the org. Use a user's `id` (string) as `userId` when adding them to a resource. Optional query parameters: `page` (default `1`), `pageSize` (default `20`), and `query` (search).
 
 ### Public resource
 
