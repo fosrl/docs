@@ -100,9 +100,23 @@ More detail on ports, firewalls, and networking for self-hosted setups is in the
 <Warning>
 **Changing nameservers hands over the whole zone, not individual records.** If you point the nameservers for your root domain (e.g. `example.com`) at Pangolin, Pangolin becomes authoritative for **every** record on that domain — including MX/email, TXT/SPF, and any other subdomains you weren't intending to move. Once delegated, you manage DNS for that zone through Pangolin, not your old provider.
 
-Some registrars — Cloudflare included — only let you delegate NS records at the root, and **don't allow you to add other records once Cloudflare is no longer authoritative** for that zone (since it's no longer serving the zone at all). Practically, this means:
+Some registrars — Cloudflare included - only let you delegate NS records at the root, and **don't allow you to add other records once Cloudflare is no longer authoritative** for that zone (since it's no longer serving the zone at all). Practically, this means:
 
 - Delegating `*.example.com` moves the entire domain, including email and any other services, to Pangolin's nameservers.
-- Delegating a subdomain instead (e.g. `*.apps.example.com`) avoids this — the root domain and its other records stay with your existing provider untouched.
+- Delegating a subdomain instead (e.g. `*.apps.example.com`) avoids this - the root domain and its other records stay with your existing provider untouched.
 - If you must delegate the root and still need other records (MX, TXT, etc.) that your old provider managed use a subdomain delegation / CNAME setup instead and maintain these records in the root provider.
 </Warning>
+
+## Serving DNS Records
+
+<Note>
+Only available on Pangolin Cloud and Pangolin Enterprise when running with the DNS server or in clustered mode.
+</Note>
+
+Pangolin can serve arbitrary DNS records on a NS delegated domain. Currently, Pangolin supports serving A, AAAA, CNAME, MX, TXT, SRV, and NS records. Records will not be served until a domain has been verified.
+
+To create a DNS record on a NS delegated domain, navigate to the domain settings in the Pangolin dashboard and add the desired record type (A, AAAA, CNAME, MX, TXT, SRV, or NS) with the appropriate name and value.
+
+<Frame caption="Custom DNS Records in the Pangolin dashboard">
+<img src="/images/custom-dns-records.png" alt="Custom DNS Records"/>
+</Frame>
