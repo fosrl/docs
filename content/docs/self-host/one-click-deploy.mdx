@@ -1,0 +1,292 @@
+---
+title: "Deploy on AWS or DigitalOcean"
+description: "Launch a self-hosted Pangolin server in minutes from a prebuilt AWS or DigitalOcean image"
+---
+
+Prebuilt images are the fastest way to self-host Pangolin. They come with Docker, a firewall setup and a guided installer. Every image installs the **latest Pangolin release** when you set it up, so you never start on an old version.
+
+<CardGroup cols={2}>
+<Card title="Amazon Web Services" icon="cloud" href="#amazon-web-services">
+  One AMI per architecture (x86 and Graviton) for both editions. Configure everything at launch with user-data or CloudFormation, so no SSH is needed.
+</Card>
+<Card title="DigitalOcean" icon="server" href="#digitalocean">
+  One-click Marketplace droplet. SSH in once and a setup wizard walks you through the install.
+</Card>
+</CardGroup>
+
+## Before you start
+
+Whichever provider you choose, you need:
+
+- **A domain** whose DNS you control. Pangolin uses a **base domain** (for example `example.com`) for the resources you expose, and a **dashboard domain** (default `pangolin.example.com`) for the admin UI.
+- **An email address** for Let's Encrypt certificates.
+- **DNS records** pointing at the server's public IP. You can create them as soon as you know the IP:
+
+  ```
+  A   pangolin.example.com   ->  <server public IP>
+  A   *.example.com          ->  <server public IP>
+  ```
+
+- **Open ports:** TCP 80 and 443, and UDP 51820 (sites) and 21820 (clients). Both images open these for you.
+
+See [DNS & Networking](/self-host/dns-and-networking) for more detail, and [Choosing a VPS](/self-host/choosing-a-vps) for sizing.
+
+## Amazon Web Services
+
+Pangolin publishes one Ubuntu 24.04 AMI per architecture:
+
+| Architecture | AMI name | Example instance |
+| --- | --- | --- |
+| x86_64 | `pangolin-ubuntu-24.04-amd64-*` | `t3.small` |
+| arm64 / Graviton | `pangolin-ubuntu-24.04-arm64-*` | `t4g.small` |
+
+The same AMI installs either the **Community Edition** (the default) or the **Enterprise Edition**. You choose the edition when you configure the instance: set `PANGOLIN_EDITION` in user-data, use the **Edition** parameter in CloudFormation, or answer the wizard's prompt. The Enterprise Edition is free for personal use and for businesses under $100K USD gross annual revenue. See [Enterprise Edition](/self-host/enterprise-edition).
+
+The AMIs are available in all default-enabled AWS regions: US East and West, Canada, São Paulo, Ireland, London, Paris, Frankfurt, Stockholm, Mumbai, Tokyo, Seoul, Osaka, Singapore and Sydney.
+
+<Tip>
+Graviton (`t4g`) instances are the most cost-effective choice. `t4g.small` (2 vCPU, 2 GB) suits most deployments.
+</Tip>
+
+### Find the AMI
+
+{/* TODO: add the AWS Marketplace listing links once they are live. */}
+
+<Tabs>
+<Tab title="AWS Marketplace">
+  Search for **Pangolin** in [AWS Marketplace](https://aws.amazon.com/marketplace) and subscribe. The listing shows the AMI ID for each region and offers a one-click CloudFormation launch.
+</Tab>
+
+<Tab title="AWS CLI">
+  AMI IDs differ per region. Look up the newest one in the region you launch in:
+
+  {/* TODO: replace <PANGOLIN_AWS_ACCOUNT_ID> with the publishing account ID. */}
+
+  ```bash
+  aws ec2 describe-images --region us-east-1 \
+    --owners <PANGOLIN_AWS_ACCOUNT_ID> \
+    --filters "Name=name,Values=pangolin-ubuntu-*-arm64-*" "Name=state,Values=available" \
+    --query 'sort_by(Images, &CreationDate)[-1].ImageId' --output text
+  ```
+
+  Use `amd64` instead of `arm64` for x86 instance types.
+</Tab>
+
+<Tab title="AWS Console">
+  1. Switch to the region you want to launch in.
+  2. Open **EC2 → Images → AMIs** and change the filter to **Public images**.
+  3. Search for `pangolin-ubuntu`, then sort by **Creation date**.
+  4. Select the newest image for your architecture and click **Launch instance from AMI**.
+</Tab>
+</Tabs>
+
+### Launch and configure
+
+Pick one way to give the instance your edition, domain and email. With CloudFormation or user-data, the instance sets itself up: it waits until the dashboard domain resolves to it, then installs Pangolin.
+
+<Tabs>
+<Tab title="CloudFormation">
+  Choose the CloudFormation launch option on the Marketplace listing and fill in the parameters:
+
+  - **Edition**: `community` (default) or `enterprise`
+  - **BaseDomain** and **LetsEncryptEmail** (required)
+  - **DashboardDomain** (optional, default `pangolin.<BaseDomain>`)
+  - **HostedZoneId** (optional). If you give a Route 53 hosted zone, the DNS records are created for you.
+  - **VpcId**, **SubnetId** (a public subnet), **SSHLocation** (your IP, e.g. `203.0.113.10/32`) and optionally a **KeyName**
+
+  The stack creates the security group, the instance and an Elastic IP. Its outputs include the public IP, the dashboard URL, and a command that prints the setup token.
+</Tab>
+
+<Tab title="User-data (CLI or API)">
+  Pass the settings as user-data when you launch. Plain `KEY=VALUE` lines are enough:
+
+  ```bash title="user-data.env"
+  PANGOLIN_EDITION=community   # or enterprise
+  PANGOLIN_BASE_DOMAIN=example.com
+  PANGOLIN_EMAIL=admin@example.com
+  ```
+
+  ```bash
+  aws ec2 run-instances \
+    --image-id ami-... --instance-type t4g.small \
+    --subnet-id subnet-... --security-group-ids sg-... --key-name my-key \
+    --user-data file://user-data.env
+  ```
+
+  The security group must allow TCP 80, 443 and UDP 51820, 21820, plus TCP 22 from your IP if you want SSH access. Attach an **Elastic IP** so the address doesn't change, then create the DNS records.
+
+  The same settings work as cloud-config. Write them to `/etc/pangolin/setup.env` with `write_files` if you already use cloud-init.
+</Tab>
+
+<Tab title="SSH wizard">
+  Launch the AMI without user-data, then connect as the `ubuntu` user:
+
+  ```bash
+  ssh ubuntu@<public-ip>
+  ```
+
+  On login you're offered the setup wizard (you can also run `sudo pangolin-setup`). It asks for the edition, your domains, email, tunneling and optional SMTP, checks DNS, and installs Pangolin.
+</Tab>
+</Tabs>
+
+<Accordion title="All user-data settings">
+| Setting | Default | Description |
+| --- | --- | --- |
+| `PANGOLIN_EDITION` | `community` | `community` or `enterprise` |
+| `PANGOLIN_BASE_DOMAIN` | required | Base domain for resources, e.g. `example.com` |
+| `PANGOLIN_DASHBOARD_DOMAIN` | `pangolin.<base domain>` | Domain for the Pangolin dashboard |
+| `PANGOLIN_EMAIL` | required | Let's Encrypt email |
+| `PANGOLIN_INSTALL_GERBIL` | `true` | Enable WireGuard tunneling. Set `false` to run Pangolin [without tunneling](/self-host/advanced/without-tunneling) |
+| `PANGOLIN_ENABLE_IPV6` | auto | IPv6 on the Docker network. Defaults to on if the instance has an IPv6 address |
+| `PANGOLIN_ENABLE_MAXMIND` | `true` | Download the GeoLite2 databases for [geolocation](/self-host/advanced/enable-geolocation) |
+| `PANGOLIN_SMTP_HOST`, `PANGOLIN_SMTP_PORT`, `PANGOLIN_SMTP_USER`, `PANGOLIN_SMTP_PASS`, `PANGOLIN_SMTP_NO_REPLY` | off | Email (SMTP). Enabled when `PANGOLIN_SMTP_HOST` is set |
+| `PANGOLIN_WAIT_FOR_DNS` | `true` | Wait for the dashboard domain to resolve to the instance before installing |
+| `PANGOLIN_DNS_TIMEOUT` | `1800` | Seconds to wait for DNS before installing anyway |
+
+If you give only `PANGOLIN_DASHBOARD_DOMAIN`, the base domain is that domain with its first label removed (`pangolin.example.com` → `example.com`).
+
+<Warning>
+Any process on the instance can read user-data. Consider adding SMTP credentials later in `/opt/pangolin/config/config.yml` instead.
+</Warning>
+</Accordion>
+
+### Get the setup token
+
+Once installation finishes (usually a few minutes after DNS resolves), you can read the setup token without SSH:
+
+```bash
+aws ec2 get-console-output --instance-id i-... --latest --output text | grep 'Setup token'
+```
+
+Or over SSH:
+
+```bash
+pangolin-setup status        # waiting-dns | installing | complete | ...
+sudo pangolin-setup token
+```
+
+Then continue with [Finish setup](#finish-setup).
+
+## DigitalOcean
+
+The [Pangolin (CE) 1-Click App](https://marketplace.digitalocean.com/apps/pangolin-ce-1?refcode=edf0480eeb81) runs on Ubuntu 24.04 with Docker CE. It installs the latest Pangolin release during setup. The listing is named for the Community Edition, but setup also lets you choose the Enterprise Edition.
+
+<Steps>
+<Step title="Create the droplet">
+  Choose a region close to your users and a plan with at least 1 GB RAM (2 GB recommended). Add your SSH key so you can log in as `root`.
+
+  <Tabs>
+  <Tab title="Control panel">
+    Open [Pangolin (CE) on the DigitalOcean Marketplace](https://marketplace.digitalocean.com/apps/pangolin-ce-1?refcode=edf0480eeb81) and click **Create Pangolin (CE) Droplet**.
+  </Tab>
+
+  <Tab title="API">
+    Create the droplet from the `fossorial-pangolince1` image with the DigitalOcean API. Set `TOKEN` to a [personal access token](https://docs.digitalocean.com/reference/api/create-personal-access-token/), and put your SSH key IDs or fingerprints in `ssh_keys`:
+
+    ```bash
+    curl -X POST "https://api.digitalocean.com/v2/droplets" \
+      -H "Content-Type: application/json" \
+      -H "Authorization: Bearer $TOKEN" \
+      -d '{
+        "name": "pangolin",
+        "region": "nyc3",
+        "size": "s-1vcpu-2gb",
+        "image": "fossorial-pangolince1",
+        "ssh_keys": ["<ssh-key-id-or-fingerprint>"]
+      }'
+    ```
+  </Tab>
+
+  <Tab title="doctl">
+    ```bash
+    doctl compute droplet create pangolin \
+      --image fossorial-pangolince1 \
+      --region nyc3 \
+      --size s-1vcpu-2gb \
+      --ssh-keys <ssh-key-id-or-fingerprint> \
+      --wait
+    ```
+
+    List your key IDs with `doctl compute ssh-key list`, and the available sizes with `doctl compute size list`.
+  </Tab>
+  </Tabs>
+</Step>
+
+<Step title="Point DNS at the droplet">
+  Copy the droplet's public IP and create the A records for your dashboard domain and `*.<base domain>`, as described in [Before you start](#before-you-start).
+</Step>
+
+<Step title="SSH in and run the setup">
+  ```bash
+  ssh root@<droplet-ip>
+  ```
+
+  The setup script starts automatically on first login and downloads the latest installer. Answer the prompts as in the [Quick Install Guide](/self-host/quick-install#installation-process): edition, base domain, dashboard domain, Let's Encrypt email, tunneling and optional SMTP.
+</Step>
+
+<Step title="Copy the setup token">
+  The installer prints the setup token when it finishes. To see it again:
+
+  ```bash
+  cd /opt/pangolin && docker compose logs pangolin | grep -A2 'SETUP TOKEN'
+  ```
+</Step>
+</Steps>
+
+The droplet comes with UFW enabled. Only ports 22, 80, 443 and UDP 51820, 21820 are allowed. For extra protection, restrict SSH to your IP with `ufw allow from <your-ip> to any port 22` or a [DigitalOcean Cloud Firewall](https://docs.digitalocean.com/products/networking/firewalls/).
+
+## Finish setup
+
+<Steps>
+<Step title="Open the dashboard">
+  Go to `https://<dashboard domain>/auth/initial-setup`.
+
+  <Check>
+  Certificates can take a few minutes to issue after DNS resolves. A brief browser certificate warning at first is normal.
+  </Check>
+</Step>
+
+<Step title="Create the admin account">
+  Paste the setup token, then enter your admin email and a strong password. The token stops working once the first admin account exists.
+</Step>
+
+<Step title="Activate Enterprise (if applicable)">
+  On an Enterprise Edition server, open **Server Admin → License** (`/admin/license`) and enter your license key. See [Activate a License](/self-host/enterprise-edition/activate).
+</Step>
+</Steps>
+
+You're ready to [add a site](/manage/sites/install-site) and expose your first resource.
+
+## Updating
+
+Both images install Pangolin with Docker Compose in `/opt/pangolin`. To update to newer releases, follow [How to Update](/self-host/how-to-update). You don't need a new image.
+
+## Troubleshooting
+
+<AccordionGroup>
+<Accordion title="AWS instance is stuck waiting for DNS">
+  Check that the dashboard domain resolves to the instance's public IP:
+
+  ```bash
+  dig +short pangolin.example.com @1.1.1.1
+  ```
+
+  The instance keeps checking and installs anyway after `PANGOLIN_DNS_TIMEOUT` (30 minutes by default). If the server sits behind a load balancer, set `PANGOLIN_WAIT_FOR_DNS=false`. Follow progress with `sudo tail -f /var/log/pangolin-setup.log`.
+</Accordion>
+
+<Accordion title="Browser shows a certificate error">
+  Let's Encrypt can only issue certificates once DNS points at the server and port 80 is reachable. After fixing DNS or the firewall, restart Traefik:
+
+  ```bash
+  cd /opt/pangolin && sudo docker compose restart traefik
+  ```
+</Accordion>
+
+<Accordion title="AWS setup failed">
+  Run `pangolin-setup status` and read `/var/log/pangolin-setup.log`. After fixing the cause, run `sudo pangolin-setup` to try again.
+</Accordion>
+
+<Accordion title="Sites can't connect">
+  Make sure UDP 51820 (and UDP 21820 for clients) is open in the AWS security group, or in the DigitalOcean firewall if you added one.
+</Accordion>
+</AccordionGroup>

@@ -257,6 +257,7 @@
       "group": "Self-host Pangolin",
       "pages": [
         "self-host/quick-install",
+        "self-host/one-click-deploy",
         "self-host/choosing-a-vps",
         {
           "group": "Manual Installation",
