@@ -24,13 +24,50 @@ Default source: `https://api.fossorial.io/api/v1/models`. Typed AI provider type
 | Vertex AI | `vertex` |
 | Amazon Bedrock | `bedrock` |
 | Microsoft Foundry | `azure` |
-| OpenRouter, Vercel AI Gateway, Custom | (not mapped) |
+| Custom | `custom` (entries you add yourself) |
+| OpenRouter, Vercel AI Gateway | (not mapped) |
 
-Unmapped types skip Known Models and wildcard expansion against the catalog. Enter exact keys if you need them listed in discovery.
+The default catalog has no `custom` entries. Until you [add some](#pricing-custom-providers), Custom providers behave like unmapped types. Unmapped types skip Known Models and wildcard expansion against the catalog. Enter exact keys if you need them listed in discovery.
 
 ## Pricing and Budgets
 
 Each catalog entry can include token rates: `in`, `out`, `cache`, and `reasoning`. [Budget](/manage/ai/budgets) enforcement and usage analytics use those rates when the requested model matches a catalog id. Unknown keys have no catalog price, so they do not count toward USD budgets. Add custom models to the catalog if you need cost tracking for them. Token budgets still sum usage for unknown ids. Cost is per token.
+
+## Pricing Custom Providers
+
+Models on a [Custom](/manage/ai/providers/custom) provider, such as a local Ollama or vLLM instance, have no vendor price. To track their cost, add entries with `"provider": "custom"` to your catalog, usually in a [`merge_file`](#loading-a-custom-catalog):
+
+```json
+{
+  "data": [
+    {
+      "model": "qwen3-coder:30b",
+      "provider": "custom",
+      "providerNiceId": "ollama",
+      "pricing": {
+        "in": 0.0000002,
+        "out": 0.0000002,
+        "cache": null,
+        "reasoning": null
+      }
+    }
+  ]
+}
+```
+
+`providerNiceId` is optional. It limits the entry to the Custom provider with that **Identifier**, which is shown on the provider's General settings and in its URL. If you leave it out, the entry applies to every Custom provider. If both kinds exist for the same model, the entry with the matching `providerNiceId` wins. Use it when two Custom providers serve the same model id at different costs.
+
+When a Custom provider handles a request, Pangolin looks for a `custom` entry first. If there is none, it falls back to an [approximate match](/manage/ai/budgets#estimates-not-invoices) against the other catalogs. `custom` entries also fill that provider's Known Models list and are used for wildcard expansion, token limits, and capability flags in `GET /v1/models`. They never apply to OpenRouter, Vercel AI Gateway, or typed providers.
+
+### Estimating Cost from Power Draw
+
+For self-hosted models, you can work out a per-token rate from power use and throughput:
+
+```
+cost per token = (watts / 1000) × price per kWh / (tokens per second × 3600)
+```
+
+For example, a GPU drawing 250 W at $0.30/kWh while generating 40 tokens/s costs about `0.25 × 0.30 / 144000 ≈ 0.00000052` per token. Set `out` to that value. Prompt processing is usually much faster than generation, so set `in` lower, at the rate measured for prompt tokens.
 
 ## Loading a Custom Catalog
 
@@ -74,4 +111,4 @@ Catalog files and API responses are JSON:
 }
 ```
 
-`provider` must be `openai`, `anthropic`, `gemini`, `vertex`, `azure`, or `bedrock`. Prefixes `bedrock*`, `vertex*`, and `azure*` are accepted and normalized to those catalogs. Unknown providers are skipped.
+`provider` must be `openai`, `anthropic`, `gemini`, `vertex`, `azure`, `bedrock`, or `custom`. Prefixes `bedrock*`, `vertex*`, and `azure*` are accepted and normalized to those catalogs. Unknown providers are skipped. `providerNiceId` only applies to `custom` entries and is ignored on the others.

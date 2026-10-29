@@ -13,7 +13,7 @@ USD cost uses catalog rates (`in`, `out`, `cache`, `reasoning`) times the token 
 
 If the model ID is not in the catalog, the request has no USD amount and does not count toward USD budgets. Token budgets still sum tokens for that call.
 
-[OpenRouter](/manage/ai/providers/open-router), [Vercel AI Gateway](/manage/ai/providers/vercel-ai-gateway), and [Custom](/manage/ai/providers/custom) may match a catalog ID with approximate pricing.
+[OpenRouter](/manage/ai/providers/open-router), [Vercel AI Gateway](/manage/ai/providers/vercel-ai-gateway), and [Custom](/manage/ai/providers/custom) may match a catalog ID with approximate pricing. For local or self-hosted models on a Custom provider, set your own rates with [`custom` catalog entries](/manage/ai/model-catalog#pricing-custom-providers).
 
 If the upstream omits usage, Pangolin estimates tokens from the request and response.
 
