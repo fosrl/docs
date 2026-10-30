@@ -37,6 +37,22 @@ In the resource’s domain settings, set the subdomain field to `*` to match any
 
 The downstream target still receives the original `Host` header, so virtual hosts and path rules on your side keep working.
 
+## Matching the Base Hostname
+
+A wildcard only matches hostnames under it, so `*.apps.example.com` does not match `apps.example.com`. To route both through one resource, turn on **Also match apps.example.com** in the resource's domain settings. The switch appears once the subdomain is a wildcard, and it's off by default. It's available on HTTP resources only.
+
+In a [blueprint](/manage/blueprints), set `match-base-domain: true` on the resource.
+
+Pangolin rejects the setting if the base hostname is already taken, so that one hostname never belongs to two resources. The hostname is taken if it is:
+
+- used by another resource
+- covered by a broader wildcard resource, such as `*.example.com` for `apps.example.com`
+- used by an organization login page or the Pangolin dashboard
+
+If you don't turn this on, you can still create a separate resource at the base hostname.
+
+On self-hosted Pangolin, DNS must also send the base hostname to your server, because a record for `*.apps` doesn't cover `apps`. Pangolin asks Traefik to include the base hostname on the wildcard certificate. On a [domain delegation](/manage/domains#domain-delegation-ns-records) domain, Pangolin answers DNS for the base hostname and the certificate already covers it.
+
 ## Requirements for Wildcard Resources
 
 Wildcard hostnames need TLS certificates that cover `*.your-level`, not just a single FQDN, and DNS must send all of those names to Pangolin. How you satisfy that depends on how you host Pangolin.

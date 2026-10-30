@@ -871,6 +871,15 @@ public-resources:
         Container label: `pangolin.public-resources.web-app.full-domain=app.example.com`
       </ResponseField>
 
+      <ResponseField name="match-base-domain" type="boolean">
+        Also serves the hostname a wildcard sits under, so `*.apps.example.com` matches `apps.example.com` too. Only valid with `mode: http` and a wildcard `full-domain`. See [Matching the Base Hostname](/manage/resources/public/wildcard-resources#matching-the-base-hostname).
+
+        **Default**: `false`
+
+        YAML: `match-base-domain: true`  
+        Container label: `pangolin.public-resources.web-app.match-base-domain=true`
+      </ResponseField>
+
       <ResponseField name="proxy-port" type="integer">
         Public port for raw TCP or UDP resources. Required when `mode` is `tcp` or `udp`.
 
