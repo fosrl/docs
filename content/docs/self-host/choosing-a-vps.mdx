@@ -27,13 +27,24 @@ If you choose a VPS with only 1GB RAM, you may need to create swap space to avoi
 </Card>
 </CardGroup>
 
+## Recommended: One-Click Deploy
+
+The easiest way to get started is with a prebuilt image on AWS or DigitalOcean. The server comes with Docker, firewall rules, and the Pangolin installer ready to go, and always installs the latest Pangolin release. You only need to provide your domain and email.
+
+<CardGroup cols={2}>
+<Card title="Amazon Web Services" icon="cloud" href="/self-host/one-click-deploy#amazon-web-services">
+  Launch the Pangolin AMI on x86 or Graviton and configure it with user-data, CloudFormation, or an SSH setup wizard.
+</Card>
+<Card title="DigitalOcean" icon="server" href="/self-host/one-click-deploy#digitalocean">
+  Create a droplet from the Pangolin 1-Click App on the <a href="https://marketplace.digitalocean.com/apps/pangolin-ce-1?refcode=edf0480eeb81">DigitalOcean Marketplace</a>.
+</Card>
+</CardGroup>
+
+See [Deploy on AWS or DigitalOcean](/self-host/one-click-deploy) for the full walkthrough.
+
 ## Provider Options
 
-Most general-purpose VPS providers will work well for Pangolin. Look for a provider with reliable uptime, a data center near your users, clear bandwidth limits, snapshots or backups, and the ability to open inbound TCP ports 80 and 443 plus the WireGuard UDP ports configured during installation.
-
-<Info>
-If you prefer a guided deployment, Pangolin is also available on the <a href="https://marketplace.digitalocean.com/apps/pangolin-ce-1?refcode=edf0480eeb81">DigitalOcean Marketplace</a>. The marketplace image can create a droplet with Pangolin pre-installed and firewall rules configured.
-</Info>
+If you'd rather use another provider, most general-purpose VPS providers will work well for Pangolin with the [quick install guide](/self-host/quick-install). Look for a provider with reliable uptime, a data center near your users, clear bandwidth limits, snapshots or backups, and the ability to open inbound TCP ports 80 and 443 plus the WireGuard UDP ports configured during installation.
 
 <AccordionGroup>
 <Accordion title="Performance Requirements">
