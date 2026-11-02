@@ -65,6 +65,10 @@ When enabled, Pangolin starts when you sign in to Windows.
 
 When enabled, the tunnel connects whenever Pangolin starts. This also opens Pangolin at sign-in.
 
+### Automatically Download and Install Updates
+
+When enabled, Pangolin downloads updates in the background and installs them the next time Pangolin quits or starts. See [Automatic Updates](#automatic-updates).
+
 ### Config File
 
 On Windows, the Pangolin GUI reads configuration from two `pangolin.json` files:
@@ -135,7 +139,11 @@ Most keys in the `Config` object below can be set in either file. If the same ke
     </ResponseField>
 
     <ResponseField name="autoUpdateChecksEnabled" type="boolean">
-      **Global only.** When true, periodically check for updates in the background. When false, automatic checks are off; users can still use **Check for Updates** unless that button is also disabled. If omitted, the default is `true`. Enabling checks surfaces the update UI when a new version exists (tray “Pangolin Update Available” and the update prompt). Intended for org admins / MDM so config is the source of truth.
+      **Global only.** When true, periodically check for updates in the background. When false, automatic checks are off; users can still use **Check for Updates** unless that button is also disabled. If omitted, the default is `true`. Enabling checks without `autoDownloadUpdatesEnabled` surfaces the update UI when a new version exists (tray “Pangolin Update Available” and the update prompt). Intended for org admins / MDM so config is the source of truth.
+    </ResponseField>
+
+    <ResponseField name="autoDownloadUpdatesEnabled" type="boolean">
+      When true, matches the **Automatically Download and Install Updates** preference. Updates found by background checks are downloaded silently and installed the next time Pangolin quits or starts, instead of showing the update prompt. Only matters when `autoUpdateChecksEnabled` is true.
     </ResponseField>
 
     <ResponseField name="updateCheckIntervalSeconds" type="integer">
@@ -174,6 +182,14 @@ The Windows client checks for updates automatically in the background. When a ne
 **Install Update** downloads the new version and installs it. Pangolin restarts when the installation finishes, and the tunnel disconnects briefly while that happens. **Later** closes the dialog and leaves the current version in place.
 
 You can also check from the system tray: **More** > **Check for Updates…**.
+
+Automatic installation can be turned on with the **Automatically Download and Install Updates** preference, or by setting `autoDownloadUpdatesEnabled` to `true` in the [config file](#config-file). Pangolin then downloads the update in the background while you keep using the current version, without a notification. The update installs:
+
+- **When you quit Pangolin** from the system tray. Pangolin stays closed afterwards.
+- **When Pangolin starts**, including at sign-in. 
+- **When Windows starts**, before Pangolin opens, if the setting is on in the global config.
+
+The tunnel disconnects while the update installs. If Pangolin stays open for about a week with an update already downloaded, it asks you to install that update. You can also install it at any time from **Pangolin Update Available…** in the system tray menu.
 
 ### Manual Updates
 
