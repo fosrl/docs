@@ -165,14 +165,6 @@ Generate an SSH CA public/private key pair for an organization and store them in
 docker exec -it pangolin pangctl generate-org-ca-keys --orgId "org-123"
 ```
 
-## Clear Certificates
-
-Clear all certificates from the database to be reinserted by the server when syncing from acme.json files or using Pangolin DNS.
-
-```bash
-docker exec -it pangolin pangctl clear-certificates
-```
-
 ### Options
 
 - `--orgId` (required): The organization ID
@@ -182,3 +174,43 @@ docker exec -it pangolin pangctl clear-certificates
 <Warning>
 If the organization already has CA keys, the command fails unless you pass `--force`. Using `--force` overwrites the existing keys; ensure you have a backup or understand the impact before overwriting.
 </Warning>
+
+## Clear Certificates
+
+Clear all certificates from the database to be reinserted by the server when syncing from acme.json files or using Pangolin DNS.
+
+```bash
+docker exec -it pangolin pangctl clear-certificates
+```
+
+## Export Blueprints
+
+Export existing public and private resources as [blueprint](/manage/blueprints) YAML. This is the bulk equivalent of [exporting a resource](/manage/blueprints#exporting-resources) from the dashboard, and is useful for moving an instance that was configured in the UI into version control.
+
+The YAML is written to stdout, so redirect it to a file. Omit `-it` so that no TTY is allocated and the output isn't mixed with terminal line endings:
+
+```bash
+docker exec pangolin pangctl export-blueprints > blueprints.yaml
+```
+
+To export a single organization:
+
+```bash
+docker exec pangolin pangctl export-blueprints --orgId "org-123" > org-123.yaml
+```
+
+### Options
+
+- `--orgId` (optional): Only export resources for this organization ID. If omitted, every organization that has resources is exported.
+
+### Output
+
+- Each organization is written as its own YAML document, starting with a `# org: <orgId>` comment. Documents are separated by `---`.
+- Public resources are written under `proxy-resources` and private resources under `client-resources`, keyed by their identifier.
+- Organizations with no resources are skipped. If nothing is found, the command prints `No resources found to export.` to stderr and writes nothing to stdout.
+
+<Note>
+Blueprints are applied per organization. When exporting multiple organizations, split the output into one file per organization before applying it.
+
+As with dashboard exports, passwords, PINs, and basic auth credentials are never written to the output. Resources that use them get a `#` comment at the top of their organization's document reminding you to set them again.
+</Note>

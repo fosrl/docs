@@ -169,6 +169,8 @@ A dialog shows the generated YAML. **Copy** it to the clipboard or **Download** 
 Passwords, PINs, and basic auth credentials are never written into the export. If the resource uses any of them, the YAML includes a `#` comment reminding you to set them again after you apply the blueprint. Shared [resource policies](/manage/resources/public/resource-policies) are referenced by identifier (`policy: <policy-id>`) rather than inlined.
 </Note>
 
+On a self-hosted instance, you can export every resource at once with the [`pangctl export-blueprints`](/self-host/advanced/container-cli-tool#export-blueprints) command.
+
 ## Quick Start YAML Example
 
 This example shows three common top-level sections in one file:
