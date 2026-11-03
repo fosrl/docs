@@ -42,6 +42,12 @@ Each authentication log entry contains the following fields:
 | `userAgent` | string | The user agent string of the client browser or application |
 | `metadata` | string | Additional contextual information in JSON format |
 
+## Linked Sessions
+
+When an authentication attempt succeeds, Pangolin creates a [resource session](/manage/resources/public/resource-sessions) and stores its ID in the log entry.
+
+Expand a log row in the dashboard to see a link to the [Resource Session](/manage/resources/public/resource-sessions) page filtered to that session. From there you can see the session's client details and revoke it, which makes the person authenticate to the resource again. If the session has already expired or been revoked, it no longer appears in the list.
+
 ## Log Retention
 
 Authentication log retention is controlled by the organization setting. By default, authentication logs are retained for 0 days (disabled).

@@ -1,0 +1,70 @@
+---
+title: "Session Revalidation"
+description: "Periodically check sessions with your identity provider and end them when the provider revokes access"
+---
+
+<Note>
+Session revalidation is only available in [Pangolin Cloud](https://app.pangolin.net/auth/signup) or self-hosted [Enterprise Edition](/self-host/enterprise-edition).
+</Note>
+
+By default, a user who signs in with an external identity provider (IdP) keeps their Pangolin session until it expires or they log out, even if the account is later disabled or their session is revoked in the IdP. Continuous session revalidation closes that gap. Pangolin periodically checks with the IdP that the user's login is still valid. If the IdP has revoked it, Pangolin ends the user's sessions.
+
+**This feature is for you if:**
+- You disable or offboard users in your IdP and want their Pangolin access to end soon after
+- You revoke sessions or refresh tokens in your IdP and want that to apply to Pangolin too
+- You want IdP-side access policies to keep applying after a user has logged in
+
+## How It Works
+
+1. When revalidation is enabled, Pangolin requests a refresh token from the IdP when the user signs in. Pangolin encrypts the refresh token and links it to the user's dashboard session.
+2. When the session is used, either in the dashboard or to access a resource through SSO, Pangolin checks when the login was last validated. If the last check is older than the revalidation interval (5 minutes by default), Pangolin redeems the refresh token at the IdP's token endpoint.
+3. If the IdP accepts the refresh token, the session continues. If the IdP returns a new refresh token, Pangolin stores it in place of the old one.
+4. If the IdP rejects the refresh token (an `invalid_grant` error), Pangolin ends every session that came from that login. This includes the dashboard session and all [resource sessions](/manage/resources/public/resource-sessions) created from it. The user has to sign in again.
+
+Pangolin client sessions on devices approved from a revalidated login inherit that login's revalidation. If the approving login is revoked, those device sessions end too.
+
+<Note>
+If the IdP can't be reached or returns an unexpected error (for example, an outage or a misconfigured client secret), Pangolin keeps the session and tries again later. Only an explicit rejection from the IdP ends sessions, so an outage won't log out all your users.
+</Note>
+
+## Enable Session Revalidation
+
+Revalidation is configured per identity provider and is off by default.
+
+<Steps>
+<Step title="Open the identity provider">
+  Go to **Identity Providers** in your organization, or in the Server Admin UI for global identity providers. Open an existing identity provider, or create a new one.
+</Step>
+
+<Step title="Turn on Continuous Session Revalidation">
+  Enable **Continuous Session Revalidation** and save.
+</Step>
+
+<Step title="Allow refresh tokens in your IdP">
+  Make sure the IdP client is allowed to issue refresh tokens. See [Refresh Tokens and Scopes](#refresh-tokens-and-scopes).
+</Step>
+</Steps>
+
+Revalidation only applies to logins made after it is enabled. Users who are already signed in aren't revalidated until they sign in again.
+
+If you turn revalidation off, Pangolin deletes the stored refresh tokens for that IdP. Existing sessions stay active and are no longer revalidated.
+
+## Refresh Tokens and Scopes
+
+Revalidation needs the IdP to issue a refresh token at sign-in. When you enable it, Pangolin requests one for you:
+
+- **OAuth2/OIDC and Azure Entra ID:** Pangolin adds the `offline_access` scope to the identity provider's scopes. Your IdP client must allow the refresh token grant. Some IdPs also require you to enable this in the IdP itself before a refresh token is issued. For example, in Authentik you must add the `offline_access` scope to the provider. Check your IdP's documentation for how to allow offline access or refresh tokens for the client.
+- **Google:** Google doesn't use the `offline_access` scope. Instead, Pangolin adds `access_type=offline` and `prompt=consent` to the sign-in request. Users see Google's consent screen each time they sign in, which is required for Google to issue a refresh token every time.
+
+If the IdP doesn't return a refresh token, the login works as normal but isn't revalidated.
+
+## Revalidation Interval
+
+On self-hosted Enterprise Edition, you can change how often sessions are revalidated with `server.idp_session_revalidation_minutes` in the [private config file](/self-host/advanced/private-config-file) (`privateConfig.yml`). The default is `5` minutes.
+
+```yaml
+server:
+  idp_session_revalidation_minutes: 5
+```
+
+A shorter interval ends revoked sessions sooner but sends more requests to the IdP's token endpoint. Pangolin only revalidates a login when it's used, so idle sessions don't create requests.
