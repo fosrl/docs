@@ -155,6 +155,35 @@ Use container labels when the resource definition should live inside your Compos
 `--blueprint-file` on a site and container labels behave as an ongoing source of truth. Dashboard edits can be overwritten the next time the blueprint is applied. UI, API, and CLI applies are typically one-off operations.
 </Note>
 
+### Environment Variable Templating
+
+YAML blueprint files can reference environment variables with `{{env.VARIABLE_NAME}}`. The placeholder is replaced with the variable's value before the blueprint is sent to Pangolin, so one file can produce different site names, domains, or other values on each host.
+
+```yaml
+public-resources:
+  web-app:
+    name: "Web App {{env.SERIAL_NUMBER}}"
+    mode: http
+    full-domain: "{{env.SERIAL_NUMBER}}.example.com"
+    targets:
+      - site: "{{env.SERIAL_NUMBER}}-site"
+        hostname: localhost
+        method: http
+        port: 8080
+```
+
+Substitution happens on the machine that reads the file, using that process's environment:
+
+| Apply method | Templating applied |
+| --- | --- |
+| Site with `--blueprint-file` or `--provisioning-blueprint-file` | Yes, every time the file is sent, including after the file changes |
+| CLI `pangolin apply blueprint` | Yes |
+| Dashboard, API, container labels | No. Placeholders are sent unchanged |
+
+<Note>
+If a variable is not set, its placeholder is replaced with an empty string, which can produce invalid names or domains. Make sure every referenced variable is set before the site or CLI starts. Placeholders that don't start with `env.` are left as-is.
+</Note>
+
 ## Exporting Resources
 
 You can export a resource created in the dashboard to its YAML blueprint equivalent. Use this when you want to move an existing resource into version control, reuse it on another site, or start a blueprint from a working UI configuration.
