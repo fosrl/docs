@@ -1,0 +1,53 @@
+---
+title: "Uninstall"
+description: "Remove a self-hosted Pangolin Docker Compose installation and its data"
+---
+
+This guide covers uninstalling a Pangolin instance installed with Docker Compose, either through the [installer script](/self-host/quick-install) or a [manual Docker Compose setup](/self-host/manual/docker-compose).
+
+All Pangolin data (database, certificates, Traefik config, and app settings) lives in the `config` directory next to your `docker-compose.yml`. Removing the containers alone leaves that data on disk.
+
+<Warning>
+Uninstalling deletes your Pangolin data. Back up the `config` directory first if you might need it later.
+</Warning>
+
+## Uninstall Process
+
+Run these commands from the directory that contains your `docker-compose.yml` (the same directory where you ran the installer or created the Compose files).
+
+<Steps>
+<Step title="Stop and remove containers">
+  Stop the stack and remove its containers and networks:
+
+```bash
+sudo docker compose down
+```
+
+  This leaves your files on disk. Your `config` directory and `docker-compose.yml` are unchanged.
+</Step>
+
+<Step title="Delete the config directory">
+  Remove the `config` directory to delete the database, certificates, and configuration:
+
+```bash
+sudo rm -rf config
+```
+
+  To remove the entire installation directory (including `docker-compose.yml` and any installer files), delete the parent folder instead:
+
+```bash
+cd ..
+sudo rm -rf <pangolin-install-directory>
+```
+</Step>
+
+<Step title="Remove images (optional)">
+  Free disk space by removing the Pangolin-related images if nothing else uses them:
+
+```bash
+sudo docker image rm fosrl/pangolin fosrl/gerbil traefik
+```
+</Step>
+</Steps>
+
+After these steps, Pangolin is fully removed from the server. Sites and clients that pointed at this instance will no longer connect until you install again and reconfigure them.

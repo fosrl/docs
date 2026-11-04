@@ -115,3 +115,19 @@ See [Auto Provision](/manage/identity-providers/auto-provisioning) for more info
 ## Session Revalidation
 
 In [Pangolin Cloud](https://app.pangolin.net/auth/signup) and [Enterprise Edition](/self-host/enterprise-edition), enable [continuous session revalidation](/manage/identity-providers/session-revalidation) on an identity provider to have Pangolin periodically check sessions with the provider and end them when the provider revokes the user's access.
+
+## Troubleshooting
+
+<AccordionGroup>
+<Accordion title={'No policies matched for <unique_identifier>. This user must be added to an organization before logging in.'}>
+  This error means the identity provider authenticated the user, but Pangolin could not place them in an organization. That usually comes down to one of two causes.
+
+  **The user is not created in the organization as an external user.**
+
+  If auto provisioning is off, create the user in the organization, select the identity provider, and set the username (identifier) to match the unique identifier from the IdP exactly. That value is the one shown in the error message. For OIDC, it comes from the [identifier path](/manage/identity-providers/openid-connect#token-configuration) you configured when you created the IdP. Often that is `sub`, but it may be `email` or another claim if you set it that way. See [Users and Roles](/manage/access-control/create-user#external-users).
+
+  **Auto provisioning did not match the user to an organization or role.**
+
+  If auto provisioning is on, the user authenticated successfully, but your auto provision settings did not match them to an organization or role, so they are not allowed access. Check your organization and role mappings. See [Auto Provisioning](/manage/identity-providers/auto-provisioning).
+</Accordion>
+</AccordionGroup>

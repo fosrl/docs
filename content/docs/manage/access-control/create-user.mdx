@@ -25,7 +25,9 @@ An internal user is an identity managed by Pangolin only. When adding the user, 
 
 An external user is an identity managed by an external identity provider. When creating an external user, you will need to select an existing identity provider added to Pangolin. [Check out the documentation on adding an IDP](/manage/identity-providers/add-an-idp).
 
-An identity provider may have auto‑provisioning enabled. This means new users who log in with the IDP are automatically created and you do not need to manually create the user. [Check out the auto‑provisioning documentation](/manage/identity-providers/auto-provisioning).
+The username (identifier) must match the unique identifier from the IdP exactly. For OIDC, that value comes from the [identifier path](/manage/identity-providers/openid-connect#token-configuration) you set on the IdP. Often this is `sub`, but it may be `email` or another claim if you configured it that way. If the values do not match, login fails with a "No policies matched" error. See [IdP troubleshooting](/manage/identity-providers/add-an-idp#troubleshooting).
+
+An identity provider may have auto‑provisioning enabled. This means new users who log in with the IdP are automatically created and you do not need to manually create the user. [Check out the auto‑provisioning documentation](/manage/identity-providers/auto-provisioning).
 
 Even if auto‑provisioning is enabled, you can still manually create users.
 

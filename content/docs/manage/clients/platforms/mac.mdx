@@ -150,3 +150,20 @@ Automatic installation can be turned on from that dialog, or by setting `autoDow
 Find the latest version in the [GitHub releases](https://github.com/fosrl/apple/releases).
 
 You can download the latest installer and run it again to install the latest version. Visit [https://pangolin.net/downloads](https://pangolin.net/downloads) for the official installer.
+
+## Uninstall
+
+1. Quit Pangolin from the menu bar if it is running.
+2. Drag **Pangolin.app** from **Applications** to the Trash, then empty the Trash.
+
+Remove the VPN configuration if macOS still lists it:
+
+1. Open **System Settings** > **Network** (or **VPN**).
+2. Select the Pangolin VPN configuration and delete it.
+3. Under **General** > **Login Items & Extensions** > **Network Extensions**, turn off or remove Pangolin if it is still listed.
+
+To delete local app data as well:
+
+```bash
+rm -rf ~/Library/Application\ Support/Pangolin
+```
