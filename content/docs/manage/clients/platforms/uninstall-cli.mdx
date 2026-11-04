@@ -1,0 +1,83 @@
+---
+title: "Uninstall Pangolin CLI"
+description: "Remove Pangolin CLI, its background services, and local config"
+---
+
+This guide covers removing the [Pangolin CLI](/manage/clients/platforms/cli) from a host. The same binary can run a [site](/manage/sites/install-site) or a [client](/manage/clients/platforms/cli). Uninstall whichever services you installed, then remove the binary and config.
+
+Uninstalling the CLI stops tunnels started by this binary. Sites and machine clients still exist in Pangolin until you delete them in the dashboard.
+
+For standalone Newt, see [Uninstall Newt](/manage/sites/uninstall-newt).
+
+## Stop Background Services
+
+If you installed a site or client service with the CLI, remove it first:
+
+```bash
+sudo pangolin service uninstall site
+sudo pangolin service uninstall client
+```
+
+Run only the commands for services you actually installed. Each command stops the service and removes its unit (systemd, launchd, or Windows service) and related environment file under `/etc/pangolin` on Linux.
+
+If you created a manual systemd unit (for example `/etc/systemd/system/pangolin-site.service` or `pangolin-cli.service`) instead of using `pangolin service install`, stop and remove that unit yourself:
+
+```bash
+sudo systemctl disable --now pangolin-site
+sudo rm -f /etc/systemd/system/pangolin-site.service
+sudo rm -f /etc/pangolin/pangolin-site.env
+sudo systemctl daemon-reload
+```
+
+Adjust the unit and env file names to match what you created.
+
+## Remove the Binary
+
+Find and delete the `pangolin` binary:
+
+```bash
+sudo rm -f "$(command -v pangolin)"
+```
+
+The installer usually places it at `/usr/local/bin/pangolin`.
+
+### Windows MSI
+
+If you installed with the Windows CLI installer, uninstall **Pangolin CLI** from **Settings** > **Apps** > **Installed apps**, or run the MSI in uninstall mode.
+
+If you installed the CLI from the Windows desktop app menu (**Install Pangolin CLI**), uninstall it the same way, or remove it when you [uninstall the Windows app](/manage/clients/platforms/windows#uninstall).
+
+## Remove Local Config (Optional)
+
+The CLI stores settings and session data under its config directory. Print the path, then delete it:
+
+```bash
+pangolin config path
+rm -rf ~/.config/pangolin
+```
+
+On every platform the default is `~/.config/pangolin` (including `config.json`, `site.json` when you ran a site, and logs). Remove that directory only if you do not need the saved login or site credentials.
+
+## Docker
+
+From the directory that contains your CLI `docker-compose.yml`:
+
+```bash
+docker compose down
+```
+
+Remove Compose files and any secret files you created. Optionally remove the image:
+
+```bash
+docker image rm fosrl/pangolin-cli
+```
+
+If you started the CLI with `docker run`, stop and remove that container, then remove the image the same way.
+
+## Kubernetes
+
+If you deployed the client with the [Kubernetes manifests](/manage/clients/kubernetes/deployment), delete the Deployment (and any related ServiceAccount, Secret, or ConfigMap) from the namespace you used:
+
+```bash
+kubectl delete deployment <pangolin-cli-deployment> -n <namespace>
+```

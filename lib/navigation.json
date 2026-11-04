@@ -327,6 +327,7 @@
           ]
         },
         "self-host/how-to-update",
+        "self-host/uninstall",
         {
           "group": "Community Guides",
           "pages": [

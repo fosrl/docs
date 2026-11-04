@@ -377,7 +377,7 @@ public-resources:
         - admin@example.com
 ```
 
-### Mutual TLS (mTLS) **(EE)**
+### Mutual TLS (mTLS)
 
 Set `auth.mtls` to require clients to present a TLS client certificate signed by one of the trusted CAs you list. mTLS is only supported on `http` resources, and `ssl` must not be set to `false`.
 
@@ -1307,7 +1307,7 @@ public-resources:
           </ResponseField>
 
           <ResponseField name="mtls" type="object">
-            Mutual TLS settings **(EE)**. Requires clients to present a certificate signed by one of the trusted CAs. Only allowed when `mode: http`, and `ssl` must not be `false`. See [Mutual TLS (mTLS)](#mutual-tls-mtls-ee).
+            Mutual TLS settings. Requires clients to present a certificate signed by one of the trusted CAs. Only allowed when `mode: http`, and `ssl` must not be `false`. See [Mutual TLS (mTLS)](#mutual-tls-mtls).
 
             YAML: `mtls: { enabled: true, ca-certificates: [...] }`  
             Container label: `pangolin.public-resources.web-app.auth.mtls.enabled=true`
@@ -1935,7 +1935,7 @@ public-policies:
       </ResponseField>
 
       <ResponseField name="mtls" type="object">
-        Mutual TLS settings **(EE)** shared by every resource that uses this policy. Same shape as `auth.mtls` on [public resources](#mutual-tls-mtls-ee).
+        Mutual TLS settings shared by every resource that uses this policy. Same shape as `auth.mtls` on [public resources](#mutual-tls-mtls).
 
         <Expandable title="mTLS object">
           <ResponseField name="enabled" type="boolean">

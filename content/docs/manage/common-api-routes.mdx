@@ -15,7 +15,14 @@ OpenAPI-compliant documentation is available at https://api.pangolin.net/v1/open
 
 In the Pangolin app, sites, public resources, private resources, and clients have an **Identifier**. In the API, this value is called `niceId`.
 
-The identifier is a human-readable, organization-unique value you can use when you want something more stable and memorable than a numeric ID. For example, a site might have a numeric `siteId` like `8723` and a `niceId` like `warehouse-west`.
+The identifier is a human-readable value that is unique within an organization. Use it when you want something more stable and memorable than a numeric ID. For example, a site might have a numeric `siteId` like `8723` and a `niceId` like `warehouse-west`.
+
+### Where to find identifiers
+
+You can find an entity's identifier in either of these places in the dashboard:
+
+- **URL slug** — When you open a site, resource, or similar entity, the identifier appears in the page URL.
+- **General settings** — Open the entity, go to its general settings, and look for the **Identifier** field. You can change the identifier there.
 
 Identifiers are especially useful for automation:
 

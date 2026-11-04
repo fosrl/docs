@@ -196,3 +196,17 @@ The tunnel disconnects while the update installs. If Pangolin stays open for abo
 Find the latest version in the [GitHub releases](https://github.com/fosrl/windows/releases).
 
 You can download the latest installer and run it again to install the latest version. Visit [https://pangolin.net/downloads](https://pangolin.net/downloads) for the official installer.
+
+## Uninstall
+
+1. Quit Pangolin from the system tray if it is running.
+2. Open **Settings** > **Apps** > **Installed apps**, find **Pangolin**, and select **Uninstall**. Tip: search for "Add or Remove Programs" to find the uninstall option.
+
+The MSI removes the app, the Pangolin Manager service, and Start Menu / Desktop shortcuts. It does not always delete user or global config. To clear those as well:
+
+```powershell
+Remove-Item -Recurse -Force "$env:LOCALAPPDATA\Pangolin"
+Remove-Item -Recurse -Force "$env:PROGRAMDATA\Pangolin"
+```
+
+If you also installed [Pangolin CLI](/manage/clients/platforms/cli), uninstall it separately. See [Uninstall Pangolin CLI](/manage/clients/platforms/uninstall-cli).

@@ -1,0 +1,103 @@
+---
+title: "Uninstall Newt"
+description: "Remove a Newt site connector installed as a binary, service, or Docker container"
+---
+
+This guide covers removing Newt from a host. Steps depend on how you [installed Newt](/manage/sites/install-newt).
+
+Uninstalling Newt stops the tunnel from this machine. The site still exists in Pangolin until you delete it in the dashboard. Credentials and local config stay on disk until you remove them.
+
+If you installed the site with the Pangolin CLI instead of standalone Newt, see [Uninstall Pangolin CLI](/manage/clients/platforms/uninstall-cli).
+
+## Binary (systemd)
+
+Use this path if you installed Newt with the installer script or a manual binary and run it under systemd.
+
+<Steps>
+<Step title="Stop and disable the service">
+```bash
+sudo systemctl disable --now newt
+```
+</Step>
+
+<Step title="Remove the unit and credentials">
+```bash
+sudo rm -f /etc/systemd/system/newt.service
+sudo systemctl daemon-reload
+sudo rm -rf /etc/newt
+```
+</Step>
+
+<Step title="Remove the binary">
+```bash
+sudo rm -f "$(command -v newt)"
+```
+
+  The installer usually places Newt at `/usr/local/bin/newt`.
+</Step>
+
+<Step title="Remove local config (optional)">
+  Delete Newt's client config if you no longer need it:
+
+```bash
+rm -rf ~/.config/newt-client
+```
+
+  On macOS the default path is `~/Library/Application Support/newt-client`.
+</Step>
+</Steps>
+
+## Docker
+
+From the directory that contains your Newt `docker-compose.yml`:
+
+```bash
+docker compose down
+```
+
+Remove the Compose files and any secret files you created (for example `newt-config.secret`). Optionally remove the image:
+
+```bash
+docker image rm fosrl/newt
+```
+
+If you started Newt with `docker run`, stop and remove that container, then remove the image the same way.
+
+## Windows Service
+
+If Newt is installed as a Windows service:
+
+```powershell
+newt.exe stop
+newt.exe remove
+```
+
+Then uninstall the Newt application (or delete the binary), and remove leftover data if you want a clean slate:
+
+```powershell
+Remove-Item -Recurse -Force "$env:PROGRAMDATA\newt"
+```
+
+## Kubernetes
+
+If you installed Newt with Helm:
+
+```bash
+helm uninstall newt --namespace pangolin
+```
+
+Use your actual release name and namespace if they differ. Uninstalling the release does not always delete PersistentVolumeClaims, Secrets you created outside Helm, or related DNS and certificates. Review those resources before deleting them.
+
+For Kustomize installs, delete the manifests or overlay you applied:
+
+```bash
+kubectl delete -k <overlay-path>
+```
+
+## Unraid
+
+In the Unraid Docker tab, stop the Newt (or Pangolin Site) container, then remove the container and its template. Delete any appdata or config paths you mapped for Newt if you want to clear credentials from disk.
+
+## Advantech Router App
+
+In the Advantech router UI, open **Router Apps**, stop the Newt app, then uninstall it. You can also delete `/etc/newt/settings` on the router if you want to remove stored credentials.
