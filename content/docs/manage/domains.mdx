@@ -42,7 +42,7 @@ Refer to the [DNS & Networking Section](/self-host/dns-and-networking).
 
 ### Cloud & Enterprise (NS Delegation or CNAME)
 
-    **Changing nameservers hands over the whole zone, not individual records.** If you point the nameservers for your root domain (e.g. `example.com`) at Pangolin, Pangolin becomes authoritative for **every** record on that domain - including MX/email, TXT/SPF, and any other subdomains you weren't intending to move. Once delegated, you manage DNS for that zone through Pangolin, not your old provider.
+    **Changing nameservers hands over the whole zone, not individual records.** If you point the nameservers for your root domain (e.g. `example.com`) at Pangolin, Pangolin becomes authoritative for **every** record on that domain - including MX/email, TXT/SPF, and any other subdomains you weren't intending to move. Once delegated, you manage DNS for that zone through Pangolin, not your old provider. Recreate the records you need as [custom DNS records](#custom-dns-records) before you switch.
 
     <Warning>
         Some registrars like Cloudflare included only let you delegate NS records at subdomains, and **don't allow you to add NS records on the root zone** at all or still include their nameservers on the root. In this case if you need to use NS delegation, delegate a subdomain of the domain or use CNAME records.
@@ -90,17 +90,80 @@ Refer to the [DNS & Networking Section](/self-host/dns-and-networking).
 </Step>
 </Steps>
 
-## Serving DNS Records
+## Custom DNS Records
 
 <Note>
-    Only available on Pangolin Cloud and Pangolin Enterprise when running with
-    the DNS server or in clustered mode.
+    Custom DNS records are available in [Pangolin Cloud](https://app.pangolin.net/auth/signup) and self-hosted [Enterprise Edition](/self-host/enterprise-edition) running in [clustering mode](/self-host/clustering/understanding-clustering) with Pangolin's [DNS server](/self-host/advanced/private-config-file#dns-server-configuration) set up.
 </Note>
 
-Pangolin can serve arbitrary DNS records on a NS delegated domain. Currently, Pangolin supports serving A, AAAA, CNAME, MX, TXT, SRV, and NS records. Records will not be served until a domain has been verified.
+When you delegate a domain to Pangolin with NS records, Pangolin's nameservers answer every query for that domain. Custom DNS records let you serve your other records from Pangolin too, such as mail (MX), SPF and DMARC (TXT), verification records, and hostnames that point to servers outside Pangolin. This means you can delegate a whole domain without losing the records your old DNS provider was serving.
 
-To create a DNS record on a NS delegated domain, navigate to the domain settings in the Pangolin dashboard and add the desired record type with the appropriate name and value.
+Custom DNS records can only be added to domains that use **Domain Delegation (NS)**. They aren't available for wildcard or single-domain (CNAME) domains, or for shared domains provided by Pangolin.
+
+### Before You Delegate
+
+Changing nameservers moves the whole zone at once. Any record you don't recreate in Pangolin stops resolving once the change propagates. To switch over without downtime:
+
+<Steps>
+<Step title="Add the domain">
+  Add the domain in Pangolin as **Domain Delegation (NS)**. Don't change the nameservers at your registrar yet.
+</Step>
+<Step title="Copy your existing records">
+  At your current DNS provider, list the records for the domain. Recreate the ones you still need in Pangolin under **Records > Custom DNS Records** on the domain. Pay special attention to MX, SPF, DKIM, and DMARC records so email keeps working.
+
+  You can add records before the domain is verified. Pangolin stores them and shows a notice that they aren't being served yet.
+</Step>
+<Step title="Change the nameservers">
+  Point the domain's nameservers to Pangolin as shown in [Setting It Up](#cloud--enterprise-ns-delegation-or-cname). Once the domain is verified, Pangolin starts serving your custom records.
+</Step>
+</Steps>
+
+### Add a Record
+
+Open the domain in your organization's **Domains** settings, go to **Records**, and select **Add Record**.
 
 <Frame caption="Custom DNS Records in the Pangolin dashboard">
     <img src="/images/custom-dns-records.png" alt="Custom DNS Records" />
 </Frame>
+
+| Field | Description |
+|-------|-------------|
+| **Name** | The name relative to the domain, such as `mail` or `_dmarc`. Use `@` for the root of the domain, or `*` as the first label for a wildcard (for example, `*.dev`). You can also enter the full hostname. |
+| **Type** | `A`, `AAAA`, `CNAME`, `MX`, `NS`, `SRV`, or `TXT` |
+| **Values** | One value per line. A record can have up to 10 values, such as both nameservers of an `NS` record or several `TXT` values. |
+| **TTL** | How long resolvers may cache the answer, from 60 to 86,400 seconds. Defaults to 300. |
+| **Priority** | Required for `MX` and `SRV` records |
+| **Weight** and **Port** | Required for `SRV` records |
+| **Enabled** | Turn a record off to stop serving it without deleting it |
+
+Changes may take a few minutes to propagate, and resolvers may keep serving cached answers until the TTL expires.
+
+### Record Types
+
+| Type | Value | Notes |
+|------|-------|-------|
+| **A** | IPv4 address | |
+| **AAAA** | IPv6 address | |
+| **CNAME** | Hostname | Not allowed at the root (`@`). Only one value, and no other records can share the name. |
+| **MX** | Mail server hostname | Requires a priority. Add a separate record for each priority. |
+| **TXT** | Text, up to 1,024 printable ASCII characters | Surrounding quotes are removed, so you can paste values from a zone file. |
+| **SRV** | Target hostname | Requires priority, weight, and port. Use a name like `_sip._tcp`. |
+| **NS** | Nameserver hostname | Delegates a subdomain to other nameservers. See [Delegating a Subdomain](#delegating-a-subdomain). |
+
+Hostname values must be fully qualified, such as `mail.example.net`.
+
+### Delegating a Subdomain
+
+Add `NS` records to hand a subdomain to another DNS provider, for example to let another team manage `lab.example.com`. Pangolin then refers every query at or below that name to the nameservers you set.
+
+- `NS` records can't be added at the root or on a wildcard name.
+- No other records can exist at or below a delegated subdomain, except `A` and `AAAA` glue records for nameservers named inside it (for example, `ns1.lab.example.com`).
+- A subdomain can't be delegated if Pangolin resources, login pages, or redirects use names at or below it.
+
+### Limits and Reserved Names
+
+- Each domain can have up to 100 custom records.
+- Each name can have one record per type. To add more values, edit the existing record. `MX` and `SRV` records can be split by priority, with up to 10 values across them.
+- `_acme-challenge` names are managed by Pangolin for certificate issuance and can't be used.
+- `A`, `AAAA`, and `CNAME` records can't be added to names used by Pangolin [resources](/manage/resources/understanding-resources), [login pages](/manage/access-control/login-page), or [redirects](/manage/redirects). Pangolin answers for those names itself.
+- Names inside another domain added to Pangolin separately (for example, `sub.example.com` when it's its own domain) belong to that domain and can't be used here.

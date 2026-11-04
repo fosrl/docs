@@ -51,6 +51,7 @@
                 "manage/resources/public/vnc",
                 "manage/resources/public/raw-resources",
                 "manage/resources/public/authentication",
+                "manage/resources/public/resource-sessions",
                 "manage/resources/public/resource-policies",
                 "manage/resources/public/targets",
                 "manage/resources/public/wildcard-resources",
@@ -197,6 +198,7 @@
           "pages": [
             "manage/identity-providers/add-an-idp",
             "manage/identity-providers/auto-provisioning",
+            "manage/identity-providers/session-revalidation",
             "manage/identity-providers/openid-connect",
             "manage/identity-providers/google",
             "manage/identity-providers/azure"
@@ -209,6 +211,7 @@
             "manage/analytics/request",
             "manage/analytics/access",
             "manage/analytics/connection",
+            "manage/analytics/ssh",
             "manage/analytics/action",
             "manage/ai/session-logs",
             "manage/ai/usage-analytics",

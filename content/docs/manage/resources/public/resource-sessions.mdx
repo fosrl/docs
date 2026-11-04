@@ -1,0 +1,65 @@
+---
+title: "Resource Sessions"
+description: "View active sessions on public resources and revoke access"
+---
+
+A resource session is created each time someone authenticates to a [public resource](/manage/resources/understanding-resources). The **Resource Sessions** page lists the sessions that are active right now: who holds each one, which resource it's for, how they authenticated, and when it expires. You can revoke any session to force that person to authenticate again.
+
+<Note>
+Resource sessions are only available in [Pangolin Cloud](https://app.pangolin.net/auth/signup) or self-hosted [Enterprise Edition](/self-host/enterprise-edition).
+</Note>
+
+## What Is a Resource Session?
+
+When someone passes a resource's [authentication](/manage/resources/public/authentication), Pangolin issues a session cookie for that resource. Later requests use the cookie instead of asking the visitor to authenticate again. The session lasts until it expires (30 days by default, set with `server.resource_session_length_hours` in the [config file](/self-host/advanced/config-file) on self-hosted installs) or until it's revoked.
+
+Every session records the method used to create it:
+
+| Method | Description |
+|--------|-------------|
+| **SSO** | The user signed in with their Pangolin account or an [identity provider](/manage/identity-providers/add-an-idp) |
+| **Password** | The visitor entered the resource password |
+| **PIN Code** | The visitor entered the resource PIN code |
+| **Email** | The visitor verified a whitelisted email address with a one-time code |
+| **Shareable Link** | The visitor opened a [shareable link](/manage/access-control/links) |
+
+Password and PIN code sessions aren't tied to a user, so they appear as **Anonymous**.
+
+## How SSO Sessions Relate to Dashboard Sessions
+
+Users who sign in with SSO have a session for Pangolin itself, which is the dashboard session. When they open an SSO-protected resource, Pangolin uses the dashboard session to issue a resource session automatically, without asking them to sign in again. That resource session stays linked to the dashboard session that created it:
+
+- **Each request checks the dashboard session.** If the dashboard session has ended, the resource session stops working, even if it hasn't expired yet.
+- **Ending the dashboard session ends its resource sessions.** Logging out, the dashboard session expiring, or an admin ending a user's sessions also deletes every resource session created from it.
+- **Identity provider revocation applies too.** With [session revalidation](/manage/identity-providers/session-revalidation) enabled, if the identity provider revokes the user's login, Pangolin ends the dashboard session and all its resource sessions.
+- **A user can have several sessions for one resource.** A new resource session is issued each time the user passes through the resource's authentication page, such as from a different browser or after cookies are cleared. They all link to the same dashboard session.
+
+## View Resource Sessions
+
+Open **Public Resources > Resource Sessions** in your organization. Each row shows:
+
+- **Actor:** the user, email address, or shareable link that holds the session. SSO users also show which identity provider they used.
+- **Resource:** the public resource the session is for.
+- **Method:** how the session was created.
+- **Issued** and **Expires:** when the session was created and when it expires.
+
+Expand a row to see the client details recorded when the session was created: IP address, location, network (ASN), browser, operating system, device type, full user agent, and session ID. Client details are only recorded for sessions created after this feature was added.
+
+You can search, sort by issued or expiration time, and filter by actor (a specific user or shareable link), resource, and method.
+
+<Tip>
+The [authentication logs](/manage/analytics/access) and [request logs](/manage/analytics/request) link to the resource session behind each entry. Expand a log row and select **Resource Session** to jump to it.
+</Tip>
+
+## Revoke a Session
+
+Select **Revoke** on a session and confirm. The person has to authenticate to the resource again. Revocation can take a few seconds to take effect.
+
+What gets revoked depends on how the session was created:
+
+- **Password, PIN code, email, and shareable link sessions:** only the selected session is revoked.
+- **SSO sessions:** every resource session for that resource that came from the same dashboard session is revoked. Pangolin also stops that dashboard session from issuing a new resource session automatically. The user has to sign in again to reach the resource, even if they're still logged in to the dashboard. Their access to other resources isn't affected.
+
+<Note>
+Revoking a session doesn't remove the user's permission to access the resource. To block access permanently, remove the user or role from the resource, or change the resource's authentication.
+</Note>

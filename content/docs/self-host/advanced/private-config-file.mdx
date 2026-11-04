@@ -77,6 +77,15 @@ This section contains the complete reference for all configuration options in `p
 		Keep this key secure and backed up - it encrypts sensitive data in your database.
 		</Warning>
     </ResponseField>
+
+    <ResponseField name="idp_session_revalidation_minutes" type="number" default="5">
+      How often, in minutes, sessions from identity providers with [session revalidation](/manage/identity-providers/session-revalidation) enabled are checked with the identity provider.
+
+      ```yaml
+      server:
+        idp_session_revalidation_minutes: 5
+      ```
+    </ResponseField>
   </Expandable>
 </ResponseField>
 

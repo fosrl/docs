@@ -1,0 +1,94 @@
+---
+title: "SSH Session Logs"
+description: "SSH session logs record each SSH session to your resources and the commands run in it"
+---
+
+SSH session logs record each SSH session opened to your [SSH resources](/manage/ssh): who connected, to which resource and site, as which system user, and for how long. Each session also includes a transcript of the commands run during it.
+
+<Note>
+SSH session logs are only available in [Pangolin Cloud](https://app.pangolin.net/auth/signup) or self-hosted [Enterprise Edition](/self-host/enterprise-edition).
+</Note>
+
+<Warning>
+SSH session logs are only recorded for resources that use **Pangolin SSH** [mode](/manage/ssh#mode). In this mode the Pangolin Site handles the SSH session itself, so it can record the session and its commands. Sessions to resources in **Standard SSH Server** mode are passed through to your SSH server and aren't logged here. Use your SSH server's own logging for those.
+</Warning>
+
+## What are SSH Session Logs?
+
+SSH session logs cover both [public SSH resources](/manage/resources/public/ssh) opened in the browser and [private SSH resources](/manage/resources/private/ssh) reached with the Pangolin client. They are useful for:
+
+- Auditing who accessed which servers and when
+- Reviewing the commands run during a session for incident response or compliance
+- Tracing a session back to the Pangolin user and client that opened it
+- Seeing which system users people logged in as
+
+The Pangolin Site sends session logs to Pangolin in batches, so expect a short delay before entries appear in the table.
+
+<Tip>Set **SSH Session Log Retention** in the org security settings. The default is 0 days, which leaves logging off.</Tip>
+
+## Enable Retention
+
+In your organization's security settings, set **SSH Session Log Retention** to how long Pangolin should keep SSH session and command logs. Logging starts only after the value is greater than zero. Older entries are deleted once they pass the retention period.
+
+## Viewing Sessions
+
+Open **Logs & Analytics > SSH Session Logs** in your organization. Each row shows the session start time, connection type, resource, site, system user, Pangolin user, client, number of commands, and duration.
+
+Expand a row to see the session details and the command transcript. Commands are listed in the order they ran, with a timestamp for each.
+
+### Command Accuracy
+
+Pangolin records commands as they're typed. If a command was edited with shell history recall (for example, the up arrow) or tab completion, the recorded text may not exactly match what the shell ran. These commands are marked with a warning icon in the transcript. If a command was recalled from shell history and its text couldn't be captured, it appears as **(recalled from shell history)**.
+
+Individual commands longer than 4,096 characters are truncated. The dashboard shows a limited number of commands per session. Export the logs to see all of them.
+
+## Filters
+
+Narrow the table by date range, then filter by:
+
+- Connection (**SSH** or **Browser**)
+- Resource
+- Site
+- System user
+- User
+- Client
+
+## SSH Session Log Fields
+
+Each SSH session log entry contains the following fields:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `sessionId` | string | Unique identifier for the SSH session |
+| `startedAt` | number | Unix timestamp (in seconds) when the session started |
+| `endedAt` | number \| null | Unix timestamp (in seconds) when the session ended, if it has ended |
+| `transport` | string | How the session connected: `ssh` (native SSH through the Pangolin client) or `browser` (browser terminal on a public resource) |
+| `resourceId` | number \| null | The ID of the public resource, for browser sessions |
+| `siteResourceId` | number \| null | The ID of the private resource, for native SSH sessions |
+| `siteId` | number | The ID of the site that handled the session |
+| `clientId` | number \| null | The Pangolin [client](/manage/clients/understanding-clients) that opened the session, for native SSH sessions |
+| `userId` | string \| null | The Pangolin user who opened the session, when it can be identified |
+| `username` | string | The system user the session logged in as on the host |
+| `sourceAddr` | string | Source address of the session |
+| `destAddr` | string | Destination address of the session |
+| `authMethod` | string \| null | How the session authenticated to the host |
+| `keyFingerprint` | string \| null | Fingerprint of the key used, when key or certificate authentication was used |
+| `certKeyId` | string \| null | Key ID of the SSH certificate, when a Pangolin-signed certificate was used |
+| `commandCount` | number | Number of commands recorded in the session |
+
+Each recorded command contains:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `command` | string | The command text |
+| `channel` | string | `shell` for commands typed in an interactive shell, or `exec` for commands passed directly to SSH (for example, `ssh host 'uptime'`) |
+| `timestamp` | number | Unix timestamp (in seconds) when the command ran |
+| `inexact` | boolean | Whether the command was edited with history recall or tab completion and may not exactly match what the shell ran |
+
+## Log Retention
+
+SSH session log retention is controlled by the organization setting. By default, SSH session logs are retained for 0 days (disabled).
+
+## Exporting
+
+Logs can be exported into CSV format for external analysis and archival. Logs can be exported from the table view in the Pangolin dashboard or via the Pangolin API. When exporting, you can specify date ranges and filters to narrow down the logs you need. The export has one row per command, so it includes every recorded command for each session.
