@@ -89,6 +89,7 @@
               "pages": [
                 "manage/clients/platforms/windows",
                 "manage/clients/platforms/mac",
+                "manage/clients/platforms/linux",
                 "manage/clients/platforms/ios",
                 "manage/clients/platforms/android",
                 "manage/clients/platforms/cli",
