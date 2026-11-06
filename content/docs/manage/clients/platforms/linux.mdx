@@ -14,7 +14,19 @@ Pangolin for Linux runs on Ubuntu 22.04 or later, Debian 12 or later, and curren
 
 1. **Download and install the Pangolin client**
 
-   Download the package for your distribution and architecture from the download page above, then install it with your package manager. Replace `<arch>` and `<version>` with the values in the file name.
+   Install Pangolin using the installation script. It detects your distribution and architecture, downloads the latest package, and installs it with your package manager:
+
+   ```bash
+   curl -fsSL https://static.pangolin.net/get-linux.sh | sh
+   ```
+
+   The script asks for your password through `sudo` if you are not root. If it cannot detect your distribution, pass the package format with `--format deb`, `--format rpm`, or `--format arch`. To install a specific version, add `--version <version>`. For example:
+
+   ```bash
+   curl -fsSL https://static.pangolin.net/get-linux.sh | sh -s -- --format rpm
+   ```
+
+   To install manually instead, download the package for your distribution and architecture from the download page above, then install it with your package manager from the folder you saved it to. Replace `<arch>` and `<version>` with the values in the file name.
 
    <Tabs>
      <Tab title="Debian / Ubuntu">
@@ -29,7 +41,7 @@ Pangolin for Linux runs on Ubuntu 22.04 or later, Debian 12 or later, and curren
      </Tab>
      <Tab title="openSUSE">
        ```bash
-       sudo zypper install ./pangolin-client-<arch>-<version>.rpm
+       sudo zypper install --allow-unsigned-rpm ./pangolin-client-<arch>-<version>.rpm
        ```
      </Tab>
      <Tab title="Arch Linux">
@@ -237,7 +249,13 @@ You can also check from the system tray: **More** > **Check for Updates…**.
 
 Find the latest version in the [GitHub releases](https://github.com/fosrl/windows-linux/releases), or on [https://pangolin.net/downloads/linux](https://pangolin.net/downloads/linux).
 
-Download the new package and install it with the same command you used to [install](#installation-steps) Pangolin. The package manager upgrades the existing installation and restarts the background service.
+Re-run the installation script to upgrade to the latest version:
+
+```bash
+curl -fsSL https://static.pangolin.net/get-linux.sh | sh
+```
+
+Or download the new package and install it with the same command you used to [install](#installation-steps) Pangolin. The package manager upgrades the existing installation and restarts the background service.
 
 ## Uninstall
 
