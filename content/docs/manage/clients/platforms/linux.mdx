@@ -1,0 +1,279 @@
+---
+title: "Linux"
+description: "Install, configure, and update the Pangolin client for Linux"
+---
+
+## Install
+
+- [Pangolin for Linux](https://pangolin.net/downloads/linux) - This is the official page to download the latest packages for Linux.
+- [All Versions](https://github.com/fosrl/windows-linux/releases) - The releases section of this repository contains release notes and download artifacts for the latest version and all older versions.
+
+Pangolin for Linux runs on Ubuntu 22.04 or later, Debian 12 or later, and current Fedora, openSUSE, and Arch Linux. Packages are available for x86_64 (`amd64`) and ARM64 (`arm64`). RHEL 9 and its rebuilds do not ship WebKitGTK 4.1, so they cannot install the package.
+
+### Installation Steps
+
+1. **Download and install the Pangolin client**
+
+   Download the package for your distribution and architecture from the download page above, then install it with your package manager. Replace `<arch>` and `<version>` with the values in the file name.
+
+   <Tabs>
+     <Tab title="Debian / Ubuntu">
+       ```bash
+       sudo apt install ./pangolin-client-<arch>-<version>.deb
+       ```
+     </Tab>
+     <Tab title="Fedora">
+       ```bash
+       sudo dnf install ./pangolin-client-<arch>-<version>.rpm
+       ```
+     </Tab>
+     <Tab title="openSUSE">
+       ```bash
+       sudo zypper install ./pangolin-client-<arch>-<version>.rpm
+       ```
+     </Tab>
+     <Tab title="Arch Linux">
+       ```bash
+       sudo pacman -U ./pangolin-client-<arch>-<version>.pkg.tar.zst
+       ```
+     </Tab>
+   </Tabs>
+
+   The package installs the `pangolin-client` app, the `pangolin-client` systemd service, an app menu entry, and the [GNOME Shell extension](#gnome). The service is enabled and started during installation.
+
+2. **Launch Pangolin**
+
+   Open Pangolin from your desktop's app menu, or run `pangolin-client` in a terminal.
+
+3. **Log in with your Pangolin account**
+
+   Log in on your Pangolin Cloud account or your self-hosted Pangolin instance.
+
+   - Click the Pangolin icon in the system tray (or the GNOME top bar) and select Log in.
+
+## System Tray
+
+Pangolin lives in the system tray. Click the tray icon to open the Pangolin menu.
+
+Most desktops, including KDE Plasma, Cinnamon, XFCE, and Budgie, show the tray icon without any extra setup.
+
+### GNOME
+
+GNOME has no system tray of its own. Pangolin ships a GNOME Shell extension that adds a Pangolin button to the top bar. Click it to open the Pangolin menu. Right-click it to quit Pangolin.
+
+The extension is installed with the package but is not turned on automatically. To turn it on:
+
+1. Log out and log back in, so GNOME Shell finds the new extension.
+2. Enable it in the **Extensions** app, or run:
+
+```bash
+gnome-extensions enable pangolin@pangolin.net
+```
+
+If you use the AppIndicator extension instead, Pangolin's icon appears there too, but it opens the menu only on a double-click. While the Pangolin extension is on, Pangolin hides its AppIndicator icon so only one icon shows.
+
+If Pangolin cannot find a system tray or the GNOME extension, it opens the Preferences window when it starts so you can still use it.
+
+## Background Service
+
+The `pangolin-client` systemd service runs as root and manages the tunnel, routes, and DNS. It also keeps your sign-in. The Pangolin app runs as your user and connects to the service.
+
+If the service is not running, Pangolin shows a warning when it opens and cannot connect. Start it with:
+
+```bash
+sudo systemctl enable --now pangolin-client
+```
+
+Logs are written to:
+
+- Service and tunnel logs: `/var/log/pangolin-client/`, also available with `journalctl -u pangolin-client`
+- App logs: `~/.local/state/pangolin-client/logs/` (or `$XDG_STATE_HOME/pangolin-client/logs/`)
+
+## Companion Mode
+
+Companion mode lets [Pangolin CLI](/manage/clients/platforms/cli) use this app's login and tunnel. Sign in and connect here, then run CLI commands as that same account. You do not run `pangolin login` again.
+
+On Linux, companion mode is on by default once both the desktop app and the CLI are installed. On machines without the desktop app, the CLI keeps its own login.
+
+1. Log in with the Linux client and connect.
+2. Install Pangolin CLI if it is not already installed. From the Pangolin menu, choose **More** > **Install Pangolin CLI…**, or follow the [CLI install steps](/manage/clients/platforms/cli). The app installs the CLI to `/usr/local/bin/pangolin`. Members of the `sudo`, `wheel`, or `admin` group can install it directly; other users are asked for an administrator's password.
+3. Run CLI commands in a terminal. For example, open SSH to a [private SSH resource](/manage/resources/private/ssh):
+
+```bash
+pangolin ssh username@alias
+```
+
+The CLI follows the account, organization, and exit node selected in the desktop app. Change those in the app. While companion mode is on, `pangolin login`, `pangolin logout`, and `pangolin select` for account, organization, or exit node are blocked.
+
+The desktop app has to be open and logged in. If it is not, the CLI asks you to start Pangolin and log in.
+
+Commands to check status or turn companion mode off are on the [CLI companion mode section](/manage/clients/platforms/cli#companion-mode).
+
+## Configure
+
+<Note>
+DNS, MTU, and other preferences shared across clients are on [Platforms](/manage/clients/platforms#shared-preferences).
+</Note>
+
+### Start at Login
+
+When enabled, Pangolin starts when you sign in to your desktop session. This uses the XDG autostart entry the package installs at `/etc/xdg/autostart/pangolin-client-autostart.desktop`; the entry does nothing unless this preference is on.
+
+### Connect at Start
+
+When enabled, the tunnel connects whenever Pangolin starts. This also opens Pangolin at sign-in.
+
+### Config File
+
+On Linux, the Pangolin GUI reads configuration from two `pangolin.json` files:
+
+- User config: `~/.config/pangolin-client/pangolin.json` (or `$XDG_CONFIG_HOME/pangolin-client/pangolin.json`)
+- Global config: `/etc/pangolin-client/pangolin.json`
+
+These are separate from Pangolin CLI's files in `~/.config/pangolin`.
+
+Most keys in the `Config` object below can be set in either file. If the same key exists in both places, the user config value overrides the global value. This lets administrators define global defaults while still allowing per-user overrides when needed. Keys marked **Global only** must be set in `/etc/pangolin-client/pangolin.json`; after changing them, run `sudo systemctl restart pangolin-client` and reopen Pangolin.
+
+<ResponseField name="Config" type="object">
+  JSON configuration for the Linux Pangolin client stored in `pangolin.json`.
+
+  <Expandable title="Config">
+    <ResponseField name="dnsOverride" type="boolean">
+      When true, matches the [Enable Aliases (Override DNS)](/manage/clients/platforms#enable-aliases-override-dns) preference and lets the client take over DNS resolution for Pangolin resources.
+    </ResponseField>
+
+    <ResponseField name="dnsTunnel" type="boolean">
+      When true, matches the [DNS Over Tunnel](/manage/clients/platforms#dns-over-tunnel) preference and sends DNS queries through the Pangolin tunnel.
+    </ResponseField>
+
+    <ResponseField name="primaryDNS" type="string">
+      Primary upstream DNS server used when override/tunnel DNS is enabled.
+    </ResponseField>
+
+    <ResponseField name="secondaryDNS" type="string">
+      Optional secondary upstream DNS server used as a fallback when the primary is unavailable.
+    </ResponseField>
+
+    <ResponseField name="dnsMatchDomains" type="array of strings">
+      Optional whitelist of domains sent to the configured upstream DNS server. When unset, all queries go to upstream DNS. When set, only matching queries use your Upstream DNS Server; all other requests use the system's DNS servers. Supports wildcards such as `*.proxy.internal`.
+    </ResponseField>
+
+    <ResponseField name="defaultServerURL" type="string">
+      When set, skips the deployment option screen during login; all login flows start directly with this server URL.
+    </ResponseField>
+
+    <ResponseField name="authPath" type="string">
+      Optional path appended to the server URL for authentication, for example `/auth/org/my-org` to always send users to a specific organization or branded login page. Most deployments should leave this unset.
+    </ResponseField>
+
+    <ResponseField name="userSettingsDisabled" type="boolean">
+      When true, hides and disables the settings form in the GUI so users cannot change these values themselves.
+    </ResponseField>
+
+    <ResponseField name="openStatusTabOnConnect" type="boolean">
+      When true, opens the Status tab immediately after clicking Connect so users can watch connection feedback while the tunnel is starting.
+    </ResponseField>
+
+    <ResponseField name="mtu" type="integer">
+      MTU for the internal WireGuard interface. Changing this is advanced and not recommended unless you have a clear reason; if you set a non-default value, configure the same MTU on every site this client connects to—see [Configure Sites](/manage/sites/configure-site).
+    </ResponseField>
+
+    <ResponseField name="preferLocalRoutes" type="boolean">
+      When true, prioritizes local routes over remote ones by adding an arbitrary metric to the WireGuard routes. This is useful when you want to ensure that local network traffic (for example, to a printer or NAS) is not routed through the Pangolin tunnel.
+    </ResponseField>
+
+    <ResponseField name="exitNodeTakesPrecedence" type="boolean">
+      When true, matches the [Exit Nodes Take Precedence Over Resources](/manage/clients/platforms#exit-nodes-take-precedence-over-resources) preference. While connected through an exit node, routes for other resources are not added and their aliases are not resolved, so all traffic flows through the exit node. If omitted, the default is `false`.
+    </ResponseField>
+
+    <ResponseField name="openUIAtLogin" type="boolean">
+      When true, matches the **Start at Login** preference and starts Pangolin when you sign in to your desktop session. If omitted, the default is `false`.
+    </ResponseField>
+
+    <ResponseField name="autoConnectAtLogin" type="boolean">
+      When true, matches the **Connect at Start** preference. The tunnel connects whenever Pangolin starts, and Pangolin also opens at sign-in, regardless of `openUIAtLogin`. If omitted, the default is `false`.
+    </ResponseField>
+
+    <ResponseField name="autoUpdateChecksEnabled" type="boolean">
+      **Global only.** When true, periodically check for updates in the background. When false, automatic checks are off; users can still use **Check for Updates** unless that button is also disabled. If omitted, the default is `true`. When a new version exists, Pangolin adds **Pangolin Update Available…** to the system tray menu. Intended for org admins so config is the source of truth.
+    </ResponseField>
+
+    <ResponseField name="updateCheckIntervalSeconds" type="integer">
+      **Global only.** How often automatic checks run, in seconds. Values below `3600` (1 hour) are clamped to `3600`. Only matters when `autoUpdateChecksEnabled` is true. If omitted, the default is `86400` (24 hours). The client applies a small amount of jitter around this interval.
+    </ResponseField>
+
+    <ResponseField name="checkForUpdatesButtonEnabled" type="boolean">
+      **Global only.** When true, show **Check for Updates** in the system tray More menu. When false, hide that menu item. If omitted, the default is `true`. Manual checks always perform a live network lookup when the button is used. This is independent of `autoUpdateChecksEnabled`.
+    </ResponseField>
+
+    <ResponseField name="logLevel" type="string">
+      **Global only.** Controls client log verbosity. Supported values include `debug` and `info`. If omitted, the default is `info`.
+    </ResponseField>
+
+    <ResponseField name="sessionCookieName" type="string">
+      Overrides the cookie name the session token is sent and read under. Most deployments should leave this unset.
+    </ResponseField>
+
+  </Expandable>
+</ResponseField>
+
+As a system administrator, you can script placing `pangolin.json` in `/etc/pangolin-client/` to set global defaults, and/or in each user's `~/.config/pangolin-client/` folder for per-user overrides and targeted rollout behavior.
+
+## Update
+
+### Automatic Updates
+
+The Linux client checks for updates automatically in the background. When a new version is available, Pangolin adds **Pangolin Update Available…** to the system tray menu. Open that menu item to see a dialog asking whether to install the update now.
+
+**Install Update** downloads the new package, checks it against Pangolin's signed update manifest, and installs it with your system package manager (`apt-get`, `dnf`, `zypper`, `rpm`, or `pacman`). The background service restarts during the install, so the tunnel disconnects briefly. Pangolin reopens when the update finishes. **Later** closes the dialog and leaves the current version in place.
+
+Installing updates from the app requires an administrator: root, or a member of the `sudo`, `wheel`, or `admin` group. Other users can update with the manual steps below.
+
+If Pangolin was not installed from a `.deb`, `.rpm`, or `.pkg.tar.zst` package, the dialog shows a download link instead of installing the update.
+
+You can also check from the system tray: **More** > **Check for Updates…**.
+
+### Manual Updates
+
+Find the latest version in the [GitHub releases](https://github.com/fosrl/windows-linux/releases), or on [https://pangolin.net/downloads/linux](https://pangolin.net/downloads/linux).
+
+Download the new package and install it with the same command you used to [install](#installation-steps) Pangolin. The package manager upgrades the existing installation and restarts the background service.
+
+## Uninstall
+
+1. Quit Pangolin from the system tray if it is running.
+2. Remove the package with your package manager:
+
+<Tabs>
+  <Tab title="Debian / Ubuntu">
+    ```bash
+    sudo apt remove pangolin-client
+    ```
+
+    To also remove the saved sign-in, service state, logs, and global config, use `sudo apt purge pangolin-client` instead.
+  </Tab>
+  <Tab title="Fedora">
+    ```bash
+    sudo dnf remove pangolin-client
+    ```
+  </Tab>
+  <Tab title="openSUSE">
+    ```bash
+    sudo zypper remove pangolin-client
+    ```
+  </Tab>
+  <Tab title="Arch Linux">
+    ```bash
+    sudo pacman -R pangolin-client
+    ```
+  </Tab>
+</Tabs>
+
+Removing the package stops and disables the background service and removes the app, the GNOME extension, and the app menu and autostart entries. It does not always delete user or global config. To clear those as well:
+
+```bash
+rm -rf ~/.config/pangolin-client ~/.local/state/pangolin-client
+sudo rm -rf /etc/pangolin-client /var/lib/pangolin-client /var/log/pangolin-client
+```
+
+If you also installed [Pangolin CLI](/manage/clients/platforms/cli), uninstall it separately. See [Uninstall Pangolin CLI](/manage/clients/platforms/uninstall-cli).
