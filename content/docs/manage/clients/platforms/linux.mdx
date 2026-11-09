@@ -10,6 +10,8 @@ description: "Install, configure, and update the Pangolin client for Linux"
 
 Pangolin for Linux runs on Ubuntu 22.04 or later, Debian 12 or later, and current Fedora, openSUSE, and Arch Linux. Packages are available for x86_64 (`amd64`) and ARM64 (`arm64`). RHEL 9 and its rebuilds do not ship WebKitGTK 4.1, so they cannot install the package.
 
+On other distributions, such as Gentoo or Void Linux, install the `.tar.gz` archive instead (see [Other distributions](#other-distributions)). It needs glibc 2.35 or later, GTK 3, and WebKitGTK 4.1, and runs the background service with systemd or OpenRC.
+
 ### Installation Steps
 
 1. **Download and install the Pangolin client**
@@ -20,7 +22,7 @@ Pangolin for Linux runs on Ubuntu 22.04 or later, Debian 12 or later, and curren
    curl -fsSL https://static.pangolin.net/get-linux.sh | sh
    ```
 
-   The script asks for your password through `sudo` if you are not root. If it cannot detect your distribution, pass the package format with `--format deb`, `--format rpm`, or `--format arch`. To install a specific version, add `--version <version>`. For example:
+   The script asks for your password through `sudo` (or `doas`) if you are not root. If it cannot detect your distribution, it installs the `.tar.gz` archive instead. To choose the format yourself, pass `--format deb`, `--format rpm`, `--format arch`, or `--format tar`. To install a specific version, add `--version <version>`. For example:
 
    ```bash
    curl -fsSL https://static.pangolin.net/get-linux.sh | sh -s -- --format rpm
@@ -49,6 +51,13 @@ Pangolin for Linux runs on Ubuntu 22.04 or later, Debian 12 or later, and curren
        sudo pacman -U ./pangolin-client-<arch>-<version>.pkg.tar.zst
        ```
      </Tab>
+     <Tab title="Other distributions">
+       ```bash
+       tar xzf pangolin-client-<arch>-<version>.tar.gz
+       cd pangolin-client-<arch>-<version>
+       sudo ./install.sh
+       ```
+     </Tab>
    </Tabs>
 
    The package installs the `pangolin-client` app, the `pangolin-client` systemd service, an app menu entry, and the [GNOME Shell extension](#gnome). The service is enabled and started during installation.
@@ -62,6 +71,18 @@ Pangolin for Linux runs on Ubuntu 22.04 or later, Debian 12 or later, and curren
    Log in on your Pangolin Cloud account or your self-hosted Pangolin instance.
 
    - Click the Pangolin icon in the system tray (or the GNOME top bar) and select Log in.
+
+### Other Distributions
+
+The `.tar.gz` archive is for distributions without a Pangolin package. It contains the same files as the packages, an OpenRC service, and an `install.sh` that installs them:
+
+- The app, app menu entry, icon, and GNOME Shell extension go under `/usr/local`. Set `PREFIX` to install somewhere else, for example `sudo PREFIX=/opt/pangolin ./install.sh`.
+- The autostart entry goes in `/etc/xdg/autostart` and the polkit policy in `/usr/share/polkit-1/actions`.
+- On systemd, the service goes in `/etc/systemd/system/pangolin-client.service`. On OpenRC, it goes in `/etc/init.d/pangolin-client` and is added to the `default` runlevel. Either way it starts at once. With neither, start `pangolin-client --daemon` as root at boot yourself.
+
+Install GTK 3 and WebKitGTK 4.1 with your package manager first, for example `net-libs/webkit-gtk:4.1` on Gentoo or `libwebkit2gtk41` on Void Linux. The app is built against glibc, so musl distributions such as Alpine need a glibc compatibility layer.
+
+Run `./install.sh --help` for all options, including `DESTDIR` for building your own distribution package from the archive.
 
 ## System Tray
 
@@ -88,17 +109,27 @@ If Pangolin cannot find a system tray or the GNOME extension, it opens the Prefe
 
 ## Background Service
 
-The `pangolin-client` systemd service runs as root and manages the tunnel, routes, and DNS. It also keeps your sign-in. The Pangolin app runs as your user and connects to the service.
+The `pangolin-client` systemd service runs as root and manages the tunnel, routes, and DNS. It also keeps your sign-in. The Pangolin app runs as your user and connects to the service. On OpenRC systems that installed the `.tar.gz`, it is the `pangolin-client` OpenRC service instead.
 
 If the service is not running, Pangolin shows a warning when it opens and cannot connect. Start it with:
 
-```bash
-sudo systemctl enable --now pangolin-client
-```
+<Tabs>
+  <Tab title="systemd">
+    ```bash
+    sudo systemctl enable --now pangolin-client
+    ```
+  </Tab>
+  <Tab title="OpenRC">
+    ```bash
+    sudo rc-update add pangolin-client default
+    sudo rc-service pangolin-client start
+    ```
+  </Tab>
+</Tabs>
 
 Logs are written to:
 
-- Service and tunnel logs: `/var/log/pangolin-client/`, also available with `journalctl -u pangolin-client`
+- Service and tunnel logs: `/var/log/pangolin-client/`, also available with `journalctl -u pangolin-client` on systemd
 - App logs: `~/.local/state/pangolin-client/logs/` (or `$XDG_STATE_HOME/pangolin-client/logs/`)
 
 ## Companion Mode
@@ -144,7 +175,7 @@ On Linux, the Pangolin GUI reads configuration from two `pangolin.json` files:
 
 These are separate from Pangolin CLI's files in `~/.config/pangolin`.
 
-Most keys in the `Config` object below can be set in either file. If the same key exists in both places, the user config value overrides the global value. This lets administrators define global defaults while still allowing per-user overrides when needed. Keys marked **Global only** must be set in `/etc/pangolin-client/pangolin.json`; after changing them, run `sudo systemctl restart pangolin-client` and reopen Pangolin.
+Most keys in the `Config` object below can be set in either file. If the same key exists in both places, the user config value overrides the global value. This lets administrators define global defaults while still allowing per-user overrides when needed. Keys marked **Global only** must be set in `/etc/pangolin-client/pangolin.json`; after changing them, restart the background service (`sudo systemctl restart pangolin-client`, or `sudo rc-service pangolin-client restart` on OpenRC) and reopen Pangolin.
 
 <ResponseField name="Config" type="object">
   JSON configuration for the Linux Pangolin client stored in `pangolin.json`.
@@ -241,7 +272,7 @@ The Linux client checks for updates automatically in the background. When a new 
 
 Installing updates from the app requires an administrator: root, or a member of the `sudo`, `wheel`, or `admin` group. Other users can update with the manual steps below.
 
-If Pangolin was not installed from a `.deb`, `.rpm`, or `.pkg.tar.zst` package, the dialog shows a download link instead of installing the update.
+If Pangolin was not installed from a `.deb`, `.rpm`, or `.pkg.tar.zst` package, for example from the `.tar.gz` archive, the dialog shows a download link instead of installing the update.
 
 You can also check from the system tray: **More** > **Check for Updates…**.
 
@@ -257,10 +288,12 @@ curl -fsSL https://static.pangolin.net/get-linux.sh | sh
 
 Or download the new package and install it with the same command you used to [install](#installation-steps) Pangolin. The package manager upgrades the existing installation and restarts the background service.
 
+For the `.tar.gz` archive, extract the new version and run its `sudo ./install.sh` again. It replaces the installed files and restarts the background service, keeping your sign-in.
+
 ## Uninstall
 
 1. Quit Pangolin from the system tray if it is running.
-2. Remove the package with your package manager:
+2. Remove the package with your package manager, or run the uninstaller the `.tar.gz` installed:
 
 <Tabs>
   <Tab title="Debian / Ubuntu">
@@ -284,6 +317,13 @@ Or download the new package and install it with the same command you used to [in
     ```bash
     sudo pacman -R pangolin-client
     ```
+  </Tab>
+  <Tab title="Other distributions">
+    ```bash
+    sudo /usr/local/lib/pangolin-client/uninstall.sh
+    ```
+
+    If you installed with a different `PREFIX`, run `uninstall.sh` from `<PREFIX>/lib/pangolin-client/` instead.
   </Tab>
 </Tabs>
 
