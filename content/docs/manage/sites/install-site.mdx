@@ -135,6 +135,10 @@ docker run -dit --network host fosrl/pangolin-cli up site --id 31frd0uzbjvp721 \
 --endpoint https://app.pangolin.net
 ```
 
+<Note>
+Host networking lets the site see the host's real network addresses, which clients on the same LAN need for [same-network detection](/manage/clients/nat-traversal#same-network-detection). On a bridge network the site only sees the container's internal addresses and those clients connect through hole punching or the relay instead. Add `network_mode: host` to the Compose service on Linux if you want local connections.
+</Note>
+
 ### Docker Compose
 
 #### Environment Variables (Recommended)

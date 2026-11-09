@@ -53,6 +53,6 @@ Machine clients authenticate with [machine client credentials](/manage/clients/m
 
 ## Client Modalities
 
-Clients connect to sites using NAT hole punching or relaying. A client first attempts a direct peer-to-peer tunnel, then falls back to relaying through your Pangolin server if hole punching fails.
+Clients connect to sites over the same local network, with NAT hole punching, or by relaying. When a client and site share a local network, they connect directly over the LAN and the traffic never leaves it. Otherwise the client attempts a direct peer-to-peer tunnel through NAT, then falls back to relaying through your Pangolin server if hole punching fails. Same-network detection requires Pangolin 1.21 or later clients and sites.
 
-See [NAT Traversal](/manage/clients/nat-traversal) for how each modality works, how to check whether a site is relayed, and tips for improving hole punching reliability.
+See [NAT Traversal](/manage/clients/nat-traversal) for how each modality works, how to check whether a site is local, direct, or relayed, and tips for improving hole punching reliability.

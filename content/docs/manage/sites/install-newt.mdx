@@ -134,6 +134,10 @@ docker run -it fosrl/newt --id 31frd0uzbjvp721 \
 --endpoint https://app.pangolin.net
 ```
 
+<Note>
+On a bridge network, Newt only sees the container's internal addresses, so clients on the same LAN cannot detect it as local and connect through hole punching or the relay instead. To enable [same-network detection](/manage/clients/nat-traversal#same-network-detection), run Newt with host networking (`--network host` or `network_mode: host`) on Linux, or install it as a binary on the host.
+</Note>
+
 ### Docker Compose
 
 #### Environment Variables (Recommended)

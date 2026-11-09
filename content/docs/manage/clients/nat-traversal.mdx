@@ -8,9 +8,17 @@ When a client connects to a site, Pangolin tries to establish the most direct pa
 
 When a client and site share the same local network, they detect this and connect peer-to-peer over the LAN. Packets stay on the local network and are not routed out through the internet or your Pangolin server. The connection does not use the relay path when both peers are on the same network.
 
-Same-network connections typically offer the lowest latency because traffic never leaves the LAN.
+Same-network connections typically offer the lowest latency because traffic never leaves the LAN. They also avoid unnecessary egress through your router or ISP. This helps most when someone is on-site with a client and the site connector is on that same network.
 
-The site collects IP addresses from the host's network interfaces and uses them to send UDP test packets to the client. If the site runs inside a Docker container, it only sees the container's internal network, so run it on the host itself to ensure it can detect the host's real IP addresses. This detection also works across VLANs. If a client and site are on different VLANs but routing between them is configured correctly, the connection should still succeed.
+Same-network detection was added in Pangolin 1.21 and requires updated clients and sites. Older versions keep using the previous connection behavior, which is hole punching with a relay fallback.
+
+The site collects IP addresses from the host's network interfaces and uses them to send UDP test packets to the client. If the site runs inside a Docker container on a bridge network, it only sees the container's internal network. Run the site on the host itself, or give the container host networking (`--network host` or `network_mode: host`), so it can detect the host's real IP addresses. This detection also works across VLANs. If a client and site are on different VLANs but routing between them is configured correctly, the connection should still succeed.
+
+### Choose Which Interfaces the Site Reports
+
+By default the site reports the addresses of every interface that is up, except loopback and its own tunnel interface. It lists wired and Wi-Fi interfaces first and virtual ones (Docker and Podman bridges, VPN tunnels, hypervisor bridges) last.
+
+On a host with many virtual interfaces you can limit what the site reports to specific interface names with `--local-endpoint-interfaces` or `LOCAL_ENDPOINT_INTERFACES`, for example `eth0,wlan0`. See [Configure Sites](/manage/sites/configure-site#param-local-endpoint-interfaces).
 
 ## NAT Hole Punching
 
@@ -41,7 +49,7 @@ You can confirm whether a connection is direct or relayed from the client. GUI c
 
 - `Direct`: hole-punched connection to the site
 - `Relay`: traffic is relayed through your Pangolin server
-- `Local`: the site is on the same local network as the client
+- `Local`: the site is on the same local network as the client, and traffic stays on the LAN without using the relay
 
 ### GUI clients
 
@@ -82,7 +90,18 @@ Another option is to keep the Pangolin Site listening for client connections on 
 
 <AccordionGroup>
 <Accordion title="What happens when the client and site are on the same network?">
-  The client and site detect that they share a local network and form a direct peer-to-peer connection on the LAN. Packets are not routed out of the network, and the connection does not use the relay path.
+  The client and site detect that they share a local network and form a direct peer-to-peer connection on the LAN. Packets are not routed out of the network, and the connection does not use the relay path. This requires Pangolin 1.21 or later clients and sites.
+</Accordion>
+
+<Accordion title="Why isn't my site detected as local?">
+  Check these in order:
+
+  1. Both the client and the site are updated to versions that support same-network detection (Pangolin 1.21 and later).
+  2. The site can see the host's real addresses. A site in a Docker container on a bridge network only sees the container network, so run it on the host or with host networking.
+  3. If you set `local-endpoint-interfaces`, the list includes the interface that faces the LAN.
+  4. Nothing between the two devices blocks UDP, such as a host firewall on the site or Wi-Fi client isolation on the access point.
+
+  If the connection still shows `Direct` or `Relay`, it works as before. Same-network detection only changes the path, not whether the site connects.
 </Accordion>
 
 <Accordion title="Why is my connection relayed instead of direct?">
