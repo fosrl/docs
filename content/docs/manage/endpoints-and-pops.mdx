@@ -43,7 +43,7 @@ Points of presence (PoPs), also called relays, are the networking edge where sit
 ### What PoPs Do
 
 - **Public resources** send all traffic through a PoP.
-- **Private resources** use PoPs to coordinate [NAT traversal](/manage/clients/nat-traversal) between a client and a site. If hole punching fails, traffic relays through the PoP instead.
+- **Private resources** use PoPs to coordinate [NAT traversal](/manage/clients/nat-traversal) between a client and a site. If hole punching fails, traffic relays through the PoP instead. When the client and site are on the same local network, they connect over the LAN and the data path does not use a PoP.
 
 Pangolin sites and clients automatically select the most optimal PoP to connect to. You do not choose a PoP manually during normal operation.
 

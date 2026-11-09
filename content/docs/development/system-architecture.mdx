@@ -115,6 +115,10 @@ Once connected, the client installs routes for each authorized destination. Pang
 
 Client-to-site traffic does not always traverse your node. Pangolin negotiates the best available path for each tunnel.
 
+### Same network (local)
+
+When a client and site connector are on the same local network, they detect this and connect over the LAN. The site collects the addresses of its network interfaces and sends UDP test packets to the client from them. Traffic stays on the local network, skips the node and its relay layer, and avoids egress through the router or ISP. This requires Pangolin 1.21 or later clients and sites.
+
 ### Direct peer-to-peer (hole punching)
 
 By default, the control plane coordinates **NAT hole punching** so a client and site connector can form a direct WireGuard peer connection. Traffic then flows client ↔ site without passing through the node's relay layer. This path typically offers lower latency and less bandwidth use on the node.
@@ -126,7 +130,7 @@ When hole punching fails (restrictive NAT, symmetric NAT, or blocked UDP), the c
 Site connectors use a separate default port (51820 UDP) for their outbound tunnels to the node. Relay is optional and can be disabled per client if you require direct paths only.
 
 <Card title="NAT traversal" icon="route" href="/manage/clients/nat-traversal">
-  Hole punching vs relay, how to check `isRelay` status, and tuning options.
+  Same-network detection, hole punching vs relay, how to check whether a site is local, direct, or relayed, and tuning options.
 </Card>
 
 ## Traffic Paths
@@ -152,7 +156,7 @@ HTTP, HTTPS, SSH, RDP, and VNC public resources terminate authentication at the 
 Private resources are reachable only when a client is connected and authorized.
 
 ```
-Client ↔ (direct peer or relay via Gerbil) ↔ Site connector (Newt) → Destination on remote network
+Client ↔ (LAN, direct peer, or relay via Gerbil) ↔ Site connector (Newt) → Destination on remote network
 ```
 
 The client installs routes for IP, CIDR, or FQDN destinations. The site connector resolves and delivers traffic on the remote LAN. For private HTTP, TLS can terminate at the connector so applications stay off the public internet entirely.

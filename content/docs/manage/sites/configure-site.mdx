@@ -419,6 +419,18 @@ Almost every setting below can also be set via an environment variable (**Env va
   **Config file key**: `port`
 </ResponseField>
 
+<ResponseField name="local-endpoint-interfaces" type="string">
+  Comma-separated list of network interface names the site reports to clients for [same-network detection](/manage/clients/nat-traversal#same-network-detection). When set, the site only reports addresses from these interfaces. By default it reports every interface that is up, except loopback and its own tunnel interface.
+
+  **Example**: `eth0,wlan0`
+
+  **Default**: all interfaces
+
+  **Env var**: `LOCAL_ENDPOINT_INTERFACES`
+
+  **Config file key**: `localEndpointInterfaces`
+</ResponseField>
+
 <ResponseField name="native" type="boolean">
   Use a native WireGuard interface for client tunnels instead of the userspace netstack implementation.
 
@@ -505,6 +517,7 @@ If `--config-file`/`CONFIG_FILE` isn't set, the site reads and writes the config
   "interface": "pangolin",
   "mtu": 1280,
   "port": 34534,
+  "localEndpointInterfaces": ["eth0"],
 
   "pingInterval": "15s",
   "pingTimeout": "7s",

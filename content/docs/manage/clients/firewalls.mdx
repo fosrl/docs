@@ -7,6 +7,8 @@ Most of the time, Pangolin works with existing firewall policies without any spe
 
 For background on direct vs relayed paths and how to verify connection type, see [NAT Traversal](/manage/clients/nat-traversal).
 
+When a client and site are on the same local network, the connection stays on the LAN and does not go through your firewall's NAT, so the workarounds on this page do not apply to it. Those connections show as `Local` in the client status. Same-network detection requires Pangolin 1.21 or later clients and sites.
+
 ## Firewall compatibility and workarounds
 
 The table below summarizes common behavior and practical mitigations reported by users.
@@ -26,7 +28,7 @@ The table below summarizes common behavior and practical mitigations reported by
 
 If your firewall is not listed and connections are consistently relayed, start with:
 
-1. Confirm current path with `pangolin status` (CLI) or client status JSON (`isRelay`).
+1. Confirm current path with `pangolin status` (CLI) or client status JSON (`isRelay`, `isLocal`). A `Local` connection is not affected by firewall NAT.
 2. Keep relaying enabled for reliability while testing firewall adjustments.
 3. If needed, pin the Pangolin Site to a fixed listening port with `--port` / `PORT` and forward that port to the Pangolin Site host.
 
@@ -128,6 +130,6 @@ After each firewall change, validate results from a client:
 
 1. Reconnect the site/client pair.
 2. Run `pangolin status` (or check JSON status in GUI clients).
-3. Confirm `RELAY=false` / `isRelay: false` for sessions expected to be direct.
+3. Confirm `RELAY=false` / `isRelay: false` for sessions expected to be direct. Sessions between devices on the same network should show `Local` (`isLocal: true`).
 
 If direct paths still fail, keep relay enabled and continue iterating with narrower firewall adjustments rather than broad allow-all rules.
