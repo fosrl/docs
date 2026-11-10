@@ -9,6 +9,12 @@ Custom auth pages are only available in [Pangolin Cloud](https://app.pangolin.ne
 
 Custom organization authentication pages let you serve the login page at your own domain instead of the default dashboard host (`app.pangolin.net` on Pangolin Cloud, or your configured dashboard domain when self-hosting). This provides better user experience and brand consistency.
 
+Custom login pages are most useful when [organization-scoped identity providers](/manage/identity-providers/add-an-idp#organization-identity-providers) are enabled. With per-org IdPs configured, the page lists those providers so users can pick how to sign in. Without per-org IdPs, the page only shows a button to log in with Pangolin credentials, which redirects back to the main login page.
+
+<Note>
+On self-hosted Pangolin Enterprise Edition, enable organization-scoped IdPs by setting `app.identity_provider_mode: "org"` in your [private config file](/self-host/advanced/private-config-file#param-identity-provider-mode) `privateConfig.yml`.
+</Note>
+
 ## Benefits
 
 **For Resource Authentication:**
