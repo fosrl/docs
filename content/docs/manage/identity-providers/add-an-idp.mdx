@@ -106,7 +106,9 @@ When using global IDPs, identity providers are created and managed via the Serve
 
 ## Custom Login Page
 
-You can [configure a custom login page](/manage/access-control/login-page) for your organization to be served at a domain of your choice. The log in page for every resource will be served at this URL. Additionally, you can visit this url to log in to the organization itself to access the Pangolin dashboard. This is particularly useful for identity providers because it creates a place for your users to go to select the identity provider of choice to access the Pangolin dashboard.
+You can [configure a custom login page](/manage/access-control/login-page) for your organization to be served at a [custom domain](/manage/access-control/login-page#configuration) of your choice. The login page for every resource is served at this URL, and you can visit the same URL to log in to the organization dashboard.
+
+Custom login pages are most useful with organization-scoped identity providers: the page lists those IdPs so users can choose how to sign in. Without per-org IdPs, the page only shows a button to log in with Pangolin credentials, which redirects back to the main login page. On self-hosted Pangolin Enterprise Edition, set `app.identity_provider_mode: "org"` in your [private config file](/self-host/advanced/private-config-file#param-identity-provider-mode) `privateConfig.yml`.
 
 ## Auto Provisioning
 
