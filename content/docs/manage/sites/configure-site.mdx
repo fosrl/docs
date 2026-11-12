@@ -431,6 +431,16 @@ Almost every setting below can also be set via an environment variable (**Env va
   **Config file key**: `localEndpointInterfaces`
 </ResponseField>
 
+<ResponseField name="local-endpoints" type="string">
+  Comma-separated list of extra IP addresses where the site can be reached, reported to clients for [same-network detection](/manage/clients/nat-traversal#same-network-detection) in addition to the automatically detected interface addresses. Use this when the site is reachable at an address that isn't bound to one of its interfaces, such as a port-forwarded or 1:1 NAT address. Each entry can be a bare IP, which uses the site's WireGuard port, or an `IP:port`. Hostnames are not accepted. These addresses are reported even if `local-endpoint-interfaces` is set.
+
+  **Example**: `192.168.1.50,[fd00::50],10.0.0.5:51820`
+
+  **Env var**: `LOCAL_ENDPOINTS`
+
+  **Config file key**: `localEndpoints` (JSON array)
+</ResponseField>
+
 <ResponseField name="native" type="boolean">
   Use a native WireGuard interface for client tunnels instead of the userspace netstack implementation.
 
