@@ -57,6 +57,19 @@ Always-on VPN keeps Pangolin connected and brings the tunnel back up if it drops
     />
 </Frame>
 
+### Private DNS
+
+Set Android's Private DNS to **Automatic** or **Off** when using Pangolin. If it is set to a provider hostname (for example `one.one.one.one` or a NextDNS address), Android sends every DNS lookup to that provider and skips Pangolin's DNS. Aliases and private resources then resolve to the wrong address or not at all, even though the app shows **Connected**.
+
+1. Open the **Settings** app.
+2. Go to **Network & internet**, then **Private DNS**. On some devices this is under **Connections** > **More connection settings** > **Private DNS**.
+3. Select **Automatic** or **Off**.
+4. Disconnect and reconnect Pangolin.
+
+<Note>
+Pangolin shows a warning when it detects this mode, but some devices don't report the setting to apps, so check it yourself if names don't resolve.
+</Note>
+
 ### Show Persistent VPN Notification
 
 When enabled, Pangolin keeps a status notification while connected. A temporary notification may still appear when connecting or recovering. Android's own VPN indicators are unaffected.
