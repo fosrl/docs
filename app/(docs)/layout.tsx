@@ -1,65 +1,29 @@
-import { DocsLayout } from 'fumadocs-ui/layouts/notebook';
-import type { LayoutTab } from 'fumadocs-ui/layouts/shared';
-import { Banner } from 'fumadocs-ui/components/banner';
-import Link from 'fumadocs-core/link';
-import { baseOptions } from '@/lib/layout.shared';
-import { getNavigationTree, navTabs } from '@/lib/navigation';
-import { banner } from '@/lib/shared';
-import { source } from '@/lib/source';
-import type { CSSProperties } from 'react';
-import { AISearch, AISearchPanel } from '@/components/ai/search';
-import { headerSearchSlot } from '@/components/header-search';
-import { SidebarAnchors } from '@/components/sidebar-anchors';
+import { DocsSidebar } from '@/components/docs/sidebar';
+import { SiteFooter } from '@/components/site-footer';
+import { SiteHeader } from '@/components/site/site-header';
+import { getNavigationTree, navAnchors, navTabs } from '@/lib/navigation';
+import { getRepoStarCount } from '@/lib/repo-meta';
 
-const tabs: LayoutTab[] = [
-  // every docs page counts as the "Documentation" tab
-  { title: 'Documentation', url: '/', urls: new Set(source.getPages().map((page) => page.url)) },
-  ...navTabs.map((tab) => ({
-    title: tab.label,
-    url: tab.href,
-    props: { target: '_blank', rel: 'noreferrer noopener' },
-  })),
-];
+/**
+ * Docs header and footer around the docs: navigation on the left, the page
+ * (content + "On this page") on the right. See app/(docs)/[[...slug]]/page.tsx.
+ */
+export default async function Layout({ children }: LayoutProps<'/'>) {
+  const stars = await getRepoStarCount('pangolin');
 
-/** Mintlify-style grid, defined as `--pg-grid` in app/global.css (responsive) */
-const containerStyle = { gridTemplate: 'var(--pg-grid)' } as CSSProperties;
-
-export default function Layout({ children }: LayoutProps<'/'>) {
   return (
-    <>
-      <Banner id={banner.id} className="pg-banner">
-        <p>
-          <strong>AI Gateway</strong> is now available
-          <span className="max-md:hidden">
-            : identity-aware access to any AI provider, eliminate API keys, and tunnel to
-            self-hosted models
-          </span>
-          .{' '}
-          <Link href={banner.link.href} className="underline underline-offset-2 font-medium">
-            {banner.link.label}
-          </Link>
-        </p>
-      </Banner>
-      {/* chat state wraps the whole layout so the header "Ask AI" button can open it */}
-      <AISearch>
-        <DocsLayout
-          {...baseOptions()}
-          slots={{ searchTrigger: headerSearchSlot }}
-          tree={getNavigationTree()}
-          nav={{ ...baseOptions().nav, mode: 'top' }}
-          tabMode="navbar"
-          tabs={tabs}
-          sidebar={{
-            defaultOpenLevel: 0,
-            collapsible: false,
-            banner: SidebarAnchors,
-          }}
-          containerProps={{ style: containerStyle }}
-        >
-          <AISearchPanel />
-          {children}
-        </DocsLayout>
-      </AISearch>
-    </>
+    <div className="relative flex min-h-screen w-full flex-col overflow-x-clip bg-background">
+      <SiteHeader links={navTabs} stars={stars} />
+      {/* `docs-shell` makes room for the Ask AI side panel on desktop (app/global.css) */}
+      <div className="docs-shell flex flex-1 flex-col">
+        <div className="mx-auto w-full max-w-[1440px] flex-1 px-5 sm:px-8">
+          <div className="grid grid-cols-[minmax(0,1fr)] lg:grid-cols-[248px_minmax(0,1fr)] lg:gap-10 xl:gap-14">
+            <DocsSidebar tree={getNavigationTree()} anchors={navAnchors} />
+            <main className="min-w-0">{children}</main>
+          </div>
+        </div>
+        <SiteFooter />
+      </div>
+    </div>
   );
 }

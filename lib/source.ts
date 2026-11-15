@@ -16,9 +16,10 @@ const docs = defineDocs({
         langAlias: { env: 'dotenv', dns: 'txt', promql: 'txt' },
         langs: ['dotenv'],
         fallbackLanguage: 'txt',
+        // full syntax highlighting; the block background comes from app/global.css
         themes: {
-          light: 'gruvbox-light-hard',
-          dark: 'gruvbox-dark-hard',
+          light: 'github-light',
+          dark: 'github-dark',
         },
         transformers: [
           ...(rehypeCodeDefaultOptions.transformers ?? []),

@@ -25,25 +25,3 @@ export function getPageMarkdownUrl(page: { slugs: string[]; locale?: string }) {
 
   return { segments, url: getContentUrl(segments, page.locale) };
 }
-
-/**
- * The Mintlify site was light-only (`appearance.strict`). Flip this to enable the
- * theme switch; the dark palette in `app/global.css` is ready for it.
- */
-export const enableDarkMode = false;
-
-export const links = {
-  login: 'https://app.pangolin.net/auth/login',
-  signup: 'https://app.pangolin.net/auth/signup',
-  github: 'https://github.com/fosrl/pangolin',
-  featureRequest: 'https://github.com/fosrl/pangolin/discussions',
-  bookDemo: 'https://click.fossorial.io/ep922',
-  pricing: 'https://pangolin.net/pricing',
-};
-
-/** top banner (text lives in `app/(docs)/layout.tsx`) */
-export const banner = {
-  /** change the id whenever the text changes so dismissed banners show again */
-  id: 'ai-gateway-launch',
-  link: { label: 'Get started', href: '/manage/ai/overview' },
-};

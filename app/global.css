@@ -2,482 +2,428 @@
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
 
+/* the theme switch (next-themes, via Fumadocs' RootProvider) puts `.dark` on <html> */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* -------------------------------------------------------------------------- */
-/* Pangolin palette (ported from the Mintlify docs.json + style.css)           */
+/* Design tokens: same as pangolin.net (landing-v5 app/globals.css)            */
 /* -------------------------------------------------------------------------- */
 
-@theme {
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: #1f1d1b;
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.141 0.005 285.823);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.141 0.005 285.823);
+  --primary: oklch(0.6717 0.1946 41.93);
+  --primary-foreground: oklch(0.98 0.016 73.684);
+  --secondary: oklch(0.967 0.001 286.375);
+  --secondary-foreground: oklch(0.21 0.006 285.885);
+  --muted: oklch(0.967 0.001 286.375);
+  --muted-foreground: #67625d;
+  --accent: oklch(0.967 0.001 286.375);
+  --accent-foreground: oklch(0.21 0.006 285.885);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: #e8e5e2;
+  --input: oklch(0.88 0.004 286.32);
+  --ring: oklch(0.705 0.213 47.604);
+  --table-header: #faf9f7;
+  --soft: #faf9f7;
+  --faint: #8f8a85;
+  --hero-tint: #fdf1ea;
+  --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
 
-  --color-pg-beige: #faf9f2; /* page background */
-  --color-pg-sand: #f2f0e7; /* nav, sidebar, code, cards */
-  --color-pg-line: #bbbbbb; /* hairlines, same as pangolin.net grey-light-8 */
-  --color-pg-ink: #202020; /* text + primary */
-  --color-pg-orange: #f36117; /* brand accent (dark primary in Mintlify) */
+  color-scheme: light;
 
-  --color-fd-background: #faf9f2;
-  --color-fd-foreground: #202020;
-  --color-fd-muted: #f2f0e7;
-  --color-fd-muted-foreground: #6b6a63;
-  --color-fd-popover: #faf9f2;
-  --color-fd-popover-foreground: #202020;
-  --color-fd-card: #f2f0e7;
-  --color-fd-card-foreground: #202020;
-  --color-fd-border: #bbbbbb;
-  --color-fd-primary: #202020;
-  --color-fd-primary-foreground: #faf9f2;
-  --color-fd-secondary: #f2f0e7;
-  --color-fd-secondary-foreground: #202020;
-  --color-fd-accent: #e8e7e5;
-  --color-fd-accent-foreground: #202020;
-  --color-fd-ring: #bbbbbb;
-  --color-fd-overlay: rgba(32, 32, 32, 0.2);
-
-  --pg-code-bg: #f2f0e7;
-  --pg-code-border: #bbbbbb;
+  /* docs chrome */
+  --site-header-height: 64px;
+  /* mobile docs bar (menu + "on this page") under the header */
+  --docs-bar-height: 0px;
 }
 
-/* only used when `enableDarkMode` is on in lib/shared.ts */
+/* dark: the Pangolin dashboard's dark theme (fosrl/pangolin src/app/globals.css) */
 .dark {
-  --color-fd-background: #161614;
-  --color-fd-foreground: #ecebe6;
-  --color-fd-muted: #1f1e1b;
-  --color-fd-muted-foreground: #a3a199;
-  --color-fd-popover: #1b1a18;
-  --color-fd-popover-foreground: #ecebe6;
-  --color-fd-card: #1f1e1b;
-  --color-fd-card-foreground: #ecebe6;
-  --color-fd-border: #2d2c28;
-  --color-fd-primary: #f36117;
-  --color-fd-primary-foreground: #161614;
-  --color-fd-secondary: #1f1e1b;
-  --color-fd-secondary-foreground: #ecebe6;
-  --color-fd-accent: #2d2c28;
-  --color-fd-accent-foreground: #ecebe6;
-  --color-fd-ring: #55534c;
-
-  --pg-code-bg: #1f1e1b;
-  --pg-code-border: #3a3934;
+  color-scheme: dark;
+  --background: #141415;
+  --foreground: oklch(0.985 0 0);
+  --card: #141415;
+  --card-foreground: oklch(0.985 0 0);
+  --popover: #18181a;
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.6717 0.1946 41.93);
+  --primary-foreground: oklch(0.98 0.016 73.684);
+  --secondary: oklch(0.274 0.006 286.033);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.274 0.006 286.033);
+  --muted-foreground: oklch(0.705 0.015 286.067);
+  --accent: oklch(0.274 0.006 286.033);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.5382 0.1949 22.216);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 18%);
+  --ring: oklch(0.646 0.222 41.116);
+  --table-header: #19191a;
+  --soft: #1b1b1d;
+  --faint: oklch(0.58 0.012 286);
+  --hero-tint: oklch(0.6717 0.1946 41.93 / 0.16);
 }
 
-html {
-  scrollbar-gutter: stable;
-}
-
-html > body[data-scroll-locked] {
-  margin-right: 0px !important;
-  --removed-body-scroll-bar-size: 0px !important;
-}
-
-body {
-  background-color: var(--color-fd-background);
-  color: var(--color-fd-foreground);
-}
-
-/*
- * Hairlines like pangolin.net (0.5px, #bbb). Unlayered, so these win over the 1px
- * Tailwind border utilities used by Fumadocs; 2px accents (active tab) are untouched.
- */
-.border {
-  border-width: 0.5px;
-}
-.border-t {
-  border-top-width: 0.5px;
-}
-.border-b {
-  border-bottom-width: 0.5px;
-}
-.border-l,
-.border-s {
-  border-inline-start-width: 0.5px;
-}
-.border-r,
-.border-e {
-  border-inline-end-width: 0.5px;
-}
-.border-x {
-  border-inline-width: 0.5px;
-}
-.border-y {
-  border-block-width: 0.5px;
-}
-
-/* -------------------------------------------------------------------------- */
-/* Chrome: navbar, sidebar, banner                                             */
-/* -------------------------------------------------------------------------- */
-
-/*
- * Layout grid (used by app/(docs)/layout.tsx). Desktop: the sidebar is pinned to the
- * left edge and content + TOC are centered in the remaining space, max 70rem like the
- * old Mintlify site; the last column holds the AI chat panel when it is open.
- */
-#nd-notebook-layout {
-  --pg-content-width: 70rem;
-  --pg-grid: 'header header' 'sidebar toc-popover' 'sidebar main' 1fr / var(--fd-sidebar-col)
-    minmax(0, 1fr);
-}
-
-@media (min-width: 1024px) {
-  #nd-notebook-layout {
-    /* width taken by the AI chat panel when it is open */
-    --pg-panel: 0px;
-    /* equal gutters that center content + TOC; they collapse to 0 on narrow screens */
-    --pg-gutter: max(
-      0px,
-      calc((100% - var(--fd-sidebar-col) - var(--pg-content-width) - var(--pg-panel)) / 2)
-    );
-    --pg-grid: 'header header header header header' 'sidebar . toc-popover toc-popover .'
-      'sidebar . main toc .' 1fr / var(--fd-sidebar-col) var(--pg-gutter) minmax(0, 1fr)
-      var(--fd-toc-width) calc(var(--pg-gutter) + var(--pg-panel));
+@media (max-width: 1023px) {
+  :root {
+    --docs-bar-height: 3rem;
   }
+}
 
-  /* set from components/ai/search.tsx while the chat panel is open */
-  #nd-notebook-layout[data-ai-open] {
-    --pg-panel: 400px;
-  }
-
-  /* slide the content along with the panel's open / close animation */
-  #nd-notebook-layout {
-    transition: grid-template-columns 200ms ease;
-  }
+/* ---------- Ask AI side panel (desktop) ---------- */
+:root {
+  --ai-panel-width: 400px;
 }
 
 @media (min-width: 1536px) {
-  #nd-notebook-layout[data-ai-open] {
-    --pg-panel: 460px;
+  :root {
+    --ai-panel-width: 460px;
   }
 }
 
-#nd-subnav {
-  background-color: color-mix(in srgb, var(--color-fd-muted) 92%, transparent);
-}
-
-#nd-subnav [data-header-body],
-#nd-subnav [data-header-tabs] {
-  border-color: var(--color-fd-border);
-}
-
-/* tab row under the navbar */
-#nd-subnav [data-header-tabs] a {
-  font-weight: 500;
-}
-
-#nd-sidebar {
-  background-color: var(--color-fd-muted);
-  border-inline-end: 0.5px solid var(--color-fd-border);
-}
-
-/* AI chat panel: same 0.5px hairline as the sidebar */
-.pg-ai-panel {
-  border: 0.5px solid var(--color-fd-border);
+@keyframes ask-ai-panel-in {
+  from {
+    translate: 100% 0;
+  }
 }
 
 @media (min-width: 1024px) {
-  .pg-ai-panel {
-    border-width: 0;
-    border-inline-start: 0.5px solid var(--color-fd-border);
+  /* everything under the header slides over to make room for the panel */
+  .docs-shell {
+    transition: padding-right 200ms var(--ease-brand);
+  }
+
+  html[data-ai-open] .docs-shell {
+    padding-right: var(--ai-panel-width);
   }
 }
 
-/* separators = Mintlify top-level group headings */
-#nd-sidebar p[data-separator],
-#nd-sidebar [data-separator] {
-  color: var(--color-fd-foreground);
-  font-weight: 600;
-}
-
-/*
- * First group heading ("About") under the anchors: Fumadocs only drops its top margin
- * when it is the very first element, but hidden mobile menu links come before it. Trim
- * it so anchors -> "About" matches the gap between groups (~26px incl. viewport padding).
- */
-#nd-sidebar p.mt-6:first-of-type {
-  margin-top: 0.625rem;
-}
-
-/* Mintlify-style sidebar anchors (Discord, Slack): icon tile + medium label */
-.pg-anchor {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  border-radius: 0.5rem;
-  padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--color-fd-muted-foreground);
-  transition: color 150ms;
-}
-
-.pg-anchor:hover {
-  color: var(--color-fd-foreground);
-}
-
-.pg-anchor-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
-  flex-shrink: 0;
-  border: 0.5px solid var(--color-fd-border);
-  border-radius: 0.375rem;
-  background-color: var(--color-fd-background);
-  color: var(--color-fd-muted-foreground);
-  transition:
-    color 150ms,
-    border-color 150ms,
-    background-color 150ms;
-}
-
-.pg-anchor-icon svg {
-  width: 0.875rem;
-  height: 0.875rem;
-}
-
-.pg-anchor:hover .pg-anchor-icon {
-  border-color: var(--color-fd-foreground);
-  background-color: var(--color-fd-foreground);
-  color: var(--color-fd-background);
-}
-
-.pg-banner {
-  background-color: var(--color-pg-ink);
-  color: #faf9f2;
-  font-size: 0.875rem;
-}
-
-.pg-banner button {
-  color: #faf9f2;
-}
-
-/* header CTAs: same height, radius, and hairline as the search bar and Ask AI */
-.pg-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 2.25rem;
-  padding: 0 0.85rem;
-  border: 0.5px solid transparent;
-  border-radius: 0.75rem;
-  background-color: var(--color-fd-primary);
-  color: var(--color-fd-primary-foreground);
-  font-size: 0.875rem;
-  font-weight: 500;
-  line-height: 1;
-  white-space: nowrap;
-  text-decoration: none;
-  transition:
-    background-color 150ms,
-    color 150ms,
-    border-color 150ms;
-}
-
-.pg-btn:hover {
-  background-color: color-mix(in srgb, var(--color-fd-primary) 80%, transparent);
-}
-
-.pg-btn:focus-visible {
-  outline: 2px solid var(--color-fd-ring);
-  outline-offset: 2px;
-}
-
-.pg-btn-secondary {
-  border-color: var(--color-fd-border);
-  background-color: var(--color-fd-background);
-  color: var(--color-fd-foreground);
-}
-
-.pg-btn-secondary:hover {
-  background-color: var(--color-fd-accent);
-  color: var(--color-fd-accent-foreground);
-}
-
-/* "Ask AI" button to the right of the header search (Mintlify style) */
-.pg-ask-ai-btn {
-  display: inline-flex;
-  flex-shrink: 0;
-  align-items: center;
-  gap: 0.4rem;
-  height: 2.25rem;
-  padding: 0 0.85rem;
-  border: 0.5px solid var(--color-fd-border);
-  border-radius: 0.75rem;
-  background-color: color-mix(in srgb, var(--color-fd-secondary) 50%, transparent);
-  color: var(--color-fd-muted-foreground);
-  font-size: 0.875rem;
-  white-space: nowrap;
-  transition:
-    background-color 150ms,
-    color 150ms;
-}
-
-.pg-ask-ai-btn:hover,
-.pg-ask-ai-btn[data-state='open'] {
-  background-color: var(--color-fd-accent);
-  color: var(--color-fd-accent-foreground);
-}
-
-.pg-ask-ai-btn svg {
-  width: 1rem;
-  height: 1rem;
-  color: currentColor;
-}
-
-/* logo: fixed height, width from the image's aspect ratio (never stretched) */
-.pg-logo {
-  display: block;
-  height: 1.5rem;
-  width: auto;
-  max-width: none;
-  flex-shrink: 0;
-  object-fit: contain;
-}
-
-.pg-logo.hidden {
-  display: none;
-}
-
-.dark .pg-logo.dark\:block {
-  display: block;
-}
-
-.dark .pg-logo.dark\:hidden {
-  display: none;
-}
-
-/* ---------- AI chat input (Mintlify style) ---------- */
-.pg-chat-input {
-  border: 0.5px solid var(--color-fd-border);
-  border-radius: 1rem;
-  background-color: var(--color-fd-background);
-  box-shadow: 0 1px 2px rgba(32, 32, 32, 0.04);
-  transition:
-    border-color 150ms,
-    box-shadow 150ms;
-}
-
-.pg-chat-input:focus-within {
-  border-color: #8d8d8d;
-  box-shadow: 0 4px 16px rgba(32, 32, 32, 0.08);
-}
-
-.pg-chat-send {
-  display: inline-flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  width: 1.9rem;
-  height: 1.9rem;
-  border-radius: 9999px;
-  background-color: var(--color-fd-primary);
-  color: var(--color-fd-primary-foreground);
-  transition:
-    opacity 150ms,
-    background-color 150ms;
-}
-
-.pg-chat-send:disabled {
-  background-color: #e8e7e5;
-  color: #8d8d8d;
-  cursor: default;
-}
-
-.dark .pg-chat-send:disabled {
-  background-color: #2d2c28;
-}
-
-/* sticky bar at the bottom of each page */
-.pg-askbar-wrap {
-  position: sticky;
-  bottom: 1.25rem;
-  z-index: 20;
-  display: flex;
-  justify-content: center;
-  margin-top: 1.5rem;
-  pointer-events: none;
-  transition:
-    opacity 200ms,
-    translate 200ms;
-}
-
-.pg-askbar-hidden {
-  opacity: 0;
-  translate: 0 0.75rem;
-}
-
-.pg-askbar {
-  pointer-events: auto;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  width: min(100%, 28rem);
-  padding: 0.4rem 0.4rem 0.4rem 1rem;
-  box-shadow: 0 8px 28px rgba(32, 32, 32, 0.1);
-}
-
-.pg-askbar-hidden .pg-askbar {
-  pointer-events: none;
-}
-
-.pg-askbar:focus-within {
-  box-shadow: 0 8px 28px rgba(32, 32, 32, 0.14);
-}
-
-.pg-askbar input {
-  flex: 1;
-  min-width: 0;
-  background: transparent;
-  font-size: 0.9rem;
-  outline: none;
-}
-
-/* iOS zooms the page when a focused field is under 16px. Search uses text-lg, so it doesn't. */
-@media (hover: none) and (pointer: coarse) {
-  .pg-chat-field,
-  .pg-askbar input {
-    font-size: 16px;
+/* not enough room for "On this page" next to the panel: give it to the content */
+@media (min-width: 1280px) and (max-width: 1799px) {
+  html[data-ai-open] .docs-page-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
-}
 
-.pg-askbar input::placeholder {
-  color: #8d8d8d;
-}
-
-.pg-askbar-kbd {
-  border: 0.5px solid var(--color-fd-border);
-  border-radius: 0.375rem;
-  padding: 0.05rem 0.35rem;
-  font-family: inherit;
-  font-size: 0.7rem;
-  color: var(--color-fd-muted-foreground);
-}
-
-@media (max-width: 767px) {
-  .pg-askbar-kbd {
+  html[data-ai-open] .docs-page-toc {
     display: none;
   }
 }
 
-/* -------------------------------------------------------------------------- */
-/* Content                                                                     */
-/* -------------------------------------------------------------------------- */
-
-/* inline code: match pangolin.net/news */
-.prose :where(code):not(:where(pre code, .not-prose code)) {
-  background-color: var(--pg-code-bg);
-  border: 0.5px solid var(--pg-code-border);
-  border-radius: 4px;
-  color: var(--color-fd-foreground);
-  font-size: 0.875em;
-  font-weight: 400;
-  padding: 0.125rem 0.35rem;
+/* same for the header's text links next to the panel */
+@media (max-width: 1799px) {
+  html[data-ai-open] .docs-header-links {
+    display: none !important;
+  }
 }
 
-/* code blocks */
-.prose figure.shiki,
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-table-header: var(--table-header);
+  --color-soft: var(--soft);
+  --color-faint: var(--faint);
+  --color-hero-tint: var(--hero-tint);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+/*
+ * Fumadocs components (tabs, code blocks, popovers) read these. Unlayered and after
+ * the Fumadocs imports, so they win over its own light and `.dark` palettes; they
+ * follow the tokens above in both themes.
+ */
+:root,
+.dark {
+  --color-fd-background: var(--background);
+  --color-fd-foreground: var(--foreground);
+  --color-fd-muted: var(--soft);
+  --color-fd-muted-foreground: var(--muted-foreground);
+  --color-fd-popover: var(--popover);
+  --color-fd-popover-foreground: var(--popover-foreground);
+  --color-fd-card: var(--card);
+  --color-fd-card-foreground: var(--card-foreground);
+  --color-fd-border: var(--border);
+  --color-fd-primary: var(--primary);
+  --color-fd-primary-foreground: var(--primary-foreground);
+  --color-fd-secondary: var(--soft);
+  --color-fd-secondary-foreground: var(--foreground);
+  --color-fd-accent: var(--accent);
+  --color-fd-accent-foreground: var(--accent-foreground);
+  --color-fd-ring: var(--ring);
+  --color-fd-overlay: rgba(0, 0, 0, 0.2);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--site-header-height) + var(--docs-bar-height) + 1.5rem);
+}
+
+::selection {
+  background-color: color-mix(in oklab, var(--primary) 22%, transparent);
+  color: var(--foreground);
+}
+
+input,
+textarea {
+  caret-color: var(--primary);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Animations (shared with pangolin.net)                                       */
+/* -------------------------------------------------------------------------- */
+
+@keyframes ask-ai-in {
+  from {
+    opacity: 0;
+    translate: 0 0.5rem;
+  }
+}
+
+@keyframes ask-ai-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes mobile-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.mobile-menu {
+  animation: mobile-menu-in 0.25s var(--ease-brand);
+}
+
+@keyframes docs-drawer-in {
+  from {
+    translate: -100% 0;
+  }
+}
+
+.docs-drawer {
+  animation: docs-drawer-in 0.25s var(--ease-brand);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu,
+  .docs-drawer {
+    animation: none;
+  }
+}
+
+html[data-feature-banner-dismissed] [data-feature-banner] {
+  display: none;
+}
+
+/* thin scrollbars on the sticky sidebar / TOC */
+.docs-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Ask AI answers (same as pangolin.net)                                       */
+/* -------------------------------------------------------------------------- */
+
+.ask-ai-prose {
+  --tw-prose-body: var(--foreground);
+  --tw-prose-headings: var(--foreground);
+  --tw-prose-links: var(--primary);
+  --tw-prose-bold: var(--foreground);
+  --tw-prose-code: var(--foreground);
+  --tw-prose-bullets: var(--faint);
+  --tw-prose-counters: var(--muted-foreground);
+  --tw-prose-hr: var(--border);
+  --tw-prose-th-borders: var(--border);
+  --tw-prose-td-borders: var(--border);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.ask-ai-prose > :first-child {
+  margin-top: 0;
+}
+
+.ask-ai-prose > :last-child {
+  margin-bottom: 0;
+}
+
+.ask-ai-prose :where(h1, h2, h3, h4) {
+  font-size: 1em;
+  font-weight: 700;
+  margin-top: 1.25em;
+  margin-bottom: 0.5em;
+}
+
+.ask-ai-prose a {
+  color: var(--primary);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.ask-ai-prose a:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.ask-ai-prose :not(pre) > code {
+  border-radius: 0.3rem;
+  background: var(--soft);
+  border: 1px solid var(--border);
+  padding: 0.1em 0.3em;
+  font-size: 0.85em;
+  font-weight: 500;
+}
+
+.ask-ai-prose figure.shiki {
+  margin-block: 0.75rem;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Page content: pangolin.net news article prose at the docs' text size        */
+/* -------------------------------------------------------------------------- */
+
+.docs-prose {
+  --tw-prose-body: var(--muted-foreground);
+  --tw-prose-headings: var(--foreground);
+  --tw-prose-lead: var(--muted-foreground);
+  --tw-prose-links: var(--primary);
+  --tw-prose-bold: var(--foreground);
+  --tw-prose-counters: var(--muted-foreground);
+  --tw-prose-bullets: var(--faint);
+  --tw-prose-hr: var(--border);
+  --tw-prose-quotes: var(--foreground);
+  --tw-prose-quote-borders: var(--border);
+  --tw-prose-captions: var(--muted-foreground);
+  --tw-prose-code: var(--foreground);
+  --tw-prose-th-borders: var(--border);
+  --tw-prose-td-borders: var(--border);
+}
+
+.prose :where(h1, h2, h3, h4, h5, h6):not(:where(.not-prose, .not-prose *)) {
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+}
+
+.prose :where(h4, h5, h6):not(:where(.not-prose, .not-prose *)) {
+  font-weight: 700;
+}
+
+.prose :where(strong):not(:where(.not-prose, .not-prose *)) {
+  color: var(--foreground);
+}
+
+.prose :where(a):not(:where(.not-prose, .not-prose *)) {
+  color: var(--primary);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.prose :where(a):not(:where(.not-prose, .not-prose *)):hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* heading anchor links keep the heading colour */
+.prose :where(h1, h2, h3, h4, h5, h6) a:not(:where(.not-prose, .not-prose *)) {
+  color: inherit;
+  font-weight: inherit;
+}
+
+.prose :where(h1, h2, h3, h4, h5, h6) a:hover {
+  text-decoration: none;
+}
+
+/* inline code: pangolin.net news-inline-code */
+.prose :where(code):not(:where(pre code, .not-prose code)) {
+  background-color: var(--soft);
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  color: var(--foreground);
+  font-size: 0.85em;
+  font-weight: 400;
+  padding: 0.15em 0.35em;
+  line-height: 1.25;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.prose :where(code):not(:where(pre code, .not-prose code))::before,
+.prose :where(code):not(:where(pre code, .not-prose code))::after {
+  content: none;
+}
+
+.prose img {
+  border-radius: 0.75rem;
+}
+
+.prose hr {
+  border-color: var(--border);
+}
+
+/* tables: pangolin.net compare table */
+.prose :where(table):not(:where(.not-prose, .not-prose *)) {
+  font-size: 0.875rem;
+}
+
+.prose :where(thead th):not(:where(.not-prose, .not-prose *)) {
+  color: var(--foreground);
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+/* code blocks: pangolin.net news-code-block (rounded-lg, border, #faf9f7) */
 figure.shiki {
-  background-color: var(--pg-code-bg);
-  border-color: var(--color-fd-border);
+  background-color: var(--table-header);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: none;
+}
+
+/* page content is flat: no shadows on Fumadocs components (cards, callouts, tables) */
+.docs-prose :where(.shadow-sm, .shadow, .shadow-md, .shadow-lg) {
   box-shadow: none;
 }
 
@@ -486,30 +432,54 @@ figure.shiki .shiki {
   background-color: transparent !important;
 }
 
+figure.shiki pre code {
+  font-family: var(--font-mono);
+}
+
+figure.shiki > div:first-child:has(figcaption) {
+  border-color: var(--border);
+  background-color: var(--background);
+}
+
 figure.shiki [data-line].highlighted,
 figure.shiki .line.highlighted {
-  background-color: rgba(243, 97, 23, 0.1);
-  box-shadow: inset 2px 0 0 var(--color-pg-orange);
+  background-color: color-mix(in oklab, var(--primary) 10%, transparent);
+  box-shadow: inset 2px 0 0 var(--primary);
 }
 
-/* tables */
-.prose table {
-  font-size: 0.875rem;
+/* tabs (Fumadocs): pangolin.net underline tabs, orange active bar */
+.prose [role='tablist'],
+[data-tabs] > [role='tablist'] {
+  border-color: var(--border);
 }
 
-/* ---------- callouts: sand wash tinted by type, hairline in the same colour ---------- */
+[role='tablist'] > [role='tab'] {
+  font-weight: 600;
+}
+
+[role='tablist'] > [role='tab'][aria-selected='true'],
+[role='tablist'] > [role='tab'][data-state='active'],
+[role='tablist'] > [role='tab'][data-active] {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+/* -------------------------------------------------------------------------- */
+/* MDX components (components/mintlify.tsx)                                    */
+/* -------------------------------------------------------------------------- */
+
+/* ---------- callouts: pangolin.net install callout, tinted by type ---------- */
 .pg-callout {
-  --pg-callout-accent: #525252;
-  position: relative;
+  --pg-callout-accent: var(--muted-foreground);
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
   margin-block: 1.25rem;
-  padding: 0.9rem 1rem;
-  border: 0.5px solid color-mix(in srgb, var(--pg-callout-accent) 35%, var(--pg-code-bg));
-  border-radius: 0.75rem;
-  background-color: color-mix(in srgb, var(--pg-callout-accent) 12%, var(--pg-code-bg));
-  color: var(--color-fd-foreground);
+  padding: 0.85rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--pg-callout-accent) 22%, var(--border));
+  border-radius: var(--radius);
+  background-color: color-mix(in srgb, var(--pg-callout-accent) 5%, var(--soft));
+  color: var(--muted-foreground);
   font-size: 0.9rem;
 }
 
@@ -517,16 +487,14 @@ figure.shiki .line.highlighted {
   --pg-callout-accent: #2563eb;
 }
 .pg-callout[data-type='info'] {
-  --pg-callout-accent: #525252;
+  --pg-callout-accent: #67625d;
 }
-.pg-callout[data-type='tip'] {
-  --pg-callout-accent: #16a34a;
-}
+.pg-callout[data-type='tip'],
 .pg-callout[data-type='check'] {
   --pg-callout-accent: #16a34a;
 }
 .pg-callout[data-type='warning'] {
-  --pg-callout-accent: #ca8a04;
+  --pg-callout-accent: oklch(0.6717 0.1946 41.93);
 }
 .pg-callout[data-type='danger'] {
   --pg-callout-accent: #dc2626;
@@ -536,7 +504,6 @@ figure.shiki .line.highlighted {
   display: flex;
   flex-shrink: 0;
   align-items: center;
-  /* same height as the first line of prose, so the icon centers on that row */
   height: calc(1.75rem * var(--tw-prose-size, 1));
   color: var(--pg-callout-accent);
 }
@@ -550,6 +517,7 @@ figure.shiki .line.highlighted {
   min-width: 0;
   flex: 1;
   font-size: 0.9rem;
+  --tw-prose-body: var(--muted-foreground);
 }
 
 .pg-callout-body > :first-child {
@@ -559,21 +527,33 @@ figure.shiki .line.highlighted {
   margin-bottom: 0;
 }
 
-/* The callout sits inside .not-prose, which disables typography's link/bold styles. */
 .pg-callout-body a {
-  color: var(--color-fd-primary);
+  color: var(--foreground);
   font-weight: 500;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 .pg-callout-body a:hover {
-  opacity: 0.8;
+  color: var(--primary);
 }
-.pg-callout-body strong {
-  font-weight: 600;
+.pg-callout-body :not(pre) > code,
+.pg-card-content :not(pre) > code,
+.pg-field-body :not(pre) > code,
+.pg-accordion-content :not(pre) > code {
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  color: var(--foreground);
+  font-size: 0.85em;
+  padding: 0.1em 0.35em;
 }
 
-/* ---------- cards ---------- */
+.pg-callout-body strong {
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+/* ---------- cards: pangolin.net link cards ---------- */
 .pg-card-group {
   display: grid;
   gap: 1rem;
@@ -596,11 +576,12 @@ figure.shiki .line.highlighted {
 .pg-card {
   display: block;
   overflow: hidden;
-  border-radius: 0.75rem;
-  background-color: var(--color-fd-card);
-  color: var(--color-fd-card-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background-color: var(--card);
+  color: var(--card-foreground);
   margin-block: 1rem;
-  transition: background-color 150ms;
+  transition: border-color 150ms;
 }
 
 .pg-card-group > .pg-card {
@@ -612,7 +593,7 @@ figure.shiki .line.highlighted {
 }
 
 .pg-card-link:hover {
-  background-color: var(--color-fd-accent);
+  border-color: var(--faint);
 }
 
 .pg-card-overlay {
@@ -623,11 +604,10 @@ figure.shiki .line.highlighted {
 }
 
 .pg-card-overlay:focus-visible {
-  outline: 2px solid var(--color-fd-ring);
+  outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
 
-/* links inside a linked card stay clickable above the overlay */
 .pg-card-link .pg-card-content a {
   position: relative;
   z-index: 2;
@@ -636,6 +616,7 @@ figure.shiki .line.highlighted {
 .pg-card-img {
   width: 100%;
   object-fit: cover;
+  border-bottom: 1px solid var(--border);
 }
 
 .pg-card-inner {
@@ -652,31 +633,26 @@ figure.shiki .line.highlighted {
 
 .pg-card-icon {
   display: inline-flex;
-  color: var(--color-fd-foreground);
+  color: var(--primary);
 }
 
 .pg-card-icon svg {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .pg-card-title {
   display: flex;
   align-items: center;
   gap: 0.35rem;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.95rem;
-}
-
-.pg-card-arrow {
-  width: 0.9rem;
-  height: 0.9rem;
-  color: var(--color-fd-muted-foreground);
+  color: var(--foreground);
 }
 
 .pg-card-content {
   margin-top: 0.25rem;
-  color: var(--color-fd-muted-foreground);
+  color: var(--muted-foreground);
   font-size: 0.875rem;
 }
 
@@ -693,7 +669,8 @@ figure.shiki .line.highlighted {
   gap: 0.2rem;
   margin-top: 0.75rem;
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 700;
+  color: var(--foreground);
 }
 
 /* ---------- steps ---------- */
@@ -715,8 +692,8 @@ figure.shiki .line.highlighted {
   left: 0.875rem;
   top: 2.25rem;
   bottom: 0.25rem;
-  width: 0.5px;
-  background-color: var(--color-fd-border);
+  width: 1px;
+  background-color: var(--border);
 }
 
 .pg-step:last-child {
@@ -736,10 +713,12 @@ figure.shiki .line.highlighted {
   justify-content: center;
   width: 1.75rem;
   height: 1.75rem;
+  border: 1px solid var(--border);
   border-radius: 9999px;
-  background-color: var(--color-fd-muted);
+  background-color: var(--soft);
+  color: var(--foreground);
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .pg-step-marker:empty::before {
@@ -749,8 +728,9 @@ figure.shiki .line.highlighted {
 .pg-step-title {
   margin: 0 !important;
   padding-top: 0.15rem;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.5rem;
+  color: var(--foreground);
 }
 
 .pg-step-content > :first-child {
@@ -760,19 +740,19 @@ figure.shiki .line.highlighted {
   margin-bottom: 0;
 }
 
-/* ---------- accordions & expandables ---------- */
+/* ---------- accordions & expandables: pangolin.net FAQ ---------- */
 .pg-accordion-group {
   margin-block: 1.25rem;
-  border: 0.5px solid var(--color-fd-border);
-  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   overflow: hidden;
 }
 
 .pg-accordion {
-  border: 0.5px solid var(--color-fd-border);
-  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   margin-block: 0.75rem;
-  background-color: var(--color-fd-background);
+  background-color: var(--background);
 }
 
 .pg-accordion-group > .pg-accordion {
@@ -782,7 +762,7 @@ figure.shiki .line.highlighted {
 }
 
 .pg-accordion-group > .pg-accordion + .pg-accordion {
-  border-top: 0.5px solid var(--color-fd-border);
+  border-top: 1px solid var(--border);
 }
 
 .pg-accordion > summary,
@@ -802,17 +782,18 @@ figure.shiki .line.highlighted {
 
 .pg-accordion > summary {
   padding: 0.85rem 1rem;
+  color: var(--foreground);
 }
 
 .pg-accordion > summary:hover {
-  background-color: var(--color-fd-muted);
+  background-color: var(--soft);
 }
 
 .pg-accordion-chevron {
   width: 1rem;
   height: 1rem;
   flex-shrink: 0;
-  color: var(--color-fd-muted-foreground);
+  color: var(--muted-foreground);
   transition: transform 150ms;
 }
 
@@ -833,18 +814,18 @@ details[open] > summary > .pg-accordion-chevron {
 
 .pg-expandable {
   margin-top: 0.75rem;
-  border: 0.5px solid var(--color-fd-border);
-  border-radius: 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) - 2px);
 }
 
 .pg-expandable > summary {
   padding: 0.4rem 0.75rem;
   font-size: 0.8rem;
-  color: var(--color-fd-muted-foreground);
+  color: var(--muted-foreground);
 }
 
 .pg-expandable > summary:hover {
-  color: var(--color-fd-foreground);
+  color: var(--foreground);
 }
 
 .pg-expandable .pg-expandable-open {
@@ -859,7 +840,7 @@ details[open] > summary > .pg-accordion-chevron {
 
 .pg-expandable-content {
   padding: 0 0.9rem 0.25rem;
-  border-top: 0.5px solid var(--color-fd-border);
+  border-top: 1px solid var(--border);
 }
 
 .pg-expandable-content > .pg-field:last-child {
@@ -869,7 +850,7 @@ details[open] > summary > .pg-accordion-chevron {
 /* ---------- response fields ---------- */
 .pg-field {
   padding-block: 1rem;
-  border-bottom: 0.5px solid var(--color-fd-border);
+  border-bottom: 1px solid var(--border);
 }
 
 .pg-field-header {
@@ -881,10 +862,10 @@ details[open] > summary > .pg-accordion-chevron {
 }
 
 .pg-field-name {
-  font-family: var(--font-mono, ui-monospace, monospace);
+  font-family: var(--font-mono);
   font-weight: 600;
   font-size: 0.875rem;
-  color: var(--color-pg-orange);
+  color: var(--primary);
   background: none !important;
   border: 0 !important;
   padding: 0 !important;
@@ -892,9 +873,9 @@ details[open] > summary > .pg-accordion-chevron {
 
 .pg-field-type,
 .pg-field-pill {
-  border-radius: 0.375rem;
-  background-color: var(--color-fd-muted);
-  color: var(--color-fd-muted-foreground);
+  border-radius: calc(var(--radius) - 4px);
+  background-color: var(--muted);
+  color: var(--muted-foreground);
   padding: 0.1rem 0.45rem;
   font-size: 0.75rem;
 }
@@ -907,7 +888,7 @@ details[open] > summary > .pg-accordion-chevron {
 }
 
 .pg-field-required {
-  color: #dc2626;
+  color: var(--destructive);
   font-weight: 500;
   font-size: 0.75rem;
 }
@@ -940,16 +921,16 @@ details[open] > summary > .pg-accordion-chevron {
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.45rem;
-  border-radius: 0.75rem;
-  background-color: var(--pg-code-bg);
-  border: 0.5px solid var(--color-fd-border);
+  padding: 0.5rem;
+  border-radius: calc(var(--radius) + 4px);
+  background-color: var(--soft);
+  border: 1px solid var(--border);
 }
 
 .pg-frame-inner img,
 .pg-frame-inner video,
 .pg-frame-inner iframe {
-  border-radius: 0.4rem;
+  border-radius: calc(var(--radius) - 2px);
   max-width: 100%;
   height: auto;
   margin: 0;
@@ -969,11 +950,7 @@ details[open] > summary > .pg-accordion-chevron {
   text-align: center;
   font-size: 0.85rem;
   line-height: 1.4;
-  color: var(--color-fd-muted-foreground);
-}
-
-.prose img {
-  border-radius: 0.6rem;
+  color: var(--muted-foreground);
 }
 
 /* ---------- changelog updates ---------- */
@@ -981,51 +958,11 @@ details[open] > summary > .pg-accordion-chevron {
   display: grid;
   gap: 1rem;
   padding-block: 1.5rem;
-  border-bottom: 0.5px solid var(--color-fd-border);
+  border-bottom: 1px solid var(--border);
 }
 
 @media (min-width: 768px) {
   .pg-update {
     grid-template-columns: 10rem 1fr;
   }
-}
-
-/* ---------- footer ---------- */
-.pg-footer {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 3rem;
-  padding-top: 1.5rem;
-  border-top: 0.5px solid var(--color-fd-border);
-}
-
-.pg-download {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  height: 2.25rem;
-  padding: 0 0.85rem;
-  border-radius: 0.75rem;
-  border: 0.5px solid var(--color-fd-border);
-  background-color: var(--color-fd-secondary);
-  color: var(--color-fd-foreground);
-  font-size: 0.875rem;
-  font-weight: 500;
-  line-height: 1;
-  white-space: nowrap;
-  text-decoration: none;
-  transition:
-    color 150ms,
-    background-color 150ms;
-}
-
-.pg-download:hover {
-  background-color: var(--color-fd-accent);
-  color: var(--color-fd-accent-foreground);
-}
-
-.pg-download:focus-visible {
-  outline: 2px solid var(--color-fd-ring);
-  outline-offset: 2px;
 }

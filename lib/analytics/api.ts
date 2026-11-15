@@ -1,5 +1,5 @@
 import 'server-only';
-import type { ChatUIMessage } from '@/components/ai/search';
+import type { ChatUIMessage } from '@/lib/ai/types';
 
 /**
  * Analytics are stored by the Fossorial API (`/api/v1/docs-analytics`), called from the

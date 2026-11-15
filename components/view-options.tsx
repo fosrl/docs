@@ -1,10 +1,11 @@
 'use client';
 
-import { buttonVariants } from 'fumadocs-ui/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from 'fumadocs-ui/components/ui/popover';
-import { ChevronDown, ExternalLink, Text } from 'lucide-react';
+import { ArrowDown01Icon, ArrowUpRight01Icon, TextIcon } from '@hugeicons/core-free-icons';
+import { HugeiconsIcon } from '@hugeicons/react';
 import { useMemo, type ComponentProps, type ReactNode } from 'react';
 import { cn } from '@/lib/cn';
+import { buttonVariants } from '@/components/ui/button';
 import { GitHubIcon } from './icons';
 
 type ViewOptionsPopoverProps = ComponentProps<typeof PopoverTrigger> & {
@@ -44,7 +45,7 @@ export function ViewOptionsPopover({
       options.push({
         title: 'View as Markdown',
         href: markdownUrl,
-        icon: <Text />,
+        icon: <HugeiconsIcon icon={TextIcon} strokeWidth={1.75} />,
       });
     }
 
@@ -76,27 +77,27 @@ export function ViewOptionsPopover({
         {...props}
         className={(state) =>
           cn(
-            buttonVariants({ variant: 'secondary', size: 'sm' }),
-            'gap-2 data-[popup-open]:bg-fd-accent data-[popup-open]:text-fd-accent-foreground',
+            buttonVariants({ variant: 'flat', size: 'sm' }),
+            'gap-1.5 data-[popup-open]:border-faint',
             typeof className === 'function' ? className(state) : className,
           )
         }
       >
         {children ?? 'Open'}
-        <ChevronDown className="size-3.5 text-fd-muted-foreground" />
+        <HugeiconsIcon icon={ArrowDown01Icon} className="size-3.5 text-muted-foreground" strokeWidth={2} />
       </PopoverTrigger>
-      <PopoverContent className="flex flex-col">
+      <PopoverContent className="flex flex-col rounded-lg border bg-popover p-1.5 shadow-[0_4px_4px_rgba(0,0,0,0.05),0_12px_32px_-12px_rgba(0,0,0,0.18)]">
         {items.map((item) => (
           <a
             key={item.href}
             href={item.href}
             rel="noreferrer noopener"
             target="_blank"
-            className="text-sm p-2 rounded-lg inline-flex items-center gap-2 hover:text-fd-accent-foreground hover:bg-fd-accent [&_svg]:size-4"
+            className="inline-flex items-center gap-2 rounded-md p-2 text-sm text-foreground hover:bg-accent [&_svg]:size-4"
           >
             {item.icon}
             {item.title}
-            <ExternalLink className="text-fd-muted-foreground size-3.5 ms-auto" />
+            <HugeiconsIcon icon={ArrowUpRight01Icon} className="ms-auto size-3.5 text-faint" strokeWidth={2} />
           </a>
         ))}
       </PopoverContent>

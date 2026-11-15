@@ -8,7 +8,7 @@ import {
   toUIMessageStream,
   type SystemModelMessage,
 } from 'ai';
-import type { ChatUIMessage } from '@/components/ai/search';
+import type { ChatUIMessage } from '@/lib/ai/types';
 import { AIConfigError, getModel } from '@/lib/ai/model';
 import { getSystemPrompt } from '@/lib/ai/prompt';
 import { checkRateLimit, clientKey } from '@/lib/ai/rate-limit';

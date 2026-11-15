@@ -46,10 +46,10 @@ export function NotFoundPage({ pages }: { pages: NotFoundLink[] }) {
   const suggestions = suggest(pages, usePathname() || '/');
 
   return (
-    <div className="flex min-h-[calc(100dvh-var(--fd-docs-row-3,6.5rem))] flex-col items-center justify-center px-6 py-24 text-center [grid-area:main] lg:[grid-column:3/5]">
-      <p className="text-5xl font-medium text-pg-orange">404</p>
-      <h1 className="mt-4 text-2xl font-medium tracking-tight">Page Not Found</h1>
-      <p className="mt-4 max-w-sm text-sm leading-6 text-fd-muted-foreground">
+    <div className="flex min-h-[60dvh] flex-col items-center justify-center px-6 py-24 text-center">
+      <p className="text-5xl font-extrabold tracking-[-0.02em] text-primary">404</p>
+      <h1 className="mt-4 text-2xl font-extrabold tracking-[-0.02em] text-foreground">Page Not Found</h1>
+      <p className="mt-4 max-w-sm text-sm leading-6 text-muted-foreground">
         We couldn&apos;t find the page. Maybe you were looking for one of these pages below?
       </p>
       {suggestions.length > 0 && (
@@ -58,7 +58,7 @@ export function NotFoundPage({ pages }: { pages: NotFoundLink[] }) {
             <li key={page.url}>
               <Link
                 href={page.url}
-                className="text-sm font-medium text-pg-orange hover:underline hover:underline-offset-4"
+                className="text-sm font-medium text-primary hover:underline hover:underline-offset-4"
               >
                 {page.title}
               </Link>
