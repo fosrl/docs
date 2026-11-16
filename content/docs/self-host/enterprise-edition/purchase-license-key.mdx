@@ -1,80 +1,163 @@
 ---
 title: "Purchase a License Key"
-description: "How to buy an Enterprise license key for Pangolin from the dashboard"
+description: "Buy a self-serve Enterprise Edition license on pangolin.net and manage it from your Pangolin dashboard"
 ---
 
-Buy an Enterprise license key directly from the Pangolin dashboard or the pricing page at [pangolin.net/pricing](https://pangolin.net/pricing). You choose your tier, complete checkout, and get your key right away.
+Commercial Enterprise Edition licenses are bought on the [pricing page](https://pangolin.net/pricing#Self-Hosted) and managed in the [Pangolin dashboard](https://app.pangolin.net).
 
-## License tiers
+- **Buy on pangolin.net.** Configure the license in the price calculator and pay through a secure Stripe checkout.
+- **Manage in the dashboard.** Your key shows up under **Licenses** at [app.pangolin.net](https://app.pangolin.net). There you can change users, sites, machine clients, add-ons, and support, manage billing, or cancel.
 
-You can purchase a **self-serve license online at any time** through [app.pangolin.net](https://app.pangolin.net). Two tiers are available for self-serve checkout:
+<Warning>
+At checkout, enter the **same email address you use for your app.pangolin.net account**. The license key is sent to that address and linked to that account, which is how it appears in your dashboard. If you don't have an account yet, create one later with the same email and the key will be linked to it.
+</Warning>
 
-- **Starter** — For smaller teams getting started with self-hosted Enterprise Edition
-- **Scale** — For growing teams that need higher limits and more advanced capabilities
+## Plans
 
-See the [Self-Hosted pricing page](https://pangolin.net/pricing#Self-Hosted) for a full comparison of features and limits included with each tier.
+The Self-Hosted tab of the [pricing page](https://pangolin.net/pricing#Self-Hosted) lists two Enterprise Edition plans:
 
-<Info>
-Need more users, more sites, or special add-ons — such as compliance packages, SLA support, pay-by-invoice, or bank transfer? Contact [sales@pangolin.net](mailto:sales@pangolin.net) for a custom quote.
-</Info>
+- **Self-serve.** Includes all Enterprise Edition features. You set the limits in the price calculator and pay by card, annually or monthly. This is what you buy online.
+- **Custom.** For more users, sites, or machine clients than the calculator offers, or for invoicing, purchase orders, security reviews, custom contracts, or an SLA. Contact [sales@pangolin.net](mailto:sales@pangolin.net) for a quote.
 
-## How to buy a license key
+## The price calculator
+
+On the Self-Hosted tab, click **Calculate price** on the Self-serve plan to open **Estimate your price**.
 
 <Steps>
-<Step title="Sign in or create an account">
-  Go to [app.pangolin.net](https://app.pangolin.net) and log in, or create an account if you don’t have one yet.
+<Step title="Set users, sites, and machine clients">
+  Drag the sliders to set how many of each the license allows. Each is priced per unit:
+
+  - **Users:** every user account on your Pangolin server.
+  - **Sites:** every site connector on your server.
+  - **Machine clients:** non-user identities such as servers, CI/CD runners, or scripts. A set number are included at no extra cost, and you only pay for the ones above that.
+
+  Hover the **?** next to each label for a definition, or see [License limits](/self-host/enterprise-edition/limits) for exactly how they are counted.
+
+  Each slider ends at a **More than** option. If you need that much, the calculator swaps checkout for a **Get a custom quote** form, which goes to our sales team.
 </Step>
 
-<Step title="Open the License section">
-  In the dashboard, open the **License** section from the sidebar.
+<Step title="Choose add-ons and support">
+  - **High availability:** turn this on to run Pangolin as a [highly available cluster](/self-host/clustering/understanding-clustering).
+  - **Support:** **Community** support (Discord and GitHub) is free. **Email** support (tickets answered by the Pangolin team) and **Priority** support (faster responses and help with deployment) cost extra. They are only available on licenses with more than 25 users.
+
+  Add-on and support prices scale with the size of the license.
 </Step>
 
-<Step title="Generate a license key">
-  Click **Generate license key**, choose your tier, and fill in the required details.
+<Step title="Pick annual or monthly billing">
+  Use the **Annual** / **Monthly** toggle. Monthly billing costs more over a year, and the calculator shows how much you would save by switching to annual. You can't change the billing period after purchase.
 </Step>
 
-<Step title="Go to checkout">
-  Click **Continue to checkout**.
-</Step>
+<Step title="Review the License Facts">
+  The **License Facts** box shows the total per billing period, broken down into users, sites, machine clients, high availability, and support. Below that are the yearly or monthly equivalent and the per-user equivalent.
 
-<Step title="Enter payment details and submit">
-  Enter your payment information and submit the order.
-</Step>
-
-<Step title="Get your key">
-  Your license key appears in the **License key** table in the dashboard, and we send a confirmation email with the key as well.
+  To share or keep the estimate, click **Copy link to this quote** or **Download quote (PDF)**.
 </Step>
 </Steps>
 
-## After purchase
+## Check out
 
-- **Cancel or change your subscription:** Use the **Billing** page in the dashboard.
-- **Need help?** Email [support@pangolin.net](mailto:support@pangolin.net).
+<Steps>
+<Step title="Click Buy now">
+  Click **Buy now** in the calculator. You'll go to a secure Stripe checkout page. You don't need to be signed in to buy.
+
+  <Tip>
+  Signed in to the dashboard already? Open **Licenses**, click **Get License Key**, choose **Enterprise**, and click **Continue to Checkout**. The calculator opens with your account email filled in, and the key is linked to the organization you came from.
+  </Tip>
+</Step>
+
+<Step title="Enter your details">
+  Enter your email, payment details, business name, first and last name, and billing address. Have a promotion code? Add it on this page.
+
+  Use the email of your app.pangolin.net account. The key is sent there and linked to that account.
+</Step>
+
+<Step title="Get your key">
+  When payment completes, a confirmation page shows the email your key is going to. You'll get the key by email shortly after.
+
+  - **Already have an account with that email?** The key appears under **Licenses** in the dashboard.
+  - **No account yet?** Click **Create Your Account** on the confirmation page. The email is filled in for you. Once you've signed up and created an organization, the key is linked to it.
+</Step>
+
+<Step title="Activate the key">
+  Follow [Activate a license](/self-host/enterprise-edition/activate) to add the key to your Pangolin server.
+</Step>
+</Steps>
+
+## Manage your license in the dashboard
+
+Sign in to [app.pangolin.net](https://app.pangolin.net) and open **Licenses**. The table shows each key's users, sites, machine clients, add-ons, support, and subscription status (the renewal date, or the end date if it's canceled). Click the three dots on a license to manage it:
+
+| Action | What it does |
+| --- | --- |
+| **Change License** | Adjust users, sites, machine clients, high availability, and support. |
+| **Manage Billing** | Opens the Stripe billing portal to update your payment method and billing details and to download invoices. |
+| **Cancel Subscription** | Stops the license from renewing. Until the paid period ends, the menu shows **Resume Subscription** in its place. |
+| **Reset Server Association** | Clears the [host ID](/self-host/enterprise-edition/activate#host-id) the key is bound to, so you can activate it on a new server. |
+
+### Adjust limits after purchase
+
+You don't need a new key to grow or shrink your license. Change the existing one:
+
+<Steps>
+<Step title="Open Change License">
+  In **Licenses**, click the three dots on the license and choose **Change License**.
+</Step>
+
+<Step title="Set the new values">
+  Change users, sites, and machine clients, turn high availability on or off, or change the support level. Each field shows the range you can choose. For more than the maximum, use **Contact sales**.
+</Step>
+
+<Step title="Review the price">
+  Click **Review Changes** to see the new yearly or monthly price and what, if anything, you will be charged today.
+</Step>
+
+<Step title="Confirm">
+  Click **Confirm and Pay** (or **Confirm** when nothing is due now).
+</Step>
+</Steps>
+
+How changes are billed:
+
+- **Increases apply right away.** You're charged now for the difference over the rest of the current billing period.
+- **Reductions apply at renewal.** Nothing is charged or refunded today. Until the renewal date, the key keeps the amounts you already paid for, and the lower price starts at renewal.
+- **Your server picks up new limits on its next license check.** To apply them right away, click **Recheck All Keys** at `/admin/license` on your Pangolin server.
+
+### Cancel
+
+Choose **Cancel Subscription** from the license's menu. You won't be charged again, and the key keeps working until the end of the period you've paid for. After that, Enterprise features turn off on any server using the key. You can choose **Resume Subscription** any time before the period ends.
+
+### Support
+
+If a license includes email or priority support, you can open a ticket from **Licenses** with **Message Support**. Your license details are attached so we can confirm your support plan.
 
 ## Frequently asked questions
 
 <AccordionGroup>
-<Accordion title="I reset my host and can’t re-register my key. What do I do?">
-  A license is tied to one host (by host ID) at a time. If you reset your instance and need the same key on a new host, open the license table in your [Pangolin account](https://app.pangolin.net), click the three dots on that license, and reset the associated server. Then register the key on the new host. See [Host ID](/self-host/enterprise-edition/activate#host-id).
+<Accordion title="I bought a key but it isn't in my dashboard.">
+  Keys are linked by the email used at checkout. Sign in to [app.pangolin.net](https://app.pangolin.net) with that same email, and create an organization if you haven't. If you used a different email, or the key still isn't there, email [support@pangolin.net](mailto:support@pangolin.net).
 </Accordion>
 
-<Accordion title="How do I cancel my subscription?">
-  Open the **Billing** page in the dashboard and click **Modify License Subscription**. You’ll be taken to the Stripe billing page where you can manage or cancel your subscription. If you run into any issues, email us.
+<Accordion title="I mistyped my email at checkout. What do I do?">
+  On the confirmation page, click **customer portal** to correct your email in Stripe, or email [support@pangolin.net](mailto:support@pangolin.net) and we'll fix it for you.
+</Accordion>
+
+<Accordion title="I reset my host and can't re-register my key. What do I do?">
+  A key is bound to one host (by host ID) at a time. In **Licenses**, click the three dots on the license and choose **Reset Server Association**. Then activate the key on the new host. See [Host ID](/self-host/enterprise-edition/activate#host-id).
+</Accordion>
+
+<Accordion title="Can I switch between monthly and annual billing?">
+  Not on an existing license. The billing period is fixed at purchase. To switch, buy a new license with the other billing period, then cancel the old one.
+</Accordion>
+
+<Accordion title="Do I need another key for more capacity?">
+  No. Use **Change License** to raise the limits on your existing key. You only need another key for another Pangolin server, because a key can only be active on one server at a time.
 </Accordion>
 
 <Accordion title="Can I try Enterprise before buying?">
-  Businesses can request a **free limited trial** of Enterprise Edition by contacting [sales@pangolin.net](mailto:sales@pangolin.net). Include your organization details and what you'd like to evaluate.
+  Businesses can request a **free limited trial** from the [pricing page](https://pangolin.net/pricing#Self-Hosted-try-enterprise) or by emailing [sales@pangolin.net](mailto:sales@pangolin.net). Include your organization details and what you'd like to evaluate.
 </Accordion>
 
-<Accordion title="Can I pay monthly instead of yearly?">
-  Self-serve licenses (Starter and Scale) are sold as annual subscriptions paid by card at checkout. If you need monthly billing, pay-by-invoice, or bank transfer, contact [sales@pangolin.net](mailto:sales@pangolin.net).
-</Accordion>
-
-<Accordion title="I need more users, sites, or custom add-ons. What are my options?">
-  Self-serve checkout covers **Starter** and **Scale** tiers only. For higher limits, compliance packages, SLA support, pay-by-invoice, bank transfer, or other custom arrangements, contact [sales@pangolin.net](mailto:sales@pangolin.net).
-</Accordion>
-
-<Accordion title="Can I buy more license keys for additional hosts?">
-  Yes. Purchase additional self-serve keys through the dashboard, or contact [sales@pangolin.net](mailto:sales@pangolin.net) if you need multiple keys added to your account under a custom agreement.
+<Accordion title="Can I pay by invoice, purchase order, or bank transfer?">
+  Self-serve licenses are paid by card. For invoicing, purchase orders, or other arrangements, see the **Custom** plan and contact [sales@pangolin.net](mailto:sales@pangolin.net).
 </Accordion>
 </AccordionGroup>
