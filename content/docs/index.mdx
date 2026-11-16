@@ -3,23 +3,29 @@ title: "Introduction to Pangolin"
 description: "Connect and protect your users with an open-source networking and security platform"
 ---
 
-Pangolin is an open-source SASE platform with one mission: connect and protect your users, wherever they are.
+Pangolin is an open-source platform for secure access to your apps, infrastructure, and AI. Connect and protect your workforce, AI agents, and infrastructure, wherever they are.
 
-It treats networking and security as a single system. Identity, sites, access control, privileged access, and an identity-aware AI gateway share one policy model. The idea is the same as platforms like Cloudflare One, Zscaler, and Prisma Access, but Pangolin is open, self-hostable, and built to stay light enough that administrators actually enjoy running it.
+Pangolin gives people access to exactly what their role allows (web apps, SSH, remote desktops, private hosts, and AI models) without exposing anything to the public internet or opening up a whole network with a legacy VPN. Share a link and someone can sign in from a browser, or install a client to reach private resources by name. Every access decision follows identity and gets logged.
 
 <Frame caption="Public resources in the Pangolin dashboard: HTTPS, SSH, RDP, VNC, and AI Gateway.">
   <img src="/images/hero.png" alt="Manage Public Resources page in the Pangolin dashboard"/>
 </Frame>
 
-## Why Pangolin Exists
+## What You Get
 
-Legacy SASE platforms got the idea right: connectivity and security belong together. They delivered it as a heavyweight, closed, cloud-locked stack. Pangolin does that unification in the open, on infrastructure you control, and simple enough to deploy yourself.
+- **Access in minutes, with just a link.** Clientless, browser-based access to web apps, terminals, and remote desktops. No jump boxes, no open ports.
+- **A faster, safer VPN replacement.** Users reach only the resources they are granted, over direct connections, signing in with their existing work account.
+- **A smaller blast radius.** A compromised login cannot roam your network. Sync users and roles from your identity provider and offboard someone once, everywhere.
+- **Audits with less work.** Every access decision is logged with who, what, and when.
+- **AI under the same rules.** An identity-aware AI Gateway puts roles, budgets, and session history in front of cloud and self-hosted model APIs, so AI agents follow the same policy as people.
 
-- **Open source and auditable.** You can see how traffic is handled and how access decisions get made.
-- **Networking and security as one platform.** Connecting users and protecting them happen together, with one identity and policy model.
+## Why Pangolin
+
+Connectivity and security belong together. SASE platforms like Cloudflare One, Zscaler, and Prisma Access got that idea right, but delivered it as heavyweight, closed, cloud-locked stacks. Pangolin brings them into one platform with a single identity and policy model, and keeps it simple enough to run yourself.
+
+- **Open source and auditable.** Every component, from the server to the clients, is on GitHub. See exactly how traffic is handled and how access decisions are made.
 - **Lightweight by design.** The control plane runs on a modest server. A user-space connector sits in your private networks.
-- **Zero trust from day one.** Access is granted per resource, with identity providers, roles, and audit logs.
-- **Run it your way.** Self-host or use [Pangolin Cloud](https://app.pangolin.net/auth/signup).
+- **Run it your way.** [Self-host](/self-host/quick-install) or use [Pangolin Cloud](https://app.pangolin.net/auth/signup). No lock-in.
 
 ## Core Concepts
 
