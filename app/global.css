@@ -78,12 +78,18 @@
 
 /* ---------- Ask AI side panel (desktop) ---------- */
 :root {
-  --ai-panel-width: 400px;
+  --ai-panel-width: 440px;
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --ai-panel-width: 500px;
+  }
 }
 
 @media (min-width: 1536px) {
   :root {
-    --ai-panel-width: 460px;
+    --ai-panel-width: 560px;
   }
 }
 
@@ -633,7 +639,7 @@ figure.shiki .line.highlighted {
 
 .pg-card-icon {
   display: inline-flex;
-  color: var(--primary);
+  color: var(--foreground);
 }
 
 .pg-card-icon svg {

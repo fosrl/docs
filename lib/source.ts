@@ -4,13 +4,15 @@ import { defineDocs } from 'fumadocs-mdx/macro';
 import { applyMdxPreset } from 'fumadocs-mdx/config';
 import { metaSchema, pageSchema } from 'fumadocs-core/source/schema';
 import { transformerMetaHighlight } from '@shikijs/transformers';
-import { rehypeCodeDefaultOptions } from 'fumadocs-core/mdx-plugins';
+import { rehypeCodeDefaultOptions, remarkMdxMermaid } from 'fumadocs-core/mdx-plugins';
 
 const docs = defineDocs({
   dir: 'content/docs',
   docs: {
     schema: pageSchema,
     mdxOptions: applyMdxPreset({
+      // ```mermaid blocks become <Mermaid chart="..." /> (components/mermaid.tsx)
+      remarkPlugins: (v) => [remarkMdxMermaid, ...v],
       rehypeCodeOptions: {
         // languages used in the content that Shiki doesn't ship
         langAlias: { env: 'dotenv', dns: 'txt', promql: 'txt' },

@@ -4,6 +4,7 @@
  * their migrations; keep this file in sync when they change. This app never writes.
  */
 import { index, integer, jsonb, pgTable, primaryKey, text, timestamp, varchar } from 'drizzle-orm/pg-core';
+import type { Site } from '@/lib/site';
 
 export const docsPageVoteTable = pgTable(
   'docsPageVote',
@@ -21,6 +22,7 @@ export const docsChatThreadTable = pgTable(
   'docsChatThread',
   {
     id: varchar('id', { length: 64 }).primaryKey(),
+    site: varchar('site', { length: 16 }).$type<Site>().notNull().default('docs'),
     visitorId: varchar('visitor_id', { length: 64 }),
     page: text('page'),
     firstQuestion: text('first_question').notNull(),
@@ -67,6 +69,7 @@ export const docsSearchQueryTable = pgTable(
   'docsSearchQuery',
   {
     id: varchar('id', { length: 64 }).primaryKey(),
+    site: varchar('site', { length: 16 }).$type<Site>().notNull().default('docs'),
     visitorId: varchar('visitor_id', { length: 64 }),
     query: varchar('query', { length: 256 }).notNull(),
     results: integer('results').notNull(),

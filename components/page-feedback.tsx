@@ -34,7 +34,7 @@ export function PageFeedback({ page }: { page: string }) {
   }
 
   return (
-    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 rounded-lg border bg-soft px-4 py-3 text-sm text-muted-foreground">
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
       <p className="font-medium text-foreground">{vote === 0 ? 'Was this page helpful?' : 'Thanks for the feedback!'}</p>
       <div className="flex gap-2">
         {([1, -1] as const).map((value) => {
