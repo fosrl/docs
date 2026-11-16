@@ -4,10 +4,9 @@ import { connection } from 'next/server';
 import { cn } from '@/lib/cn';
 import { getThread } from '@/lib/queries';
 import { formatDateTime } from '@/lib/range';
+import { siteHref, siteLabel } from '@/lib/site';
 import { Card } from '@/components/ui';
 import { MessageMarkdown } from '@/components/message-markdown';
-
-const docsUrl = process.env.DOCS_SITE_URL ?? 'https://docs.pangolin.net';
 
 function toolLabel(tool: { name: string; input?: unknown }) {
   const input = (tool.input ?? {}) as Record<string, unknown>;
@@ -30,11 +29,11 @@ export default async function ChatPage(props: PageProps<'/chats/[id]'>) {
       <div className="flex flex-col gap-1">
         <h1 className="text-xl font-semibold">AI chat</h1>
         <p className="text-sm text-fd-muted-foreground">
-          {formatDateTime(thread.createdAt)}
+          {siteLabel[thread.site]} · {formatDateTime(thread.createdAt)}
           {thread.page && (
             <>
               {' · started on '}
-              <a href={`${docsUrl}${thread.page}`} target="_blank" rel="noreferrer" className="underline underline-offset-2">
+              <a href={siteHref(thread.site, thread.page)} target="_blank" rel="noreferrer" className="underline underline-offset-2">
                 {thread.page}
               </a>
             </>
@@ -78,7 +77,7 @@ export default async function ChatPage(props: PageProps<'/chats/[id]'>) {
               <p className="text-sm whitespace-pre-wrap break-words">{m.content}</p>
             ) : m.content ? (
               <div className="prose text-sm max-w-none">
-                <MessageMarkdown text={m.content} />
+                <MessageMarkdown text={m.content} site={thread.site} />
               </div>
             ) : (
               <p className="text-sm text-fd-muted-foreground">(no text, the answer was stopped or failed)</p>

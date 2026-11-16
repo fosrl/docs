@@ -13,15 +13,15 @@ import {
 import Link from 'fumadocs-core/link';
 import { Tab as FumaTab, Tabs as FumaTabs } from 'fumadocs-ui/components/tabs';
 import {
-  ArrowRight,
-  ChevronRight,
-  CircleAlert,
-  CircleCheck,
-  Info as InfoIcon,
-  Lightbulb,
-  OctagonAlert,
-  StickyNote,
-} from 'lucide-react';
+  Alert02Icon,
+  AlertDiamondIcon,
+  ArrowRight01Icon,
+  CheckmarkCircle02Icon,
+  Idea01Icon,
+  InformationCircleIcon,
+  Note01Icon,
+} from '@hugeicons/core-free-icons';
+import { HugeiconsIcon, type IconSvgElement } from '@hugeicons/react';
 import { cn } from '@/lib/cn';
 import { Icon } from './icons';
 
@@ -31,14 +31,18 @@ import { Icon } from './icons';
 
 type CalloutType = 'note' | 'info' | 'tip' | 'warning' | 'check' | 'danger';
 
-const calloutIcons: Record<CalloutType, typeof InfoIcon> = {
-  note: StickyNote,
-  info: InfoIcon,
-  tip: Lightbulb,
-  warning: CircleAlert,
-  check: CircleCheck,
-  danger: OctagonAlert,
+const calloutIcons: Record<CalloutType, IconSvgElement> = {
+  note: Note01Icon,
+  info: InformationCircleIcon,
+  tip: Idea01Icon,
+  warning: Alert02Icon,
+  check: CheckmarkCircle02Icon,
+  danger: AlertDiamondIcon,
 };
+
+function ChevronRight({ className }: { className?: string }) {
+  return <HugeiconsIcon icon={ArrowRight01Icon} className={className} strokeWidth={2} />;
+}
 
 function Callout({
   type,
@@ -51,11 +55,10 @@ function Callout({
   icon?: string;
   children?: ReactNode;
 }) {
-  const DefaultIcon = calloutIcons[type];
   return (
     <div className="pg-callout not-prose" data-type={type} role="note">
       <span className="pg-callout-icon">
-        {icon ? <Icon name={icon} /> : <DefaultIcon />}
+        {icon ? <Icon name={icon} /> : <HugeiconsIcon icon={calloutIcons[type]} strokeWidth={1.75} />}
       </span>
       <div className="pg-callout-body prose">
         {title && <p className="font-medium">{title}</p>}
@@ -81,7 +84,7 @@ export function Card({
   title,
   icon,
   href,
-  arrow,
+  arrow: _arrow,
   cta,
   horizontal,
   img,
@@ -97,7 +100,6 @@ export function Card({
   children?: ReactNode;
 }) {
   const external = href ? /^https?:\/\//.test(href) : false;
-  const showArrow = arrow === true || arrow === 'true' || (arrow === undefined && external);
 
   const content = (
     <>
@@ -112,14 +114,12 @@ export function Card({
           {title && (
             <p className="pg-card-title">
               {title}
-              {showArrow && <ArrowRight className="pg-card-arrow" />}
             </p>
           )}
           {children && <div className="pg-card-content prose">{children}</div>}
           {cta && (
             <p className="pg-card-cta">
               {cta}
-              <ChevronRight className="size-3.5" />
             </p>
           )}
         </div>
@@ -241,11 +241,11 @@ export function Accordion({
     <details className="pg-accordion" open={defaultOpen} id={slugify(title)}>
       <summary>
         <ChevronRight className="pg-accordion-chevron" />
-        {icon && <Icon name={icon} className="size-4 shrink-0 text-fd-muted-foreground" />}
+        {icon && <Icon name={icon} className="size-4 shrink-0 text-muted-foreground" />}
         <span className="flex-1">
           <span className="font-medium">{title}</span>
           {description && (
-            <span className="block text-sm text-fd-muted-foreground">{description}</span>
+            <span className="block text-sm text-muted-foreground">{description}</span>
           )}
         </span>
       </summary>
@@ -399,7 +399,7 @@ export function Update({
     <div className="pg-update" id={slugify(label)}>
       <div className="pg-update-meta">
         <span className="pg-field-pill">{label}</span>
-        {description && <p className="text-sm text-fd-muted-foreground">{description}</p>}
+        {description && <p className="text-sm text-muted-foreground">{description}</p>}
       </div>
       <div className="prose">{children}</div>
     </div>

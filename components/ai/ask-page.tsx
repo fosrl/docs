@@ -1,21 +1,18 @@
 'use client';
-import { Sparkles } from 'lucide-react';
-import { buttonVariants } from 'fumadocs-ui/components/ui/button';
-import { cn } from '@/lib/cn';
-import { useAskAI } from './search';
+import { AiMagicIcon } from '@hugeicons/core-free-icons';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { buttonVariants } from '@/components/ui/button';
+import { useAskAi } from './ask-ai';
 
 export function AskAIAboutPage({ title }: { title: string }) {
-  const ask = useAskAI();
+  const ask = useAskAi();
   return (
     <button
       type="button"
-      className={cn(
-        buttonVariants({ color: 'secondary', size: 'sm' }),
-        'gap-2 [&_svg]:size-3.5 [&_svg]:text-fd-muted-foreground',
-      )}
+      className={buttonVariants({ variant: 'flat', size: 'sm' })}
       onClick={() => ask(`Summarize the "${title}" page I'm on and what I should do next.`)}
     >
-      <Sparkles />
+      <HugeiconsIcon icon={AiMagicIcon} className="size-4 text-primary" strokeWidth={2} />
       Ask AI
     </button>
   );

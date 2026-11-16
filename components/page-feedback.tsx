@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { ThumbsDown, ThumbsUp } from 'lucide-react';
+import { ThumbsDownIcon, ThumbsUpIcon } from '@hugeicons/core-free-icons';
+import { HugeiconsIcon } from '@hugeicons/react';
 import { cn } from '@/lib/cn';
 import { buttonVariants } from '@/components/ui/button';
 import { sendFeedback, type Vote } from '@/lib/analytics/client';
@@ -33,11 +34,10 @@ export function PageFeedback({ page }: { page: string }) {
   }
 
   return (
-    <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-fd-muted-foreground">
-      <p>{vote === 0 ? 'Was this page helpful?' : 'Thanks for the feedback!'}</p>
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
+      <p className="font-medium text-foreground">{vote === 0 ? 'Was this page helpful?' : 'Thanks for the feedback!'}</p>
       <div className="flex gap-2">
         {([1, -1] as const).map((value) => {
-          const Icon = value === 1 ? ThumbsUp : ThumbsDown;
           const active = vote === value;
           return (
             <button
@@ -45,13 +45,13 @@ export function PageFeedback({ page }: { page: string }) {
               type="button"
               aria-pressed={active}
               className={cn(
-                buttonVariants({ variant: 'outline', size: 'sm' }),
-                'rounded-full gap-1.5 px-3 [&_svg]:size-3.5',
-                active && 'bg-fd-accent text-fd-accent-foreground',
+                buttonVariants({ variant: 'flat', size: 'sm' }),
+                'h-7 gap-1.5 rounded-full px-3 [&_svg]:size-3.5',
+                active && 'border-primary/40 text-primary',
               )}
               onClick={() => choose(value)}
             >
-              <Icon className={cn(active && 'fill-current')} />
+              <HugeiconsIcon icon={value === 1 ? ThumbsUpIcon : ThumbsDownIcon} strokeWidth={2} />
               {value === 1 ? 'Yes' : 'No'}
             </button>
           );

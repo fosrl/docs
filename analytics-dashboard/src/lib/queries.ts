@@ -1,5 +1,5 @@
 import 'server-only';
-import { and, asc, count, desc, eq, exists, gte, ilike, lt, max, min, sql, type AnyColumn } from 'drizzle-orm';
+import { and, asc, count, desc, eq, exists, gte, ilike, inArray, lt, max, min, sql, type AnyColumn } from 'drizzle-orm';
 import {
   docsChatMessageTable as message,
   docsChatThreadTable as thread,
@@ -8,11 +8,13 @@ import {
   docsSearchQueryTable as search,
   getDb,
 } from '@/db';
+import type { Site } from '@/lib/site';
 
-/** epoch ms; `to` is exclusive */
+/** epoch ms; `to` is exclusive. `site` limits to one site; unset means both */
 export interface Range {
   from: number;
   to: number;
+  site?: Site;
 }
 
 const DAY = 86_400_000;
@@ -21,32 +23,47 @@ function inRange(column: AnyColumn, { from, to }: Range) {
   return and(gte(column, new Date(from)), lt(column, new Date(to)));
 }
 
+/** limits a `threadId` column to threads from `site` (no-op for both sites) */
+function threadOnSite(threadId: AnyColumn, site: Site | undefined) {
+  if (!site) return undefined;
+  return inArray(threadId, getDb().select({ id: thread.id }).from(thread).where(eq(thread.site, site)));
+}
+
+const siteIs = (column: AnyColumn, site: Site | undefined) => (site ? eq(column, site) : undefined);
+
 const upvotes = (vote: AnyColumn) => sql<number>`coalesce(sum(case when ${vote} = 1 then 1 else 0 end), 0)::int`;
 const downvotes = (vote: AnyColumn) => sql<number>`coalesce(sum(case when ${vote} = -1 then 1 else 0 end), 0)::int`;
 
 export async function getSummary(range: Range) {
   const db = getDb();
+  const { site } = range;
   const [[pages], [responses], [threads], [questions], [searches]] = await Promise.all([
-    db
-      .select({ up: upvotes(pageVote.vote), down: downvotes(pageVote.vote) })
-      .from(pageVote)
-      .where(inRange(pageVote.updatedAt, range)),
+    // page votes only exist on the docs
+    site === 'landing'
+      ? [{ up: 0, down: 0 }]
+      : db
+          .select({ up: upvotes(pageVote.vote), down: downvotes(pageVote.vote) })
+          .from(pageVote)
+          .where(inRange(pageVote.updatedAt, range)),
     db
       .select({ up: upvotes(messageVote.vote), down: downvotes(messageVote.vote) })
       .from(messageVote)
-      .where(inRange(messageVote.updatedAt, range)),
-    db.select({ n: count() }).from(thread).where(inRange(thread.createdAt, range)),
+      .where(and(inRange(messageVote.updatedAt, range), threadOnSite(messageVote.threadId, site))),
+    db
+      .select({ n: count() })
+      .from(thread)
+      .where(and(inRange(thread.createdAt, range), siteIs(thread.site, site))),
     db
       .select({ n: count() })
       .from(message)
-      .where(and(eq(message.role, 'user'), inRange(message.createdAt, range))),
+      .where(and(eq(message.role, 'user'), inRange(message.createdAt, range), threadOnSite(message.threadId, site))),
     db
       .select({
         n: count(),
         empty: sql<number>`coalesce(sum(case when ${search.results} = 0 then 1 else 0 end), 0)::int`,
       })
       .from(search)
-      .where(inRange(search.createdAt, range)),
+      .where(and(inRange(search.createdAt, range), siteIs(search.site, site))),
   ]);
 
   return {
@@ -66,7 +83,11 @@ function dayStart(t: number) {
 /** questions asked per UTC day, with empty days filled in */
 export async function getQuestionActivity(range: Range) {
   const db = getDb();
-  const userInRange = and(eq(message.role, 'user'), inRange(message.createdAt, range));
+  const userInRange = and(
+    eq(message.role, 'user'),
+    inRange(message.createdAt, range),
+    threadOnSite(message.threadId, range.site),
+  );
   const [bounds] = await db.select({ first: min(message.createdAt) }).from(message).where(userInRange);
   if (!bounds?.first) return [];
 
@@ -112,7 +133,7 @@ const threadId = sql`${sql.identifier('docsChatThread')}.${sql.identifier('id')}
 
 export async function getThreads({ q, feedback, offset = 0, limit = 25, ...range }: ThreadFilter) {
   const db = getDb();
-  const filters = [inRange(thread.createdAt, range)];
+  const filters = [inRange(thread.createdAt, range), siteIs(thread.site, range.site)];
   if (q) {
     filters.push(
       exists(
@@ -140,6 +161,7 @@ export async function getThreads({ q, feedback, offset = 0, limit = 25, ...range
   const rows = await db
     .select({
       id: thread.id,
+      site: thread.site,
       firstQuestion: thread.firstQuestion,
       page: thread.page,
       createdAt: thread.createdAt,
@@ -166,6 +188,7 @@ export async function getDownvotedResponses(range: Range, limit = 10) {
   const rows = await getDb()
     .select({
       threadId: messageVote.threadId,
+      site: thread.site,
       messageId: messageVote.messageId,
       votedAt: messageVote.updatedAt,
       answer: message.content,
@@ -174,7 +197,8 @@ export async function getDownvotedResponses(range: Range, limit = 10) {
     })
     .from(messageVote)
     .innerJoin(message, eq(message.id, messageVote.messageId))
-    .where(and(eq(messageVote.vote, -1), inRange(messageVote.updatedAt, range)))
+    .innerJoin(thread, eq(thread.id, messageVote.threadId))
+    .where(and(eq(messageVote.vote, -1), inRange(messageVote.updatedAt, range), siteIs(thread.site, range.site)))
     .orderBy(desc(messageVote.updatedAt))
     .limit(limit);
 
@@ -203,6 +227,7 @@ export async function getThread(id: string) {
 
   return {
     id: row.id,
+    site: row.site,
     page: row.page,
     visitorId: row.visitorId,
     createdAt: row.createdAt.getTime(),
@@ -217,7 +242,7 @@ export async function getThread(id: string) {
 
 /** searches grouped case-insensitively; `empty` limits them to ones that found nothing */
 export async function getTopSearches(range: Range, { empty = false, limit = 15 } = {}) {
-  const filters = [inRange(search.createdAt, range)];
+  const filters = [inRange(search.createdAt, range), siteIs(search.site, range.site)];
   if (empty) filters.push(eq(search.results, 0));
 
   const rows = await getDb()

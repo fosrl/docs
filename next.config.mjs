@@ -8,7 +8,7 @@ const redirects = JSON.parse(readFileSync(new URL('./lib/redirects.json', import
 
 /** @type {import('next').NextConfig} */
 const config = {
-  allowedDevOrigins: ['fuma-docs-dev.int.fossorial.io'],
+  allowedDevOrigins: ["192.168.*.*", "10.*.*.*", "*.local"],
   reactStrictMode: true,
   // self-contained server bundle for the Docker image
   output: 'standalone',

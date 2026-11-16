@@ -20,6 +20,7 @@ import {
   withParams,
   type SearchParams,
 } from '@/lib/range';
+import { resolveSite, siteHref, siteLabel, sites, type Site } from '@/lib/site';
 import { ActivityChart } from '@/components/activity-chart';
 import { Card, CardTitle, Empty, percent, Stat, Votes } from '@/components/ui';
 
@@ -40,12 +41,14 @@ function plain(markdown: string) {
     .trim();
 }
 
-const docsUrl = process.env.DOCS_SITE_URL ?? 'https://docs.pangolin.net';
-
 export default async function AnalyticsPage(props: PageProps<'/'>) {
   await connection();
   const params: SearchParams = await props.searchParams;
   const range = resolveRange(params);
+  const site = resolveSite(params);
+  const scoped = { ...range, site };
+  // page votes only exist on the docs
+  const showPages = site !== 'landing';
   const q = param(params, 'q');
   const feedbackParam = param(params, 'feedback');
   const feedback = feedbackParam === 'up' || feedbackParam === 'down' ? feedbackParam : undefined;
@@ -54,14 +57,14 @@ export default async function AnalyticsPage(props: PageProps<'/'>) {
   let data;
   try {
     data = await Promise.all([
-      getSummary(range),
-      getQuestionActivity(range),
-      getTopPages(range, 'up'),
-      getTopPages(range, 'down'),
-      getDownvotedResponses(range),
-      getThreads({ ...range, q, feedback, offset, limit: PAGE_SIZE }),
-      getTopSearches(range),
-      getTopSearches(range, { empty: true }),
+      getSummary(scoped),
+      getQuestionActivity(scoped),
+      showPages ? getTopPages(range, 'up') : [],
+      showPages ? getTopPages(range, 'down') : [],
+      getDownvotedResponses(scoped),
+      getThreads({ ...scoped, q, feedback, offset, limit: PAGE_SIZE }),
+      getTopSearches(scoped),
+      getTopSearches(scoped, { empty: true }),
     ]);
   } catch (e) {
     console.error('[analytics] dashboard', e);
@@ -84,18 +87,25 @@ export default async function AnalyticsPage(props: PageProps<'/'>) {
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-3">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <h1 className="text-2xl font-semibold">Docs analytics</h1>
-          <p className="text-sm text-fd-muted-foreground">{range.label}</p>
+          <h1 className="text-2xl font-semibold">{site ? `${siteLabel[site]} analytics` : 'Analytics'}</h1>
+          <p className="text-sm text-fd-muted-foreground">
+            {range.label} · {site ? siteLabel[site] : 'docs + pangolin.net'}
+          </p>
         </div>
-        <RangeFilter params={params} range={range} activePreset={range.preset} />
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+          <SiteFilter params={params} active={site} />
+          <RangeFilter params={params} range={range} activePreset={range.preset} />
+        </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-5">
-        <Stat
-          label="Pages rated helpful"
-          value={percent(summary.pages.up, pageVotes)}
-          detail={<Votes up={summary.pages.up} down={summary.pages.down} />}
-        />
+      <div className={cn('grid grid-cols-2 gap-3', showPages ? 'lg:grid-cols-5' : 'lg:grid-cols-4')}>
+        {showPages && (
+          <Stat
+            label={site ? 'Pages rated helpful' : 'Docs pages rated helpful'}
+            value={percent(summary.pages.up, pageVotes)}
+            detail={<Votes up={summary.pages.up} down={summary.pages.down} />}
+          />
+        )}
         <Stat label="AI chats" value={summary.threads.toLocaleString()} detail="conversations started" />
         <Stat
           label="Questions asked"
@@ -125,10 +135,12 @@ export default async function AnalyticsPage(props: PageProps<'/'>) {
         <ActivityChart points={activity} />
       </Card>
 
-      <div className="grid gap-3 lg:grid-cols-2">
-        <PageTable title="Most upvoted pages" rows={topUp} empty="No upvotes in this range." />
-        <PageTable title="Most downvoted pages" rows={topDown} empty="No downvotes in this range." />
-      </div>
+      {showPages && (
+        <div className="grid gap-3 lg:grid-cols-2">
+          <PageTable title="Most upvoted docs pages" rows={topUp} empty="No upvotes in this range." />
+          <PageTable title="Most downvoted docs pages" rows={topDown} empty="No downvotes in this range." />
+        </div>
+      )}
 
       <div className="grid gap-3 lg:grid-cols-2">
         <SearchTable
@@ -139,7 +151,7 @@ export default async function AnalyticsPage(props: PageProps<'/'>) {
         />
         <SearchTable
           title="Searches with no results"
-          hint="gaps in the docs"
+          hint="gaps in the content"
           rows={emptySearches}
           empty="Every search found something."
           noResults
@@ -158,7 +170,10 @@ export default async function AnalyticsPage(props: PageProps<'/'>) {
                   href={`/chats/${r.threadId}#${r.messageId}`}
                   className="group block min-w-0"
                 >
-                  <p className="text-sm font-medium group-hover:underline line-clamp-2">{r.question}</p>
+                  <p className="text-sm font-medium group-hover:underline line-clamp-2">
+                    {!site && <SiteBadge site={r.site} />}
+                    {r.question}
+                  </p>
                   <p className="mt-1 text-sm text-fd-muted-foreground line-clamp-2">{plain(r.answer)}</p>
                   <p className="mt-1 text-xs text-fd-muted-foreground">{formatDateTime(r.votedAt)}</p>
                 </Link>
@@ -172,7 +187,7 @@ export default async function AnalyticsPage(props: PageProps<'/'>) {
         <CardTitle hint="newest first">AI chats</CardTitle>
         <form className="mb-3 flex flex-wrap items-center gap-2" action="/#chats">
           {/* keep the time range when searching */}
-          {(['range', 'from', 'to'] as const).map((key) => {
+          {(['range', 'from', 'to', 'site'] as const).map((key) => {
             const value = param(params, key);
             return value ? <input key={key} type="hidden" name={key} value={value} /> : null;
           })}
@@ -209,6 +224,7 @@ export default async function AnalyticsPage(props: PageProps<'/'>) {
               <thead>
                 <tr className="text-xs text-fd-muted-foreground">
                   <th className="pb-2 text-start font-normal">First question</th>
+                  {!site && <th className="pb-2 text-start font-normal">Site</th>}
                   <th className="pb-2 text-start font-normal">Started on</th>
                   <th className="pb-2 text-end font-normal">Questions</th>
                   <th className="pb-2 text-end font-normal">Feedback</th>
@@ -223,10 +239,23 @@ export default async function AnalyticsPage(props: PageProps<'/'>) {
                         {t.firstQuestion}
                       </Link>
                     </td>
+                    {!site && (
+                      <td className="py-2 pe-4 whitespace-nowrap text-fd-muted-foreground">{siteLabel[t.site]}</td>
+                    )}
                     <td className="max-w-[14rem] py-2 pe-4 text-fd-muted-foreground">
-                      <span className="block truncate" title={t.page ?? undefined}>
-                        {t.page ?? '—'}
-                      </span>
+                      {t.page ? (
+                        <a
+                          href={siteHref(t.site, t.page)}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="block truncate hover:underline"
+                          title={t.page}
+                        >
+                          {t.page}
+                        </a>
+                      ) : (
+                        '—'
+                      )}
                     </td>
                     <td className="py-2 text-end tabular-nums">{t.questions}</td>
                     <td className="py-2 ps-4 text-end">
@@ -274,6 +303,34 @@ export default async function AnalyticsPage(props: PageProps<'/'>) {
   );
 }
 
+function SiteFilter({ params, active }: { params: SearchParams; active: Site | undefined }) {
+  return (
+    <div className="flex flex-wrap gap-1 rounded-lg border bg-fd-secondary p-1" role="group" aria-label="Site">
+      {sites.map((s) => (
+        <Link
+          key={s.label}
+          href={`/${withParams(params, { site: s.id, offset: undefined })}`}
+          aria-current={active === s.id ? 'true' : undefined}
+          className={cn(
+            'rounded-md px-2.5 py-1 text-sm text-fd-muted-foreground hover:text-fd-foreground',
+            active === s.id && 'bg-fd-background text-fd-foreground shadow-sm',
+          )}
+        >
+          {s.label}
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+function SiteBadge({ site }: { site: Site }) {
+  return (
+    <span className="me-1.5 inline-block rounded border px-1 py-px align-[1px] text-[11px] font-normal text-fd-muted-foreground">
+      {siteLabel[site]}
+    </span>
+  );
+}
+
 function RangeFilter({
   params,
   range,
@@ -302,7 +359,7 @@ function RangeFilter({
         ))}
       </div>
       <form className="flex flex-wrap items-center gap-2" action="/">
-        {(['q', 'feedback'] as const).map((key) => {
+        {(['q', 'feedback', 'site'] as const).map((key) => {
           const value = param(params, key);
           return value ? <input key={key} type="hidden" name={key} value={value} /> : null;
         })}
@@ -361,7 +418,7 @@ function PageTable({
               <tr key={r.page} className="border-t">
                 <td className="py-2 pe-3">
                   <a
-                    href={`${docsUrl}${r.page}`}
+                    href={siteHref('docs', r.page)}
                     target="_blank"
                     rel="noreferrer"
                     className="block truncate hover:underline"
