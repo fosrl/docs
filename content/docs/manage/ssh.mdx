@@ -183,7 +183,7 @@ This gives short-lived, auditable access without long-lived keys on the server.
 
 ## How Users and Access Are Managed
 
-When using **Standard SSH Server** with automated provisioning, users are provisioned **just in time** on the remote system. When you connect, Pangolin ensures an account exists for you with the right permissions before the SSH session starts. Your Pangolin identity is mapped to a local username (derived from the part before `@` in your identity; if needed, a suffix is added for uniqueness). The account is created with a home directory and can be granted sudo access as configured.
+When using **Standard SSH Server** with automated provisioning, users are provisioned **just in time** on the remote system. When you connect, Pangolin ensures an account exists for you with the right permissions before the SSH session starts. Your Pangolin identity is mapped to a local username (derived from the part before `@` in your identity; if needed, a suffix is added for uniqueness). Sudo access, Unix groups, and whether a home directory is created come from the [role permissions](#configuring-role-permissions) of the user's roles that are assigned to the resource.
 
 With **Pangolin SSH** and automated provisioning, Pangolin handles user provisioning through the site connector directly. OpenSSH and auth daemon setup are not required on the host. The Pangolin Site must still run as root.
 
@@ -386,7 +386,7 @@ If you need a password generated for your user on the remote system (for example
 <Frame>
     <img
         src="/images/role_ssh_modal.png"
-        alt="Claude Desktop third-party inference settings"
+        alt="SSH settings in the role editor"
     />
 </Frame>
 
@@ -396,13 +396,34 @@ Choosing to disable SSH will prevent users in that role from being able to conne
 
 Choosing to restrict the sudo mode will configure what sudo permissions the user has on the remote machine. You can choose between no sudo access, full sudo access, or limited sudo access restricted by specific commands. Additionally, you can configure which groups to put the users into.
 
-You can choose weather or not to allow the user to have a home directory configure when provisioning the user on the remote machine.
+You can also choose whether a home directory is created when the user is provisioned on the remote machine.
+
+### Assign the Role to the Resource
+
+<Warning>
+    Sudo mode, Unix groups, and home directory settings only apply when the role
+    is assigned to the SSH resource itself. Assigning the role to the user is
+    not enough on its own.
+</Warning>
+
+Pangolin uses two different checks when a user connects:
+
+- **Allow SSH** is checked against all of the user's roles in the organization. If any of them allows SSH, the user can connect.
+- **Sudo mode, Unix groups, and home directory** are read only from the user's roles that are selected under **Roles** in the resource's access settings. For public resources, roles granted through the attached [resource policy](/manage/resources/public/resource-policies) also count.
+
+If a user has access to the resource only because they were added under **Users**, none of their role settings apply. They can still log in, but the account is provisioned with no sudo access, no extra groups, and no home directory. To apply the role's settings, add the role under **Roles** on the resource. This also grants access to everyone else in that role.
+
+When more than one of the user's roles is assigned to the resource, the settings are combined. The most permissive sudo mode wins, sudo commands and groups from every role are merged, and a home directory is created if any of the roles enables it.
 
 ## Session Logs
 
 Resources in **Pangolin SSH** mode record each session and the commands run in it. Set **SSH Session Log Retention** in your organization's security settings, then view sessions in [SSH Session Logs](/manage/analytics/ssh). Sessions in **Standard SSH Server** mode aren't recorded.
 
 ## FAQ
+
+### Why does my provisioned user have no home directory or sudo access?
+
+The role that holds those settings is most likely assigned to the user but not to the resource. See [Assign the Role to the Resource](#assign-the-role-to-the-resource). The auth daemon log shows what Pangolin sent. A line like `metadata.sudoMode="none" metadata.homedir=false metadata.groups=[]` means none of the user's roles on the resource set those options. Add the role under **Roles** on the resource and reconnect. The existing account is updated on the next connection.
 
 ### How long are the temporary keys valid?
 
