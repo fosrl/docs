@@ -460,6 +460,71 @@ Chart `1.4.0` changed the RBAC default to `rbac.create=false`. Existing installa
 
 </Accordion>
 
+  <Accordion title="Service annotations">
+
+Newt can create Pangolin resources from annotations on Kubernetes Services. See [Kubernetes Service Annotations](/manage/blueprints#kubernetes-service-annotations) for the annotation format.
+
+Enable it per Newt instance:
+
+```yaml
+newtInstances:
+  - name: main-tunnel
+    enabled: true
+    kubernetes:
+      enabled: true
+      # Optional: only watch one namespace. Leave empty to watch all namespaces.
+      namespace: apps
+```
+
+This sets `KUBERNETES_ENABLED` and `KUBERNETES_NAMESPACE` on the Newt container, or the matching `--kubernetes` and `--kubernetes-namespace` flags when `useCommandArgs` is set. It also mounts the ServiceAccount token for that instance, even when `automountServiceAccountToken` is `false`, because Newt needs it to reach the Kubernetes API.
+
+Newt needs `get`, `list` and `watch` on `services`. With `rbac.create: true` the chart adds this permission for instances that use Service annotations:
+
+```yaml
+rbac:
+  create: true
+  # Needed when kubernetes.namespace is empty (watch all namespaces).
+  clusterRole: true
+```
+
+| Setup | RBAC the chart creates |
+| --- | --- |
+| `rbac.clusterRole: true` | A `ClusterRole` and `ClusterRoleBinding` with read access to Services in every namespace |
+| `rbac.clusterRole: false` and `kubernetes.namespace` set | A `Role` and `RoleBinding` in the watched namespace |
+| `rbac.clusterRole: false` and `kubernetes.namespace` empty | The chart fails to render, because watching all namespaces needs a `ClusterRole` |
+
+If you manage RBAC yourself, leave `rbac.create: false` and bind a role with the same permissions to the Newt service account:
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: newt-service-reader
+rules:
+  - apiGroups: [""]
+    resources: ["services"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: newt-service-reader
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: newt-service-reader
+subjects:
+  - kind: ServiceAccount
+    name: newt          # the Newt service account name
+    namespace: newt     # the namespace Newt runs in
+```
+
+<Note>
+Service annotation support needs a Newt image and chart release that include it. Check the [version matrix](#version-context) before enabling it.
+</Note>
+
+</Accordion>
+
   <Accordion title="Resources and scheduling">
 
 Global resource requests and limits apply to Newt workloads.

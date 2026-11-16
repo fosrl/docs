@@ -62,7 +62,7 @@ These keys are the same idea as the **Identifier** shown in the Pangolin app, ca
 
 ## Choose A Format
 
-Pangolin supports two blueprint formats:
+Pangolin supports these blueprint formats:
 
 ### YAML
 
@@ -71,6 +71,10 @@ Use YAML when you want a readable file that can be committed to git, applied thr
 ### Container Labels
 
 Use container labels when the resource definition should live inside your Compose stack. This is especially useful when a container and its Pangolin resource should be managed together.
+
+### Kubernetes Service Annotations
+
+Use Service annotations when the resource definition should live next to the Kubernetes manifests for the app, the same way an Ingress would.
 
 ## How YAML Blueprints Are Applied
 
@@ -696,6 +700,92 @@ This creates a single Pangolin resource with multiple targets:
 
 <Card title="Merged Configuration">
   Labels from multiple containers can be merged into one logical resource, which is useful when different containers contribute different targets.
+</Card>
+
+## Kubernetes Service Annotations
+
+Annotations on a Kubernetes Service use the same schema as [container labels](#container-labels-format), so every property in the [configuration reference](#configuration-reference) is available. The site must be able to read Services; see [Kubernetes Service Integration](/manage/sites/configure-site#kubernetes-service-integration) for the flags and RBAC.
+
+There are two ways to write the annotations. They can be combined on the same Service, and an individual annotation overrides the same property from a blueprint snippet.
+
+### Individual Annotations
+
+Individual annotations use the same keys as container labels, with one difference. Kubernetes does not allow `[` or `]` in annotation keys, so write array indexes as dotted numbers. The site converts `targets.0.port` to `targets[0].port` before applying it.
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+  namespace: apps
+  annotations:
+    pangolin.public-resources.web.name: Web
+    pangolin.public-resources.web.protocol: http
+    pangolin.public-resources.web.full-domain: web.example.com
+    pangolin.public-resources.web.auth.sso-roles.0: Member
+    pangolin.public-resources.web.targets.0.method: http
+spec:
+  selector:
+    app: web
+  ports:
+    - port: 8080
+```
+
+The name part of an annotation key can be at most 63 characters. For long resource keys, use the `pangolin.net/` prefix, which moves `pangolin.` into the key prefix and leaves the full 63 characters for the rest:
+
+```yaml
+annotations:
+  pangolin.net/public-resources.my-long-resource-name.targets.0.healthcheck.hostname: web.apps.svc
+```
+
+### Blueprint Snippet
+
+The `pangolin.net/blueprint` annotation takes a YAML snippet with the same structure as a blueprint file. This is easier to read when a resource has many properties.
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: api
+  namespace: apps
+  annotations:
+    pangolin.net/blueprint: |
+      public-resources:
+        api:
+          name: API
+          protocol: http
+          full-domain: api.example.com
+          auth:
+            sso-enabled: true
+            sso-roles:
+              - Member
+          targets:
+            - method: http
+spec:
+  selector:
+    app: api
+  ports:
+    - port: 8000
+```
+
+The snippet accepts the `public-resources` and `private-resources` sections. Use plain YAML lists in the snippet, not dotted indexes.
+
+### Service Annotation Behavior
+
+<Card title="Automatic Discovery">
+  If a target does not set `hostname`, it defaults to the in-cluster DNS name of the Service, `<service>.<namespace>.svc`. If it does not set `port`, it defaults to the first port in the Service. Set them explicitly to point at a different port or host.
+</Card>
+
+<Card title="Site Assignment">
+  If no `site` is specified, the resource is assigned to the site that is watching the Service.
+</Card>
+
+<Card title="Continuous Apply">
+  Like container labels, Service annotations are applied continuously. Treat the manifest as the source of truth because dashboard edits can be overwritten.
+</Card>
+
+<Card title="Invalid Annotations">
+  An annotation that cannot be parsed, such as a key with an unknown section, is skipped and logged by the site. The other annotations on the Service are still applied.
 </Card>
 
 ## Configuration Reference

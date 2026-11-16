@@ -160,6 +160,36 @@ Almost every setting below can also be set via an environment variable (**Env va
   **Config file key**: `dockerEnforceNetworkValidation`
 </ResponseField>
 
+<ResponseField name="kubernetes" type="boolean">
+  Watch Kubernetes Services for `pangolin.*` annotations and create resources from them. See [Kubernetes Service Integration](#kubernetes-service-integration).
+
+  **Default**: `false`
+
+  **Env var**: `KUBERNETES_ENABLED`
+
+  **Config file key**: `kubernetes`
+</ResponseField>
+
+<ResponseField name="kubernetes-namespace" type="string">
+  Only watch Services in this namespace. When empty, Services in all namespaces are watched.
+
+  **Example**: `apps`
+
+  **Env var**: `KUBERNETES_NAMESPACE`
+
+  **Config file key**: `kubernetesNamespace`
+</ResponseField>
+
+<ResponseField name="kubeconfig" type="string">
+  Path to a kubeconfig file, for running the site outside the cluster. When empty, the site uses the in-cluster configuration and then falls back to the `KUBECONFIG` environment variable and `~/.kube/config`.
+
+  **Example**: `/home/user/.kube/config`
+
+  **Env var**: `KUBERNETES_KUBECONFIG`
+
+  **Config file key**: `kubeconfig`
+</ResponseField>
+
 <ResponseField name="health-file" type="string">
   Check if connection to WireGuard server (Pangolin) is ok. Creates a file if ok, removes it if not ok. Can be used with Docker healthcheck to restart the site.
 
@@ -540,6 +570,10 @@ If `--config-file`/`CONFIG_FILE` isn't set, the site reads and writes the config
   "dockerSocket": "unix:///var/run/docker.sock",
   "dockerEnforceNetworkValidation": false,
 
+  "kubernetes": false,
+  "kubernetesNamespace": "",
+  "kubeconfig": "",
+
   "healthFile": "/tmp/healthy",
   "blueprintFile": "/path/to/blueprint.yaml",
 
@@ -622,6 +656,56 @@ Validation is `false` by default. It can be enabled via setting the `--docker-en
 <Warning>
 If the site container is run with a network mode of `host`, this feature will not work. Running in `host` mode causes the container to share its resources with the host machine, making it impossible to retrieve specific host container information for network validation.
 </Warning>
+
+## Kubernetes Service Integration
+
+The site can watch Kubernetes Services and create Pangolin resources from their annotations. This works like Docker container labels, but the definition lives on the Service next to the rest of your manifests, which suits GitOps workflows. The annotation format is described in [Kubernetes Service Annotations](/manage/blueprints#kubernetes-service-annotations).
+
+Enable it with the `--kubernetes` CLI argument or the `KUBERNETES_ENABLED` environment variable. By default the site watches Services in every namespace. Use `--kubernetes-namespace` or `KUBERNETES_NAMESPACE` to limit it to one namespace.
+
+When the site runs inside the cluster it uses its pod service account. To run it somewhere else, point `--kubeconfig` at a kubeconfig file.
+
+The site only needs read access to Services:
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pangolin-site
+  namespace: pangolin
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: pangolin-site-service-reader
+rules:
+  - apiGroups: [""]
+    resources: ["services"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: pangolin-site-service-reader
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: pangolin-site-service-reader
+subjects:
+  - kind: ServiceAccount
+    name: pangolin-site
+    namespace: pangolin
+```
+
+If you set `--kubernetes-namespace`, a namespaced `Role` and `RoleBinding` in that namespace is enough.
+
+Only Services that have at least one `pangolin.` annotation are sent to Pangolin. The site sends an updated list when a Service with Pangolin annotations is created, changed or deleted.
+
+Docker and Kubernetes can be enabled at the same time. The site combines containers and Services into one list.
+
+<Note>
+If the site cannot list Services, for example because the service account lacks permission, it logs an error and continues without Kubernetes integration.
+</Note>
 
 ## Updown Scripts
 
