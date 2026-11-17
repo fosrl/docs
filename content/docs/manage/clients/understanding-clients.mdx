@@ -51,6 +51,14 @@ Though you may connect a server via a user account using a CLI client, we recomm
 
 Machine clients authenticate with [machine client credentials](/manage/clients/machine-clients#credentials): an ID and secret. These are passed as arguments to the Pangolin CLI. They can be revoked and rotated. User devices never use these credentials. You can also assign [roles](/manage/clients/machine-clients#grant-access-to-private-resources) to a machine client so it inherits private-resource access from those roles.
 
+## Split Tunneling by Default
+
+Pangolin clients are split tunnel by default. The client only sends traffic for the private resources a user or machine can access through the tunnel. That includes resource IPs, CIDR ranges, and [aliases](/manage/resources/private/alias). Everything else, such as public websites, video calls, and devices on the local network like printers, stays on the device's normal internet connection. This keeps regular browsing fast and avoids sending traffic through your sites that doesn't need to go there.
+
+DNS is split too. With [Override DNS](/manage/clients/dns#override-dns-enable-aliases) on, the client answers names for your Pangolin resources and forwards every other lookup to an upstream DNS server over the normal connection. DNS only goes through the tunnel if you turn on [DNS Over Tunnel](/manage/clients/dns#dns-over-tunnel). See [DNS](/manage/clients/dns).
+
+To route **all** traffic through Pangolin like a traditional full-tunnel VPN, set up an [exit node](/manage/resources/private/exit-node). An exit node resource sends the default routes (`0.0.0.0/0`) through a site, so internet traffic leaves from that site's network. Even then, other private resources keep working through their own sites unless you turn on [Exit Nodes Take Precedence Over Resources](/manage/clients/platforms#exit-nodes-take-precedence-over-resources).
+
 ## Client Modalities
 
 Clients connect to sites over the same local network, with NAT hole punching, or by relaying. When a client and site share a local network, they connect directly over the LAN and the traffic never leaves it. Otherwise the client attempts a direct peer-to-peer tunnel through NAT, then falls back to relaying through your Pangolin server if hole punching fails. Same-network detection requires Pangolin 1.21 or later clients and sites.
