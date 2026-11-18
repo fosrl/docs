@@ -249,15 +249,11 @@ Follow the installation prompts, then enter the site ID, secret, and endpoint fr
 
 ### Kubernetes
 
-<Note>
-The Kubernetes install still uses the legacy Newt for the Helm chart, namespace, and secret keys shown below.
-</Note>
-
-Running a site in a Kubernetes cluster is covered separately from the Docker instructions above, since it uses a dedicated Helm chart rather than a plain `docker run` or Compose file. See:
+Running a site in a Kubernetes cluster is covered separately from the Docker instructions above, since it uses a dedicated Helm chart rather than a plain `docker run` or Compose file. The `fosrl/pangolin-cli` chart runs the site with the Pangolin CLI; existing Newt deployments can keep using the [Newt chart](/manage/sites/kubernetes/newt-helm). See:
 
 <CardGroup cols={2}>
 	<Card title="Helm" href="/manage/sites/kubernetes/helm" icon="box">
-		Quick-start guide for installing a site with Helm.
+		Install a site with the Pangolin CLI Helm chart.
 	</Card>
 	<Card title="Kustomize" href="/manage/sites/kubernetes/kustomize" icon="layer-group">
 		Install a site with rendered manifests and Kustomize overlays.

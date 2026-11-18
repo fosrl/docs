@@ -1,9 +1,13 @@
 ---
 title: "Kustomize"
-description: "Deploy Newt on Kubernetes using Helm-rendered manifests and Kustomize overlays."
+description: "Deploy sites on Kubernetes using Helm-rendered manifests and Kustomize overlays."
 ---
 
-Use Kustomize when you want to manage Newt with rendered manifests, environment-specific overlays, and explicit patches in Git.
+Use Kustomize when you want to manage sites with rendered manifests, environment-specific overlays, and explicit patches in Git.
+
+<Note>
+This page applies to both site charts: the recommended [Pangolin CLI chart](/manage/sites/kubernetes/helm) (`fosrl/pangolin-cli`) and the [Newt chart](/manage/sites/kubernetes/newt-helm) (`fosrl/newt`). They share the same layout. The examples use the Newt chart's names; for the Pangolin CLI chart use `siteInstances[]` instead of `newtInstances[]`, the Secret keys `SITE_ID` / `SITE_SECRET` instead of `NEWT_ID` / `NEWT_SECRET`, `siteName` instead of `newtName`, and the pod label `app.kubernetes.io/component=site` instead of `app.kubernetes.io/component=newt`. See [Migrating from the Newt chart](/manage/sites/kubernetes/helm#migrating-from-the-newt-chart) for the full list.
+</Note>
 
 For Newt, the supported Kustomize workflow is:
 
@@ -152,7 +156,7 @@ You can also render from the GHCR OCI chart:
 
 ```bash
 helm template newt oci://ghcr.io/fosrl/helm-charts/newt \
-  --version 1.4.0 \
+  --version 1.6.0 \
   --namespace pangolin \
   --values values/values-base.yaml \
   > base/newt.yaml
@@ -448,10 +452,10 @@ Verify the deployment:
 
 ```bash
 kubectl get pods --namespace pangolin \
-  -l app.kubernetes.io/name=newt
+  -l app.kubernetes.io/component=newt
 
 kubectl logs --namespace pangolin \
-  -l app.kubernetes.io/name=newt \
+  -l app.kubernetes.io/component=newt \
   --tail=50
 ```
 
@@ -476,7 +480,7 @@ Or with OCI:
 
 ```bash
 helm template newt oci://ghcr.io/fosrl/helm-charts/newt \
-  --version 1.4.0 \
+  --version 1.6.0 \
   --namespace pangolin \
   --values values/values-base.yaml \
   > base/newt.yaml
@@ -582,7 +586,7 @@ Check logs:
 
 ```bash
 kubectl logs --namespace pangolin \
-  -l app.kubernetes.io/name=newt \
+  -l app.kubernetes.io/component=newt \
   --tail=100
 ```
 

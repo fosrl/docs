@@ -28,6 +28,7 @@
               "group": "Kubernetes",
               "pages": [
                 "manage/sites/kubernetes/helm",
+                "manage/sites/kubernetes/newt-helm",
                 "manage/sites/kubernetes/kustomize",
                 "manage/sites/kubernetes/configuration",
                 "manage/sites/kubernetes/troubleshooting"

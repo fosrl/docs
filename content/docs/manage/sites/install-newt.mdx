@@ -10,7 +10,7 @@ For new sites, install with the Pangolin CLI. Existing Newt deployments keep wor
 You must first create a site and copy the Newt config in Pangolin before running Newt.
 
 <Note>
-Deploying Newt in Kubernetes instead? See the dedicated [Kubernetes](/manage/sites/kubernetes/helm) docs: install guides for [Helm](/manage/sites/kubernetes/helm) and [Kustomize](/manage/sites/kubernetes/kustomize), a full [Configuration](/manage/sites/kubernetes/configuration) reference, and [Troubleshooting](/manage/sites/kubernetes/troubleshooting).
+Deploying Newt in Kubernetes instead? See the dedicated [Kubernetes](/manage/sites/kubernetes/newt-helm) docs: install guides for [Helm (Newt)](/manage/sites/kubernetes/newt-helm) and [Kustomize](/manage/sites/kubernetes/kustomize), a full [Configuration](/manage/sites/kubernetes/configuration) reference, and [Troubleshooting](/manage/sites/kubernetes/troubleshooting).
 </Note>
 
 ## Binary Installation
@@ -230,8 +230,8 @@ docker compose up -d
 Running Newt in a Kubernetes cluster is covered separately from the Docker instructions above, since it uses a dedicated Helm chart rather than a plain `docker run` or Compose file. See:
 
 <CardGroup cols={2}>
-	<Card title="Helm" href="/manage/sites/kubernetes/helm" icon="box">
-		Quick-start guide for installing Newt with Helm.
+	<Card title="Helm (Newt)" href="/manage/sites/kubernetes/newt-helm" icon="box">
+		Quick-start guide for installing Newt with Helm. New sites should use the Pangolin CLI chart.
 	</Card>
 	<Card title="Kustomize" href="/manage/sites/kubernetes/kustomize" icon="layer-group">
 		Install Newt with rendered manifests and Kustomize overlays.
