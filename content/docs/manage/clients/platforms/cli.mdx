@@ -238,7 +238,7 @@ You can also set `disable_companion_mode` in the [CLI config file](#config-file)
 ## Configure
 
 <Note>
-DNS, MTU, and other preferences shared across clients are on [Platforms](/manage/clients/platforms#shared-preferences).
+DNS, MTU, and other connection settings are the same on every platform and are on [Platforms](/manage/clients/platforms#connection-settings).
 </Note>
 
 ### Config File
@@ -274,11 +274,11 @@ The Pangolin CLI stores persistent settings in `~/.config/pangolin/config.json` 
     </ResponseField>
 
     <ResponseField name="up.override_dns" type="boolean">
-      Default for `--override-dns`. When true, matches the [Enable Aliases (Override DNS)](/manage/clients/platforms#enable-aliases-override-dns) preference and lets the client take over DNS resolution for Pangolin resources. If omitted, the default is `true`.
+      Default for `--override-dns`. When true, matches the [Enable Aliases (Override DNS)](/manage/clients/platforms#enable-aliases-override-dns) setting and lets the client take over DNS resolution for Pangolin resources. If omitted, the default is `true`.
     </ResponseField>
 
     <ResponseField name="up.tunnel_dns" type="boolean">
-      Default for `--tunnel-dns`. When true, matches the [DNS Over Tunnel](/manage/clients/platforms#dns-over-tunnel) preference and sends DNS queries through the Pangolin tunnel. If omitted, the default is `false`.
+      Default for `--tunnel-dns`. When true, matches the [DNS Over Tunnel](/manage/clients/platforms#dns-over-tunnel) setting and sends DNS queries through the Pangolin tunnel. If omitted, the default is `false`.
     </ResponseField>
 
     <ResponseField name="up.upstream_dns" type="array of strings">
@@ -294,7 +294,7 @@ The Pangolin CLI stores persistent settings in `~/.config/pangolin/config.json` 
     </ResponseField>
 
     <ResponseField name="up.exit_node_takes_precedence" type="boolean">
-      Default for `--exit-node-takes-precedence`. When true, matches the [Exit Nodes Take Precedence Over Resources](/manage/clients/platforms#exit-nodes-take-precedence-over-resources) preference. While connected through an exit node, routes for other resources are not added and their aliases are not resolved, so all traffic flows through the exit node. If omitted, the default is `false`.
+      Default for `--exit-node-takes-precedence`. When true, matches the [Exit Nodes Take Precedence Over Resources](/manage/clients/platforms#exit-nodes-take-precedence-over-resources) setting. While connected through an exit node, routes for other resources are not added and their aliases are not resolved, so all traffic flows through the exit node. If omitted, the default is `false`.
     </ResponseField>
 
   </Expandable>

@@ -105,7 +105,7 @@ gnome-extensions enable pangolin@pangolin.net
 
 If you use the AppIndicator extension instead, Pangolin's icon appears there too, but it opens the menu only on a double-click. While the Pangolin extension is on, Pangolin hides its AppIndicator icon so only one icon shows.
 
-If Pangolin cannot find a system tray or the GNOME extension, it opens the Preferences window when it starts so you can still use it.
+If Pangolin cannot find a system tray or the GNOME extension, it opens the Settings window when it starts so you can still use it.
 
 ## Background Service
 
@@ -155,12 +155,12 @@ Commands to check status or turn companion mode off are on the [CLI companion mo
 ## Configure
 
 <Note>
-DNS, MTU, and other preferences shared across clients are on [Platforms](/manage/clients/platforms#shared-preferences).
+This section covers the general settings for this platform. DNS, MTU, and other connection settings are the same on every platform and are on [Platforms](/manage/clients/platforms#connection-settings).
 </Note>
 
 ### Start at Login
 
-When enabled, Pangolin starts when you sign in to your desktop session. This uses the XDG autostart entry the package installs at `/etc/xdg/autostart/pangolin-client-autostart.desktop`; the entry does nothing unless this preference is on.
+When enabled, Pangolin starts when you sign in to your desktop session. This uses the XDG autostart entry the package installs at `/etc/xdg/autostart/pangolin-client-autostart.desktop`; the entry does nothing unless this setting is on.
 
 ### Connect at Start
 
@@ -182,11 +182,11 @@ Most keys in the `Config` object below can be set in either file. If the same ke
 
   <Expandable title="Config">
     <ResponseField name="dnsOverride" type="boolean">
-      **Can be set per organization.** When true, matches the [Enable Aliases (Override DNS)](/manage/clients/platforms#enable-aliases-override-dns) preference and lets the client take over DNS resolution for Pangolin resources.
+      **Can be set per organization.** When true, matches the [Enable Aliases (Override DNS)](/manage/clients/platforms#enable-aliases-override-dns) setting and lets the client take over DNS resolution for Pangolin resources.
     </ResponseField>
 
     <ResponseField name="dnsTunnel" type="boolean">
-      **Can be set per organization.** When true, matches the [DNS Over Tunnel](/manage/clients/platforms#dns-over-tunnel) preference and sends DNS queries through the Pangolin tunnel.
+      **Can be set per organization.** When true, matches the [DNS Over Tunnel](/manage/clients/platforms#dns-over-tunnel) setting and sends DNS queries through the Pangolin tunnel.
     </ResponseField>
 
     <ResponseField name="primaryDNS" type="string">
@@ -226,15 +226,15 @@ Most keys in the `Config` object below can be set in either file. If the same ke
     </ResponseField>
 
     <ResponseField name="exitNodeTakesPrecedence" type="boolean">
-      **Can be set per organization.** When true, matches the [Exit Nodes Take Precedence Over Resources](/manage/clients/platforms#exit-nodes-take-precedence-over-resources) preference. While connected through an exit node, routes for other resources are not added and their aliases are not resolved, so all traffic flows through the exit node. If omitted, the default is `false`.
+      **Can be set per organization.** When true, matches the [Exit Nodes Take Precedence Over Resources](/manage/clients/platforms#exit-nodes-take-precedence-over-resources) setting. While connected through an exit node, routes for other resources are not added and their aliases are not resolved, so all traffic flows through the exit node. If omitted, the default is `false`.
     </ResponseField>
 
     <ResponseField name="openUIAtLogin" type="boolean">
-      When true, matches the **Start at Login** preference and starts Pangolin when you sign in to your desktop session. If omitted, the default is `false`.
+      When true, matches the **Start at Login** setting and starts Pangolin when you sign in to your desktop session. If omitted, the default is `false`.
     </ResponseField>
 
     <ResponseField name="autoConnectAtLogin" type="boolean">
-      When true, matches the **Connect at Start** preference. The tunnel connects whenever Pangolin starts, and Pangolin also opens at sign-in, regardless of `openUIAtLogin`. If omitted, the default is `false`.
+      When true, matches the **Connect at Start** setting. The tunnel connects whenever Pangolin starts, and Pangolin also opens at sign-in, regardless of `openUIAtLogin`. If omitted, the default is `false`.
     </ResponseField>
 
     <ResponseField name="autoUpdateChecksEnabled" type="boolean">

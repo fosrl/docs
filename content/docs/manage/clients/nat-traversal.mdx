@@ -53,7 +53,7 @@ You can confirm whether a connection is direct or relayed from the client. GUI c
 
 ### GUI clients
 
-In a GUI client (Mac, Windows, Android, or iOS/iPadOS), open **Preferences** and go to the **Status** tab. The formatted view lists each site and its status. Click a site to open its details and read **Connection**.
+In a GUI client (Mac, Windows, Android, or iOS/iPadOS), open **Status**: in the **Settings** window on Mac and Windows, the **Status** tab on iOS/iPadOS, or **Status** in the menu on Android. The formatted view lists each site and its status. Click a site to open its details and read **Connection**.
 
 <Frame caption="Site details from the Status tab. Connection is Relay for this site.">
   <img src="/images/client-site-status.png" alt="Site details for Prod VPC Bastion us-east-1 showing Status Connected and Connection Relay" />
@@ -109,7 +109,7 @@ Another option is to keep the Pangolin Site listening for client connections on 
 </Accordion>
 
 <Accordion title="How do I check whether a site is relayed?">
-  **GUI clients:** Open **Preferences**, go to the **Status** tab, and click a site. **Connection** is `Relay` when the site is relayed, and `Direct` or `Local` when the path is direct.
+  **GUI clients:** Open **Status** (in the **Settings** window on Mac and Windows) and click a site. **Connection** is `Relay` when the site is relayed, and `Direct` or `Local` when the path is direct.
 
   **CLI:** Run `pangolin status` and check the **CONNECTION** column for each site.
 

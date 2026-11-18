@@ -8,7 +8,7 @@ description:
 	Only available in [Pangolin Cloud](https://app.pangolin.net/auth/signup) on the Enterprise plan and self-hosted [Enterprise Edition](/self-host/enterprise-edition).
 </Note>
 
-Server-side client settings let an admin set the [client preferences](/manage/clients/platforms#shared-preferences-all-platforms) for every user in a role, instead of asking each user to configure their own device. Use them to roll out a DNS setup, require an exit node, or tune the tunnel for a whole team at once.
+Server-side client settings let an admin set the [connection settings](/manage/clients/platforms#connection-settings) for every user in a role, instead of asking each user to configure their own device. Use them to roll out a DNS setup, require an exit node, or tune the tunnel for a whole team at once.
 
 Settings are configured per role. Each setting can be managed by the server or left to the client, so you only need to manage the settings you care about.
 
@@ -16,7 +16,7 @@ Settings are configured per role. Each setting can be managed by the server or l
 
 Each time a Pangolin client connects to an organization, it fetches the settings for the signed-in user from the server. Settings managed by the server replace the device's own values and can't be changed on the device. Settings not managed by the server keep whatever the user chose.
 
-On Mac, iOS/iPadOS, Windows, and Linux, the client shows a note in its preferences when the organization manages some of its settings.
+On Mac, iOS/iPadOS, Windows, Linux, and Android, the client shows in **Settings** > **Connection** how many of its settings the organization manages, with a lock next to each one.
 
 ### Users With Multiple Roles
 
@@ -45,7 +45,7 @@ Text and number settings are left to the client when they are blank.
 
 ## Available Settings
 
-The settings below match the shared client preferences. See [Shared Preferences](/manage/clients/platforms#shared-preferences-all-platforms) for more detail on what each one does.
+The settings below match the client connection settings. See [Connection Settings](/manage/clients/platforms#connection-settings) for more detail on what each one does.
 
 ### DNS
 

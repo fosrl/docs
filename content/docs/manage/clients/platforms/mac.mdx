@@ -3,10 +3,10 @@ title: "Mac"
 description: "Install, configure, and update the Pangolin client for Mac"
 ---
 
-<Frame caption="Pangolin for Mac — preferences and menu bar">
+<Frame caption="Pangolin for Mac — settings and menu bar">
   <img
     src="/images/mac_client_ui.jpeg"
-    alt="Pangolin Preferences window and menu bar dropdown on macOS showing connected status"
+    alt="Pangolin Settings window and menu bar dropdown on macOS showing connected status"
   />
 </Frame>
 
@@ -45,7 +45,7 @@ description: "Install, configure, and update the Pangolin client for Mac"
 ## Configure
 
 <Note>
-DNS, MTU, and other preferences shared across clients are on [Platforms](/manage/clients/platforms#shared-preferences).
+This section covers the general settings for this platform. DNS, MTU, and other connection settings are the same on every platform and are on [Platforms](/manage/clients/platforms#connection-settings).
 </Note>
 
 ### Start at Login
@@ -73,11 +73,11 @@ On Mac, the Pangolin GUI reads configuration from `~/Library/Application Support
 
   <Expandable title="Config">
     <ResponseField name="dnsOverrideEnabled" type="boolean">
-      **Can be set per organization.** When true, matches the [Enable Aliases (Override DNS)](/manage/clients/platforms#enable-aliases-override-dns) preference and lets the client take over DNS resolution for Pangolin resources.
+      **Can be set per organization.** When true, matches the [Enable Aliases (Override DNS)](/manage/clients/platforms#enable-aliases-override-dns) setting and lets the client take over DNS resolution for Pangolin resources.
     </ResponseField>
 
     <ResponseField name="dnsTunnelEnabled" type="boolean">
-      **Can be set per organization.** When true, matches the [DNS Over Tunnel](/manage/clients/platforms#dns-over-tunnel) preference and sends DNS queries through the Pangolin tunnel.
+      **Can be set per organization.** When true, matches the [DNS Over Tunnel](/manage/clients/platforms#dns-over-tunnel) setting and sends DNS queries through the Pangolin tunnel.
     </ResponseField>
 
     <ResponseField name="primaryDNSServer" type="string">
@@ -93,7 +93,7 @@ On Mac, the Pangolin GUI reads configuration from `~/Library/Application Support
     </ResponseField>
 
     <ResponseField name="exitNodeTakesPrecedence" type="boolean">
-      **Can be set per organization.** When true, matches the [Exit Nodes Take Precedence Over Resources](/manage/clients/platforms#exit-nodes-take-precedence-over-resources) preference. While connected through an exit node, routes for other resources are not added and their aliases are not resolved, so all traffic flows through the exit node. If omitted, the default is `false`.
+      **Can be set per organization.** When true, matches the [Exit Nodes Take Precedence Over Resources](/manage/clients/platforms#exit-nodes-take-precedence-over-resources) setting. While connected through an exit node, routes for other resources are not added and their aliases are not resolved, so all traffic flows through the exit node. If omitted, the default is `false`.
     </ResponseField>
 
     <ResponseField name="tunnelMTU" type="integer">
