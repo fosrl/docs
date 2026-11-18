@@ -171,34 +171,34 @@ When enabled, the tunnel connects whenever Pangolin starts. This also opens Pang
 On Linux, the Pangolin GUI reads configuration from two `pangolin.json` files:
 
 - User config: `~/.config/pangolin-client/pangolin.json` (or `$XDG_CONFIG_HOME/pangolin-client/pangolin.json`)
-- Global config: `/etc/pangolin-client/pangolin.json`
+- System config: `/etc/pangolin-client/pangolin.json`, for every user of the computer
 
 These are separate from Pangolin CLI's files in `~/.config/pangolin`.
 
-Most keys in the `Config` object below can be set in either file. If the same key exists in both places, the user config value overrides the global value. This lets administrators define global defaults while still allowing per-user overrides when needed. Keys marked **Global only** must be set in `/etc/pangolin-client/pangolin.json`; after changing them, restart the background service (`sudo systemctl restart pangolin-client`, or `sudo rc-service pangolin-client restart` on OpenRC) and reopen Pangolin.
+Most keys in the `Config` object below can be set in either file. If the same key is in both, the user config's value is used, so administrators can set defaults in the system config while each user can still change their own. Keys marked **System config only** must be set in `/etc/pangolin-client/pangolin.json`; after changing them, restart the background service (`sudo systemctl restart pangolin-client`, or `sudo rc-service pangolin-client restart` on OpenRC) and reopen Pangolin. See [Which Setting Applies](#which-setting-applies) for how the two files combine with per-organization settings and server-side client settings.
 
 <ResponseField name="Config" type="object">
   JSON configuration for the Linux Pangolin client stored in `pangolin.json`.
 
   <Expandable title="Config">
     <ResponseField name="dnsOverride" type="boolean">
-      When true, matches the [Enable Aliases (Override DNS)](/manage/clients/platforms#enable-aliases-override-dns) preference and lets the client take over DNS resolution for Pangolin resources.
+      **Can be set per organization.** When true, matches the [Enable Aliases (Override DNS)](/manage/clients/platforms#enable-aliases-override-dns) preference and lets the client take over DNS resolution for Pangolin resources.
     </ResponseField>
 
     <ResponseField name="dnsTunnel" type="boolean">
-      When true, matches the [DNS Over Tunnel](/manage/clients/platforms#dns-over-tunnel) preference and sends DNS queries through the Pangolin tunnel.
+      **Can be set per organization.** When true, matches the [DNS Over Tunnel](/manage/clients/platforms#dns-over-tunnel) preference and sends DNS queries through the Pangolin tunnel.
     </ResponseField>
 
     <ResponseField name="primaryDNS" type="string">
-      Primary upstream DNS server used when override/tunnel DNS is enabled.
+      **Can be set per organization.** Primary upstream DNS server used when override/tunnel DNS is enabled.
     </ResponseField>
 
     <ResponseField name="secondaryDNS" type="string">
-      Optional secondary upstream DNS server used as a fallback when the primary is unavailable.
+      **Can be set per organization.** Optional secondary upstream DNS server used as a fallback when the primary is unavailable.
     </ResponseField>
 
     <ResponseField name="dnsMatchDomains" type="array of strings">
-      Optional whitelist of domains sent to the configured upstream DNS server. When unset, all queries go to upstream DNS. When set, only matching queries use your Upstream DNS Server; all other requests use the system's DNS servers. Supports wildcards such as `*.proxy.internal`.
+      **Can be set per organization.** Optional whitelist of domains sent to the configured upstream DNS server. When unset, all queries go to upstream DNS. When set, only matching queries use your Upstream DNS Server; all other requests use the system's DNS servers. Supports wildcards such as `*.proxy.internal`.
     </ResponseField>
 
     <ResponseField name="defaultServerURL" type="string">
@@ -218,15 +218,15 @@ Most keys in the `Config` object below can be set in either file. If the same ke
     </ResponseField>
 
     <ResponseField name="mtu" type="integer">
-      MTU for the internal WireGuard interface. Changing this is advanced and not recommended unless you have a clear reason; if you set a non-default value, configure the same MTU on every site this client connects to—see [Configure Sites](/manage/sites/configure-site).
+      **Can be set per organization.** MTU for the internal WireGuard interface. Changing this is advanced and not recommended unless you have a clear reason; if you set a non-default value, configure the same MTU on every site this client connects to—see [Configure Sites](/manage/sites/configure-site).
     </ResponseField>
 
     <ResponseField name="preferLocalRoutes" type="boolean">
-      When true, prioritizes local routes over remote ones by adding an arbitrary metric to the WireGuard routes. This is useful when you want to ensure that local network traffic (for example, to a printer or NAS) is not routed through the Pangolin tunnel.
+      **Can be set per organization.** When true, prioritizes local routes over remote ones by adding an arbitrary metric to the WireGuard routes. This is useful when you want to ensure that local network traffic (for example, to a printer or NAS) is not routed through the Pangolin tunnel.
     </ResponseField>
 
     <ResponseField name="exitNodeTakesPrecedence" type="boolean">
-      When true, matches the [Exit Nodes Take Precedence Over Resources](/manage/clients/platforms#exit-nodes-take-precedence-over-resources) preference. While connected through an exit node, routes for other resources are not added and their aliases are not resolved, so all traffic flows through the exit node. If omitted, the default is `false`.
+      **Can be set per organization.** When true, matches the [Exit Nodes Take Precedence Over Resources](/manage/clients/platforms#exit-nodes-take-precedence-over-resources) preference. While connected through an exit node, routes for other resources are not added and their aliases are not resolved, so all traffic flows through the exit node. If omitted, the default is `false`.
     </ResponseField>
 
     <ResponseField name="openUIAtLogin" type="boolean">
@@ -238,29 +238,98 @@ Most keys in the `Config` object below can be set in either file. If the same ke
     </ResponseField>
 
     <ResponseField name="autoUpdateChecksEnabled" type="boolean">
-      **Global only.** When true, periodically check for updates in the background. When false, automatic checks are off; users can still use **Check for Updates** unless that button is also disabled. If omitted, the default is `true`. When a new version exists, Pangolin adds **Pangolin Update Available…** to the system tray menu. Intended for org admins so config is the source of truth.
+      **System config only.** When true, periodically check for updates in the background. When false, automatic checks are off; users can still use **Check for Updates** unless that button is also disabled. If omitted, the default is `true`. When a new version exists, Pangolin adds **Pangolin Update Available…** to the system tray menu. Intended for org admins so config is the source of truth.
     </ResponseField>
 
     <ResponseField name="updateCheckIntervalSeconds" type="integer">
-      **Global only.** How often automatic checks run, in seconds. Values below `3600` (1 hour) are clamped to `3600`. Only matters when `autoUpdateChecksEnabled` is true. If omitted, the default is `86400` (24 hours). The client applies a small amount of jitter around this interval.
+      **System config only.** How often automatic checks run, in seconds. Values below `3600` (1 hour) are clamped to `3600`. Only matters when `autoUpdateChecksEnabled` is true. If omitted, the default is `86400` (24 hours). The client applies a small amount of jitter around this interval.
     </ResponseField>
 
     <ResponseField name="checkForUpdatesButtonEnabled" type="boolean">
-      **Global only.** When true, show **Check for Updates** in the system tray More menu. When false, hide that menu item. If omitted, the default is `true`. Manual checks always perform a live network lookup when the button is used. This is independent of `autoUpdateChecksEnabled`.
+      **System config only.** When true, show **Check for Updates** in the system tray More menu. When false, hide that menu item. If omitted, the default is `true`. Manual checks always perform a live network lookup when the button is used. This is independent of `autoUpdateChecksEnabled`.
     </ResponseField>
 
     <ResponseField name="logLevel" type="string">
-      **Global only.** Controls client log verbosity. Supported values include `debug` and `info`. If omitted, the default is `info`.
+      **System config only.** Controls client log verbosity. Supported values include `debug` and `info`. If omitted, the default is `info`.
     </ResponseField>
 
     <ResponseField name="sessionCookieName" type="string">
       Overrides the cookie name the session token is sent and read under. Most deployments should leave this unset.
     </ResponseField>
 
+    <ResponseField name="orgs" type="object">
+      Settings for specific organizations, keyed by organization ID. See [Per-Organization Settings](#per-organization-settings).
+    </ResponseField>
+
   </Expandable>
 </ResponseField>
 
-As a system administrator, you can script placing `pangolin.json` in `/etc/pangolin-client/` to set global defaults, and/or in each user's `~/.config/pangolin-client/` folder for per-user overrides and targeted rollout behavior.
+As a system administrator, you can script placing `pangolin.json` in `/etc/pangolin-client/` to set defaults for every user, and/or in each user's `~/.config/pangolin-client/` folder for per-user settings.
+
+### Per-Organization Settings
+
+The top-level keys above are settings for **all organizations**. The connection settings can also be set for one organization, in the `orgs` object. Each key in `orgs` is an organization ID. Its value can hold any key marked **Can be set per organization** above, with the same meaning.
+
+It can also hold `exitNodeResourceId` (integer): the exit node to use in this organization until the user picks one in the app. Exit nodes only exist within one organization, so this key has no top-level equivalent.
+
+A key the organization's entry leaves out falls back to the top-level key, so an entry only needs the settings that differ. Keys marked **System config only**, and the other app and update settings, can't be set per organization.
+
+The app writes the user config. In **Settings** > **Connection**, an organization uses the settings for all organizations until the user selects **Use Own Settings**. That copies every connection setting into the organization's entry in `orgs`, so nothing changes until they're edited, and later changes on that screen are saved only for that organization. **Reset** removes them again.
+
+### Which Setting Applies
+
+The system config and the user config have the same format, including `orgs`. When the client connects to an organization, it uses each connection setting from the first place that sets it:
+
+1. [Server-side client settings](/manage/clients/server-side-settings) for the user's role in the organization. These always apply: nothing in either `pangolin.json` or the app can change a setting the server manages.
+2. The organization's entry in `orgs` in the user config.
+3. The organization's entry in `orgs` in the system config.
+4. The top-level key in the user config.
+5. The top-level key in the system config.
+6. The built-in default.
+
+The two files are combined key by key first, with the user config winning, and only then is the organization's entry checked before the top-level keys. So an organization's entry beats a top-level key no matter which file each is in:
+
+- A user's top-level setting does **not** replace an administrator's `orgs` entry in the system config. That organization keeps the administrator's value, and the user's setting applies to every other organization.
+- A user's value for the same key in the same organization's entry **does** replace the administrator's.
+
+For example, with this system config at `/etc/pangolin-client/pangolin.json`:
+
+```json
+{
+  "primaryDNS": "1.1.1.1",
+  "mtu": 1400,
+  "orgs": {
+    "acme": {
+      "primaryDNS": "10.0.0.53"
+    }
+  }
+}
+```
+
+and this user config at `~/.config/pangolin-client/pangolin.json`:
+
+```json
+{
+  "primaryDNS": "9.9.9.9",
+  "orgs": {
+    "acme": {
+      "mtu": 1280
+    }
+  }
+}
+```
+
+the user's organizations use `9.9.9.9` and MTU `1400`, except `acme`, which uses `10.0.0.53` (the administrator's entry for it beats the user's top-level server) and MTU `1280` (the user's entry for it beats the system config's top-level MTU). If the role's server-side client settings manage the upstream DNS servers or the MTU, those values replace all of these.
+
+<Tip>
+    To keep users from changing a setting, manage it with [server-side client
+    settings](/manage/clients/server-side-settings), or set `userSettingsDisabled`
+    in the system config. Values in the system config alone are defaults that a
+    user's own settings can replace.
+</Tip>
+
+After editing the system config, restart the background service (`sudo systemctl restart pangolin-client`, or `sudo rc-service pangolin-client restart` on OpenRC) and reopen Pangolin.
+
 
 ## Update
 
@@ -301,7 +370,7 @@ For the `.tar.gz` archive, extract the new version and run its `sudo ./install.s
     sudo apt remove pangolin-client
     ```
 
-    To also remove the saved sign-in, service state, logs, and global config, use `sudo apt purge pangolin-client` instead.
+    To also remove the saved sign-in, service state, logs, and system config, use `sudo apt purge pangolin-client` instead.
   </Tab>
   <Tab title="Fedora">
     ```bash
@@ -327,7 +396,7 @@ For the `.tar.gz` archive, extract the new version and run its `sudo ./install.s
   </Tab>
 </Tabs>
 
-Removing the package stops and disables the background service and removes the app, the GNOME extension, and the app menu and autostart entries. It does not always delete user or global config. To clear those as well:
+Removing the package stops and disables the background service and removes the app, the GNOME extension, and the app menu and autostart entries. It does not always delete the user or system config. To clear those as well:
 
 ```bash
 rm -rf ~/.config/pangolin-client ~/.local/state/pangolin-client

@@ -73,31 +73,31 @@ On Mac, the Pangolin GUI reads configuration from `~/Library/Application Support
 
   <Expandable title="Config">
     <ResponseField name="dnsOverrideEnabled" type="boolean">
-      When true, matches the [Enable Aliases (Override DNS)](/manage/clients/platforms#enable-aliases-override-dns) preference and lets the client take over DNS resolution for Pangolin resources.
+      **Can be set per organization.** When true, matches the [Enable Aliases (Override DNS)](/manage/clients/platforms#enable-aliases-override-dns) preference and lets the client take over DNS resolution for Pangolin resources.
     </ResponseField>
 
     <ResponseField name="dnsTunnelEnabled" type="boolean">
-      When true, matches the [DNS Over Tunnel](/manage/clients/platforms#dns-over-tunnel) preference and sends DNS queries through the Pangolin tunnel.
+      **Can be set per organization.** When true, matches the [DNS Over Tunnel](/manage/clients/platforms#dns-over-tunnel) preference and sends DNS queries through the Pangolin tunnel.
     </ResponseField>
 
     <ResponseField name="primaryDNSServer" type="string">
-      Primary upstream DNS server used when override/tunnel DNS is enabled.
+      **Can be set per organization.** Primary upstream DNS server used when override/tunnel DNS is enabled.
     </ResponseField>
 
     <ResponseField name="secondaryDNSServer" type="string">
-      Optional secondary upstream DNS server used as a fallback when the primary is unavailable.
+      **Can be set per organization.** Optional secondary upstream DNS server used as a fallback when the primary is unavailable.
     </ResponseField>
 
     <ResponseField name="dnsMatchDomains" type="array of strings">
-      Optional whitelist of domains sent to the configured upstream DNS server. When unset, all queries go to upstream DNS. When set, only matching queries use your Upstream DNS Server; all other requests use the system's DNS servers. Supports wildcards such as `*.proxy.internal`.
+      **Can be set per organization.** Optional whitelist of domains sent to the configured upstream DNS server. When unset, all queries go to upstream DNS. When set, only matching queries use your Upstream DNS Server; all other requests use the system's DNS servers. Supports wildcards such as `*.proxy.internal`.
     </ResponseField>
 
     <ResponseField name="exitNodeTakesPrecedence" type="boolean">
-      When true, matches the [Exit Nodes Take Precedence Over Resources](/manage/clients/platforms#exit-nodes-take-precedence-over-resources) preference. While connected through an exit node, routes for other resources are not added and their aliases are not resolved, so all traffic flows through the exit node. If omitted, the default is `false`.
+      **Can be set per organization.** When true, matches the [Exit Nodes Take Precedence Over Resources](/manage/clients/platforms#exit-nodes-take-precedence-over-resources) preference. While connected through an exit node, routes for other resources are not added and their aliases are not resolved, so all traffic flows through the exit node. If omitted, the default is `false`.
     </ResponseField>
 
     <ResponseField name="tunnelMTU" type="integer">
-      MTU for the internal WireGuard interface. Changing this is advanced and not recommended unless you have a clear reason; if you set a non-default value, configure the same MTU on every site this client connects to. See [Configure Sites](/manage/sites/configure-site).
+      **Can be set per organization.** MTU for the internal WireGuard interface. Changing this is advanced and not recommended unless you have a clear reason; if you set a non-default value, configure the same MTU on every site this client connects to. See [Configure Sites](/manage/sites/configure-site).
     </ResponseField>
 
     <ResponseField name="onDemandWiFiEnabled" type="boolean">
@@ -132,8 +132,44 @@ On Mac, the Pangolin GUI reads configuration from `~/Library/Application Support
       Overrides the cookie name the session token is sent and read under. Most deployments should leave this unset.
     </ResponseField>
 
+    <ResponseField name="orgs" type="object">
+      Settings for specific organizations, keyed by organization ID. See [Per-Organization Settings](#per-organization-settings).
+    </ResponseField>
+
   </Expandable>
 </ResponseField>
+
+### Per-Organization Settings
+
+The top-level keys above are your settings for **all organizations**. The connection settings can also be set for one organization, in the `orgs` object. Each key in `orgs` is an organization ID. Its value can hold any key marked **Can be set per organization** above, with the same meaning.
+
+It can also hold `exitNodeResourceId` (integer): the exit node to use in this organization until you pick one in the app. Exit nodes only exist within one organization, so this key has no top-level equivalent.
+
+When the client connects to an organization, it uses each setting from the first place that sets it:
+
+1. [Server-side client settings](/manage/clients/server-side-settings) for your role in the organization. These always apply: nothing in `pangolin.json` or the app can change a setting the server manages.
+2. The organization's entry in `orgs`.
+3. The top-level key, your setting for all organizations.
+4. The built-in default.
+
+A key the organization's entry leaves out falls back to the top-level key, so an entry only needs the settings that differ.
+
+For example, this uses Cloudflare's DNS for every organization except `acme`, which uses its own DNS server and a smaller MTU:
+
+```json
+{
+  "dnsOverrideEnabled": true,
+  "primaryDNSServer": "1.1.1.1",
+  "orgs": {
+    "acme": {
+      "primaryDNSServer": "10.0.0.53",
+      "tunnelMTU": 1280
+    }
+  }
+}
+```
+
+The app writes the same file. In **Settings** > **Connection**, an organization uses your settings for all organizations until you select **Use Own Settings**. That copies every connection setting into the organization's entry in `orgs`, so nothing changes until you edit them, and later changes on that screen are saved only for that organization. **Reset** removes them again.
 
 ## Update
 
