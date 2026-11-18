@@ -97,6 +97,7 @@
               ]
             },
             "manage/clients/machine-clients",
+            "manage/clients/server-side-settings",
             "manage/clients/fingerprinting",
             "manage/clients/archiving-blocking",
             "manage/clients/client-logs",
