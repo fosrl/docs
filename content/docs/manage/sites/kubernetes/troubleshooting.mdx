@@ -1,9 +1,13 @@
 ---
 title: "Troubleshooting"
-description: "Diagnose and resolve common Newt Kubernetes deployment issues."
+description: "Diagnose and resolve common site deployment issues on Kubernetes."
 ---
 
-Use this guide to troubleshoot Newt Kubernetes deployments installed with Helm, Kustomize, Argo CD, or Flux.
+Use this guide to troubleshoot site deployments on Kubernetes installed with Helm, Kustomize, Argo CD, or Flux.
+
+<Note>
+This page applies to both site charts: the recommended [Pangolin CLI chart](/manage/sites/kubernetes/helm) (`fosrl/pangolin-cli`) and the [Newt chart](/manage/sites/kubernetes/newt-helm) (`fosrl/newt`). They share the same layout. The examples use the Newt chart's names; for the Pangolin CLI chart use `siteInstances[]` instead of `newtInstances[]`, the Secret keys `SITE_ID` / `SITE_SECRET` instead of `NEWT_ID` / `NEWT_SECRET`, `siteName` instead of `newtName`, and the pod label `app.kubernetes.io/component=site` instead of `app.kubernetes.io/component=newt`. See [Migrating from the Newt chart](/manage/sites/kubernetes/helm#migrating-from-the-newt-chart) for the full list.
+</Note>
 
 Start with the basic checks, then move to the section that matches the symptom.
 
@@ -27,7 +31,7 @@ Check Newt pods:
 
 ```bash
 kubectl get pods --namespace "$NEWT_NAMESPACE" \
-  -l app.kubernetes.io/name=newt
+  -l app.kubernetes.io/component=newt
 ```
 
 Check recent events:
@@ -41,7 +45,7 @@ Check logs:
 
 ```bash
 kubectl logs --namespace "$NEWT_NAMESPACE" \
-  -l app.kubernetes.io/name=newt \
+  -l app.kubernetes.io/component=newt \
   --tail=100
 ```
 
@@ -61,14 +65,14 @@ List Newt resources:
 
 ```bash
 kubectl get deploy,sts,svc,secret,cm --namespace "$NEWT_NAMESPACE" \
-  -l app.kubernetes.io/name=newt
+  -l app.kubernetes.io/component=newt
 ```
 
 List pods with labels:
 
 ```bash
 kubectl get pods --namespace "$NEWT_NAMESPACE" \
-  -l app.kubernetes.io/name=newt \
+  -l app.kubernetes.io/component=newt \
   --show-labels
 ```
 
@@ -76,7 +80,7 @@ Store the first Newt pod name:
 
 ```bash
 export NEWT_POD="$(kubectl get pod --namespace "$NEWT_NAMESPACE" \
-  -l app.kubernetes.io/name=newt \
+  -l app.kubernetes.io/component=newt \
   -o jsonpath='{.items[0].metadata.name}')"
 ```
 
@@ -324,7 +328,7 @@ The chart also has `service.enabledWhenAcceptClients`, but runtime client behavi
 
 ```bash
 kubectl get svc --namespace "$NEWT_NAMESPACE" \
-  -l app.kubernetes.io/name=newt
+  -l app.kubernetes.io/component=newt
 ```
 
 Describe the Service:
@@ -403,7 +407,7 @@ Check resources:
 ```bash
 kubectl get svc,podmonitor,servicemonitor,prometheusrule \
   --namespace "$NEWT_NAMESPACE" \
-  -l app.kubernetes.io/name=newt
+  -l app.kubernetes.io/component=newt
 ```
 
 <Note>
@@ -490,14 +494,14 @@ kubectl create secret generic newt-auth-site-b \
 
 ## RBAC or service account issues
 
-Chart `1.4.0` disables RBAC creation by default.
+Both charts disable RBAC creation by default (the Newt chart since `1.4.0`).
 
 Check service account and RBAC:
 
 ```bash
 kubectl get serviceaccount,role,rolebinding \
   --namespace "$NEWT_NAMESPACE" \
-  -l app.kubernetes.io/name=newt
+  -l app.kubernetes.io/component=newt
 ```
 
 If your configuration requires Kubernetes API access, enable RBAC:
@@ -516,7 +520,7 @@ Check resource usage:
 
 ```bash
 kubectl top pod --namespace "$NEWT_NAMESPACE" \
-  -l app.kubernetes.io/name=newt
+  -l app.kubernetes.io/component=newt
 ```
 
 Check current resource settings:
@@ -652,11 +656,11 @@ Collect logs and resource information:
 
 ```bash
 kubectl logs --namespace "$NEWT_NAMESPACE" \
-  -l app.kubernetes.io/name=newt \
+  -l app.kubernetes.io/component=newt \
   --tail=200 > newt-logs.txt
 
 kubectl get pods --namespace "$NEWT_NAMESPACE" \
-  -l app.kubernetes.io/name=newt \
+  -l app.kubernetes.io/component=newt \
   -o yaml > newt-pods.yaml
 
 kubectl get events --namespace "$NEWT_NAMESPACE" \

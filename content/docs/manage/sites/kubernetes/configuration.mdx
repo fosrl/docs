@@ -1,30 +1,35 @@
 ---
 title: "Configuration"
-description: "Configuration reference for Newt Kubernetes deployments."
+description: "Configuration reference for site deployments on Kubernetes with the Pangolin CLI and Newt charts."
 ---
 
-This page covers the main Newt Kubernetes configuration options for Helm and Kustomize workflows.
+This page covers the main configuration options for running sites on Kubernetes, for Helm and Kustomize workflows.
+
+<Note>
+This page applies to both site charts: the recommended [Pangolin CLI chart](/manage/sites/kubernetes/helm) (`fosrl/pangolin-cli`) and the [Newt chart](/manage/sites/kubernetes/newt-helm) (`fosrl/newt`). They share the same layout. The examples use the Newt chart's names; for the Pangolin CLI chart use `siteInstances[]` instead of `newtInstances[]`, the Secret keys `SITE_ID` / `SITE_SECRET` instead of `NEWT_ID` / `NEWT_SECRET`, `siteName` instead of `newtName`, and the pod label `app.kubernetes.io/component=site` instead of `app.kubernetes.io/component=newt`. See [Migrating from the Newt chart](/manage/sites/kubernetes/helm#migrating-from-the-newt-chart) for the full list.
+</Note>
 
 For exhaustive option coverage, refer to the chart resources:
 
 <CardGroup cols={3}>
-  <Card title="README" href="https://github.com/fosrl/helm-charts/blob/main/charts/newt/README.md" />
-  <Card title="values.yaml" href="https://github.com/fosrl/helm-charts/blob/main/charts/newt/values.yaml" />
-  <Card title="values.schema.json" href="https://github.com/fosrl/helm-charts/blob/main/charts/newt/values.schema.json" />
+  <Card title="Pangolin CLI README" href="https://github.com/fosrl/helm-charts/blob/main/charts/pangolin-cli/README.md" />
+  <Card title="Pangolin CLI values.yaml" href="https://github.com/fosrl/helm-charts/blob/main/charts/pangolin-cli/values.yaml" />
+  <Card title="Pangolin CLI values.schema.json" href="https://github.com/fosrl/helm-charts/blob/main/charts/pangolin-cli/values.schema.json" />
+  <Card title="Newt README" href="https://github.com/fosrl/helm-charts/blob/main/charts/newt/README.md" />
+  <Card title="Newt values.yaml" href="https://github.com/fosrl/helm-charts/blob/main/charts/newt/values.yaml" />
+  <Card title="Newt values.schema.json" href="https://github.com/fosrl/helm-charts/blob/main/charts/newt/values.schema.json" />
 </CardGroup>
 
 ## Version context
 
-This page is aligned with the Newt Helm chart `1.4.0`.
+| Item | Pangolin CLI chart | Newt chart |
+| --- | --- | --- |
+| Chart version | `0.1.0` | `1.6.0` |
+| App version | `0.20.0` | `1.20.0` |
+| Kubernetes version | `>=1.30.14-0` | `>=1.30.14-0` |
+| Default image | `docker.io/fosrl/pangolin-cli:0.20.0` | `docker.io/fosrl/newt:1.20.0` |
 
-| Item | Value |
-| --- | --- |
-| Chart version | `1.4.0` |
-| App version | `1.12.3` |
-| Kubernetes version | `>=1.30.14-0` |
-| Default image | `docker.io/fosrl/newt:1.12.3` |
-
-Chart `1.4.0` also publishes the Newt image metadata for Docker Hub and GHCR and includes Artifact Hub signing metadata.
+Both charts also publish image metadata for Docker Hub and GHCR and include Artifact Hub signing metadata.
 
 ## Configuration sections
 
@@ -178,7 +183,7 @@ Inline credentials can appear in rendered manifests and Helm release history. Us
 Do not commit plaintext credentials to Git. For GitOps workflows, use encrypted or external secret backends such as SOPS, Sealed Secrets, External Secrets Operator, Vault, or Infisical.
 </Warning>
 
-Chart `1.4.0` also includes `auth.createSecret` and `auth.envVarsDirect` modes for generated Secret and direct environment-variable workflows. Use these only when they match your operational model.
+Both charts also include `auth.createSecret` and `auth.envVarsDirect` modes for generated Secret and direct environment-variable workflows. Use these only when they match your operational model.
 
 </Accordion>
 
@@ -426,7 +431,7 @@ serviceAccount:
   automountServiceAccountToken: false
 ```
 
-RBAC is disabled by default in chart `1.4.0`:
+RBAC is disabled by default in both charts:
 
 ```yaml
 rbac:
@@ -455,7 +460,7 @@ newtInstances:
 ```
 
 <Warning>
-Chart `1.4.0` changed the RBAC default to `rbac.create=false`. Existing installations that relied on auto-created RBAC must opt in explicitly during upgrade.
+Newt chart `1.4.0` changed the RBAC default to `rbac.create=false`. Existing installations that relied on auto-created RBAC must opt in explicitly during upgrade.
 </Warning>
 
 </Accordion>

@@ -28,6 +28,7 @@
               "group": "Kubernetes",
               "pages": [
                 "manage/sites/kubernetes/helm",
+                "manage/sites/kubernetes/newt-helm",
                 "manage/sites/kubernetes/kustomize",
                 "manage/sites/kubernetes/configuration",
                 "manage/sites/kubernetes/troubleshooting"
@@ -97,6 +98,7 @@
               ]
             },
             "manage/clients/machine-clients",
+            "manage/clients/server-side-settings",
             "manage/clients/fingerprinting",
             "manage/clients/archiving-blocking",
             "manage/clients/client-logs",

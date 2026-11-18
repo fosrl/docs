@@ -129,6 +129,10 @@ When hole punching fails (restrictive NAT, symmetric NAT, or blocked UDP), the c
 
 Site connectors use a separate default port (51820 UDP) for their outbound tunnels to the node. Relay is optional and can be disabled per client if you require direct paths only.
 
+### Proxying out of the site
+
+The site connector (newt or the cli) runs in userspace and terminates the WireGuard tunnel. In order to make any target on the local network to the site reachable by the clients it performs a SNAT operation on the packets. This means that the source IP of the packets will be the site connector's IP address and not the client's IP address. If the source was the client's IP address, it would be lost in the local network because target resources do not know how to forward back to the client on an internal network WireGuard IP address. This is important to understand when troubleshooting connectivity issues or when configuring firewall rules on the site network. 
+
 <Card title="NAT traversal" icon="route" href="/manage/clients/nat-traversal">
   Same-network detection, hole punching vs relay, how to check whether a site is local, direct, or relayed, and tuning options.
 </Card>

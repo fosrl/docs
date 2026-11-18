@@ -64,3 +64,11 @@ To route **all** traffic through Pangolin like a traditional full-tunnel VPN, se
 Clients connect to sites over the same local network, with NAT hole punching, or by relaying. When a client and site share a local network, they connect directly over the LAN and the traffic never leaves it. Otherwise the client attempts a direct peer-to-peer tunnel through NAT, then falls back to relaying through your Pangolin server if hole punching fails. Same-network detection requires Pangolin 1.21 or later clients and sites.
 
 See [NAT Traversal](/manage/clients/nat-traversal) for how each modality works, how to check whether a site is local, direct, or relayed, and tips for improving hole punching reliability.
+
+### How Traffic Leaves the Site
+
+The site connector (Newt or the Pangolin CLI) runs in userspace and terminates the WireGuard tunnel from the client. To reach resources on the site's local network, it applies source NAT (SNAT) to client traffic. Resources see connections coming from the site connector's IP address, not the client's.
+
+Without SNAT, packets would carry the client's WireGuard tunnel IP. Hosts on the site network have no route back to that address, so replies would never reach the client.
+
+Keep this in mind when troubleshooting connectivity or writing firewall rules on the site network: allow traffic from the site connector's host, not from client tunnel IPs.

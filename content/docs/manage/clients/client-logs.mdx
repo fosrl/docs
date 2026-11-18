@@ -2,11 +2,11 @@
 title: "Client Logs"
 description: "View Pangolin client logs on Windows, Mac, Linux, Android, and iOS"
 ---
-How you access client logs depends on the platform. Use the section for your client type below.
+The Pangolin apps for Windows, Mac, Linux, iOS/iPadOS, and Android show their logs under **About** > **Logs**, with messages from both the app and the tunnel, and can save them to a file to attach to a support request. The sections below also cover each platform's log files and system tools, and the [Pangolin CLI](#cli).
 
 ## Windows
 
-You can view logs in the Pangolin client GUI under **Preferences > Logs**.
+Open **Settings** > **About** > **Logs**. Select **Save...** to save them to a file.
 
 You can also open the log file directly. The default location is:
 
@@ -22,13 +22,26 @@ Get-Content "C:\ProgramData\pangolin\logs\pangolin.log" -Tail 0 -Wait
 
 ## Mac
 
-Mac uses the Apple system logger. To stream Pangolin logs:
+Open **Settings** > **About** > **Logs**. Select **Save…** to save them to a file.
+
+Pangolin also writes to the Apple system logger. To stream its logs in Terminal:
 
 ```bash
 log stream --predicate 'subsystem == "net.pangolin.Pangolin" OR subsystem == "net.pangolin.Pangolin.PacketTunnel"' --level debug --style compact
 ```
 
-## CLI / Linux
+## Linux
+
+Open **Settings** > **About** > **Logs**. Select **Save...** to save them to a file.
+
+The log files are at:
+
+- Background service and tunnel: `/var/log/pangolin-client/`, also available with `journalctl -u pangolin-client` on systemd
+- App: `~/.local/state/pangolin-client/logs/` (or `$XDG_STATE_HOME/pangolin-client/logs/`)
+
+See [Linux](/manage/clients/platforms/linux#background-service).
+
+## CLI
 
 The default log file location is:
 
@@ -52,13 +65,13 @@ sudo pangolin up --attach
 
 ## Android
 
-Turn on **Enable Log Collection** under **Preferences**. Tunnel logs are then saved to a file you can download from the app. You can also view logs under **Preferences > Logs**. See [Android](/manage/clients/platforms/android).
+Open **About** > **Logs**. Pangolin saves tunnel logs automatically once you connect. Select **Download Logs** to save them to a file. See [Android](/manage/clients/platforms/android).
 
-## iOS
+## iOS/iPadOS
 
-Because of how iOS handles system logging, attach the iPhone to a Mac and use Console.app to view logs.
+Open the **About** tab, then **Logs**. Tap the share button to save or send them, or use **More** to copy them.
 
-In Console.app, add a **Subsystem** filter for:
+For more detail, attach the iPhone or iPad to a Mac and use Console.app. Add a **Subsystem** filter for:
 
 ```
 net.pangolin.Pangolin

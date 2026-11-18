@@ -1,36 +1,43 @@
 ---
 title: "Platforms"
-description: "Install, configure, and update Pangolin clients, and shared DNS and routing preferences"
+description: "Install, configure, and update Pangolin clients, and their DNS and routing connection settings"
 ---
 
 Pangolin clients run on Windows, Mac, Linux, iOS/iPadOS, Android, and from the command line. Choose a platform below for install steps, platform-specific settings, and how to update. Each platform page also covers uninstall.
 
-Some preferences, like DNS and routing, are the same across all platforms. Those are documented on this page under Shared Preferences.
+Each client has two kinds of settings. **Connection settings**, like DNS and routing, are the same on every platform and are documented on this page under [Connection Settings](#connection-settings). **General settings**, like starting at login, differ by platform and are on each platform's page.
 
 <CardGroup cols={2}>
 <Card title="Windows" icon="windows" href="/manage/clients/platforms/windows">
-  Install the Windows client, set preferences, and update.
+  Install the Windows client, configure settings, and update.
 </Card>
 <Card title="Mac" icon="apple" href="/manage/clients/platforms/mac">
-  Install the Mac client, set preferences, and update.
+  Install the Mac client, configure settings, and update.
 </Card>
 <Card title="Linux" icon="linux" href="/manage/clients/platforms/linux">
-  Install the Linux client, set preferences, and update.
+  Install the Linux client, configure settings, and update.
 </Card>
 <Card title="iOS/iPadOS" icon="apple" href="/manage/clients/platforms/ios">
-  Install the iOS app, set preferences, and update from the App Store.
+  Install the iOS app, configure settings, and update from the App Store.
 </Card>
 <Card title="Android" icon="android" href="/manage/clients/platforms/android">
-  Install the Android app, set preferences, and update from Google Play.
+  Install the Android app, configure settings, and update from Google Play.
 </Card>
 <Card title="Pangolin CLI" icon="terminal" href="/manage/clients/platforms/cli">
   Install the CLI on Linux, macOS, and Windows, including machine clients.
 </Card>
 </CardGroup>
 
-## Shared Preferences (All Platforms)
+{/* Old anchors for this section, from when it was called Shared Preferences. Fragments never
+    reach the server, so a redirect can't send them here. */}
+<span id="shared-preferences-all-platforms" />
+<span id="shared-preferences" />
 
-The following preferences control how your client handles DNS resolution and network routing. They are available on Mac, Windows, Android, and iOS/iPadOS.
+## Connection Settings
+
+Connection settings control how your client handles DNS resolution and network routing. In the Mac, Windows, Linux, iOS/iPadOS, and Android apps they are in **Settings** > **Connection**, and they can differ per organization. The [Pangolin CLI](/manage/clients/platforms/cli) sets them with flags or a config file.
+
+Admins can also manage these settings for every user in a role. See [Server-Side Client Settings](/manage/clients/server-side-settings).
 
 ### Enable Aliases (Override DNS)
 

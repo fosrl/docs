@@ -5,7 +5,7 @@ description: "How Pangolin clients resolve aliases and private hostnames, forwar
 
 Every Pangolin client runs a small DNS resolver inside the tunnel. That resolver answers names for your private resources, such as [aliases](/manage/resources/private/alias) and [private HTTP/HTTPS](/manage/resources/private/private-http) hostnames, and forwards all other queries to an upstream DNS server. No external DNS records are needed for private names. They exist only for clients that are connected and have access.
 
-This page covers how the resolver works, what each client DNS setting does, and how to fix common DNS problems. For a short summary of the same settings, see [Shared Preferences](/manage/clients/platforms#shared-preferences).
+This page covers how the resolver works, what each client DNS setting does, and how to fix common DNS problems. For a short summary of the same settings, see [Connection Settings](/manage/clients/platforms#connection-settings).
 
 ## How DNS Works in a Pangolin Client
 
@@ -114,7 +114,7 @@ See also [DNS Cache](/manage/dns-cache).
 
 ## Client DNS Settings
 
-The DNS settings are the same on every platform. GUI clients (Mac, Windows, Linux, iOS/iPadOS, Android) show them in **Preferences**. The [Pangolin CLI](/manage/clients/platforms/cli) and [Olm](/manage/clients/platforms/olm) use flags or a config file.
+The DNS settings are the same on every platform. GUI clients (Mac, Windows, Linux, iOS/iPadOS, Android) show them in **Settings** > **Connection**. The [Pangolin CLI](/manage/clients/platforms/cli) and [Olm](/manage/clients/platforms/olm) use flags or a config file.
 
 | Setting | Default | CLI flag | CLI config key |
 |---------|---------|----------|----------------|
@@ -262,7 +262,7 @@ This example sends every DNS query from a laptop to a Pi-hole on a home network,
   Per-client statistics in Pi-hole show the site host for all Pangolin users.
 </Step>
 <Step title="Configure the client">
-  In the client's **Preferences**:
+  In the client's **Settings** > **Connection**:
 
   - **Enable Aliases (Override DNS):** on
   - **DNS Over Tunnel:** on
