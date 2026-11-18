@@ -1,13 +1,12 @@
 import Script from 'next/script';
 
 /**
- * Same analytics as the Mintlify site (PostHog via the pangolin.net relay, Rybbit, Reo).
+ * Same analytics as the Mintlify site (PostHog via the pangolin.net relay, Rybbit).
  * Only loaded in production builds; set NEXT_PUBLIC_DISABLE_ANALYTICS=1 to turn off.
  */
 const POSTHOG_KEY = 'phc_RIHQ7o2Y2hf8qms2nP62vpoJHEvsrw6TieflQGQO7yI';
 const POSTHOG_HOST = 'https://pangolin.net/relay-O7yI';
 const RYBBIT_SITE_ID = 'da4fb64dc2d5';
-const REO_CLIENT_ID = '4209f8e1b88e13b';
 
 export function Analytics() {
   if (process.env.NODE_ENV !== 'production' || process.env.NEXT_PUBLIC_DISABLE_ANALYTICS) {
@@ -24,14 +23,6 @@ posthog.init(${JSON.stringify(POSTHOG_KEY)},{api_host:${JSON.stringify(POSTHOG_H
         src={`https://rybbit.fossorial.io/api/script.js?siteId=${RYBBIT_SITE_ID}`}
         strategy="afterInteractive"
       />
-      <Script
-        src={`https://static.reo.dev/${REO_CLIENT_ID}/reo.js`}
-        strategy="afterInteractive"
-        id="reo"
-      />
-      <Script id="reo-init" strategy="lazyOnload">
-        {`(function w(){if(window.Reo){Reo.init({clientID:${JSON.stringify(REO_CLIENT_ID)}})}else setTimeout(w,500)})();`}
-      </Script>
     </>
   );
 }
