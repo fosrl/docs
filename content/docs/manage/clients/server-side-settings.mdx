@@ -10,6 +10,8 @@ description:
 
 Server-side client settings let an admin set the [connection settings](/manage/clients/platforms#connection-settings) for every user in a role, instead of asking each user to configure their own device. Use them to roll out a DNS setup, require an exit node, or tune the tunnel for a whole team at once.
 
+A setting managed by the server always applies, and overrides every other way of setting it: the user's own choice in the app, the settings for one organization or for all organizations, and `pangolin.json` on the device, including a system-wide one set by an administrator. Settings the server doesn't manage are left to the device.
+
 Settings are configured per role. Each setting can be managed by the server or left to the client, so you only need to manage the settings you care about.
 
 ## How It Works
