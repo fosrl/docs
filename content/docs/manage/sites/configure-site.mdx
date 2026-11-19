@@ -419,6 +419,18 @@ Almost every setting below can also be set via an environment variable (**Env va
   **Config file key**: `port`
 </ResponseField>
 
+<ResponseField name="local-endpoints" type="string">
+  Comma-separated list of IP address the site reports to clients for [same-network detection](/manage/clients/nat-traversal#same-network-detection). When set, the site only reports these addresses. By default it reports every interface that is up, except loopback and its own tunnel interface.
+
+  **Example**: `192.168.1.1,192.168.1.2`
+
+  **Default**: all interfaces
+
+  **Env var**: `LOCAL_ENDPOINTS`
+
+  **Config file key**: `localEndpoints`
+</ResponseField>
+
 <ResponseField name="local-endpoint-interfaces" type="string">
   Comma-separated list of network interface names the site reports to clients for [same-network detection](/manage/clients/nat-traversal#same-network-detection). When set, the site only reports addresses from these interfaces. By default it reports every interface that is up, except loopback and its own tunnel interface.
 
