@@ -42,6 +42,26 @@ description: "Install, configure, and update the Pangolin client for Mac"
 
    - Click the Pangolin icon in the menu bar and select Log in.
 
+## Companion Mode
+
+Companion mode lets [Pangolin CLI](/manage/clients/platforms/cli) use this app's login and tunnel. Sign in and connect here, then run CLI commands as that same account. You do not run `pangolin login` again.
+
+Companion mode requires Pangolin for macOS 0.14.0 or later, and it is on by default once the CLI is installed.
+
+1. Log in with the Mac client and connect.
+2. Install Pangolin CLI if it is not already installed. From the Pangolin menu bar, choose **More** > **Install Pangolin CLI…**, or follow the [CLI install steps](/manage/clients/platforms/cli). The app installs the CLI to `/usr/local/bin/pangolin`. If your account can't write to that folder, macOS asks for an administrator's password.
+3. Run CLI commands in a terminal. For example, open SSH to a [private SSH resource](/manage/resources/private/ssh):
+
+```bash
+pangolin ssh username@alias
+```
+
+The CLI follows the account, organization, and exit node selected in the desktop app. Change those in the app. While companion mode is on, `pangolin login`, `pangolin logout`, and `pangolin select` for account, organization, or exit node are blocked.
+
+The desktop app has to be open and logged in. If it is not, the CLI asks you to start Pangolin and log in.
+
+Commands to check status or turn companion mode off are on the [CLI companion mode section](/manage/clients/platforms/cli#companion-mode).
+
 ## Configure
 
 <Note>
@@ -197,6 +217,8 @@ Remove the VPN configuration if macOS still lists it:
 1. Open **System Settings** > **Network** (or **VPN**).
 2. Select the Pangolin VPN configuration and delete it.
 3. Under **General** > **Login Items & Extensions** > **Network Extensions**, turn off or remove Pangolin if it is still listed.
+
+If you also installed [Pangolin CLI](/manage/clients/platforms/cli), uninstall it separately. See [Uninstall Pangolin CLI](/manage/clients/platforms/uninstall-cli).
 
 To delete local app data as well:
 

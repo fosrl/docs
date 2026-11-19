@@ -5,7 +5,7 @@ description: "Install, configure, and update Pangolin CLI on Linux, macOS, and W
 
 Pangolin CLI is the recommended way to run a client using a command line interface on Mac and Linux.
 
-Pangolin CLI can run on Windows, but the CLI VPN functionality is not supported. With [companion mode](#companion-mode), connect in the Windows app and use the CLI for commands such as SSH, on the same account, without a second login.
+Pangolin CLI can run on Windows, but the CLI VPN functionality is not supported. With [companion mode](#companion-mode), connect in the Windows app and use the CLI for commands such as SSH, on the same account, without a second login. Companion mode also works with the macOS and Linux desktop apps.
 
 Pangolin CLI supports running as a user device with authentication or a machine client.
 
@@ -21,7 +21,9 @@ Use this command to automatically install Pangolin CLI. It detects your system a
 curl -fsSL https://static.pangolin.net/get-cli.sh | bash
 ```
 
-On Windows, [download the latest installer](https://github.com/fosrl/cli/releases/latest/download/pangolin-cli_windows_installer.msi), or choose to install the CLI from menu bar of the desktop app by choosing the "Install Pangolin CLI" option.
+On Windows, [download the latest installer](https://github.com/fosrl/cli/releases/latest/download/pangolin-cli_windows_installer.msi).
+
+If you use the Pangolin desktop app on Windows, macOS, or Linux, you can also install the CLI from the app's menu: choose **More** > **Install Pangolin CLI…**. The option is hidden once the CLI is installed.
 
 Binaries for all platforms are available in the [GitHub releases](https://github.com/fosrl/cli/releases) for ARM and AMD64 (x86_64) architectures.
 
@@ -167,13 +169,19 @@ Deploying in Kubernetes? See [Kubernetes Deployment](/manage/clients/kubernetes/
 
 ## Companion Mode
 
-Companion mode lets Pangolin CLI use the [Windows desktop app](/manage/clients/platforms/windows#companion-mode) for authentication and the tunnel. Log in and connect in the desktop app, then run CLI commands as that same account. You do not run `pangolin login` separately.
+Companion mode lets Pangolin CLI use the Pangolin desktop app for authentication and the tunnel. Log in and connect in the desktop app, then run CLI commands as that same account. You do not run `pangolin login` separately.
 
-Companion mode is available on Windows only, and it requires Pangolin for Windows 0.11.0 or later. On macOS and Linux the CLI keeps its own login, and `pangolin companion` is not available. On Windows, companion mode is on by default.
+Companion mode is on by default when the desktop app is installed. It requires:
+
+- [Windows](/manage/clients/platforms/windows#companion-mode): Pangolin for Windows 0.11.0 or later
+- [macOS](/manage/clients/platforms/mac#companion-mode): Pangolin for macOS 0.14.0 or later
+- [Linux](/manage/clients/platforms/linux#companion-mode): any version of the Pangolin Linux desktop app
+
+On machines without the desktop app, the CLI keeps its own login.
 
 ### SSH through the desktop connection
 
-1. Log in and connect with the Windows client.
+1. Log in and connect with the desktop app.
 2. SSH to a [private SSH resource](/manage/resources/private/ssh):
 
 ```bash
@@ -210,7 +218,7 @@ Client: Pangolin Windows
 Ready: yes
 ```
 
-If the desktop app is not logged in, status reports `Ready: no` and tells you to open Pangolin and log in.
+`Client` names the desktop app for your platform: `Pangolin Windows`, `Pangolin macOS`, or `Pangolin Linux`. If the desktop app is not logged in, status reports `Ready: no` and tells you to open Pangolin and log in.
 
 With companion mode off, status reports:
 
@@ -231,7 +239,7 @@ These commands are blocked. The CLI tells you to use the desktop app, or to run 
 - `pangolin select org`
 - `pangolin select exit-node`
 
-Other commands, including `pangolin ssh` and `pangolin scp`, run with the desktop app's session. The desktop app has to be open and logged in. If it is not, the CLI asks you to start Pangolin for Windows 0.11.0 or later and log in.
+Other commands, including `pangolin ssh` and `pangolin scp`, run with the desktop app's session. The desktop app has to be open and logged in. If it is not, the CLI asks you to start Pangolin and log in, and names the minimum app version for your platform.
 
 You can also set `disable_companion_mode` in the [CLI config file](#config-file). `true` matches `pangolin companion disable`.
 
@@ -262,7 +270,7 @@ The Pangolin CLI stores persistent settings in `~/.config/pangolin/config.json` 
     </ResponseField>
 
     <ResponseField name="disable_companion_mode" type="boolean">
-      When true, the CLI uses its own standalone authentication instead of [companion mode](#companion-mode), where login, accounts, organizations, and exit node selection are managed by the Pangolin desktop app. If omitted, the default is `false`, so companion mode is on. This only applies on Windows.
+      When true, the CLI uses its own standalone authentication instead of [companion mode](#companion-mode), where login, accounts, organizations, and exit node selection are managed by the Pangolin desktop app. If omitted, the default is `false`, so companion mode is on. This applies on Windows, macOS, and Linux.
     </ResponseField>
 
     <ResponseField name="companion_app_data_dirs" type="object">
