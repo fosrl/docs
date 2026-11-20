@@ -1,12 +1,22 @@
 ---
-title: 'Managed (Server-side) Client Settings'
-description:
-  'Manage DNS, exit node, and tunnel settings for user devices from a role'
+title: "Managed (Server-side) Client Settings"
+description: "Manage DNS, exit node, and tunnel settings for user devices from a role"
 ---
 
 <Note>
-	Only available in [Pangolin Cloud](https://app.pangolin.net/auth/signup) on the Enterprise plan and self-hosted [Enterprise Edition](/self-host/enterprise-edition).
+    Only available in [Pangolin Cloud](https://app.pangolin.net/auth/signup) on
+    the Enterprise plan and self-hosted [Enterprise
+    Edition](/self-host/enterprise-edition).
 </Note>
+
+<iframe
+    className="w-full aspect-video rounded-xl"
+    src="https://www.youtube.com/embed/Z41JEBcP9v0?si=hKW4nvteh8lvXZCR"
+    title="YouTube video player"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen
+></iframe>
 
 Server-side client settings let an admin set the [connection settings](/manage/clients/platforms#connection-settings) for every user in a role, instead of asking each user to configure their own device. Use them to roll out a DNS setup, require an exit node, or tune the tunnel for a whole team at once.
 
@@ -25,7 +35,11 @@ On Mac, iOS/iPadOS, Windows, Linux, and Android, the client shows in **Settings*
 Settings are never combined across roles. If a user has several roles that manage client settings, they get the settings of the **oldest** of those roles (the one created first). Roles with **Manage settings from the server** turned off are skipped.
 
 <Tip>
-	To avoid conflicts, create a role just for client settings, such as `Client Settings - Engineering`, and manage settings only on that role. Leave **Manage settings from the server** off on your other roles. Add the role to users alongside their existing roles: it doesn't need access to any resources, so it only changes their client settings.
+    To avoid conflicts, create a role just for client settings, such as `Client
+    Settings - Engineering`, and manage settings only on that role. Leave
+    **Manage settings from the server** off on your other roles. Add the role to
+    users alongside their existing roles: it doesn't need access to any
+    resources, so it only changes their client settings.
 </Tip>
 
 ## Configure Client Settings for a Role
@@ -51,30 +65,30 @@ The settings below match the client connection settings. See [Connection Setting
 
 ### DNS
 
-| Setting | Description |
-| --- | --- |
-| Enable Aliases (DNS Override) | Use Pangolin's DNS to resolve internal resources and aliases, overriding the device's default DNS settings. |
-| DNS Over Tunnel | Send DNS queries through the tunnel for remote resolution. The DNS server must be defined as a Pangolin resource. |
-| Primary Upstream DNS Server | The DNS server for queries that aren't Pangolin aliases. Must be an IPv4 or IPv6 address. |
-| Secondary Upstream DNS Server | A fallback upstream DNS server. Must be an IPv4 or IPv6 address. |
-| Match Domains | One wildcard pattern per line, such as `*.proxy.internal`. Only matching queries go to the upstream DNS servers; everything else uses the device's DNS servers. |
+| Setting                       | Description                                                                                                                                                     |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Enable Aliases (DNS Override) | Use Pangolin's DNS to resolve internal resources and aliases, overriding the device's default DNS settings.                                                     |
+| DNS Over Tunnel               | Send DNS queries through the tunnel for remote resolution. The DNS server must be defined as a Pangolin resource.                                               |
+| Primary Upstream DNS Server   | The DNS server for queries that aren't Pangolin aliases. Must be an IPv4 or IPv6 address.                                                                       |
+| Secondary Upstream DNS Server | A fallback upstream DNS server. Must be an IPv4 or IPv6 address.                                                                                                |
+| Match Domains                 | One wildcard pattern per line, such as `*.proxy.internal`. Only matching queries go to the upstream DNS servers; everything else uses the device's DNS servers. |
 
 The primary and secondary upstream DNS servers are managed together: if you set either one, the client uses only the servers you set.
 
 ### Exit Node
 
-| Setting | Description |
-| --- | --- |
-| Exit Node | A gateway resource to send the client's traffic through. Users must have access to the gateway resource for it to take effect. |
-| Exit Node Mode | **Default** applies until the user picks a different exit node. **Locked** always applies, and the user can't change or turn off the exit node. |
-| Exit Node Takes Precedence Over Resources | Don't add routes or resolve aliases for individual resources, so all traffic is sent through the exit node. |
+| Setting                                   | Description                                                                                                                                     |
+| ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Exit Node                                 | A gateway resource to send the client's traffic through. Users must have access to the gateway resource for it to take effect.                  |
+| Exit Node Mode                            | **Default** applies until the user picks a different exit node. **Locked** always applies, and the user can't change or turn off the exit node. |
+| Exit Node Takes Precedence Over Resources | Don't add routes or resolve aliases for individual resources, so all traffic is sent through the exit node.                                     |
 
 ### Advanced
 
-| Setting | Description |
-| --- | --- |
-| MTU | The MTU of the client's tunnel interface, between 576 and 65535. Every site the client connects to must use the same MTU. See [MTU](/manage/clients/platforms#mtu). |
-| Prefer Local Routes | Add tunnel routes with a high metric so overlapping routes on the local network take precedence. |
+| Setting             | Description                                                                                                                                                         |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| MTU                 | The MTU of the client's tunnel interface, between 576 and 65535. Every site the client connects to must use the same MTU. See [MTU](/manage/clients/platforms#mtu). |
+| Prefer Local Routes | Add tunnel routes with a high metric so overlapping routes on the local network take precedence.                                                                    |
 
 <Warning>
     Changing MTU is advanced and not recommended for most users. If you manage
