@@ -150,6 +150,86 @@ The output should look like this:
 +---------------------------+----------------------+--------+------+
 ```
 
+## Bot Detection
+
+<Note>
+Bot detection is available as an opt-in option in the installer starting with Pangolin 1.26. It is currently in alpha.
+</Note>
+
+CrowdSec's [AppSec bot detection](https://docs.crowdsec.net/docs/next/appsec/bot_detection/enable/) requires browsers to solve a challenge before they can reach any resource behind Traefik. Automated clients that cannot solve the challenge are blocked.
+
+<Warning>
+Bot detection applies to every resource routed through the CrowdSec middleware. Non-browser clients, such as mobile apps, API tools, scripts, and webhooks, may be blocked.
+</Warning>
+
+### Enable with the installer
+
+When installing CrowdSec with the Pangolin installer, answer yes to the following prompt:
+
+```
+Would you like to enable CrowdSec bot detection (alpha)?
+```
+
+The installer will add the `crowdsecurity/appsec-bot-challenge` collection and enable the bot detection AppSec rules for you.
+
+### Enable on an existing installation
+
+If CrowdSec is already installed, you can enable bot detection manually:
+
+1. Make sure the CrowdSec bouncer plugin in `/config/traefik/traefik_config.yml` is `v1.8.1` or newer:
+
+```yaml
+experimental:
+  plugins:
+    crowdsec:
+      moduleName: "github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
+      version: "v1.8.1"
+```
+
+2. Add the `crowdsecurity/appsec-bot-challenge` collection to the CrowdSec container in your `docker-compose.yml` file:
+
+```yaml
+service:
+  crowdsec:
+    environment:
+      COLLECTIONS: crowdsecurity/traefik crowdsecurity/appsec-virtual-patching crowdsecurity/appsec-generic-rules crowdsecurity/appsec-bot-challenge
+```
+
+3. Update `/config/crowdsec/acquis.d/appsec.yaml` to load the bot detection AppSec configs. Note that `appsec_config` is replaced by the list `appsec_configs`:
+
+```yaml
+listen_addr: 0.0.0.0:7422
+appsec_configs:
+  - crowdsecurity/appsec-default
+  - crowdsecurity/appsec-bot-*
+name: myAppSecComponent
+source: appsec
+labels:
+  type: appsec
+```
+
+4. Make sure AppSec is enabled on the CrowdSec middleware in `/config/traefik/dynamic_config.yml`. This is the default for installer-based setups:
+
+```yaml
+http:
+  middlewares:
+    crowdsec:
+      plugin:
+        crowdsec:
+          crowdsecAppsecEnabled: true
+          crowdsecAppsecHost: crowdsec:7422
+```
+
+5. Restart the stack:
+
+```bash
+docker compose down && docker compose up -d
+```
+
+To disable bot detection, remove `crowdsecurity/appsec-bot-*` from `appsec_configs` and restart CrowdSec.
+
+The default detection threshold is used, as recommended by CrowdSec. To tune it, see [choosing a threshold](https://docs.crowdsec.net/docs/next/appsec/bot_detection/enable/#choosing-a-threshold). To confirm it is working, follow CrowdSec's [verification steps](https://docs.crowdsec.net/docs/next/appsec/bot_detection/enable/#verification).
+
 ## Custom Ban Page
 
 To display a custom ban page to attackers, follow these steps:
