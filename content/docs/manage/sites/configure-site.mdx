@@ -509,6 +509,20 @@ Almost every setting below can also be set via an environment variable (**Env va
   **Config file key**: `mtu`
 </ResponseField>
 
+<ResponseField name="enable-tcp-rack" type="boolean">
+  Turn gVisor's TCP RACK loss detection back on in the userspace netstack tunnels. It is off by default because it can stall downloads after packet loss.
+
+  <Note>
+    Most users should not use this feature.
+  </Note>
+
+  **Default**: `false`
+
+  **Env var**: `ENABLE_TCP_RACK`
+
+  **Config file key**: `enableTcpRack`
+</ResponseField>
+
 ## Config File
 
 The site can be configured entirely with a JSON config file instead of (or in addition to) CLI flags and environment variables. Almost every flag documented above has a matching camelCase key in this file — see the **Config file key** on each flag for its exact name.
