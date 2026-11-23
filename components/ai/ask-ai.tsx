@@ -523,6 +523,8 @@ function ToolActivity({ part }: { part: ToolPart }) {
         {done ? 'Read' : 'Reading'} <code className="font-mono">{part.input?.path ?? '…'}</code>
       </>
     );
+  } else if (name === 'get_latest_versions') {
+    label = done ? 'Checked the latest release versions' : 'Checking the latest release versions';
   }
 
   return (
