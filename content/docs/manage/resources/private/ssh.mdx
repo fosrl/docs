@@ -40,11 +40,11 @@ The tunnel can be provided by the CLI or by another Pangolin client (for example
 
 Create a private resource with a [destination](/manage/resources/private/destinations) (IP or FQDN) for the host you want to SSH into. Assign an [alias](/manage/resources/private/alias) so users have a friendly name to pass to `pangolin ssh`.
 
-Grant access to users or roles and ensure **TCP 22** is allowed in [port restrictions](/manage/resources/private/port-restrictions).
+Grant access to users or roles.
 
-<Warning>
-If TCP 22 is not allowed in the resource's port restrictions, users will not be able to establish SSH sessions to that resource even when the rest of the setup is correct.
-</Warning>
+<Note>
+SSH resources don't use [port restrictions](/manage/resources/private/port-restrictions), and the option isn't shown for them. Pangolin only allows the SSH port: in **Standard SSH Server** mode, that is the port you enter for the SSH server in the destination (default `22`). In **Pangolin SSH** mode, there is no network port to configure, because the session runs through the site connector on the host itself.
+</Note>
 
 ## Site and Host Configuration
 
@@ -74,4 +74,8 @@ See [SSH Access](/manage/ssh) for a full explanation of each option, setup instr
 | **Auth layer** | Identity from the active client connection; [private resource access rules](/manage/resources/private/authentication) | [Public resource authentication](/manage/resources/public/authentication) — login page, SSO, access rules |
 | **Manual auth step** | Credentials handled by the SSH client or certificate flow | Username/password or private key entered in a browser form after the public auth layer |
 | **Hostname** | [Alias](/manage/resources/private/alias) on the private resource | Public FQDN on your Pangolin domain |
-| **Port restrictions** | TCP 22 must be allowed in [port restrictions](/manage/resources/private/port-restrictions) | Not applicable |
+| **Port restrictions** | Not applicable. Only the SSH port in the destination is allowed | Not applicable |
+
+## Troubleshooting
+
+See [Troubleshooting](/manage/ssh#troubleshooting) on the SSH Access page for common setup mistakes and what each `pangolin ssh` error means.

@@ -9,6 +9,10 @@ For each private resource, TCP and UDP are configured separately. Each protocol 
 
 Port settings apply to users, roles, and machines that have access to the resource. They limit which application traffic can reach the resource’s destination through Pangolin.
 
+<Note>
+Port and ICMP settings apply to host and CIDR resources. [SSH resources](/manage/resources/private/ssh) don't use them: Pangolin only allows the SSH port set in the destination, or no network port at all in Pangolin SSH mode.
+</Note>
+
 ### All
 
 All means no port filtering for that protocol: every port on the destination is reachable through the tunnel. This is the default-style behavior when you are not narrowing traffic to a subset of ports.
@@ -30,7 +34,7 @@ Custom means only the ports you list are allowed; every other port for that prot
 * a range with a hyphen (e.g. `8000-8100`).
 * lists and ranges (e.g. `80,443,8080-8090,9000-9010`)
 
-Use Custom for least-privilege access: allow only the ports your application actually needs (see also [SSH](/manage/ssh) for allowing TCP `22` when using Pangolin SSH).
+Use Custom for least-privilege access: allow only the ports your application actually needs.
 
 ## ICMP
 

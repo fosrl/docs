@@ -145,7 +145,7 @@ There are five valid configuration combinations. Auth daemon location is not app
 
 **When to use:** OpenSSH runs on the same machine as the site connector, but you want network SSH routing (Standard SSH Server mode) with Pangolin identity provisioning instead of Pangolin SSH mode.
 
-**Example:** A Pangolin Site runs on your production app server. OpenSSH also listens on that host. You create a private SSH resource with destination `localhost`, allow TCP 22 in [port restrictions](/manage/resources/private/port-restrictions), and assign an alias such as `prod-app.internal`. Configure Standard SSH Server mode pointing at `127.0.0.1:22`, automated provisioning, and auth daemon on site. Engineers run `pangolin ssh prod-app.internal` and land on the same machine running the Pangolin Site with a provisioned account.
+**Example:** A Pangolin Site runs on your production app server. OpenSSH also listens on that host. You create a private SSH resource with destination `localhost` and assign an alias such as `prod-app.internal`. Configure Standard SSH Server mode pointing at `127.0.0.1:22`, automated provisioning, and auth daemon on site. Engineers run `pangolin ssh prod-app.internal` and land on the same machine running the Pangolin Site with a provisioned account.
 
 **Host setup required:** Run the Pangolin Site and configure OpenSSH on the same host. The site runs as an auth daemon by default. An extra flag is not needed. See [Option 1](#option-1-pangolin-site-as-the-auth-daemon-same-host).
 
@@ -157,7 +157,7 @@ There are five valid configuration combinations. Auth daemon location is not app
 
 **When to use:** The site connector runs on a bastion, and you need to SSH into multiple other servers on the same network that do not run a Pangolin Site. This is the most common automated provisioning setup for multi-server environments.
 
-**Example:** A Pangolin Site runs on `bastion.corp.internal`. You have application servers `app-01` and `app-02` on the same VLAN. For `app-01`, you create a private SSH resource with destination `10.0.5.21` (the IP of the OpenSSH server on the remote host), allow TCP 22 in [port restrictions](/manage/resources/private/port-restrictions), and assign alias `app-01.corp.internal` as the domain name users connect with. Configure Standard SSH Server mode with host `10.0.5.21:22`, automated provisioning, and auth daemon on remote host (daemon port `22123`). Each app server runs `pangolin auth-daemon`. Developers run `pangolin ssh app-01.corp.internal`. The client tunnels through the Pangolin Site, which proxies SSH to the OpenSSH server and coordinates with the auth daemon on that host to provision the user.
+**Example:** A Pangolin Site runs on `bastion.corp.internal`. You have application servers `app-01` and `app-02` on the same VLAN. For `app-01`, you create a private SSH resource with destination `10.0.5.21` (the IP of the OpenSSH server on the remote host) and assign alias `app-01.corp.internal` as the domain name users connect with. Configure Standard SSH Server mode with host `10.0.5.21:22`, automated provisioning, and auth daemon on remote host (daemon port `22123`). Each app server runs `pangolin auth-daemon`. Developers run `pangolin ssh app-01.corp.internal`. The client tunnels through the Pangolin Site, which proxies SSH to the OpenSSH server and coordinates with the auth daemon on that host to provision the user.
 
 **Host setup required:** Pangolin Site on the bastion with a pre-shared key, auth daemon on each target host, OpenSSH configured on each target. See [Option 2: External Auth Daemon](#option-2-external-auth-daemon-ssh-on-another-server-that-does-not-run-a-pangolin-site).
 
@@ -183,7 +183,7 @@ This gives short-lived, auditable access without long-lived keys on the server.
 
 ## How Users and Access Are Managed
 
-When using **Standard SSH Server** with automated provisioning, users are provisioned **just in time** on the remote system. When you connect, Pangolin ensures an account exists for you with the right permissions before the SSH session starts. Your Pangolin identity is mapped to a local username (derived from the part before `@` in your identity; if needed, a suffix is added for uniqueness). Sudo access, Unix groups, and whether a home directory is created come from the [role permissions](#configuring-role-permissions) of the user's roles that are assigned to the resource.
+When using **Standard SSH Server** with automated provisioning, users are provisioned **just in time** on the remote system. When you connect, Pangolin ensures an account exists for you with the right permissions before the SSH session starts. Your Pangolin identity is mapped to a local username, `p-` followed by the part before `@` in your identity. See [How are usernames created on the remote server?](#how-are-usernames-created-on-the-remote-server). Sudo access, Unix groups, and whether a home directory is created come from the [role permissions](#configuring-role-permissions) of the user's roles that are assigned to the resource.
 
 With **Pangolin SSH** and automated provisioning, Pangolin handles user provisioning through the site connector directly. OpenSSH and auth daemon setup are not required on the host. The Pangolin Site must still run as root.
 
@@ -196,7 +196,7 @@ Host setup is only required for **Standard SSH Server** mode with **Automated Pr
 | Standard SSH Server + Automated + On Site        | [Option 1](#option-1-pangolin-site-as-the-auth-daemon-same-host)                               |
 | Standard SSH Server + Automated + On Remote Host | [Option 2](#option-2-external-auth-daemon-ssh-on-another-server-that-does-not-run-a-pangolin-site) |
 
-Before setting up the host, create the SSH resource (public or private) in the dashboard, grant access, and for private resources allow TCP 22 in [port restrictions](/manage/resources/private/port-restrictions).
+Before setting up the host, create the SSH resource (public or private) in the dashboard and grant access. SSH resources don't use [port restrictions](/manage/resources/private/port-restrictions); only the SSH port set in the destination is allowed.
 
 ## Option 1: Pangolin Site as the Auth Daemon (Same Host)
 
@@ -419,6 +419,124 @@ When more than one of the user's roles is assigned to the resource, the settings
 
 Resources in **Pangolin SSH** mode record each session and the commands run in it. Set **SSH Session Log Retention** in your organization's security settings, then view sessions in [SSH Session Logs](/manage/analytics/ssh). Sessions in **Standard SSH Server** mode aren't recorded.
 
+## Troubleshooting
+
+### Common Setup Mistakes
+
+- **Looking for port restrictions.** SSH resources don't have [port restrictions](/manage/resources/private/port-restrictions), and you don't need to allow TCP 22 anywhere. In **Standard SSH Server** mode, you set the SSH server's port in the destination (default `22`), and Pangolin only allows that port. In **Pangolin SSH** mode, there is no network port: the session runs through the site connector on the host itself, so there is no host or port to enter.
+- **Running the site in Docker or on a non-Linux host for Pangolin SSH.** Pangolin SSH and on-site automated provisioning need the Pangolin Site [binary](/manage/sites/install-site#binary-installation) running **as root on Linux**. On macOS or Windows, or when the site isn't root, the site starts but its SSH support doesn't, and connections fail with one of the `not initialized` errors below. In a container, sessions and provisioned users end up inside the container, not on the host.
+- **Disabling SSH on the site.** `--disable-ssh` (or `DISABLE_SSH=true`, or `pangolin service install site --disable-ssh`) turns off the on-site auth daemon and Pangolin SSH. Only a remote auth daemon keeps working.
+- **Selecting more than one site.** Pangolin SSH mode, and Automated Provisioning with the auth daemon on site, allow only one site. The session or the provisioned account lives on that one host.
+- **Using a hostname as the destination without an alias.** A private SSH resource with a hostname destination needs an [alias](/manage/resources/private/alias). Destinations must be an IPv4 address or a hostname; IPv6 addresses aren't accepted.
+- **Leaving out the username with Manual Authentication.** Manual Authentication connects as an existing host account, so you must name it: `pangolin ssh username@<alias>`.
+- **Expecting your own username with Automated Provisioning.** Provisioned usernames start with `p-`. See [How are usernames created on the remote server?](#how-are-usernames-created-on-the-remote-server).
+- **Assigning the role to the user but not the resource.** Sudo, groups, and home directory settings only apply from roles assigned to the resource. See [Assign the Role to the Resource](#assign-the-role-to-the-resource).
+- **Unix groups that don't exist on the host.** Pangolin adds provisioned users to the groups you list, but doesn't create the groups. Create them on each host first.
+- **Sudo commands without a full path.** Limited sudo commands must start with an absolute path, such as `/usr/bin/systemctl`.
+- **`TrustedUserCAKeys` pointing at the wrong file.** In Standard SSH Server mode with Automated Provisioning, the site writes the CA to `/etc/ssh/ca.pem`, or to the path set with `--ad-ca-cert-path` (or `--ca-cert-path` on `pangolin auth-daemon`). `sshd_config` must point at the same file, and the SSH server must be restarted after changing it.
+- **Port forwarding in Pangolin SSH mode.** Pangolin SSH doesn't support port forwarding (`-L`, `-R`, `-D`), jump hosts (`-J`), agent or X11 forwarding, or `-o` options. `pangolin ssh` removes them and prints `The following options are not supported by the native SSH server and were ignored`. Use Standard SSH Server mode if you need them.
+
+<Tip>
+When SSH fails because of the site, check the site's logs from when it started. A line starting with `Did not start on site auth daemon:` gives the reason, such as `auth-daemon must be run as root (use sudo)` or `auth-daemon is only supported on Linux`.
+</Tip>
+
+### Error Messages
+
+Errors from the Pangolin server and the site are shown by `pangolin ssh` with an `SSH error:` prefix.
+
+<AccordionGroup>
+<Accordion title="SSH error: auth daemon server or SSH credential store not initialized">
+  The resource uses **Pangolin SSH** mode with **Automated Provisioning**, and the site couldn't start its SSH support. Common causes:
+
+  - The site isn't running as root. Run it with `sudo pangolin up site ...` or as a root service.
+  - The site runs on macOS or Windows. Pangolin SSH needs a Linux host.
+  - The site was started with `--disable-ssh` or `DISABLE_SSH=true`.
+
+  Fix the cause and restart the site. Its startup log shows the reason in a `Did not start on site auth daemon:` line.
+</Accordion>
+
+<Accordion title="SSH error: auth daemon server not initialized (enable by running Newt site connector as root)">
+  The resource uses **Standard SSH Server** mode with **Automated Provisioning** and the auth daemon **On Site**, but the site's auth daemon isn't running. The causes and fixes are the same as for the previous error: run the site as root, on Linux, without `--disable-ssh`.
+</Accordion>
+
+<Accordion title="SSH error: auth daemon key not configured">
+  The auth daemon is set to **On Remote Host**, but the site wasn't started with a pre-shared key. Start the site with `--ad-pre-shared-key <key>` (or `AD_KEY`), using the same key as `pangolin auth-daemon --pre-shared-key` on each target host. See [Option 2](#option-2-external-auth-daemon-ssh-on-another-server-that-does-not-run-a-pangolin-site).
+</Accordion>
+
+<Accordion title="SSH error: failed to connect to auth daemon">
+  The site couldn't reach the remote auth daemon. Check that:
+
+  - `pangolin auth-daemon` is running on the target host (`systemctl status pangolin-auth-daemon`).
+  - The resource's destination is that host's address.
+  - The **Daemon Port** in the resource matches the daemon's `--port` (default `22123`).
+  - A firewall allows TCP 22123 (or your port) from the site to the target host.
+</Accordion>
+
+<Accordion title="SSH error: auth daemon returned status 401">
+  The pre-shared key on the site (`--ad-pre-shared-key`) doesn't match the one on the auth daemon (`--pre-shared-key`). Set the same value on both and restart them.
+</Accordion>
+
+<Accordion title="SSH error: timed out waiting for round-trip message">
+  Pangolin sent the connection to the site but got no answer within about 15 seconds. The site is probably offline or disconnected, or is running a version too old to handle SSH. Check that the site is online in the dashboard and update it.
+</Accordion>
+
+<Accordion title="No client is currently running. Start the client first.">
+  `pangolin ssh` needs an active Pangolin tunnel. Run `pangolin up`, or connect with the desktop app. With [companion mode](/manage/clients/platforms/cli#companion-mode), the CLI uses the desktop app's connection.
+</Accordion>
+
+<Accordion title="Organization is required">
+  The CLI isn't logged in or has no organization selected. Run `pangolin login`, then `pangolin select org`. In companion mode, select the organization in the desktop app.
+</Accordion>
+
+<Accordion title="Companion mode is enabled but the ... is not ready to use">
+  The CLI is set to use the desktop app's login, but the app isn't running or isn't logged in. Open the app and log in, or run `pangolin companion disable` to use the CLI's own login.
+</Accordion>
+
+<Accordion title="SSH error: Resource not found">
+  No private resource matches what you passed to `pangolin ssh`. Use the resource's alias or its identifier, and check that you're in the right organization.
+</Accordion>
+
+<Accordion title="SSH error: User does not have access to this resource">
+  You aren't granted access to the resource through a user or role assignment. Add the user, or one of their roles, to the resource's access settings.
+</Accordion>
+
+<Accordion title="SSH error: User does not have permission perform this action">
+  None of your roles allows SSH. Turn on **Allow SSH** for one of your roles. See [Configuring Role Permissions](#configuring-role-permissions).
+</Accordion>
+
+<Accordion title="SSH error: Username must be provided when PAM mode is passthrough">
+  The resource uses Manual Authentication, which needs an existing host account. Connect with `pangolin ssh username@<alias>`.
+</Accordion>
+
+<Accordion title="SSH error: Multiple sites associated with resource, unable to determine SSH host when in native mode">
+  A Pangolin SSH resource has more than one site. Pangolin SSH runs on one specific host, so select a single site.
+</Accordion>
+
+<Accordion title="SSH error: SSHing is not supported for CIDR resources">
+  The target is a CIDR resource. Create an SSH resource for the host instead.
+</Accordion>
+
+<Accordion title="SSH error: SSH CA not configured for this organization">
+  Self-hosted only. The organization has no SSH certificate authority, which happens when `server.secret` wasn't set when the organization was created. Set `server.secret` in the [config file](/self-host/advanced/config-file), then generate the CA with [`pangctl generate-org-ca-keys`](/self-host/advanced/container-cli-tool#generate-org-ca-keys).
+</Accordion>
+
+<Accordion title="Timed out waiting for site to connect">
+  The client couldn't connect to the resource's site within 30 seconds. Disconnect and reconnect the client, then check that the site is online and that the client can reach it. See [NAT Traversal](/manage/clients/nat-traversal).
+</Accordion>
+
+<Accordion title="ssh executable not found">
+  `pangolin ssh` uses the system OpenSSH client. On Windows, install the **OpenSSH Client** optional feature. On Linux or macOS, install OpenSSH, or point `PANGOLIN_SSH_BINARY` at your `ssh` binary. You can also use `pangolin ssh --builtin` for an interactive shell without OpenSSH.
+</Accordion>
+
+<Accordion title="Permission denied (publickey,...)">
+  The SSH server rejected the login.
+
+  - **Manual Authentication:** the username, password, or key (`-i`) is wrong for that host.
+  - **Standard SSH Server with Automated Provisioning:** check `TrustedUserCAKeys` and `AuthorizedPrincipalsCommand` in [`sshd_config`](#configure-the-ssh-server-on-the-host), restart the SSH server, and check that the CA file exists. Signed certificates are only valid for 5 minutes, so retry rather than reusing an old one.
+  - **Pangolin SSH:** the site must run as root to check passwords and switch to the user.
+</Accordion>
+</AccordionGroup>
+
 ## FAQ
 
 ### Why does my provisioned user have no home directory or sudo access?
@@ -437,7 +555,9 @@ When the client requests a signed key from the Pangolin server, the certificate 
 
 ### How are usernames created on the remote server?
 
-Pangolin derives the remote username from your Pangolin identity (the part before `@`). If that name is already taken in the organization, a numeric suffix is added until it is unique.
+With **Automated Provisioning**, Pangolin derives the remote username from your Pangolin identity: the part of your email before `@`, with characters other than letters, numbers, `_`, and `-` removed, and prefixed with `p-`. For example, `jane.doe@example.com` becomes `p-janedoe`. If that name is already taken in the organization, a number is appended to make it unique. The username is saved, so you get the same one on every host and every connection.
+
+With **Manual Authentication**, nothing is created. You connect as the existing host account you name in `pangolin ssh username@<alias>`.
 
 ### How Does the Pangolin Site Communicate With the External Auth Daemon?
 
