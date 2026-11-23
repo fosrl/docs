@@ -1,0 +1,109 @@
+---
+title: "Docs MCP Server"
+description: "Connect your AI agent or coding assistant to the Pangolin documentation with the Model Context Protocol (MCP)."
+---
+
+The Pangolin docs have a public [MCP](https://modelcontextprotocol.io) server. Connect it to an AI agent or coding assistant, such as Claude Code, Cursor, VS Code, or Codex, and the agent can search and read the docs and check current release versions while it helps you install, configure, and troubleshoot Pangolin.
+
+The MCP server uses the same tools and guidance as the Ask AI assistant on this site, so your agent works from the current docs instead of guessing from old training data.
+
+```text
+https://docs.pangolin.net/mcp
+```
+
+<Note>
+The server is free, read-only, and needs no account or API key. It only serves public documentation and has no access to your Pangolin instance.
+</Note>
+
+## Add the Server to Your Agent
+
+The server uses the Streamable HTTP transport. Pick your client below. For any other MCP client, add a remote (HTTP) server with the URL above.
+
+<Tabs>
+<Tab title="Claude Code">
+
+```bash
+claude mcp add --transport http pangolin-docs https://docs.pangolin.net/mcp
+```
+
+</Tab>
+<Tab title="Claude">
+
+In Claude (web or desktop), go to **Settings** → **Connectors** → **Add custom connector**, name it `Pangolin Docs`, and enter `https://docs.pangolin.net/mcp` as the URL.
+
+</Tab>
+<Tab title="Cursor">
+
+Add the server to `~/.cursor/mcp.json` (all projects) or `.cursor/mcp.json` (one project):
+
+```json title="mcp.json"
+{
+  "mcpServers": {
+    "pangolin-docs": {
+      "url": "https://docs.pangolin.net/mcp"
+    }
+  }
+}
+```
+
+</Tab>
+<Tab title="VS Code">
+
+Add the server to `.vscode/mcp.json` in your workspace:
+
+```json title=".vscode/mcp.json"
+{
+  "servers": {
+    "pangolin-docs": {
+      "type": "http",
+      "url": "https://docs.pangolin.net/mcp"
+    }
+  }
+}
+```
+
+</Tab>
+<Tab title="Codex">
+
+```bash
+codex mcp add pangolin-docs --url https://docs.pangolin.net/mcp
+```
+
+</Tab>
+<Tab title="Windsurf">
+
+Add the server to `~/.codeium/windsurf/mcp_config.json`:
+
+```json title="mcp_config.json"
+{
+  "mcpServers": {
+    "pangolin-docs": {
+      "serverUrl": "https://docs.pangolin.net/mcp"
+    }
+  }
+}
+```
+
+</Tab>
+</Tabs>
+
+Once it is connected, ask your agent a Pangolin question, for example "How do I add a site with Docker Compose?" or "What is the latest version of Pangolin?" The agent looks up the answer in the docs and links to the pages it used.
+
+## Available Tools
+
+| Tool | What it does |
+| --- | --- |
+| `search_docs` | Full-text search over the docs. Returns matching pages with their URLs and the sections that matched. |
+| `read_page` | Returns the full Markdown of one page. Accepts a path like `/manage/sites/install-site` or a full docs URL. |
+| `list_pages` | Lists every docs page with its URL, title, and description. |
+| `get_latest_versions` | Returns the latest release versions of Pangolin, sites, clients, the CLI, and remote nodes, with links to their release notes. |
+
+The server also sends instructions to your agent on how to use the docs well, such as checking FAQ pages, citing the pages it used, and noting whether an answer applies to Pangolin Cloud or self-hosted Pangolin.
+
+## Other Ways to Use the Docs with AI
+
+If your tool does not support MCP, you can give it the docs directly:
+
+- [`/llms.txt`](https://docs.pangolin.net/llms.txt): an index of every page.
+- [`/llms-full.txt`](https://docs.pangolin.net/llms-full.txt): the full documentation as a single file.
+- Add `.md` to any page URL to get its Markdown source, for example [`/manage/sites/install-site.md`](https://docs.pangolin.net/manage/sites/install-site.md).

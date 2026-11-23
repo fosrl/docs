@@ -7,7 +7,8 @@
         "about/how-pangolin-works",
         "about/pangolin-vs-reverse-proxy-vs-vpn",
         "about/pangolin-vs-bifrost-vs-litellm",
-        "about/pangolin-cloud-vs-self-hosted"
+        "about/pangolin-cloud-vs-self-hosted",
+        "about/docs-mcp-server"
       ]
     },
     {
@@ -404,6 +405,11 @@
       "label": "Slack",
       "href": "https://pangolin.net/slack",
       "icon": "slack"
+    },
+    {
+      "label": "Docs MCP Server",
+      "href": "/about/docs-mcp-server",
+      "icon": "robot"
     }
   ]
 }
