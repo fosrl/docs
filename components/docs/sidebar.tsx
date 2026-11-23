@@ -159,21 +159,32 @@ function SidebarContent({ tree, anchors }: { tree: PageTree.Root; anchors: Ancho
     <nav aria-label="Docs" className="flex flex-col gap-6 text-sm">
       <FeatureBanner />
       <ul className="flex flex-col gap-0.5">
-        {anchors.map((anchor) => (
-          <li key={anchor.href}>
-            <a
-              href={anchor.href}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="group flex items-center gap-2.5 rounded-md px-2.5 py-1 text-sm text-muted-foreground transition hover:text-foreground"
-            >
+        {anchors.map((anchor) => {
+          const className =
+            'group flex items-center gap-2.5 rounded-md px-2.5 py-1 text-sm text-muted-foreground transition hover:text-foreground';
+          const content = (
+            <>
               <span className="inline-flex size-6 items-center justify-center rounded-md border bg-card text-muted-foreground shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition group-hover:border-faint group-hover:text-foreground [&_svg]:size-3.5">
                 <Icon name={anchor.icon ?? undefined} />
               </span>
               {anchor.label}
-            </a>
-          </li>
-        ))}
+            </>
+          );
+          return (
+            <li key={anchor.href}>
+              {/* site-relative anchors (e.g. the MCP page) stay in the docs; others open in a new tab */}
+              {anchor.href.startsWith('/') ? (
+                <Link href={anchor.href} className={className}>
+                  {content}
+                </Link>
+              ) : (
+                <a href={anchor.href} target="_blank" rel="noreferrer noopener" className={className}>
+                  {content}
+                </a>
+              )}
+            </li>
+          );
+        })}
       </ul>
       <ul className="flex flex-col gap-0.5">
         {tree.children.map((node) => (

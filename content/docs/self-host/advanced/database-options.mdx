@@ -141,3 +141,17 @@ The same pattern applies to the optional dedicated logs database: `postgres_logs
 
 See the [`postgres.replicas` reference](/self-host/advanced/config-file#database-configuration) for the full config schema, and the [Environment Variables reference](/self-host/advanced/config-file#environment-variables) for all supported variables.
 
+
+## Switching Between SQLite and PostgreSQL
+
+Pangolin does not provide a script or tool to migrate data between SQLite and PostgreSQL. Changing the Docker image and configuration will point Pangolin at a new, empty database. Your existing data will not be carried over automatically.
+
+If you want to switch databases, you have the following options:
+
+- **Migrate the data manually** by exporting it from your current database and importing it into the new one.
+- **Write your own migration script** to copy the data between databases.
+- **Start with a fresh database** and reconfigure Pangolin from scratch.
+
+<Warning>
+Always back up your existing database and configuration before switching database types.
+</Warning>
