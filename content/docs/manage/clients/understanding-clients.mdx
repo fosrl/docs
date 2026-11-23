@@ -38,6 +38,20 @@ Examples include:
 
 Then, just like in the Pangolin dashboard, a user selects the organization to connect to. Once connected, all resources made available to the user in that organization become available via the tunnel.
 
+#### How User Devices Authenticate
+
+Under the hood, each user device is given an ID and secret, similar to a [machine client](/manage/clients/machine-clients#credentials). The difference is that for a user device, the secret is **not** what authenticates the connection, so the same ID and secret are reused across logins. This is intentional and is not a security flaw.
+
+Instead, every user device must present a valid **user session token**, which the client gets through the login flow in the client app. That session must belong to the same user the device is registered to. When the user logs out, the session is invalidated, and a new one is issued the next time they log in. The device's ID and secret stay the same.
+
+Pangolin also recognizes user devices by their [fingerprint](/manage/clients/fingerprinting#how-devices-are-recognized), so reinstalling the client on the same device shows it as the same device in the dashboard. Any [block](/manage/clients/archiving-blocking#blocking-devices) on it stays in effect.
+
+| | User devices | Machine clients |
+|---|---|---|
+| ID and secret | Yes, reused across logins | Yes |
+| What authenticates the connection | A user session token from the login flow, bound to the device's user | The ID and secret |
+| Logging out | Invalidates the session; the ID and secret are unchanged | Not applicable |
+
 ### Machines
 
 Machine clients are for servers and automated systems that are not associated with a specific user.
@@ -49,7 +63,7 @@ Examples include:
 
 Though you may connect a server via a user account using a CLI client, we recommend you specifically use a machine client.
 
-Machine clients authenticate with [machine client credentials](/manage/clients/machine-clients#credentials): an ID and secret. These are passed as arguments to the Pangolin CLI. They can be revoked and rotated. User devices never use these credentials. You can also assign [roles](/manage/clients/machine-clients#grant-access-to-private-resources) to a machine client so it inherits private-resource access from those roles.
+Machine clients authenticate with [machine client credentials](/manage/clients/machine-clients#credentials): an ID and secret. These are passed as arguments to the Pangolin CLI. They can be revoked and rotated. For machine clients, the secret is the authentication mechanism, because there is no user session. You can also assign [roles](/manage/clients/machine-clients#grant-access-to-private-resources) to a machine client so it inherits private-resource access from those roles.
 
 ## Split Tunneling by Default
 

@@ -12,9 +12,15 @@ To block a device that has been compromised or lost:
 
 When you block a device, it is immediately moved to a restricted list and loses access to all resources or the ability to connect.
 
+A block stays in place if the user uninstalls the client. Pangolin recognizes user devices by their [fingerprint](/manage/clients/fingerprinting#how-devices-are-recognized), so when the client is reinstalled on the same device, even after a factory reset, Pangolin matches it to the saved fingerprint and the device is still blocked.
+
+<Warning>
+Blocking relies on the fingerprint, which is not a guaranteed security control. Someone with control of the device can change the values the fingerprint is built from, such as the serial number, and the device then shows up as a new one. To cut off a person rather than one device, also remove the user from the organization or change their roles.
+</Warning>
+
 ## Archiving Devices
 
-Devices cannot be permanently deleted from Pangolin. Instead, you can archive devices to remove them from your active client list.
+User devices cannot be deleted from the dashboard. Instead, you can archive devices to remove them from your active client list.
 
 To archive a device:
 
@@ -24,12 +30,26 @@ To archive a device:
 
 ### Why Archive Instead of Delete?
 
-Pangolin maintains a permanent audit trail of all devices that have accessed your resources. This ensures:
+A user device has to stay on the server so that later installs of the client can be [matched to its fingerprint](/manage/clients/fingerprinting#how-devices-are-recognized). If the record were deleted, a reinstalled client would show up as a brand-new device. Keeping it ensures:
 
-- Block rules remain effective even for archived devices
+- Block rules remain effective, even for archived devices and after the client is reinstalled
 - Security logs and access history are preserved
 
 Archiving keeps your interface clean by hiding inactive or duplicate devices while maintaining the integrity of your security records.
+
+### Fully Deleting a Device (Self-Hosted)
+
+On a self-hosted server, a server administrator can permanently remove a client with the [`pangctl delete-client`](/self-host/advanced/container-cli-tool#delete-client) command:
+
+```bash
+docker exec -it pangolin pangctl delete-client --orgId "org-123" --niceId "client-identifier"
+```
+
+This deletes the client along with its current fingerprint, approvals, and user associations. Snapshots are preserved.
+
+<Warning>
+After you delete a device, Pangolin has no saved fingerprint to match it to. If the client is installed on that device again, it shows up as a new device, and any block on the old record no longer applies. Archive the device instead if you want a block to stay in effect.
+</Warning>
 
 ## Filtering
 

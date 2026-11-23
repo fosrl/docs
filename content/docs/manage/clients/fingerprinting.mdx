@@ -23,6 +23,18 @@ The following device attributes are collected on each device when available:
 - Device model
 - Serial number
 
+## How Devices Are Recognized
+
+Pangolin tracks each user device by its fingerprint. When the client is installed on a device, Pangolin compares that device's fingerprint with the fingerprints already saved on the server. If it matches, the device is treated as the one Pangolin has already seen, and the dashboard shows it as the same device rather than a new one.
+
+This works across reinstalls. If a user uninstalls the client and installs it again on the same device, even after a factory reset, Pangolin matches the device to its saved fingerprint as long as the fingerprint hasn't changed.
+
+Because of this, actions you take on a device stay attached to it. For example, if you [block a device](/manage/clients/archiving-blocking#blocking-devices), it stays blocked when the user uninstalls and reinstalls the client. This is also why devices are [archived instead of deleted](/manage/clients/archiving-blocking#why-archive-instead-of-delete): the record has to stay on the server so later installs can be matched to it.
+
+<Warning>
+Fingerprint matching is not a guaranteed security control. The fingerprint is built from values reported by the device, and someone with control of the device can change them, for example by changing the serial number. A device with a changed fingerprint shows up as a new device. Use fingerprinting and blocking as one layer, alongside controls on the user, such as [removing them from the organization or changing their roles](/manage/access-control/create-user), and [device approvals](/manage/access-control/approvals).
+</Warning>
+
 ## Available Posture Checks
 
 <Note>
