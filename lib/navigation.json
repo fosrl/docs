@@ -242,6 +242,7 @@
           "icon": "file-code",
           "pages": [
             "manage/blueprints",
+            "manage/blueprints-ci-cd",
             "manage/community-blueprints-repo"
           ]
         },

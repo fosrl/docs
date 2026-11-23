@@ -1,0 +1,264 @@
+---
+title: "Blueprints in CI/CD"
+description: "Manage Pangolin resources with GitOps by keeping blueprints in Git and applying them from a CI/CD pipeline"
+---
+
+[Blueprints](/manage/blueprints) describe Pangolin resources and access in YAML. When you keep those files in Git and apply them from CI, the repository becomes the source of truth for your resources, and changes go through the same review process as the rest of your infrastructure.
+
+## Why Apply Blueprints From CI
+
+Managing resources only from the dashboard works for a handful of changes, but it gets harder to track as your organization grows. Applying blueprints from a pipeline gives you:
+
+- **Version history**: Every change to a resource or its access rules is a commit, with an author and a reason.
+- **Review before apply**: Changes go through pull requests, so someone can check who is getting access to what before it happens.
+- **Rollback**: Reverting a commit and letting the pipeline run again restores the previous state.
+- **Bulk changes**: Updating many resources or customers is one edit and one merge, not a series of dashboard clicks.
+- **Less drift**: Pangolin keeps matching what is in Git, rather than what someone last changed in the dashboard.
+
+## How It Works
+
+1. An operator edits a blueprint file in the repository.
+2. The change is reviewed and merged through a pull request.
+3. The CI pipeline runs `pangolin apply blueprint` with an Integration API key.
+4. Pangolin creates or updates the resources so that they match the file.
+
+Pangolin matches each entry to an existing resource by its key, so you can apply the same file again and again. Applying again updates what changed and does not create duplicates. See [Blueprint Mental Model](/manage/blueprints#blueprint-mental-model).
+
+<Note>
+A CLI apply is a one-off operation. Edits made later in the dashboard stay in place until the pipeline applies the blueprint again, and that apply overwrites them. To avoid confusion, make changes to blueprint-managed resources in Git rather than in the dashboard.
+</Note>
+
+## Prerequisites
+
+- An [Integration API](/manage/integration-api) key for the organization. On self-hosted Pangolin, the Integration API must be [enabled](/self-host/advanced/integration-api) first.
+- The API endpoint. For Pangolin Cloud this is `https://api.pangolin.net`. For self-hosted Pangolin, use your API host, for example `https://api.your-domain.com`.
+- The organization ID that the blueprints should be applied to.
+- The sites that your blueprints reference, which must already exist in the organization.
+
+## Repository Layout
+
+You can keep blueprints in a dedicated GitOps repository or next to the application they expose. A dedicated repository works well when one team manages access for many apps or customers:
+
+```text
+pangolin-gitops/
+├── blueprints/
+│   ├── customer-a.yaml
+│   └── customer-b.yaml
+└── .github/
+    └── workflows/
+        └── apply-blueprints.yml
+```
+
+Splitting blueprints by customer, environment, or team keeps reviews small and makes it clear who owns each file.
+
+<Tip>
+Already have resources set up in the dashboard? [Export them as blueprints](/manage/blueprints#exporting-resources) to bring them into the repository instead of writing the YAML by hand.
+</Tip>
+
+## Example Blueprint
+
+This blueprint defines a private SSH resource for Pangolin clients and a public web app protected by SSO, both on the `customer-a` site:
+
+```yaml title="blueprints/customer-a.yaml"
+private-resources:
+  customer-a-ssh:
+    name: Customer A SSH
+    mode: host
+    sites:
+      - customer-a
+    destination: localhost
+    tcp-ports: "22"
+    alias: ssh.customer-a.internal
+    roles:
+      - DevOps
+    users:
+      - oncall@example.com
+
+public-resources:
+  customer-a-web:
+    name: Customer A Web
+    mode: http
+    full-domain: customer-a.example.com
+    auth:
+      sso-enabled: true
+      sso-roles:
+        - Member
+      sso-users:
+        - support@example.com
+    targets:
+      - site: customer-a
+        hostname: localhost
+        method: http
+        port: 8080
+```
+
+See [Blueprints](/manage/blueprints) for every supported field.
+
+## GitHub Actions
+
+<Steps>
+<Step title="Add repository secrets">
+  In your GitHub repository, go to **Settings > Secrets and variables > Actions** and add:
+
+  | Secret | Value |
+  | --- | --- |
+  | `PANGOLIN_INTEGRATION_API_KEY` | Your Integration API key, in the form `<api_key_id>.<api_key_secret>` |
+  | `PANGOLIN_ENDPOINT` | Your API endpoint, for example `https://api.pangolin.net` |
+  | `PANGOLIN_ORG_ID` | The ID of the organization to apply to |
+</Step>
+
+<Step title="Add the workflow">
+  Create `.github/workflows/apply-blueprints.yml`:
+
+  ```yaml title=".github/workflows/apply-blueprints.yml"
+  name: Apply Pangolin blueprints
+
+  on:
+    push:
+      branches:
+        - main
+
+  jobs:
+    apply:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4
+
+        - name: Install Pangolin CLI
+          run: curl -fsSL https://static.pangolin.net/get-cli.sh | bash
+
+        - name: Apply blueprint
+          env:
+            PANGOLIN_INTEGRATION_API_KEY: ${{ secrets.PANGOLIN_INTEGRATION_API_KEY }}
+            PANGOLIN_ENDPOINT: ${{ secrets.PANGOLIN_ENDPOINT }}
+            PANGOLIN_ORG_ID: ${{ secrets.PANGOLIN_ORG_ID }}
+          run: |
+            pangolin apply blueprint \
+              --api-key "$PANGOLIN_INTEGRATION_API_KEY" \
+              --endpoint "$PANGOLIN_ENDPOINT" \
+              --org "$PANGOLIN_ORG_ID" \
+              --file ./blueprints/customer-a.yaml
+  ```
+</Step>
+
+<Step title="Merge a change">
+  Open a pull request that changes a blueprint, get it reviewed, and merge it into `main`. The workflow applies the blueprint, and the resources in Pangolin are updated to match.
+</Step>
+</Steps>
+
+### Applying Multiple Blueprints
+
+To apply every file in `blueprints/`, loop over them in the apply step:
+
+```yaml
+        - name: Apply blueprints
+          env:
+            PANGOLIN_INTEGRATION_API_KEY: ${{ secrets.PANGOLIN_INTEGRATION_API_KEY }}
+            PANGOLIN_ENDPOINT: ${{ secrets.PANGOLIN_ENDPOINT }}
+            PANGOLIN_ORG_ID: ${{ secrets.PANGOLIN_ORG_ID }}
+          run: |
+            set -euo pipefail
+            for file in ./blueprints/*.yaml; do
+              echo "Applying $file"
+              pangolin apply blueprint \
+                --api-key "$PANGOLIN_INTEGRATION_API_KEY" \
+                --endpoint "$PANGOLIN_ENDPOINT" \
+                --org "$PANGOLIN_ORG_ID" \
+                --file "$file"
+            done
+```
+
+To apply only the blueprints that changed, add a `paths` filter to the trigger, or split the files across separate workflows or jobs.
+
+## Other CI Systems
+
+The CLI only needs to be installed and given the API key, endpoint, and organization ID, so the same approach works in any CI system. For example, in GitLab CI with `PANGOLIN_INTEGRATION_API_KEY`, `PANGOLIN_ENDPOINT`, and `PANGOLIN_ORG_ID` set as masked CI/CD variables:
+
+```yaml title=".gitlab-ci.yml"
+apply-blueprints:
+  image: ubuntu:latest
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+  before_script:
+    - apt-get update && apt-get install -y curl
+    - curl -fsSL https://static.pangolin.net/get-cli.sh | bash
+  script:
+    - |
+      pangolin apply blueprint \
+        --api-key "$PANGOLIN_INTEGRATION_API_KEY" \
+        --endpoint "$PANGOLIN_ENDPOINT" \
+        --org "$PANGOLIN_ORG_ID" \
+        --file ./blueprints/customer-a.yaml
+```
+
+## Templating Blueprints Per Environment
+
+The CLI replaces `{{env.VARIABLE_NAME}}` placeholders with environment variables before it sends the blueprint. In CI, this lets one template produce a different blueprint for each customer or environment:
+
+```yaml title="blueprints/template.yaml"
+public-resources:
+  web-app:
+    name: "Web App {{env.CUSTOMER}}"
+    mode: http
+    full-domain: "{{env.CUSTOMER}}.example.com"
+    targets:
+      - site: "{{env.CUSTOMER}}"
+        hostname: localhost
+        method: http
+        port: 8080
+```
+
+```yaml
+  jobs:
+    apply:
+      runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          customer: [customer-a, customer-b]
+      steps:
+        - uses: actions/checkout@v4
+        - run: curl -fsSL https://static.pangolin.net/get-cli.sh | bash
+        - env:
+            CUSTOMER: ${{ matrix.customer }}
+            PANGOLIN_INTEGRATION_API_KEY: ${{ secrets.PANGOLIN_INTEGRATION_API_KEY }}
+            PANGOLIN_ENDPOINT: ${{ secrets.PANGOLIN_ENDPOINT }}
+            PANGOLIN_ORG_ID: ${{ secrets.PANGOLIN_ORG_ID }}
+          run: |
+            pangolin apply blueprint \
+              --api-key "$PANGOLIN_INTEGRATION_API_KEY" \
+              --endpoint "$PANGOLIN_ENDPOINT" \
+              --org "$PANGOLIN_ORG_ID" \
+              --file ./blueprints/template.yaml \
+              --name "${{ matrix.customer }}"
+```
+
+<Warning>
+A variable that isn't set is replaced with an empty string, which can produce invalid names or domains. Make sure the pipeline sets every variable the template references. See [Environment Variable Templating](/manage/blueprints#environment-variable-templating).
+</Warning>
+
+## Handling Secrets
+
+- Store the API key, endpoint, and organization ID in your CI system's secret store. Never commit them to the repository.
+- Create a dedicated Integration API key for the pipeline so you can rotate or revoke it without affecting other automation.
+- [Exported blueprints](/manage/blueprints#exporting-resources) leave out passwords, PINs, and basic auth credentials. If a resource needs them, add them to the blueprint with templating and inject the values from CI secrets, rather than committing them in plain text.
+- Protect the branch that triggers the apply, and require pull request reviews, so that access changes can't skip review.
+
+## FAQ
+
+<AccordionGroup>
+<Accordion title="Do blueprints need their own repository?">
+  No. A dedicated GitOps repository is a good fit when one team manages access for many apps or customers, but you can also keep blueprints next to the application they expose and apply them from that repository's pipeline.
+</Accordion>
+
+<Accordion title="Can I still use the dashboard?">
+  Yes, but the next pipeline run overwrites dashboard changes to blueprint-managed resources. Use the dashboard for resources that aren't in Git, or to try something out and then [export it](/manage/blueprints#exporting-resources) into the repository.
+</Accordion>
+
+<Accordion title="Can I log in interactively instead of using an API key?">
+  For local use, `pangolin login` followed by `pangolin select org` works. For CI, use an Integration API key, because the pipeline can't complete an interactive login.
+</Accordion>
+
+<Accordion title="Do blueprints replace access design?">
+  No. Blueprints apply the roles, users, and policies you define, but you still need to decide who should have access to what. Git and pull requests make those decisions visible and reviewable.
+</Accordion>
+</AccordionGroup>
