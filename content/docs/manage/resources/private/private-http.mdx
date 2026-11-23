@@ -37,6 +37,68 @@ When you create a private HTTP/HTTPS resource, you assign a domain name. That ho
 
 Enable SSL on the resource so Pangolin obtains and serves a valid certificate for that hostname. When a connected user opens the site in a browser, a reverse proxy running on the site terminates TLS and proxies the request downstream to your [destination](/manage/resources/private/destinations). The Pangolin control plane provisions routing and pushes certificates to the site connector, so users get normal HTTPS without certificate warnings.
 
+## The Placeholder Page
+
+Because a private HTTP hostname is on a real domain, it also exists in public DNS. Pangolin needs that public record to issue a valid TLS certificate. Anyone who looks up the hostname without the Pangolin client, **including your own device before it connects**, gets your Pangolin server's public IP, and the server returns a **placeholder page** instead of the app.
+
+This is expected and is how the resource stays private: the app itself is never reachable from the internet. Only connected clients with access resolve the hostname to the resource's private overlay address, and their traffic goes over the tunnel to the site.
+
+**If you see the placeholder page while connected, your device is still using the public DNS answer.** The resource is almost always configured correctly; the lookup just never reached the Pangolin client's resolver. The most common causes are:
+
+- **A stale cache.** You opened the URL before connecting, so the browser or operating system cached the public IP. It can also keep reusing an open connection to that IP.
+- **Browser secure DNS (DNS over HTTPS).** A browser set to a specific DoH provider sends lookups straight to that provider and never asks the Pangolin resolver. See [Browser Secure DNS](/manage/clients/dns#browser-secure-dns-doh).
+- **Match domains.** The client has [match domains](/manage/clients/dns#match-domains) set that don't include the hostname, so the lookup goes to system DNS.
+- **Override DNS is off.** The operating system never asks the Pangolin resolver. See [Override DNS](/manage/clients/dns#override-dns-enable-aliases).
+- **No access.** You aren't allowed to use the resource, so the client has no private record for it and the lookup falls through to public DNS. Check the resource's [access rules](/manage/resources/private/authentication).
+
+The reverse can also happen. After you disconnect, a cache may hold the private address for up to 5 minutes, so the hostname times out instead of showing the placeholder.
+
+<Note>
+Self-hosted deployments can turn off the public placeholder with [`flags.disable_private_http_placeholder`](/self-host/advanced/config-file). This can prevent Pangolin from issuing certificates for private HTTP hostnames.
+</Note>
+
+## Checking That It Works
+
+With the client connected, work through these checks in order. Replace `app.example.com` with your resource's hostname.
+
+<Steps>
+<Step title="Ask the Pangolin resolver directly">
+  ```bash
+  nslookup app.example.com 100.96.128.1
+  ```
+
+  The answer should be a private overlay address from your organization's utility subnet (`100.96.128.0/20` by default), **not** your Pangolin server's public IP. If it fails or returns the public IP, the client has no record for the hostname. Check that the client is connected, that you have access to the resource, and that no exit node is active with [Exit Nodes Take Precedence](/manage/clients/dns#exit-nodes-take-precedence-over-resources) on.
+</Step>
+
+<Step title="Ask the system resolver">
+  ```bash
+  nslookup app.example.com
+  ```
+
+  This should return the same overlay address as the previous step. If the previous step worked but this returns the public IP, the operating system isn't using the Pangolin resolver. Check that Override DNS is on and that your system DNS server is `100.96.128.1`, check match domains, and check whether another VPN or security agent controls DNS. See [Override DNS](/manage/clients/dns#override-dns-enable-aliases).
+</Step>
+
+<Step title="Test outside the browser">
+  ```bash
+  curl -v https://app.example.com
+  ```
+
+  The `Connected to` line in the output should show the overlay address, and the response should come from your app. If `curl` reaches the app but the browser still shows the placeholder, the problem is in the browser: a cache or secure DNS.
+</Step>
+
+<Step title="Clear the browser's caches">
+  Close and reopen the browser completely. If that doesn't help, clear the browser's DNS cache and socket pools, then flush the operating system's DNS cache. Steps for each browser and operating system are in [DNS Caching and Private HTTP/HTTPS Resources](/manage/clients/dns#dns-caching-and-private-httphttps-resources) and [DNS Cache](/manage/dns-cache).
+
+  A quick way to confirm it's a cache: open the URL in a private window or a different browser. If that works, clearing the cache in the original browser will fix it.
+</Step>
+
+<Step title="Check browser secure DNS">
+  If the placeholder keeps coming back after you clear the caches, the browser is probably using its own DNS-over-HTTPS provider. Set secure DNS to use your current service provider or the OS default, or turn it off for the browser profile you use with Pangolin. See [Browser Secure DNS](/manage/clients/dns#browser-secure-dns-doh).
+</Step>
+</Steps>
+
+If the hostname resolves to the overlay address but the request fails with a timeout or a gateway error rather than the placeholder, DNS is working. The problem is between the site and the backend: check the resource's [destination](/manage/resources/private/destinations) host, port, and scheme, and confirm the site can reach the backend.
+
 ## Destination Fields
 
 The destination block for a private HTTP resource is closer to a [target](/manage/resources/public/targets) on a public resource than to a plain private resource: in addition to the upstream hostname or IP, you set a destination port and a scheme (`http` or `https`). Those values are required so the site knows how to open the connection to the backend after TLS is terminated at the proxy.
