@@ -22,6 +22,14 @@ Readers can rate each page (👍/👎) and each AI answer. Every AI chat and eve
 - Viewing: `analytics-dashboard/` is a separate app that reads the API's database directly. See its README.
 - Readers are anonymous: votes carry a random id kept in the browser's localStorage, nothing else.
 
+## Assistant surfaces
+
+The docs assistant is one agent (`lib/ai/agent.ts`) with one set of tools (`lib/docs-tools.ts`), used in three places:
+
+- **Ask AI** on the site: `/api/chat`.
+- **MCP server** for people's own agents: `/mcp` (tools and guidance only; the agent is theirs). Documented at `/about/docs-mcp-server`.
+- **Pango-Bot** in Discord ([fosrl/pango-bot](https://github.com/fosrl/pango-bot)): `/api/bot/answer` streams progress and the answer, `/api/bot/vote` records 👍/👎. Both need `DOCS_BOT_API_KEY`. Discord chats are stored in the same analytics, tagged by their page `/discord/<guild>/<thread>` and ids starting with `discord-`, so no analytics API changes are needed to tell them apart.
+
 ## Writing docs
 
 - Pages live in `content/docs/**/*.mdx`. The URL is the file path.

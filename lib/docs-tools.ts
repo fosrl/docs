@@ -18,6 +18,8 @@ export interface DocsToolContext {
 
 export const chatContext: DocsToolContext = { linkBase: '' };
 export const mcpContext: DocsToolContext = { linkBase: siteUrl };
+/** Discord can't resolve site-relative links */
+export const discordContext: DocsToolContext = { linkBase: siteUrl };
 
 const MAX_PAGE_CHARS = 60_000;
 

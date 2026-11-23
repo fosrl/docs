@@ -89,11 +89,15 @@ function messagePage(message: ChatUIMessage) {
   return null;
 }
 
-/** creates the thread on its first question; re-sent messages (regenerate) are ignored */
+/**
+ * creates the thread on its first question; re-sent messages (regenerate) are ignored.
+ * `page` overrides the page taken from the message's client context (e.g. `/discord/...`).
+ */
 export async function recordUserMessage(
   threadId: string,
   visitorId: string | null,
   message: ChatUIMessage,
+  page?: string,
 ) {
   const id = parseId(message.id);
   const content = messageText(message);
@@ -102,7 +106,7 @@ export async function recordUserMessage(
   await post('/chat-messages', {
     threadId,
     visitorId,
-    page: messagePage(message),
+    page: page ?? messagePage(message),
     id,
     role: 'user',
     content,

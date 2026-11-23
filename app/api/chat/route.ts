@@ -1,18 +1,9 @@
 import { after } from 'next/server';
-import {
-  convertToModelMessages,
-  createUIMessageStreamResponse,
-  generateId,
-  stepCountIs,
-  streamText,
-  toUIMessageStream,
-  type SystemModelMessage,
-} from 'ai';
+import { convertToModelMessages, createUIMessageStreamResponse, generateId, toUIMessageStream } from 'ai';
 import type { ChatUIMessage } from '@/lib/ai/types';
+import { streamDocsAgent } from '@/lib/ai/agent';
 import { AIConfigError, getModel } from '@/lib/ai/model';
-import { getSystemPrompt } from '@/lib/ai/prompt';
 import { checkRateLimit, clientKey } from '@/lib/ai/rate-limit';
-import { tools } from '@/lib/ai/tools';
 import { parseId, recordAssistantMessage, recordUserMessage } from '@/lib/analytics/api';
 
 export const maxDuration = 120;
@@ -65,19 +56,9 @@ export async function POST(req: Request) {
     });
   }
 
-  const instructions: SystemModelMessage = {
-    role: 'system',
-    content: getSystemPrompt(),
-    // the system prompt is large and identical across requests
-    providerOptions: { anthropic: { cacheControl: { type: 'ephemeral' } } },
-  };
-
-  const result = streamText({
-    model: config.model,
-    stopWhen: stepCountIs(8),
-    tools,
-    toolChoice: 'auto',
-    instructions,
+  const result = streamDocsAgent({
+    config,
+    surface: 'web',
     messages: await convertToModelMessages<ChatUIMessage>(messages, {
       convertDataPart(part) {
         if (part.type === 'data-client')
@@ -87,9 +68,6 @@ export async function POST(req: Request) {
           };
       },
     }),
-    onError({ error }) {
-      console.error('[api/chat]', error);
-    },
   });
 
   return createUIMessageStreamResponse({
