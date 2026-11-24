@@ -251,6 +251,7 @@
           "pages": [
             "manage/remote-node/understanding-nodes",
             "manage/remote-node/quick-install-remote",
+            "manage/remote-node/kubernetes-helm",
             "manage/remote-node/config-file",
             "manage/remote-node/backhaul"
           ]

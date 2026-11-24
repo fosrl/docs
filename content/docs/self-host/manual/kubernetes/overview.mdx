@@ -10,6 +10,7 @@ description: "Deploy Pangolin, Sites (Newt), and related components on Kubernete
 | Pangolin | Main application for the dashboard, API, authentication, configuration, and database-backed state. |
 | Gerbil | Tunnel stack component used by Pangolin for site connectivity. |
 | Site (Newt) | Site connector used to connect private resources to Pangolin. |
+| Pangolin Node | Remote node (Pangolin Node agent, Gerbil, and Traefik in one Pod) connected to Pangolin Cloud or an Enterprise Edition control plane. |
 | Traefik | Reverse proxy and router for ingress traffic. |
 | PostgreSQL / SQLite | Database options for Pangolin deployments, depending on the selected chart configuration. |
 | Pangolin Kube Controller | Kubernetes controller for integrating Pangolin with Kubernetes and Traefik resources. |
@@ -73,5 +74,8 @@ flowchart LR
 	</Card>
 	<Card title="Site (Newt) Troubleshooting" href="/manage/sites/kubernetes/troubleshooting" icon="circle-question">
 		Diagnose and resolve Site connector deployment issues.
+	</Card>
+	<Card title="Remote Node Helm" href="/manage/remote-node/kubernetes-helm" icon="cubes">
+		Run a remote node in your cluster with the Pangolin Node Helm chart.
 	</Card>
 </CardGroup>

@@ -4,6 +4,8 @@ description: "Configure your remote node using the config.yml file"
 ---
 The `config.yml` file includes basic config variable for your remote node. This file is mounted at `config/config.yml` in your Docker container.
 
+On Kubernetes, the [Helm chart](/manage/remote-node/kubernetes-helm#configuration) renders this file from the `config` values.
+
 Minimal configuration file:
 
 ```yaml title="config.yml"
