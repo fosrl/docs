@@ -1,0 +1,329 @@
+---
+title: "Kubernetes (Helm)"
+description: "Deploy a remote node on Kubernetes with the pangolin-node Helm chart."
+---
+
+This guide deploys a [remote node](/manage/remote-node/understanding-nodes) on Kubernetes with the `fosrl/pangolin-node` Helm chart. The chart runs the same three containers as the [installer](/manage/remote-node/quick-install-remote): the Pangolin Node agent, Gerbil, and Traefik.
+
+See [Version Matrix](https://github.com/fosrl/helm-charts/blob/main/VERSION_MATRIX.md) for chart and default app version references.
+
+## What the chart deploys
+
+Chart `0.1.1` (Pangolin Node `1.7.0`, Gerbil `1.6.0`, Traefik `v3.7.19`, Badger `v1.8.0`) renders a single Deployment with one Pod:
+
+| Container | Role |
+| --- | --- |
+| `pangolin-node` | Connects to the control plane with the node ID and secret. Writes the Traefik router config to `/var/dynamic` and TLS certificates to `/var/certificates`. |
+| `gerbil` | WireGuard for sites (51820/udp) and clients (21820/udp), and the SNI proxy that receives public HTTPS traffic. |
+| `traefik` | Reads the router config and certificates and proxies requests to your targets, with the Badger plugin for authentication. |
+
+All three containers share one Pod for the same reasons the Docker install shares volumes and a network namespace:
+
+- `pangolin-node` and `traefik` share `/var/dynamic` and `/var/certificates`. Inside one Pod these are `emptyDir` volumes, so no `ReadWriteMany` storage is needed. The node refills both from the control plane on startup.
+- Traefik runs in Gerbil's network namespace so it can reach targets over the WireGuard tunnels.
+- Gerbil and Traefik start only after `pangolin-node` passes its startup probe, which matches `depends_on: condition: service_healthy` in the Docker Compose file.
+
+The Deployment always runs one replica with the `Recreate` strategy. To run several nodes, install one release per node.
+
+## Prerequisites
+
+Before installing, you need:
+
+- Kubernetes `1.30.14` or newer
+- Helm 3.x
+- `kubectl` access to the target cluster
+- a [Pangolin Cloud](https://app.pangolin.net/auth/signup) account or a self-hosted [Enterprise Edition](/self-host/enterprise-edition) deployment
+- remote node credentials (ID and secret). Generate them in the dashboard under the "Self-hosted" section by adding a new node.
+- a public IP address or DNS name for the node
+- a way to expose 80/tcp, 443/tcp, 51820/udp, and 21820/udp publicly (see [Exposing the node](#exposing-the-node))
+- outbound access to the control plane (`https://app.pangolin.net` by default) and to `github.com`, where Traefik downloads the Badger plugin on startup
+
+## Quick install with existing Secret
+
+This is the recommended pattern. The node secret stays in a Kubernetes Secret and never appears in Helm values or release history.
+
+### Step 1: Create the namespace
+
+```bash
+kubectl create namespace pangolin
+```
+
+Gerbil needs the `NET_ADMIN` capability to manage the WireGuard interface. If your cluster enforces Pod Security Admission, label the namespace as privileged:
+
+```bash
+kubectl label namespace pangolin \
+  pod-security.kubernetes.io/enforce=privileged \
+  pod-security.kubernetes.io/audit=baseline \
+  pod-security.kubernetes.io/warn=baseline
+```
+
+### Step 2: Create the credentials Secret
+
+```bash
+kubectl create secret generic pangolin-node-credentials \
+  --namespace pangolin \
+  --from-literal=id=<your-node-id> \
+  --from-literal=secret=<your-node-secret>
+```
+
+An init container merges these values into `config.yml` when the Pod starts.
+
+### Step 3: Create a values file
+
+Create `values-node.yaml`:
+
+```yaml
+config:
+  managed:
+    existingSecret: pangolin-node-credentials
+  gerbil:
+    base_endpoint: node.example.com # REPLACE WITH YOUR IP OR DOMAIN
+```
+
+`base_endpoint` is the public address that sites and clients use to reach this node's WireGuard listener. It must resolve to the LoadBalancer address or node IP from [Exposing the node](#exposing-the-node).
+
+A LoadBalancer address is usually assigned only after the Service exists. Use a DNS name you control and point it at the address once it appears, so you never have to change `base_endpoint`. If you use the raw address instead, install with any placeholder and set the real value in [Step 6](#step-6-set-the-public-address).
+
+The chart validates values against its schema, so a misspelled key fails the install instead of being ignored.
+
+If you use a self-hosted Enterprise Edition control plane, set its URL:
+
+```yaml
+config:
+  managed:
+    existingSecret: pangolin-node-credentials
+    endpoint: https://pangolin.example.com
+  gerbil:
+    base_endpoint: node.example.com
+```
+
+### Step 4: Install the chart
+
+Add the Helm repository:
+
+```bash
+helm repo add fossorial https://charts.fossorial.io
+helm repo update fossorial
+```
+
+Install the chart:
+
+```bash
+helm upgrade --install pangolin-node fossorial/pangolin-node \
+  --namespace pangolin \
+  --values values-node.yaml
+```
+
+### Step 5: Verify the deployment
+
+Check the pod. It reports `3/3` ready once all three containers are up:
+
+```bash
+kubectl get pods --namespace pangolin \
+  -l app.kubernetes.io/instance=pangolin-node
+```
+
+Check the logs of each container:
+
+```bash
+kubectl logs --namespace pangolin deploy/pangolin-node -c pangolin-node --tail=50
+kubectl logs --namespace pangolin deploy/pangolin-node -c gerbil --tail=50
+kubectl logs --namespace pangolin deploy/pangolin-node -c traefik --tail=50
+```
+
+A healthy `pangolin-node` log shows `Connected to WebSocket server`. One or two `ECONNREFUSED 127.0.0.1:3003` errors right after startup are expected: the agent starts before Gerbil and retries until Gerbil is listening.
+
+### Step 6: Set the public address
+
+Get the external address of the Service:
+
+```bash
+kubectl get service pangolin-node --namespace pangolin
+```
+
+If `base_endpoint` is a DNS name, point it at the `EXTERNAL-IP` (an A record for an IP, a CNAME for a hostname). If you installed with a placeholder, set `base_endpoint` in `values-node.yaml` to the address and upgrade:
+
+```bash
+helm upgrade pangolin-node fossorial/pangolin-node \
+  --namespace pangolin \
+  --values values-node.yaml
+```
+
+Confirm in the dashboard that the node is online, then point your resource domains at the same address.
+
+## Exposing the node
+
+The node needs four public ports:
+
+| Port | Protocol | Goes to |
+| --- | --- | --- |
+| 80 | TCP | Traefik HTTP entrypoint |
+| 443 | TCP | Gerbil SNI proxy, which forwards to Traefik HTTPS |
+| 51820 | UDP | Gerbil WireGuard (sites) |
+| 21820 | UDP | Gerbil WireGuard (clients) |
+
+### LoadBalancer (default)
+
+The chart creates a `LoadBalancer` Service with `externalTrafficPolicy: Local` so the node sees real client IPs. Your provider must support TCP and UDP ports on the same LoadBalancer Service. Most managed clusters do; check your provider's documentation if the Service stays in `Pending`.
+
+Provider-specific settings go in `service.annotations`.
+
+#### AWS (EKS)
+
+On EKS, use the [AWS Load Balancer Controller](https://kubernetes-sigs.github.io/aws-load-balancer-controller/). The in-tree cloud provider cannot put TCP and UDP listeners on one load balancer.
+
+```yaml
+service:
+  type: LoadBalancer
+  loadBalancerClass: service.k8s.aws/nlb
+  externalTrafficPolicy: Local
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-protocol: TCP
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "3003"
+```
+
+The health check annotations matter. An NLB checks a UDP target group over TCP on the traffic port by default, and nothing listens on TCP 51820 or 21820, so the WireGuard targets never become healthy. Port 3003 is Gerbil's API inside the Pod. The same file is in the chart as [`values-aws-nlb.yaml`](https://github.com/fosrl/helm-charts/blob/main/charts/pangolin-node/examples/values-aws-nlb.yaml).
+
+Other providers with the same behavior need the same fix: point the health check at a TCP port in the Pod.
+
+### hostPorts
+
+On a single machine or bare metal without a LoadBalancer (for example k3s on a VPS), bind the ports directly on the node, as the Docker install does:
+
+```yaml
+config:
+  managed:
+    existingSecret: pangolin-node-credentials
+  gerbil:
+    base_endpoint: node.example.com
+
+hostPorts:
+  enabled: true
+
+service:
+  type: ClusterIP
+
+pod:
+  nodeSelector:
+    kubernetes.io/hostname: edge-1
+```
+
+Pin the Pod with `pod.nodeSelector` to the node whose public IP `base_endpoint` resolves to.
+
+<Note>
+`config.gerbil.start_port` must match the public WireGuard port (`service.ports.wg1` or `hostPorts.wg1`). Sites connect to `base_endpoint:start_port`, so the chart refuses to render if they differ.
+</Note>
+
+## Configuration
+
+The chart renders `config.yml` from the `config` values. The keys match the [configuration file](/manage/remote-node/config-file) used by the Docker install:
+
+```yaml
+config:
+  app:
+    log_level: info
+    log_failed_attempts: false
+    audit_logging_enabled: true
+  managed:
+    existingSecret: pangolin-node-credentials
+    endpoint: https://app.pangolin.net
+  gerbil:
+    base_endpoint: node.example.com
+    start_port: 51820
+```
+
+The chart sets `server.internal_hostname` and `gerbil.reachable_at` to `127.0.0.1`, because all three containers share the Pod's network. It also sets the `traefik.*` paths to match the shared volumes. Add any other `config.yml` keys under `config.extra`; they are deep-merged into the rendered file.
+
+### Authentication options
+
+| Method | Recommended for | Notes |
+| --- | --- | --- |
+| `config.managed.existingSecret` | Production | Secret holds `id` and `secret`. Key names are set with `existingSecretIdKey` and `existingSecretSecretKey`. |
+| `config.existingSecret` | Full control | Secret holds a complete `config.yml`. Keep `server.internal_hostname: 127.0.0.1` and `gerbil.reachable_at: http://127.0.0.1:3003`. |
+| `config.managed.id` / `config.managed.secret` | Local testing only | Credentials are stored in Helm release history. |
+
+### WireGuard key persistence
+
+Gerbil stores its WireGuard private key on a small PVC (`gerbil.persistence`, 64Mi by default). Without it, Gerbil generates a new key on every restart. The PVC is kept on `helm uninstall`; delete it manually if you are removing the node for good.
+
+If your cluster has no default StorageClass, set `gerbil.persistence.storageClass` (for example `gp2` or `gp3` on EKS), otherwise the PVC and the Pod stay `Pending`.
+
+```yaml
+gerbil:
+  persistence:
+    enabled: true
+    storageClass: ""
+    size: 64Mi
+```
+
+### Local sites
+
+Traefik runs inside the cluster, so a [local site](/manage/sites/understanding-sites#local-site) on this node can target cluster Services directly (for example `my-app.default.svc.cluster.local`), with no Pangolin Site connector or tunnel.
+
+## Upgrade
+
+```bash
+helm repo update fossorial
+
+helm upgrade pangolin-node fossorial/pangolin-node \
+  --namespace pangolin \
+  --values values-node.yaml
+```
+
+The Pod restarts automatically when values change. If you rotate the credentials in `pangolin-node-credentials`, restart it yourself:
+
+```bash
+kubectl rollout restart deployment/pangolin-node --namespace pangolin
+```
+
+## Troubleshooting
+
+- **Pod rejected with a Pod Security error:** label the namespace `pod-security.kubernetes.io/enforce=privileged` (see [Step 1](#step-1-create-the-namespace)).
+- **`gerbil` and `traefik` stay in `PodInitializing`:** they wait for `pangolin-node` to pass its startup probe. Check the `pangolin-node` logs for credential or connectivity errors against the control plane.
+- **Traefik logs `unknown plugin type: badger`:** the Pod could not download the plugin. Allow egress to `github.com`.
+- **Service stuck in `Pending`:** the provider cannot create a mixed TCP/UDP LoadBalancer. Use [hostPorts](#hostports) or provider annotations.
+- **Pod and PVC stuck in `Pending`:** the cluster has no default StorageClass. Set `gerbil.persistence.storageClass`.
+- **Load balancer marks the UDP targets unhealthy:** its health check probes TCP on 51820 and 21820. Point it at port 3003 (see [AWS (EKS)](#aws-eks)).
+- **`values don't meet the specifications of the schema`:** a key in your values file is misspelled or not part of the chart. The error names the key.
+- **Sites cannot connect:** confirm `base_endpoint` resolves to the public address and that 51820/udp reaches the Pod.
+
+## OCI install
+
+The chart is also published as an OCI chart in GHCR:
+
+```bash
+helm upgrade --install pangolin-node oci://ghcr.io/fosrl/helm-charts/pangolin-node \
+  --version 0.1.1 \
+  --namespace pangolin \
+  --values values-node.yaml
+```
+
+## References
+
+<CardGroup cols={2}>
+  <Card title="Chart README" href="https://github.com/fosrl/helm-charts/blob/main/charts/pangolin-node/README.md" icon="book" />
+  <Card title="values.yaml" href="https://github.com/fosrl/helm-charts/blob/main/charts/pangolin-node/values.yaml" icon="file-code" />
+  <Card title="Examples" href="https://github.com/fosrl/helm-charts/tree/main/charts/pangolin-node/examples" icon="file-code" />
+  <Card title="Artifact Hub" href="https://artifacthub.io/packages/helm/fosrl/pangolin-node" icon="box" />
+  <Card title="Pangolin Node" href="https://github.com/fosrl/pangolin-node" icon="server" />
+  <Card title="Issues" href="https://github.com/fosrl/helm-charts/issues" icon="circle-question" />
+</CardGroup>
+
+## Next steps
+
+<CardGroup cols={2}>
+	<Card title="Configuration File" href="/manage/remote-node/config-file" icon="sliders">
+		Review the remote node config options.
+	</Card>
+	<Card title="Understanding Remote Nodes" href="/manage/remote-node/understanding-nodes" icon="circle-nodes">
+		Learn how nodes, failover, and local sites work.
+	</Card>
+	<Card title="Kubernetes Sites" href="/manage/sites/kubernetes/helm" icon="cubes">
+		Run site connectors in Kubernetes.
+	</Card>
+	<Card title="Quick Install Guide" href="/manage/remote-node/quick-install-remote" icon="bolt">
+		Install a node on a Linux server with the installer.
+	</Card>
+</CardGroup>

@@ -12,9 +12,16 @@ Remote nodes, you run your own Pangolin node - your tunnels, SSL termination, an
 
 Think of different nodes as the "front doors" to your applications - users connect to the closest one, and it securely routes their requests to your backend services.
 
-<Tip>
-    You can deploy a remote Pangolin node [using the installer](/manage/remote-node/quick-install-remote). 
-</Tip>
+## Deploy a Node
+
+<CardGroup cols={2}>
+	<Card title="Quick Install Guide" href="/manage/remote-node/quick-install-remote" icon="bolt">
+		Install a node on a Linux server with the installer and Docker.
+	</Card>
+	<Card title="Kubernetes (Helm)" href="/manage/remote-node/kubernetes-helm" icon="cubes">
+		Run a node in your cluster with the `pangolin-node` Helm chart.
+	</Card>
+</CardGroup>
 
 ## How It Works
 
